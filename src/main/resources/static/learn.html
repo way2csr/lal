@@ -939,7 +939,7 @@
             <div id="user-badge" style="background: var(--primary-light); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; border: 1px solid #c7d2fe; display: none;">
                 👤 <span id="username-display">User</span>
             </div>
-            <button id="shutdown-btn" class="btn-add btn-remove" style="width: auto; padding: 0 15px; border-radius: 20px; box-shadow: var(--shadow);" title="Shutdown Server" onclick="shutdownServer(this)">🛑 Shutdown</button>
+            <button id="logout-btn" class="btn-add btn-remove" style="width: auto; padding: 0 15px; border-radius: 20px; box-shadow: var(--shadow);" title="Sign Out" onclick="logoutUser(this)">🚪 Logout</button>
         </div>
         <header>
             <h1>✨ LingoLearn AI</h1>
@@ -1083,34 +1083,24 @@
             textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
         }
 
-        async function shutdownServer(btn) {
-            if (!confirm('Are you sure you want to shut down the LingoLearn server?')) return;
-            
+        async function logoutUser(btn) {
             const originalText = btn.innerHTML;
-            btn.innerHTML = '⏳ Stopping...';
+            btn.innerHTML = '⏳ Logging out...';
             btn.disabled = true;
 
             try {
-                const response = await fetch('/actuator/shutdown', {
+                // Spring security default logout must be a POST when CSRF enabled, but we disabled it, so GET or POST is fine. We use POST.
+                const response = await fetch('/logout', {
                     method: 'POST'
                 });
                 
-                if (response.ok) {
-                    btn.innerHTML = '✅ Stopped';
-                    btn.style.background = '#10b981'; // Green
-                    document.body.innerHTML = `
-                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; font-family:sans-serif; text-align:center;">
-                            <h1 style="color:#ef4444; font-size:4rem; margin-bottom:10px;">🛑</h1>
-                            <h2 style="color:#1e293b;">Server Offline</h2>
-                            <p style="color:#64748b; font-size:1.2rem;">LingoLearn has been successfully shut down.</p>
-                            <p style="color:#64748b;">You can safely close this window.</p>
-                        </div>
-                    `;
+                if (response.redirected) {
+                    window.location.href = response.url;
                 } else {
-                    throw new Error('Server returned an error');
+                    window.location.href = '/login.html?logout';
                 }
             } catch (err) {
-                alert('Failed to shut down the server. It might already be offline.');
+                alert('Failed to log out.');
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }
