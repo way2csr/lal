@@ -1071,12 +1071,19 @@
             </div>
             
             <div style="padding: 20px 20px 0 20px;">
-                <div class="history-tabs">
-                    <button class="history-tab active" onclick="switchHistoryTab('tab-translations', this)">Translations</button>
-                    <button class="history-tab" onclick="switchHistoryTab('tab-teacher', this)">AI Teacher</button>
-                    <button class="history-tab" onclick="switchHistoryTab('tab-stories', this)">Stories</button>
-                    <button class="history-tab" onclick="switchHistoryTab('tab-other', this)">Other</button>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <div class="history-tabs" style="margin-bottom: 0; border-bottom: none; padding-bottom: 0;">
+                        <button class="history-tab active" onclick="switchHistoryTab('tab-translations', this)">Translations</button>
+                        <button class="history-tab" onclick="switchHistoryTab('tab-teacher', this)">AI Teacher</button>
+                        <button class="history-tab" onclick="switchHistoryTab('tab-stories', this)">Stories</button>
+                        <button class="history-tab" onclick="switchHistoryTab('tab-other', this)">Other</button>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-add" style="background: #3b82f6; width:auto; padding: 6px 15px; font-size:0.85rem; border-radius:8px;" onclick="toggleSelectAllHistory()">☑️ Select All</button>
+                        <button class="btn-add" style="background: #10b981; width:auto; padding: 6px 15px; font-size:0.85rem; border-radius:8px;" onclick="printSelectedHistory()">🖨️ Print</button>
+                    </div>
                 </div>
+                <div style="border-bottom: 2px solid #e2e8f0; margin-bottom: 15px;"></div>
             </div>
 
             <div id="history-content" style="padding:0 20px 20px 20px; overflow-y:auto; flex-grow:1;">
@@ -1143,6 +1150,56 @@
             document.getElementById(tabId).classList.add('active');
         }
 
+        function toggleSelectAllHistory() {
+            const activePane = document.querySelector('.history-content-pane.active');
+            if (!activePane) return;
+            const checkboxes = activePane.querySelectorAll('.history-checkbox');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            checkboxes.forEach(cb => cb.checked = !allChecked);
+        }
+
+        function printSelectedHistory() {
+            const checkboxes = document.querySelectorAll('.history-checkbox:checked');
+            if (checkboxes.length === 0) {
+                alert("Please select at least one history item to print.");
+                return;
+            }
+            
+            let printContent = `
+                <div style="font-family: sans-serif; padding: 20px; max-width: 800px; margin: 0 auto;">
+                    <h2 style="color: #4f46e5; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">📚 LingoLearn History Archive</h2>
+            `;
+            
+            checkboxes.forEach(cb => {
+                const recordDiv = cb.closest('.history-record-item');
+                const clone = recordDiv.cloneNode(true);
+                // Remove the checkbox and delete button container
+                const actionsCol = clone.querySelector('.history-actions-col');
+                if (actionsCol) actionsCol.remove();
+                
+                printContent += `<div style="margin-bottom: 20px; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px;">`;
+                printContent += clone.innerHTML;
+                printContent += `</div>`;
+            });
+            
+            printContent += `</div>`;
+            
+            const printWindow = window.open('', '_blank', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Print History</title>');
+            printWindow.document.write('<style>body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }</style>');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write(printContent);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            
+            // Wait for resources to load before printing
+            setTimeout(() => {
+                printWindow.focus();
+                printWindow.print();
+                printWindow.close();
+            }, 500);
+        }
+
         async function openHistoryModal() {
             document.getElementById('history-modal').style.display = 'flex';
             const container = document.getElementById('history-content');
@@ -1194,12 +1251,17 @@
                         }
                         
                         return `
-                            <div style="border-bottom: 1px solid #e2e8f0; padding:12px 0;">
-                                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                                    <span style="color:var(--text-light); font-size:0.8rem;">${date}</span>
+                            <div class="history-record-item" style="border-bottom: 1px solid #e2e8f0; padding:12px 0; display:flex; gap: 15px;">
+                                <div class="history-actions-col" style="display:flex; flex-direction:column; align-items:center; gap: 15px; padding-top: 5px;">
+                                    <input type="checkbox" class="history-checkbox" style="width: 18px; height: 18px; cursor: pointer;">
                                     <button onclick="deleteHistory('${record.id}')" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer;" title="Remove">🗑️</button>
                                 </div>
-                                <div>${contentHtml}</div>
+                                <div style="flex-grow: 1;">
+                                    <div style="margin-bottom:5px;">
+                                        <span style="color:var(--text-light); font-size:0.8rem;">${date}</span>
+                                    </div>
+                                    <div>${contentHtml}</div>
+                                </div>
                             </div>
                         `;
                     }).join('');
