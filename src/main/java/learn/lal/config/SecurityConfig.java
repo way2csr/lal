@@ -29,18 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/login.html", "/css/**", "/js/**", "/images/**").permitAll()
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/login.html")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/learn.html", true)
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutSuccessUrl("/login.html?logout")
-                .permitAll()
+                .anyRequest().permitAll()
             )
             .csrf(csrf -> csrf.disable()); // Disabled so frontend JS shutdown button works without needing CSRF tokens
 
