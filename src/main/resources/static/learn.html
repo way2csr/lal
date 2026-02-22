@@ -1261,7 +1261,10 @@
                             }
                         } else if (record.actionType === 'STORY') {
                              contentHtml = `<strong>Prompt:</strong> Level ${record.content.level}<br>
-                             <div style="background:#f1f5f9; padding:8px; border-radius:6px; margin-top:5px; font-size:0.9rem;">${record.content.story}</div>`;
+                             <div style="background:#f1f5f9; padding:8px; border-radius:6px; margin-top:5px; font-size:0.9rem;">
+                                ${record.content.headline ? `<strong style="display:block;margin-bottom:6px;color:var(--primary)">[${record.content.headline}]</strong>` : ''}
+                                ${record.content.story}
+                             </div>`;
                         } else {
                              contentHtml = `<pre style="font-size:0.8rem">${JSON.stringify(record.content, null, 2)}</pre>`;
                         }
@@ -1450,7 +1453,7 @@
 
             const prompt = `Write a very small, realistic story with a good meaning and a moral. 
             The story should be at Level ${level}: ${levelDescriptions[level]}
-            Output ONLY the story text.`;
+            Output ONLY valid JSON with two string fields: "headline" (a catchy title for the story) and "story" (the story text). DO NOT include markdown formatting or backticks.`;
 
             let endpoint = '/ai/generate';
             if (teacherModel === 'gemini') endpoint = '/ai/gemini';
@@ -1460,13 +1463,23 @@
             try {
                 const response = await fetch(`${endpoint}?message=${encodeURIComponent(prompt)}`);
                 const data = await response.json();
-                const story = data.generation || "";
+                const generation = data.generation || "";
                 
-                if (story) {
-                    inputField.value = story.trim();
+                let storyObj = null;
+                try {
+                    let rawJson = generation.replace(/```json/g, '').replace(/```/g, '').trim();
+                    storyObj = JSON.parse(rawJson);
+                } catch(e) {
+                    storyObj = { headline: "Story", story: generation };
+                }
+                
+                if (storyObj && storyObj.story) {
+                    const headline = storyObj.headline || "Story";
+                    const formattedStory = `[${headline}]\n\n${storyObj.story.trim()}`;
+                    inputField.value = formattedStory;
                     autoResize(inputField);
                     resultsDiv.innerHTML = `<div class="system-message">✨ Level ${level} story generated! Clicking 🚀 to translate...</div>`;
-                    saveHistory('STORY', { level: level, story: story.trim() });
+                    saveHistory('STORY', { level: level, headline: headline, story: storyObj.story.trim() });
                     setTimeout(() => handleTranslate(id), 1200);
                 } else {
                     const errMsg = data.error || "Failed to generate story. Please check your API keys.";
