@@ -1017,6 +1017,15 @@
                     <label><input type="checkbox" value="hi" checked> HI</label>
                     <label><input type="checkbox" value="te" checked> TE</label>
                 </div>
+
+                <span style="margin-left: 10px;">TTS Speed:</span>
+                <select id="tts-speed-select">
+                    <option value="0.5">Slow (0.5x)</option>
+                    <option value="0.75">Slower (0.75x)</option>
+                    <option value="1" selected>Normal (1x)</option>
+                    <option value="1.25">Fast (1.25x)</option>
+                    <option value="1.5">Very Fast (1.5x)</option>
+                </select>
             </div>
         </header>
 
@@ -2085,6 +2094,12 @@
 
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = lang;
+            
+            const speedSelect = document.getElementById('tts-speed-select');
+            if (speedSelect) {
+                utterance.rate = parseFloat(speedSelect.value) || 1.0;
+            }
+
             currentUtterance = utterance;
 
             if (btn) {
