@@ -1,6 +1,9 @@
 spring:
   main:
     allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      uri: mongodb+srv://way2csr_db_user:Ma%409701425145%23%40@clusterlal.txjdw5x.mongodb.net/LingoLearn?retryWrites=true&w=majority&appName=ClusterLAL
   config:
     import: optional:file:./src/main/resources/application-local.yaml
   application:

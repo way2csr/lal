@@ -939,6 +939,7 @@
             <div id="user-badge" style="background: var(--primary-light); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; border: 1px solid #c7d2fe; display: none;">
                 👤 <span id="username-display">User</span>
             </div>
+            <button class="btn-add" style="width: auto; padding: 0 15px; border-radius: 20px; background: #8b5cf6;" onclick="openHistoryModal()">🕒 History</button>
             <button id="logout-btn" class="btn-add btn-remove" style="width: auto; padding: 0 15px; border-radius: 20px; box-shadow: var(--shadow);" title="Sign Out" onclick="logoutUser(this)">🚪 Logout</button>
         </div>
         <header>
@@ -1052,6 +1053,64 @@
                 console.error("Could not fetch user:", err);
             }
         }
+
+        async function saveHistory(actionType, content) {
+            try {
+                await fetch('/api/history', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ actionType, content })
+                });
+            } catch (err) {
+                console.error("Failed to save history", err);
+            }
+        }
+
+        async function openHistoryModal() {
+            document.getElementById('history-modal').style.display = 'flex';
+            const container = document.getElementById('history-content');
+            container.innerHTML = 'Loading... <div class="loader"></div>';
+            try {
+                const response = await fetch('/api/history');
+                const history = await response.json();
+                if (history.length === 0) {
+                    container.innerHTML = '<p style="color:var(--text-light)">No history found yet. Try translating something!</p>';
+                    return;
+                }
+                
+                container.innerHTML = history.map(record => {
+                    const date = new Date(record.timestamp).toLocaleString();
+                    let contentHtml = '';
+                    if (record.actionType === 'TRANSLATE' || record.actionType === 'BETTER_WAY') {
+                        const c = record.content;
+                        contentHtml = `<strong>Original:</strong> ${c.original || ''}<br>`;
+                        if (c.translations) {
+                            contentHtml += `<div style="background:#f1f5f9; padding:8px; border-radius:6px; margin-top:5px; font-size:0.9rem;">
+                                ${Object.entries(c.translations).map(([k,v]) => `<b>${k.toUpperCase()}:</b> ${v}`).join('<br>')}
+                            </div>`;
+                        } else if (c.refined) {
+                            contentHtml += `<div style="background:#f1f5f9; padding:8px; border-radius:6px; margin-top:5px; font-size:0.9rem;"><b>Refined:</b> ${c.refined}</div>`;
+                        }
+                    } else if (record.actionType === 'STORY') {
+                         contentHtml = `<strong>Prompt:</strong> Level ${record.content.level}<br>
+                         <div style="background:#f1f5f9; padding:8px; border-radius:6px; margin-top:5px; font-size:0.9rem;">${record.content.story}</div>`;
+                    }
+                    
+                    return `
+                        <div style="border-bottom: 1px solid #e2e8f0; padding:12px 0;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                                <span style="font-weight:600; color:var(--primary); font-size:0.85rem; text-transform:uppercase;">${record.actionType}</span>
+                                <span style="color:var(--text-light); font-size:0.8rem;">${date}</span>
+                            </div>
+                            <div>${contentHtml}</div>
+                        </div>
+                    `;
+                }).join('');
+            } catch(e) {
+                container.innerHTML = `<span style="color:red">Failed to load history</span>`;
+            }
+        }
+        function closeHistoryModal() { document.getElementById('history-modal').style.display = 'none'; }
 
         function init() {
             fetchUser();
@@ -1209,6 +1268,7 @@
                     inputField.value = story.trim();
                     autoResize(inputField);
                     resultsDiv.innerHTML = `<div class="system-message">✨ Level ${level} story generated! Clicking 🚀 to translate...</div>`;
+                    saveHistory('STORY', { level: level, story: story.trim() });
                     setTimeout(() => handleTranslate(id), 1200);
                 } else {
                     const errMsg = data.error || "Failed to generate story. Please check your API keys.";
@@ -1329,6 +1389,7 @@
                     `;
                     renderTranslations(resultsDiv, translations, id);
                     appendRowActionBar(id, result.perfected);
+                    saveHistory('BETTER_WAY', { original: text, refined: result.perfected, translations: translations });
                 } catch (err) {
                     resultsDiv.innerHTML = `<div style="color:red">Error: ${err.message}</div>`;
                 }
@@ -1348,6 +1409,7 @@
                     
                     renderTranslations(resultsDiv, translations, id);
                     appendRowActionBar(id, text);
+                    saveHistory('TRANSLATE', { original: text, translations: translations });
                     
                 } catch (err) {
                     resultsDiv.innerHTML = `<div style="color:red">Error: ${err.message}</div>`;
@@ -1394,6 +1456,7 @@
                 renderTranslations(resultsDiv, translations, id);
                 // Vocab must be clicked explicitly — never auto-generate
                 appendRowActionBar(id, safeText, false);
+                saveHistory('TRANSLATE', { original: text, translations: translations });
             } catch (err) {
                 resultsDiv.innerHTML = `<div style="color:red">Error: ${err.message}. Please try again.</div>`;
             }
