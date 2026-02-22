@@ -930,16 +930,48 @@
             #input-container { margin: 0 !important; padding: 0 !important; }
             * { -webkit-print-color-adjust: economy !important; print-color-adjust: economy !important; }
         }
+    <style>
+        /* History Modal Tabs */
+        .history-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .history-tab {
+            background: none;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .history-tab.active {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        .history-content-pane {
+            display: none;
+        }
+        .history-content-pane.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <!-- Top Left: History Button -->
+        <button class="btn-add" style="position: absolute; top: 10px; left: 10px; width: auto; padding: 0 15px; border-radius: 20px; background: #8b5cf6; z-index: 9999;" onclick="openHistoryModal()">🕒 History</button>
+        
+        <!-- Top Right: User & Logout -->
         <div style="position: absolute; top: 10px; right: 10px; display: flex; align-items: center; gap: 10px; z-index: 9999;">
             <div id="user-badge" style="background: var(--primary-light); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; border: 1px solid #c7d2fe; display: none;">
                 👤 <span id="username-display">User</span>
             </div>
-            <button class="btn-add" style="width: auto; padding: 0 15px; border-radius: 20px; background: #8b5cf6;" onclick="openHistoryModal()">🕒 History</button>
             <button id="logout-btn" class="btn-add btn-remove" style="width: auto; padding: 0 15px; border-radius: 20px; box-shadow: var(--shadow);" title="Sign Out" onclick="logoutUser(this)">🚪 Logout</button>
         </div>
         <header>
@@ -1030,6 +1062,29 @@
         </div>
     </div>
 
+    <!-- History Modal -->
+    <div id="history-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:10000; align-items:center; justify-content:center;">
+        <div style="background:white; width:90%; max-width:800px; max-height:85vh; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);">
+            <div style="padding:20px; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+                <h2 style="margin:0; color:var(--text-dark);">📚 Your History</h2>
+                <button onclick="closeHistoryModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text-light);">&times;</button>
+            </div>
+            
+            <div style="padding: 20px 20px 0 20px;">
+                <div class="history-tabs">
+                    <button class="history-tab active" onclick="switchHistoryTab('tab-translations', this)">Translations</button>
+                    <button class="history-tab" onclick="switchHistoryTab('tab-teacher', this)">AI Teacher</button>
+                    <button class="history-tab" onclick="switchHistoryTab('tab-stories', this)">Stories</button>
+                    <button class="history-tab" onclick="switchHistoryTab('tab-other', this)">Other</button>
+                </div>
+            </div>
+
+            <div id="history-content" style="padding:0 20px 20px 20px; overflow-y:auto; flex-grow:1;">
+                Loading... <div class="loader"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const state = {
             rowVocabulary: new Map(), // rowId -> Array of vocab objects
@@ -1066,6 +1121,13 @@
             }
         }
 
+        function switchHistoryTab(tabId, btn) {
+            document.querySelectorAll('.history-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.history-content-pane').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
         async function openHistoryModal() {
             document.getElementById('history-modal').style.display = 'flex';
             const container = document.getElementById('history-content');
@@ -1073,39 +1135,78 @@
             try {
                 const response = await fetch('/api/history');
                 const history = await response.json();
+                
                 if (history.length === 0) {
-                    container.innerHTML = '<p style="color:var(--text-light)">No history found yet. Try translating something!</p>';
+                    container.innerHTML = '<p style="color:var(--text-light)">No history found yet. Try exploring the app!</p>';
                     return;
                 }
                 
-                container.innerHTML = history.map(record => {
-                    const date = new Date(record.timestamp).toLocaleString();
-                    let contentHtml = '';
-                    if (record.actionType === 'TRANSLATE' || record.actionType === 'BETTER_WAY') {
-                        const c = record.content;
-                        contentHtml = `<strong>Original:</strong> ${c.original || ''}<br>`;
-                        if (c.translations) {
-                            contentHtml += `<div style="background:#f1f5f9; padding:8px; border-radius:6px; margin-top:5px; font-size:0.9rem;">
-                                ${Object.entries(c.translations).map(([k,v]) => `<b>${k.toUpperCase()}:</b> ${v}`).join('<br>')}
-                            </div>`;
-                        } else if (c.refined) {
-                            contentHtml += `<div style="background:#f1f5f9; padding:8px; border-radius:6px; margin-top:5px; font-size:0.9rem;"><b>Refined:</b> ${c.refined}</div>`;
+                // Group history by category
+                const groups = {
+                    TRANSLATE: [],
+                    BETTER_WAY: [],
+                    STORY: [],
+                    OTHER: []
+                };
+
+                history.forEach(record => {
+                    if (record.actionType === 'TRANSLATE') groups.TRANSLATE.push(record);
+                    else if (record.actionType === 'BETTER_WAY') groups.BETTER_WAY.push(record);
+                    else if (record.actionType === 'STORY') groups.STORY.push(record);
+                    else groups.OTHER.push(record);
+                });
+
+                const renderRecords = (records, emptyMsg) => {
+                    if (records.length === 0) return `<p style="color:var(--text-light)">${emptyMsg}</p>`;
+                    return records.map(record => {
+                        const date = new Date(record.timestamp).toLocaleString();
+                        let contentHtml = '';
+                        if (record.actionType === 'TRANSLATE' || record.actionType === 'BETTER_WAY') {
+                            const c = record.content;
+                            contentHtml = `<strong>Original:</strong> ${c.original || ''}<br>`;
+                            if (c.translations) {
+                                contentHtml += `<div style="background:#f1f5f9; padding:8px; border-radius:6px; margin-top:5px; font-size:0.9rem;">
+                                    ${Object.entries(c.translations).map(([k,v]) => `<b>${k.toUpperCase()}:</b> ${v}`).join('<br>')}
+                                </div>`;
+                            } else if (c.refined) {
+                                contentHtml += `<div style="background:#f1f5f9; padding:8px; border-radius:6px; margin-top:5px; font-size:0.9rem;"><b>Refined:</b> ${c.refined}</div>`;
+                            }
+                        } else if (record.actionType === 'STORY') {
+                             contentHtml = `<strong>Prompt:</strong> Level ${record.content.level}<br>
+                             <div style="background:#f1f5f9; padding:8px; border-radius:6px; margin-top:5px; font-size:0.9rem;">${record.content.story}</div>`;
+                        } else {
+                             contentHtml = `<pre style="font-size:0.8rem">${JSON.stringify(record.content, null, 2)}</pre>`;
                         }
-                    } else if (record.actionType === 'STORY') {
-                         contentHtml = `<strong>Prompt:</strong> Level ${record.content.level}<br>
-                         <div style="background:#f1f5f9; padding:8px; border-radius:6px; margin-top:5px; font-size:0.9rem;">${record.content.story}</div>`;
-                    }
-                    
-                    return `
-                        <div style="border-bottom: 1px solid #e2e8f0; padding:12px 0;">
-                            <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                                <span style="font-weight:600; color:var(--primary); font-size:0.85rem; text-transform:uppercase;">${record.actionType}</span>
-                                <span style="color:var(--text-light); font-size:0.8rem;">${date}</span>
+                        
+                        return `
+                            <div style="border-bottom: 1px solid #e2e8f0; padding:12px 0;">
+                                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                                    <span style="color:var(--text-light); font-size:0.8rem;">${date}</span>
+                                </div>
+                                <div>${contentHtml}</div>
                             </div>
-                            <div>${contentHtml}</div>
-                        </div>
-                    `;
-                }).join('');
+                        `;
+                    }).join('');
+                };
+
+                container.innerHTML = `
+                    <div id="tab-translations" class="history-content-pane active">
+                        ${renderRecords(groups.TRANSLATE, 'No translation history.')}
+                    </div>
+                    <div id="tab-teacher" class="history-content-pane">
+                        ${renderRecords(groups.BETTER_WAY, 'No AI Teacher history.')}
+                    </div>
+                    <div id="tab-stories" class="history-content-pane">
+                        ${renderRecords(groups.STORY, 'No story generation history.')}
+                    </div>
+                    <div id="tab-other" class="history-content-pane">
+                        ${renderRecords(groups.OTHER, 'No other history items.')}
+                    </div>
+                `;
+                
+                // Reset tabs state to first tab
+                document.querySelectorAll('.history-tab')[0].click();
+                
             } catch(e) {
                 container.innerHTML = `<span style="color:red">Failed to load history</span>`;
             }
