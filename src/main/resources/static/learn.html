@@ -1574,7 +1574,17 @@
                 5: "literary/expert level, sophisticated themes, rich vocabulary, and nuanced storytelling."
             };
 
+            const randomTopics = [
+                "an unexpected friendship", "a magical discovery", "overcoming a small fear", 
+                "a day in the life of a clever animal", "a mystery solved through teamwork",
+                "a space adventure", "learning a new skill", "helping a neighbor",
+                "a brave little explorer", "finding something lost", "a funny misunderstanding",
+                "a secret garden", "a rainy day surprise", "a journey across the mountains"
+            ];
+            const randomTopic = randomTopics[Math.floor(Math.random() * randomTopics.length)];
+
             const prompt = `Write a very small, realistic story with a good meaning and a moral. 
+            The story must be about: ${randomTopic}.
             The story should be at Level ${level}: ${levelDescriptions[level]}
             Output ONLY valid JSON with two string fields: "headline" (a catchy title for the story) and "story" (the story text). DO NOT include markdown formatting or backticks.`;
 
