@@ -120,8 +120,15 @@
 
         .input-row {
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            gap: 12px;
             margin-bottom: 1rem;
+        }
+
+        .input-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
         }
 
         input[type="text"], textarea {
@@ -1363,13 +1370,16 @@
                 <div class="input-row">
                     <textarea placeholder="Enter text or upload image..." 
                               oninput="autoResize(this)"
-                              onkeydown="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); handleTranslate('${id}'); }"></textarea>
+                              onkeydown="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); handleTranslate('${id}'); }"
+                              style="width: 100%; min-height: 80px;"></textarea>
                     
-                    <button class="btn-add" title="Translate" onclick="handleTranslate('${id}')">🚀</button>
-                    <button class="btn-add" style="background:#f59e0b" title="English Teacher (Better Way)" onclick="handleBetterWay('${id}')">✨</button>
-                    <button class="btn-add" style="background:#3b82f6" title="Scan Image (OCR)" onclick="triggerOcr('${id}')">📷</button>
-                    <button class="btn-add" style="background:#10b981" title="Add Row" onclick="addRow()">+</button>
-                    <button class="btn-add btn-remove" title="Remove Row" onclick="removeRow('${id}')">−</button>
+                    <div class="input-actions" style="display: flex; justify-content: flex-end; gap: 10px;">
+                        <button class="btn-add" title="Translate" onclick="handleTranslate('${id}')">🚀</button>
+                        <button class="btn-add" style="background:#f59e0b" title="English Teacher (Better Way)" onclick="handleBetterWay('${id}')">✨</button>
+                        <button class="btn-add" style="background:#3b82f6" title="Scan Image (OCR)" onclick="triggerOcr('${id}')">📷</button>
+                        <button class="btn-add" style="background:#10b981" title="Add Row" onclick="addRow()">+</button>
+                        <button class="btn-add btn-remove" title="Remove Row" onclick="removeRow('${id}')">−</button>
+                    </div>
                     <input type="file" id="file-${id}" style="display:none" accept="image/*" onchange="handleOcr(${id}, this)">
                 </div>
                 <div id="action-bar-container-${id}"></div>
