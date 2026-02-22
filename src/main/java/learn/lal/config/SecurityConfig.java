@@ -16,11 +16,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${app.users.nirvana.password}")
-    private String nirvanaPassword;
+    @Value("${app.users.nirvaan.password}")
+    private String nirvaanPassword;
 
-    @Value("${app.users.devansh.password}")
-    private String devanshPassword;
+    @Value("${app.users.devaansh.password}")
+    private String devaanshPassword;
 
     @Value("${app.users.admin.password}")
     private String adminPassword;
@@ -51,13 +51,13 @@ public class SecurityConfig {
     public InMemoryUserDetailsManager userDetailsService() {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-        UserDetails nirvana = User.withUsername("nirvana")
-            .password(encoder.encode(nirvanaPassword))
+        UserDetails nirvaan = User.withUsername("nirvaan")
+            .password(encoder.encode(nirvaanPassword))
             .roles("USER")
             .build();
 
-        UserDetails devansh = User.withUsername("devansh")
-            .password(encoder.encode(devanshPassword))
+        UserDetails devaansh = User.withUsername("devaansh")
+            .password(encoder.encode(devaanshPassword))
             .roles("USER")
             .build();
 
@@ -66,6 +66,6 @@ public class SecurityConfig {
             .roles("ADMIN")
             .build();
 
-        return new InMemoryUserDetailsManager(nirvana, devansh, admin);
+        return new InMemoryUserDetailsManager(nirvaan, devaansh, admin);
     }
 }
