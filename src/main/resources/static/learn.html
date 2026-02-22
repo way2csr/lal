@@ -932,6 +932,8 @@
     </style>
 </head>
 <body>
+    <button id="shutdown-btn" class="btn-add btn-remove" style="position: fixed; top: 20px; right: 20px; z-index: 9999; width: auto; padding: 0 15px; border-radius: 20px; box-shadow: var(--shadow);" title="Shutdown Server" onclick="shutdownServer(this)">🛑 Shutdown</button>
+
 
     <div class="container">
         <header>
@@ -970,8 +972,6 @@
                     <label><input type="checkbox" value="hi" checked> HI</label>
                     <label><input type="checkbox" value="te" checked> TE</label>
                 </div>
-                
-                <button class="btn-add btn-remove" style="margin-left: 15px; width: auto; padding: 0 15px; border-radius: 20px;" title="Shutdown Server" onclick="shutdownServer(this)">🛑 Shutdown</button>
             </div>
         </header>
 

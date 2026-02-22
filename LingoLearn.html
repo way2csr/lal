@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launch LingoLearn</title>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #f8fafc;
+            margin: 0;
+            color: #1e293b;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 500px;
+        }
+        h1 { color: #6366f1; margin-bottom: 0.5rem; }
+        .offline-box {
+            display: none;
+            margin-top: 1.5rem;
+        }
+        .code-box {
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #ef4444;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .loading { font-size: 3rem; animation: spin 2s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="checking">
+        <div class="loading">⏳</div>
+        <h1>Connecting to LingoLearn...</h1>
+        <p style="color: #64748b;">Checking if the local server is running.</p>
+    </div>
+
+    <div class="container offline-box" id="offline">
+        <h1 style="color: #ef4444; font-size: 3.5rem; margin:0;">🛑</h1>
+        <h2>Server is Offline</h2>
+        <p>Browsers cannot start local scripts automatically for security reasons. To launch LingoLearn silently in the background, please double-click one of the following files in this folder:</p>
+        
+        <div style="text-align: left; margin-top: 2rem;">
+            <strong>If you are on Windows:</strong>
+            <div class="code-box">🚀 Start-LingoLearn.vbs</div>
+            
+            <br>
+            <strong>If you are on Mac/Linux:</strong>
+            <div class="code-box">🚀 Start-LingoLearn.command</div>
+        </div>
+        
+        <p style="margin-top: 2rem; color: #64748b; font-size: 0.9rem;">Once the server starts, this page will automatically redirect.</p>
+    </div>
+
+    <script>
+        // Check if server is running every 3 seconds
+        async function checkServer() {
+            try {
+                // If the app is up, this request will succeed
+                const response = await fetch('http://localhost:8080/learn.html');
+                if (response.ok) {
+                    window.location.href = 'http://localhost:8080/learn.html';
+                }
+            } catch (err) {
+                // Server is down
+                document.getElementById('checking').style.display = 'none';
+                document.getElementById('offline').style.display = 'block';
+                
+                // Keep checking
+                setTimeout(checkServer, 3000);
+            }
+        }
+
+        // Start checking 
+        setTimeout(checkServer, 1000);
+    </script>
+</body>
+</html>
