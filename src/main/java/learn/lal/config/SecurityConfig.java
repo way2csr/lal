@@ -26,16 +26,21 @@ public class SecurityConfig {
     private String adminPassword;
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/login.html", "/css/**", "/js/**", "/images/**", "/error").permitAll()
+                .requestMatchers("/login.html", "/css/**", "/js/**", "/images/**", "/error", "/api/guest/login").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/login.html")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/learn.html", true)
                 .permitAll()
             )
             .logout(logout -> logout
@@ -46,27 +51,5 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()); // Disabled so frontend JS shutdown button works without needing CSRF tokens
 
         return http.build();
-    }
-
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-
-        UserDetails nirvaan = User.withUsername("nirvaan")
-            .password(encoder.encode(nirvaanPassword))
-            .roles("USER")
-            .build();
-
-        UserDetails devaansh = User.withUsername("devaansh")
-            .password(encoder.encode(devaanshPassword))
-            .roles("USER")
-            .build();
-
-        UserDetails admin = User.withUsername("admin")
-            .password(encoder.encode(adminPassword))
-            .roles("ADMIN")
-            .build();
-
-        return new InMemoryUserDetailsManager(nirvaan, devaansh, admin);
     }
 }
