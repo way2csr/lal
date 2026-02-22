@@ -23,6 +23,13 @@ spring:
       api-key: ${SARVAM_API_KEY:YOUR_SARVAM_API_KEY}
 
 app:
+  users:
+    nirvana:
+      password: "123"
+    devansh:
+      password: "123"
+    admin:
+      password: "admin"
   ocr:
     tesseract-path: ${TESSERACT_PATH:/usr/bin/tesseract}
     languages: eng+hin+tel
