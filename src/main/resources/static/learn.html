@@ -426,6 +426,39 @@
             color: white;
             border-color: var(--primary);
         }
+
+        /* Story Generator Styles */
+        .story-btn-wrapper { position: relative; display: flex; align-items: center; }
+        .story-level-selector {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            padding: 10px;
+            z-index: 1000;
+            border: 1px solid #e2e8f0;
+            flex-direction: column;
+            gap: 4px;
+            width: 180px;
+            margin-top: 8px;
+        }
+        .story-level-selector.show { display: flex; }
+        .story-level-btn {
+            text-align: left;
+            padding: 8px 12px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            transition: all 0.2s;
+        }
+        .story-level-btn:hover { background: var(--primary-light); color: var(--primary); }
+        .story-level-btn span { font-size: 0.75rem; color: var(--text-light); display: block; }
         .quiz-question {
             margin-bottom: 20px;
             padding: 10px;
@@ -1023,11 +1056,21 @@
                     <textarea placeholder="Enter text or upload image..." 
                               oninput="autoResize(this)"
                               onkeydown="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); handleTranslate(${id}); }"></textarea>
-                    <button class="btn-add" title="Translate" onclick="handleTranslate(${id})">🚀</button>
-                    <button class="btn-add" style="background:#f59e0b" title="English Teacher (Better Way)" onclick="handleBetterWay(${id})">✨</button>
-                    <button class="btn-add" style="background:#3b82f6" title="Scan Image (OCR)" onclick="triggerOcr(${id})">📷</button>
+                    <div class="story-btn-wrapper">
+                        <button class="btn-add" style="background:#8b5cf6" title="Generate AI Story" onclick="toggleStoryLevels(this)">📖</button>
+                        <div class="story-level-selector">
+                            <button class="story-level-btn" onclick="generateAiStory('${id}', 1)">Level 1 <span>Simple sentences</span></button>
+                            <button class="story-level-btn" onclick="generateAiStory('${id}', 2)">Level 2 <span>Primary level</span></button>
+                            <button class="story-level-btn" onclick="generateAiStory('${id}', 3)">Level 3 <span>Intermediate</span></button>
+                            <button class="story-level-btn" onclick="generateAiStory('${id}', 4)">Level 4 <span>Advanced English</span></button>
+                            <button class="story-level-btn" onclick="generateAiStory('${id}', 5)">Level 5 <span>Expert/Literary</span></button>
+                        </div>
+                    </div>
+                    <button class="btn-add" title="Translate" onclick="handleTranslate('${id}')">🚀</button>
+                    <button class="btn-add" style="background:#f59e0b" title="English Teacher (Better Way)" onclick="handleBetterWay('${id}')">✨</button>
+                    <button class="btn-add" style="background:#3b82f6" title="Scan Image (OCR)" onclick="triggerOcr('${id}')">📷</button>
                     <button class="btn-add" style="background:#10b981" title="Add Row" onclick="addRow()">+</button>
-                    <button class="btn-add btn-remove" title="Remove Row" onclick="removeRow(${id})">−</button>
+                    <button class="btn-add btn-remove" title="Remove Row" onclick="removeRow('${id}')">−</button>
                     <input type="file" id="file-${id}" style="display:none" accept="image/*" onchange="handleOcr(${id}, this)">
                 </div>
                 <div id="action-bar-container-${id}"></div>
@@ -1053,6 +1096,65 @@
 
         function triggerOcr(id) {
             document.getElementById(`file-${id}`).click();
+        }
+
+        function toggleStoryLevels(btn) {
+            const selector = btn.nextElementSibling;
+            selector.classList.toggle('show');
+            // Close if click outside
+            const closeOnClickOutside = (e) => {
+                if (!btn.contains(e.target) && !selector.contains(e.target)) {
+                    selector.classList.remove('show');
+                    document.removeEventListener('click', closeOnClickOutside);
+                }
+            };
+            setTimeout(() => document.addEventListener('click', closeOnClickOutside), 10);
+        }
+
+        async function generateAiStory(id, level) {
+            const resultsDiv = document.getElementById(`results-${id}`);
+            const inputField = document.getElementById(`wrapper-${id}`).querySelector('textarea');
+            const teacherModel = document.getElementById('teacher-provider-select').value;
+            
+            // Hide selector
+            const selector = document.querySelector(`#wrapper-${id} .story-level-selector`);
+            if (selector) selector.classList.remove('show');
+
+            resultsDiv.innerHTML = `<div class="system-message">Writing a Level ${level} Story... <div class="loader"></div></div>`;
+            
+            const levelDescriptions = {
+                1: "preschool level, extremely simple sentences (max 4), basic vocabulary.",
+                2: "primary school level, simple narrative, 5-6 sentences.",
+                3: "middle school level, intermediate paragraph, expressive vocabulary.",
+                4: "high school level, advanced vocabulary, complex sentence structures.",
+                5: "literary/expert level, sophisticated themes, rich vocabulary, and nuanced storytelling."
+            };
+
+            const prompt = `Write a very small, realistic story with a good meaning and a moral. 
+            The story should be at Level ${level}: ${levelDescriptions[level]}
+            Output ONLY the story text.`;
+
+            let endpoint = '/ai/generate';
+            if (teacherModel === 'gemini') endpoint = '/ai/gemini';
+            if (teacherModel === 'sarvam') endpoint = '/ai/sarvam';
+            if (teacherModel === 'huggingface') endpoint = '/ai/hf';
+
+            try {
+                const response = await fetch(`${endpoint}?message=${encodeURIComponent(prompt)}`);
+                const data = await response.json();
+                const story = data.generation || "";
+                
+                if (story) {
+                    inputField.value = story.trim();
+                    autoResize(inputField);
+                    resultsDiv.innerHTML = `<div class="system-message">✨ Level ${level} story generated! Clicking 🚀 to translate...</div>`;
+                    setTimeout(() => handleTranslate(id), 1200);
+                } else {
+                    resultsDiv.innerHTML = `<div style="color:red">Failed to generate story.</div>`;
+                }
+            } catch (err) {
+                resultsDiv.innerHTML = `<div style="color:red">Error: ${err.message}</div>`;
+            }
         }
 
         async function handleOcr(id, input) {
