@@ -935,7 +935,12 @@
 <body>
 
     <div class="container">
-        <button class="btn-add btn-remove" style="position: absolute; top: 10px; right: 10px; width: auto; padding: 0 15px; border-radius: 20px; box-shadow: var(--shadow);" title="Shutdown Server" onclick="shutdownServer(this)">🛑 Shutdown</button>
+        <div style="position: absolute; top: 10px; right: 10px; display: flex; align-items: center; gap: 10px; z-index: 9999;">
+            <div id="user-badge" style="background: var(--primary-light); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; border: 1px solid #c7d2fe; display: none;">
+                👤 <span id="username-display">User</span>
+            </div>
+            <button id="shutdown-btn" class="btn-add btn-remove" style="width: auto; padding: 0 15px; border-radius: 20px; box-shadow: var(--shadow);" title="Shutdown Server" onclick="shutdownServer(this)">🛑 Shutdown</button>
+        </div>
         <header>
             <h1>✨ LingoLearn AI</h1>
             <div class="top-controls">
@@ -1033,7 +1038,23 @@
             quizAbortControllers: new Map()   // rowId -> AbortController
         };
 
+        async function fetchUser() {
+            try {
+                const response = await fetch('/api/user/me');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.username) {
+                        document.getElementById('username-display').textContent = data.username;
+                        document.getElementById('user-badge').style.display = 'block';
+                    }
+                }
+            } catch (err) {
+                console.error("Could not fetch user:", err);
+            }
+        }
+
         function init() {
+            fetchUser();
             addRow();
 
             // Re-enable all vocab/quiz buttons when model changes
