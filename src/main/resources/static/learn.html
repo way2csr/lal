@@ -1150,7 +1150,8 @@
                     resultsDiv.innerHTML = `<div class="system-message">✨ Level ${level} story generated! Clicking 🚀 to translate...</div>`;
                     setTimeout(() => handleTranslate(id), 1200);
                 } else {
-                    resultsDiv.innerHTML = `<div style="color:red">Failed to generate story.</div>`;
+                    const errMsg = data.error || "Failed to generate story. Please check your API keys.";
+                    resultsDiv.innerHTML = `<div style="color:red">Error: ${errMsg}</div>`;
                 }
             } catch (err) {
                 resultsDiv.innerHTML = `<div style="color:red">Error: ${err.message}</div>`;
@@ -1503,8 +1504,9 @@
                 const quiz = JSON.parse(rawJson);
                 callback(quiz);
             } catch (e) {
+                const errMsg = data.error || "Invalid format from AI or backend failure.";
                 console.error("Quiz Parse Error", e, rawJson);
-                throw new Error("Invalid format from AI");
+                throw new Error(errMsg);
             }
         }
 

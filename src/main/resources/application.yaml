@@ -1,13 +1,15 @@
 spring:
   main:
     allow-bean-definition-overriding: true
+  config:
+    import: optional:file:./src/main/resources/application-local.yaml
   application:
     name: lal
   ai:
     openai:
       api-key: ${OPENAI_API_KEY:YOUR_OPENAI_API_KEY}
       chat:
-        enabled: false
+        enabled: true
     huggingface:
       api-key: ${HF_API_KEY:YOUR_HF_API_KEY}
     gemini:
@@ -16,7 +18,7 @@ spring:
         options:
           model: gemini-1.5-flash
     grok:
-      api-key: YOUR_GROK_API_KEY_HERE
+      api-key: ${GROK_API_KEY:YOUR_GROK_API_KEY_HERE}
     sarvam:
       api-key: ${SARVAM_API_KEY:YOUR_SARVAM_API_KEY}
 
