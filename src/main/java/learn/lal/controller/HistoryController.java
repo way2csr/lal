@@ -39,4 +39,12 @@ public class HistoryController {
         }
         return List.of();
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteHistory(@PathVariable String id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && !auth.getPrincipal().equals("anonymousUser")) {
+            historyRepository.deleteByIdAndUsername(id, auth.getName());
+        }
+    }
 }

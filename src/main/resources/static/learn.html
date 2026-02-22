@@ -1121,6 +1121,21 @@
             }
         }
 
+        async function deleteHistory(id) {
+            if (!confirm("Are you sure you want to remove this from your history?")) return;
+            try {
+                const response = await fetch(`/api/history/${id}`, { method: 'DELETE' });
+                if (response.ok) {
+                    await openHistoryModal(); // refresh
+                } else {
+                    alert("Failed to delete history.");
+                }
+            } catch (err) {
+                console.error("Delete failed", err);
+                alert("Failed to delete history.");
+            }
+        }
+
         function switchHistoryTab(tabId, btn) {
             document.querySelectorAll('.history-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.history-content-pane').forEach(p => p.classList.remove('active'));
@@ -1182,6 +1197,7 @@
                             <div style="border-bottom: 1px solid #e2e8f0; padding:12px 0;">
                                 <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
                                     <span style="color:var(--text-light); font-size:0.8rem;">${date}</span>
+                                    <button onclick="deleteHistory('${record.id}')" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer;" title="Remove">🗑️</button>
                                 </div>
                                 <div>${contentHtml}</div>
                             </div>
