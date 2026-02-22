@@ -27,9 +27,9 @@ spring:
 
 app:
   users:
-    nirvana:
+    nirvaan:
       password: "123"
-    devansh:
+    devaansh:
       password: "123"
     admin:
       password: "admin"
