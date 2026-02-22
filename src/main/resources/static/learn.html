@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LingoLearn | AI Powered</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #e0e7ff;
+            --secondary: #ec4899;
+            --bg: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .top-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: var(--white);
+            padding: 8px 14px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        select, .lang-checkbox-group {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            outline: none;
+            cursor: pointer;
+            background: white;
+        }
+
+        .lang-checkbox-group {
+            display: flex;
+            gap: 15px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            align-items: center;
+        }
+
+        .lang-checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .lang-checkbox-group input {
+            cursor: pointer;
+        }
+
+        /* Color Coding for Languages */
+        .color-en { color: #4338ca; } /* Indigo */
+        .color-hi { color: #b91c1c; } /* Red */
+        .color-te { color: #047857; } /* Emerald */
+        .color-fr { color: #c2410c; } /* Orange */
+        .color-es { color: #be185d; } /* Pink */
+
+        /* Input Section */
+        #input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .row-wrapper {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        input[type="text"], textarea {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        textarea {
+            resize: none;
+            min-height: 45px;
+            max-height: 200px;
+            overflow-y: auto;
+            line-height: 1.5;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-add {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .btn-remove {
+            background: #ef4444 !important; /* Red */
+        }
+
+        .btn-add:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        /* Translation Output - Horizontal Line-by-Line (Default Vertical List) */
+        .translation-box {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dotted #e2e8f0;
+            transition: all 0.3s;
+        }
+
+        /* Side-by-Side (Horizontal Grid) */
+        .inner-translation-box.side-by-side {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .inner-translation-box.side-by-side .translation-line {
+            flex: 1;
+            min-width: 0;
+            flex-direction: column;
+            align-items: flex-start;
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .translation-line {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 4px 0;
+        }
+
+        .lang-tag {
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 3px 7px;
+            border-radius: 5px;
+            min-width: 32px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
+        .lang-tag-en { background: #e0e7ff; color: #4338ca; }
+        .lang-tag-hi { background: #fee2e2; color: #b91c1c; }
+        .lang-tag-te { background: #d1fae5; color: #047857; }
+
+        .lang-group {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .sentence {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center; /* Align speaker icon with text */
+        }
+
+        .sentence-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .btn-speak-sentence {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 4px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .btn-speak-sentence:hover {
+            background: var(--primary-light);
+            transform: scale(1.1);
+        }
+
+        /* Word Interaction */
+        .word {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #f1f5f9;
+            border-radius: 6px;
+            cursor: help;
+            transition: all 0.2s;
+            position: relative;
+            font-weight: 500;
+            white-space: nowrap; /* Prevent splitting words */
+        }
+
+        /* Buffer to bridge the gap between word and tooltip */
+        .word::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            right: 0;
+            height: 25px;
+            display: none;
+        }
+
+        .word:hover::after {
+            display: block;
+        }
+
+        .word:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--white);
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+            white-space: nowrap;
+            border: 1px solid #e2e8f0;
+            gap: 10px;
+        }
+
+        .tooltip::before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background: transparent;
+        }
+
+        .word:hover .tooltip {
+            display: flex;
+        }
+
+        .tooltip button {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            font-size: 1.4rem;
+            padding: 8px;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .tooltip button:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* Loading Spinner */
+        .loader {
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Dictionary Table */
+        .dictionary-section {
+            margin-top: 5rem;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .dictionary-section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 16px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            .translation-box { grid-template-columns: 1fr; }
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            display: none;
+        }
+        .quiz-level-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .level-btn {
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .level-btn:hover { background: var(--primary-light); }
+        .level-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .quiz-question {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .quiz-question h4 {
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+        .quiz-choices {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+        .choice-btn {
+            text-align: left;
+            padding: 10px 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .choice-btn:hover:not(.disabled) { background: #f1f5f9; border-color: var(--primary); }
+        .choice-btn.correct { background: #dcfce7; border-color: #22c55e; color: #166534; }
+        .choice-btn.incorrect { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+        .choice-btn.disabled { cursor: default; opacity: 0.8; }
+        .quiz-feedback {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: none;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 1rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .btn-close {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text-light);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .btn-close:hover { background: #fee2e2; color: #ef4444; border-color: #ef4444; }
+
+        /* Styled close (×) span in modal */
+        .close-modal {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            font-size: 1.6rem;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--text-light);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+        .close-modal:hover { background: #fee2e2; color: #ef4444; border-color: #ef4444; }
+
+        .usage-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .usage-item {
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .usage-en {
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .usage-trans {
+            display: block;
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        .usage-label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-right: 6px;
+        }
+
+        .pos-tag {
+            color: #ef4444; /* Red */
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+
+        .usage-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tense-section {
+            margin-top: 2rem;
+            border-top: 2px solid #f1f5f9;
+            padding-top: 1.5rem;
+        }
+
+        .tense-section h4 {
+            font-size: 1.2rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tense-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .tense-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+
+        .tense-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-color: var(--primary);
+        }
+
+        .tense-badge {
+            font-size: 0.6rem;
+            font-weight: 850;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: var(--primary-light);
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .btn-advanced {
+            margin-top: 1rem;
+            background: none;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: fit-content;
+        }
+
+        .btn-advanced:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .advanced-tense-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .tense-group-header {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            grid-column: 1 / -1;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .target-word-highlight {
+            background-color: #ff007f; /* Neon Pink */
+            color: #fff;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-weight: 850;
+            box-shadow: 0 2px 8px rgba(255, 0, 127, 0.4);
+            border: 1px solid #d9006b;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .modal-title-box {
+            background: #f8fafc;
+            padding: 16px 24px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            border-left: 6px solid #2563eb; /* Blue accent */
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .modal-title-text {
+            font-size: 1.5rem;
+            font-weight: 850;
+            color: #1e293b;
+            letter-spacing: -0.02em;
+        }
+
+        .modal-word-title {
+            color: #2563eb; /* Specific Blue */
+            font-weight: 900;
+        }
+
+        .pos-badge {
+            background: #7c3aed; /* Vibrant Violet */
+            color: white;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 850;
+            display: inline-block;
+        }
+
+        .vocab-trigger-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .vocab-trigger-btn:hover:not(:disabled) {
+            opacity: 0.85;
+        }
+
+        .vocab-trigger-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .trans-word {
+            display: inline;
+            border-radius: 3px;
+            padding: 1px 2px;
+            cursor: default;
+            transition: background 0.15s;
+        }
+        .trans-word:hover { background: rgba(99, 102, 241, 0.15); }
+        .trans-word.cross-highlight {
+            background: rgba(251, 191, 36, 0.45);
+            border-radius: 3px;
+            outline: 1px solid rgba(251, 191, 36, 0.7);
+        }
+
+        .action-bar-container {
+            min-height: 36px; /* Reserve space even before bar is rendered */
+        }
+
+        .row-action-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 0 4px 0;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .row-action-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 4px 9px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #475569;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .row-action-btn:hover { background: #e2e8f0; }
+        .row-action-btn.active { background: #2563eb; color: white; border-color: #2563eb; }
+        .row-action-btn.print-btn { background: #3b82f6; color: white; border-color: #3b82f6; }
+        .row-action-btn.print-btn:hover { background: #2563eb; }
+
+        .row-select-label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.78rem;
+            color: #64748b;
+            cursor: pointer;
+        }
+        .row-select-label input { cursor: pointer; }
+
+        .row-wrapper.print-selected {
+            outline: 2px solid #3b82f6;
+            border-radius: 10px;
+        }
+
+        /* Print Specific Styling */
+        @media print {
+            html, body { background: white !important; margin: 0 !important; padding: 0 !important; color: black !important; }
+            .container { box-shadow: none !important; max-width: 100% !important; margin: 0 !important; padding: 5px !important; }
+            header, .top-controls, .input-row, .row-action-bar, .action-bar-container {
+                display: none !important;
+            }
+            .dictionary-section { 
+                display: block !important; 
+                margin-top: 20px !important;
+                background: white !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+            }
+            /* Hide the section title in print if everything inside is hidden */
+            .dictionary-section h2 { margin-top: 0; color: black !important; }
+            
+            #vocab-table th, #vocab-table td {
+                background: white !important;
+                color: black !important;
+                border-bottom: 1px solid black !important;
+            }
+            #vocab-table th { border-bottom-width: 2px !important; }
+
+            /* Hide unselected vocab rows */
+            #vocab-table tr:not(.vocab-print-selected):not(#vocab-header) {
+                display: none !important;
+            }
+            /* Hide the whole table if no rows are selected (header only) */
+            #vocab-table:not(:has(.vocab-print-selected)) {
+                display: none !important;
+            }
+            #vocab-table:not(:has(.vocab-print-selected)) ~ h2 {
+                display: none !important;
+            }
+            
+            /* Hide the selection column (first column) in print */
+            #vocab-table th:first-child,
+            #vocab-table td:first-child {
+                display: none !important;
+            }
+
+            .word {
+                background: transparent !important;
+                color: black !important;
+                padding: 0 !important;
+                border: none !important;
+                transform: none !important;
+            }
+
+            /* Hide ALL rows by default; show only selected ones */
+            .row-wrapper { display: none !important; }
+            .row-wrapper.print-selected {
+                display: block !important;
+                background: white !important;
+                color: black !important;
+                margin: 0 0 16px 0 !important;
+                padding: 0 !important;
+                outline: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+            }
+            .inner-translation-box {
+                border: 1px solid black;
+                padding: 8px;
+                margin: 0;
+                outline: none !important;
+                background: white !important;
+            }
+            .color-en, .color-hi, .color-te { color: black !important; }
+            #input-container { margin: 0 !important; padding: 0 !important; }
+            * { -webkit-print-color-adjust: economy !important; print-color-adjust: economy !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>✨ LingoLearn AI</h1>
+            <div class="top-controls">
+                <span>Model:</span>
+                <select id="provider-select">
+                    <option value="google">Google Translate (High Accuracy)</option>
+                    <option value="gemini">Google Gemini (1.5 Flash - Fast)</option>
+                    <option value="openai">OpenAI (GPT-4o-mini)</option>
+                    <option value="huggingface">Hugging Face (Qwen 2.5 72B)</option>
+                    <option value="grok">Grok (xAI)</option>
+                    <option value="sarvam">Sarvam AI (sarvam-m)</option>
+                </select>
+                
+                <span style="margin-left: 10px;">Vocab Model:</span>
+                <select id="vocab-provider-select">
+                    <option value="gemini">Google Gemini (Fastest)</option>
+                    <option value="huggingface" selected>Hugging Face</option>
+                    <option value="openai">OpenAI</option>
+                    <option value="grok">Grok (xAI)</option>
+                    <option value="sarvam">Sarvam AI</option>
+                </select>
+
+                <span style="margin-left: 10px;">Teacher Model:</span>
+                <select id="teacher-provider-select">
+                    <option value="openai">OpenAI (Expert)</option>
+                    <option value="gemini">Google Gemini</option>
+                    <option value="sarvam" selected>Sarvam AI</option>
+                    <option value="huggingface">Hugging Face</option>
+                </select>
+
+                <span style="margin-left: 10px;">Translate to:</span>
+                <div class="lang-checkbox-group" id="lang-selector">
+                    <label><input type="checkbox" value="en" checked> EN</label>
+                    <label><input type="checkbox" value="hi" checked> HI</label>
+                    <label><input type="checkbox" value="te" checked> TE</label>
+                </div>
+            </div>
+        </header>
+
+        <div id="input-container"></div>
+
+        <div class="dictionary-section" id="dictionary-section" style="display: none;">
+            <h2>Vocabulary Builder</h2>
+            <table id="vocab-table">
+                <thead>
+                    <tr id="vocab-header">
+                        <th>English</th>
+                        <th>Meaning</th>
+                        <th>Hindi</th>
+                        <th>Telugu</th>
+                    </tr>
+                </thead>
+                <tbody id="vocab-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Usage Examples Modal -->
+    <div id="usage-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            
+            <div class="modal-title-box">
+                <span style="font-size: 1.5rem;">📖</span>
+                <div>
+                    <div class="modal-title-text">Sentence Usage of <span id="modal-word-display" class="modal-word-title">...</span></div>
+                    <span id="modal-pos" class="pos-badge">...</span>
+                </div>
+            </div>
+
+            <div id="modal-body" class="usage-section">
+                <!-- General examples here -->
+            </div>
+            <div id="modal-tenses" class="tense-section" style="display:none">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h4>⏳ Tense Explorer</h4>
+                    <button id="btn-show-advanced" class="btn-advanced" onclick="showAdvancedTenses()">✨ Advanced 12-Tense Matrix</button>
+                </div>
+                <div id="tense-body" class="tense-grid">
+                    <!-- Basic tense cards here -->
+                </div>
+                <div id="advanced-tense-body" class="advanced-tense-grid" style="display:none">
+                    <!-- 12 Tense matrix cards here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const state = {
+            rowVocabulary: new Map(), // rowId -> Array of vocab objects
+            wordTransCache: new Map(), // 'word|lang' -> translated string
+            isSideBySide: false,
+            vocabAbortControllers: new Map(), // rowId -> AbortController
+            quizAbortControllers: new Map()   // rowId -> AbortController
+        };
+
+        function init() {
+            addRow();
+
+            // Re-enable all vocab/quiz buttons when model changes
+            document.getElementById('vocab-provider-select')?.addEventListener('change', () => {
+                document.querySelectorAll('.vocab-trigger-btn').forEach(btn => {
+                    btn.textContent = '📚 Vocab';
+                    btn.disabled = false;
+                    btn.dataset.generating = 'false';
+                    // Abort active generation if any
+                    const rowId = btn.closest('.row-action-bar')?.id.split('-')[2];
+                    if (rowId && state.vocabAbortControllers.has(rowId)) {
+                        state.vocabAbortControllers.get(rowId).abort();
+                        state.vocabAbortControllers.delete(rowId);
+                    }
+                });
+            });
+            document.getElementById('teacher-provider-select')?.addEventListener('change', () => {
+                // Clear any active quiz generators if teacher model changes mid-flow
+                state.quizAbortControllers.forEach(ctrl => ctrl.abort());
+                state.quizAbortControllers.clear();
+            });
+        }
+
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
+        }
+
+        function addRow() {
+            const id = Date.now();
+            const wrapper = document.createElement('div');
+            wrapper.className = 'row-wrapper';
+            wrapper.id = `wrapper-${id}`;
+            wrapper.innerHTML = `
+                <div class="input-row">
+                    <textarea placeholder="Enter text or upload image..." 
+                              oninput="autoResize(this)"
+                              onkeydown="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); handleTranslate(${id}); }"></textarea>
+                    <button class="btn-add" title="Translate" onclick="handleTranslate(${id})">🚀</button>
+                    <button class="btn-add" style="background:#f59e0b" title="English Teacher (Better Way)" onclick="handleBetterWay(${id})">✨</button>
+                    <button class="btn-add" style="background:#3b82f6" title="Scan Image (OCR)" onclick="triggerOcr(${id})">📷</button>
+                    <button class="btn-add" style="background:#10b981" title="Add Row" onclick="addRow()">+</button>
+                    <button class="btn-add btn-remove" title="Remove Row" onclick="removeRow(${id})">−</button>
+                    <input type="file" id="file-${id}" style="display:none" accept="image/*" onchange="handleOcr(${id}, this)">
+                </div>
+                <div id="action-bar-container-${id}"></div>
+                <div id="results-${id}" class="translation-box"></div>
+            `;
+            document.getElementById('input-container').appendChild(wrapper);
+        }
+
+        function removeRow(id) {
+            const row = document.getElementById(`wrapper-${id}`);
+            if (document.querySelectorAll('.row-wrapper').length > 1) {
+                row.remove();
+                state.rowVocabulary.delete(id);
+                refreshVocabTable();
+            } else {
+                // If it's the last row, just clear it and its vocab
+                row.querySelector('textarea').value = '';
+                document.getElementById(`results-${id}`).innerHTML = '';
+                state.rowVocabulary.delete(id);
+                refreshVocabTable();
+            }
+        }
+
+        function triggerOcr(id) {
+            document.getElementById(`file-${id}`).click();
+        }
+
+        async function handleOcr(id, input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const resultsDiv = document.getElementById(`results-${id}`);
+            const inputField = document.getElementById(`wrapper-${id}`).querySelector('textarea');
+
+            resultsDiv.innerHTML = `<div class="system-message">Scanning Image... <div class="loader"></div></div>`;
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/ai/ocr', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                
+                if (data.text) {
+                    inputField.value = data.text;
+                    resultsDiv.innerHTML = `<div class="system-message">✨ Text extracted! Click 🚀 to translate.</div>`;
+                } else {
+                    resultsDiv.innerHTML = `<div class="system-message" style="color:red">No text found in image.</div>`;
+                }
+            } catch (err) {
+                resultsDiv.innerHTML = `<div style="color:red">OCR Error: ${err.message}</div>`;
+            } finally {
+                input.value = ''; // Reset file input
+            }
+        }
+
+        async function fetchGoogleTranslate(text, targetLang) {
+            try {
+                const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                return data[0].map(x => x[0]).join('');
+            } catch (err) {
+                console.error('Google Translate Error:', err);
+                return "Translation Error";
+            }
+        }
+
+        async function handleTranslate(id) {
+            await processInput(id, 'translate');
+        }
+
+        async function handleBetterWay(id) {
+            await processInput(id, 'better');
+        }
+
+        async function processInput(id, mode) {
+            const wrapper = document.getElementById(`wrapper-${id}`);
+            const input = wrapper.querySelector('textarea');
+            const resultsDiv = document.getElementById(`results-${id}`);
+            const provider = mode === 'better' 
+                ? document.getElementById('teacher-provider-select').value 
+                : document.getElementById('provider-select').value;
+            const text = input.value.trim();
+
+            const selectedLangs = Array.from(document.querySelectorAll('#lang-selector input:checked')).map(cb => cb.value);
+
+            if (!text || selectedLangs.length === 0) return;
+
+            // Clear stale vocabulary for this row on every new translation
+            state.rowVocabulary.delete(id);
+            const existingActionBar = document.getElementById(`action-bar-${id}`);
+            if (existingActionBar) {
+                const vocabBtn = existingActionBar.querySelector('.vocab-trigger-btn');
+                if (vocabBtn) { vocabBtn.textContent = '📚 Vocab'; vocabBtn.disabled = false; }
+            }
+            // Also clear the vocab table display
+            refreshVocabTable();
+
+            resultsDiv.innerHTML = `<div class="system-message">${mode === 'better' ? 'Refining your English...' : 'Thinking...'} <div class="loader"></div></div>`;
+            if (mode === 'better') {
+                try {
+                    // Step 1: Tell AI to be an English teacher: correct mistakes, simplify for kids, and make it professional
+                    const prompt = `As an expert English teacher, take this input: "${text}".
+                    1. Correct any grammatical or spelling mistakes.
+                    2. Rewrite it in the absolute BEST, most natural, and simple way so even a child could understand, but keep it professional.
+                    Output ONLY a JSON object: {"original": "${text}", "perfected": "...", "explanation": "..."}`;
+                    
+                    const response = await fetch(`/ai/generate?message=${encodeURIComponent(prompt)}`);
+                    const data = await response.json();
+                    let rawJson = data.generation || "{}";
+                    let match = rawJson.match(/\{[\s\S]*\}/);
+                    if (match) rawJson = match[0];
+                    const result = JSON.parse(rawJson);
+                    
+                    if (!result.perfected) throw new Error("Could not refine sentence");
+
+                    // Step 2: Use Google Translate to translate this PERFECTED sentence
+                    const transPromises = selectedLangs.map(async (l) => {
+                        const translation = await fetchGoogleTranslate(result.perfected, l);
+                        return [l, translation];
+                    });
+                    const transResults = await Promise.all(transPromises);
+                    const translations = Object.fromEntries(transResults);
+
+                    // Show results + perfection badge
+                    resultsDiv.innerHTML = `
+                        <div style="background:var(--primary-light); padding:10px; border-radius:8px; margin-bottom:10px; border-left:4px solid var(--primary)">
+                            <small style="color:var(--primary); font-weight:800; text-transform:uppercase">✨ Better Way (Refined)</small>
+                            <p style="margin:5px 0; font-weight:600;">${result.perfected}</p>
+                        </div>
+                    `;
+                    renderTranslations(resultsDiv, translations, id);
+                    appendRowActionBar(id, result.perfected);
+                } catch (err) {
+                    resultsDiv.innerHTML = `<div style="color:red">Error: ${err.message}</div>`;
+                }
+                return;
+            }
+
+            // mode === 'translate' logic (existing Google switch)
+            if (provider === 'google') {
+                // Fetch translations from Google Translate in parallel
+                try {
+                    const transPromises = selectedLangs.map(async (l) => {
+                        const translation = await fetchGoogleTranslate(text, l);
+                        return [l, translation];
+                    });
+                    const transResults = await Promise.all(transPromises);
+                    const translations = Object.fromEntries(transResults);
+                    
+                    renderTranslations(resultsDiv, translations, id);
+                    appendRowActionBar(id, text);
+                    
+                } catch (err) {
+                    resultsDiv.innerHTML = `<div style="color:red">Error: ${err.message}</div>`;
+                }
+                return;
+            }
+
+            // LLM Translation Path
+            const langNames = { en: "English", hi: "Hindi", te: "Telugu" };
+            const targets = selectedLangs.map(l => langNames[l]).join(", ");
+            const safeText = text.replace(/[\r\n]+/g, ' ').replace(/"/g, "'").trim();
+            // Ask ONLY for translations — no vocabulary here (user triggers that separately)
+            const prompt = `Translate the following text into ${targets}: ${safeText}. Output ONLY raw JSON, no markdown: {${selectedLangs.map(l => `"${l}": "..."`).join(", ")}}`;
+
+            try {
+                let endpoint = '/ai/generate';
+                if (provider === 'huggingface') endpoint = '/ai/hf';
+                if (provider === 'gemini') endpoint = '/ai/gemini';
+                if (provider === 'grok') endpoint = '/ai/grok';
+                if (provider === 'sarvam') endpoint = '/ai/sarvam';
+
+                const response = await fetch(`${endpoint}?message=${encodeURIComponent(prompt)}`);
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+
+                let rawJson = data.generation || "";
+                let match = rawJson.match(/\{[\s\S]*\}/);
+                if (match) rawJson = match[0];
+                rawJson = rawJson.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')
+                                 .replace(/([^\\])\n/g, '$1 ')
+                                 .replace(/([^\\])\r/g, '$1 ');
+
+                let result;
+                try {
+                    result = JSON.parse(rawJson);
+                } catch (parseErr) {
+                    console.error('Translation JSON parse failed:', rawJson, parseErr);
+                    resultsDiv.innerHTML = `<div style="color:red">⚠️ AI response could not be parsed. Try Google Translate.</div>`;
+                    return;
+                }
+
+                // Accept both {en:..., hi:..., te:...} and {translations:{...}} shapes
+                const translations = result.translations || result;
+                renderTranslations(resultsDiv, translations, id);
+                // Vocab must be clicked explicitly — never auto-generate
+                appendRowActionBar(id, safeText, false);
+            } catch (err) {
+                resultsDiv.innerHTML = `<div style="color:red">Error: ${err.message}. Please try again.</div>`;
+            }
+        }
+
+        async function triggerVocabulary(id) {
+            const bar = document.getElementById(`action-bar-${id}`);
+            const btn = bar ? bar.querySelector('.vocab-trigger-btn') : null;
+            const text = bar ? bar.dataset.sourceText : '';
+            if (!text) return;
+
+            // If already generating → CANCEL
+            if (btn && btn.dataset.generating === 'true') {
+                const ctrl = state.vocabAbortControllers.get(id);
+                if (ctrl) ctrl.abort();
+                state.vocabAbortControllers.delete(id);
+                btn.textContent = '📚 Vocab';
+                btn.disabled = false;
+                btn.dataset.generating = 'false';
+                return;
+            }
+
+            // Start generating
+            const ctrl = new AbortController();
+            state.vocabAbortControllers.set(id, ctrl);
+            if (btn) {
+                btn.textContent = '⏹ Cancel';
+                btn.disabled = false; // keep enabled so user can cancel
+                btn.dataset.generating = 'true';
+            }
+
+            try {
+                await fetchLlmVocabulary(text, (vocab) => {
+                    updateVocabulary(id, vocab);
+                }, ctrl.signal);
+                if (btn && btn.dataset.generating === 'true') {
+                    btn.textContent = '✅ Vocab Done';
+                    btn.disabled = true;
+                    btn.dataset.generating = 'false';
+                }
+            } catch(e) {
+                if (btn) {
+                    btn.textContent = '📚 Retry Vocab';
+                    btn.disabled = false;
+                    btn.dataset.generating = 'false';
+                }
+            } finally {
+                state.vocabAbortControllers.delete(id);
+            }
+        }
+
+        function appendRowActionBar(id, text, vocabAlreadyDone = false) {
+            const container = document.getElementById(`wrapper-${id}`);
+            if (!container) return;
+
+            const existing = document.getElementById(`action-bar-${id}`);
+            if (existing) existing.remove();
+
+            const bar = document.createElement('div');
+            bar.className = 'action-bar-container';
+            bar.id = `action-bar-${id}`;
+            bar.dataset.sourceText = text;
+            bar.innerHTML = `
+                <div class="row-action-bar">
+                    <button class="vocab-trigger-btn ${vocabAlreadyDone ? 'done' : ''}" 
+                            onclick="triggerVocabulary('${id}')" 
+                            ${vocabAlreadyDone ? 'disabled' : ''}>
+                        ${vocabAlreadyDone ? '✅ Vocab Done' : '📚 Vocab'}
+                    </button>
+                    <button class="quiz-trigger-btn" onclick="triggerQuiz('${id}')">📝 Quiz</button>
+                    <button onclick="toggleRowLayout('${id}', this)">☰ Layout</button>
+                    <button onclick="printRow('${id}')">🖨️ Print</button>
+                    <div style="display:flex; align-items:center; gap:5px; margin-left:auto; font-size:0.8rem; color:#64748b;">
+                        <input type="checkbox" onchange="toggleRowSelect('${id}', this)"> 
+                        Select for Print
+                    </div>
+                </div>
+                <div id="quiz-container-${id}" class="quiz-container"></div>
+            `;
+            container.appendChild(bar);
+        }
+
+        async function triggerQuiz(id) {
+            const container = document.getElementById(`quiz-container-${id}`);
+            if (!container) return;
+
+            // Toggle visibility
+            if (container.style.display === 'block' && !container.innerHTML.includes('Thinking')) {
+                container.style.display = 'none';
+                return;
+            }
+
+            container.style.display = 'block';
+            
+            // Show level selector
+            container.innerHTML = `
+                <div class="quiz-level-selector">
+                    <strong>Select Quiz Level:</strong>
+                    <button class="level-btn" onclick="startQuiz('${id}', 1)">Level 1 (Direct)</button>
+                    <button class="level-btn" onclick="startQuiz('${id}', 2)">Level 2 (Inference)</button>
+                    <button class="level-btn" onclick="startQuiz('${id}', 3)">Level 3 (Contextual)</button>
+                    <button class="level-btn" onclick="startQuiz('${id}', 4)">Level 4 (Advanced)</button>
+                    <button class="level-btn" onclick="startQuiz('${id}', 5)">Level 5 (Expert)</button>
+                </div>
+                <div id="quiz-content-${id}"></div>
+            `;
+        }
+
+        async function startQuiz(id, level) {
+            const bar = document.getElementById(`action-bar-${id}`);
+            const text = bar ? bar.dataset.sourceText : '';
+            const content = document.getElementById(`quiz-content-${id}`);
+            if (!text || !content) return;
+
+            // Highlight active level
+            const btns = document.querySelectorAll(`#quiz-container-${id} .level-btn`);
+            btns.forEach((b, i) => b.classList.toggle('active', (i + 1) === level));
+
+            content.innerHTML = `<div class="system-message">Generating Level ${level} Quiz... <div class="loader"></div></div>`;
+
+            // Abort previous if any
+            if (state.quizAbortControllers.has(id)) state.quizAbortControllers.get(id).abort();
+            const ctrl = new AbortController();
+            state.quizAbortControllers.set(id, ctrl);
+
+            try {
+                await fetchLlmQuiz(text, level, (quiz) => {
+                    renderQuiz(id, quiz);
+                }, ctrl.signal);
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    content.innerHTML = `<div style="color:red">Error generating quiz. Please try again.</div>`;
+                }
+            } finally {
+                state.quizAbortControllers.delete(id);
+            }
+        }
+
+        async function fetchLlmQuiz(text, level, callback, signal) {
+            const levelPrompts = {
+                1: "Level 1: Ask 3 questions based STRICTLY on the facts explicitly stated in the text.",
+                2: "Level 2: Ask 3 questions that require basic inference or detail recall from the text.",
+                3: "Level 3: Ask 3 questions that connect the text to broader general knowledge (contextual extension).",
+                4: "Level 4: Ask 3 questions about deep logic, themes, or complex implications of the ideas in the text.",
+                5: "Level 5: Ask 3 expert-level questions requiring advanced critical thinking and synthesis of the concepts."
+            };
+
+            const prompt = `As an AI Tutor, generate a quiz for this text: "${text}".
+            ${levelPrompts[level]}
+            
+            Return ONLY a valid JSON array of 3 questions with this exact structure:
+            [{"q":"question text","options":["opt1","opt2","opt3","opt4"],"correct":0,"explanation":"why opt1 is correct"}]
+            (correct index is 0-3)`;
+
+            const teacherModel = document.getElementById('teacher-provider-select').value;
+            let endpoint = '/ai/generate'; // Default to OpenAI
+            if (teacherModel === 'gemini') endpoint = '/ai/gemini';
+            if (teacherModel === 'sarvam') endpoint = '/ai/sarvam';
+            if (teacherModel === 'huggingface') endpoint = '/ai/hf';
+
+            const response = await fetch(`${endpoint}?message=${encodeURIComponent(prompt)}`, { signal });
+            const data = await response.json();
+            
+            let rawJson = (data.generation || '[]').trim();
+            const arrMatch = rawJson.match(/\[[\s\S]*\]/);
+            if (arrMatch) rawJson = arrMatch[0];
+
+            try {
+                const quiz = JSON.parse(rawJson);
+                callback(quiz);
+            } catch (e) {
+                console.error("Quiz Parse Error", e, rawJson);
+                throw new Error("Invalid format from AI");
+            }
+        }
+
+        function renderQuiz(id, questions) {
+            const content = document.getElementById(`quiz-content-${id}`);
+            if (!content || !questions || questions.length === 0) return;
+
+            content.innerHTML = questions.map((q, qIndex) => `
+                <div class="quiz-question" id="q-${id}-${qIndex}">
+                    <h4>${qIndex + 1}. ${q.q}</h4>
+                    <div class="quiz-choices">
+                        ${q.options.map((opt, oIndex) => `
+                            <button class="choice-btn" onclick="checkAnswer('${id}', ${qIndex}, ${oIndex}, ${q.correct}, '${q.explanation.replace(/'/g, "\\'")}')">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-feedback" id="feedback-${id}-${qIndex}"></div>
+                </div>
+            `).join('');
+        }
+
+        function checkAnswer(id, qIndex, selectedIndex, correctIndex, explanation) {
+            const questionDiv = document.getElementById(`q-${id}-${qIndex}`);
+            const feedbackDiv = document.getElementById(`feedback-${id}-${qIndex}`);
+            const btns = questionDiv.querySelectorAll('.choice-btn');
+
+            // Disable all buttons for this question
+            btns.forEach(btn => btn.classList.add('disabled'));
+            btns.forEach(btn => btn.onclick = null);
+
+            // Highlight answers
+            btns[selectedIndex].classList.add(selectedIndex === correctIndex ? 'correct' : 'incorrect');
+            if (selectedIndex !== correctIndex) {
+                btns[correctIndex].classList.add('correct');
+            }
+
+            // Show feedback
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.style.color = selectedIndex === correctIndex ? '#166534' : '#991b1b';
+            feedbackDiv.innerHTML = `${selectedIndex === correctIndex ? '✅ Correct!' : '❌ Incorrect.'} ${explanation}`;
+        }
+
+        function toggleRowLayout(id, btn) {
+            const resultsDiv = document.getElementById(`results-${id}`);
+            const box = resultsDiv ? resultsDiv.querySelector('.inner-translation-box') : null;
+            if (box) {
+                const isGrid = box.classList.toggle('side-by-side');
+                btn.textContent = isGrid ? '⊞ Grid ON' : '☰ Layout';
+                btn.classList.toggle('active', isGrid);
+            }
+        }
+
+        function toggleRowSelect(id, cb) {
+            const wrapper = document.getElementById(`wrapper-${id}`);
+            if (wrapper) wrapper.classList.toggle('print-selected', cb.checked);
+        }
+
+        function printRow(id) {
+            const selected = document.querySelectorAll('.row-wrapper.print-selected');
+            if (selected.length > 0) {
+                // User has multiple rows checked — print all of them together
+                window.print();
+            } else {
+                // No rows selected — print just this row temporarily
+                const allWrappers = document.querySelectorAll('.row-wrapper');
+                const target = document.getElementById(`wrapper-${id}`);
+                if (target) target.classList.add('print-selected');
+                window.print();
+                if (target) target.classList.remove('print-selected');
+            }
+        }
+
+        async function fetchLlmVocabulary(text, callback, signal) {
+            // Stop words to exclude — keep only meaningful content words
+            const stopWords = new Set(['the','and','with','into','one','for','was','that','this','are','have','had','has','not','but','from','they']);
+            const contentWords = [...new Set(
+                text.split(/\s+/)
+                    .map(w => w.replace(/[^a-zA-Z\u0900-\u097F\u0C00-\u0C7F]/g, '').trim().toLowerCase())
+                    .filter(w => w.length > 2 && !stopWords.has(w)) // Lowered to 2 to include "cat", "dog", etc.
+            )].slice(0, 12);
+
+            if (contentWords.length === 0) {
+                const vocabBody = document.getElementById('vocab-body');
+                const dictSection = document.getElementById('dictionary-section');
+                if (vocabBody) {
+                    vocabBody.innerHTML = `<tr><td colspan="4" style="color:#64748b;text-align:center;padding:10px">ℹ️ No significant vocabulary words found in this text. Try a longer sentence.</td></tr>`;
+                    if (dictSection) dictSection.style.display = 'block';
+                }
+                return;
+            }
+
+            const prompt = `You are a language teacher. Translate these English words into Hindi and Telugu with a short meaning:\nWords: [${contentWords.join(', ')}]\nOutput ONLY a valid JSON array (no markdown, no extra text):\n[{"en":"word","meaning":"simple meaning","hi":"Hindi word","te":"Telugu word"}]`;
+
+            try {
+                const vocabProvider = document.getElementById('vocab-provider-select').value;
+                let endpoint = '/ai/generate';
+                if (vocabProvider === 'huggingface') endpoint = '/ai/hf';
+                if (vocabProvider === 'gemini') endpoint = '/ai/gemini';
+                if (vocabProvider === 'grok') endpoint = '/ai/grok';
+                if (vocabProvider === 'sarvam') endpoint = '/ai/sarvam';
+
+                const response = await fetch(`${endpoint}?message=${encodeURIComponent(prompt)}`, { signal });
+                const data = await response.json();
+
+                // Check for provider-level error before attempting parse
+                if (data.error) {
+                    const vocabBody = document.getElementById('vocab-body');
+                    const dictSection = document.getElementById('dictionary-section');
+                    const short = data.error.includes('429') ? '⚠️ API quota exceeded. Switch to a different Vocab model.'
+                                : `⚠️ ${data.error.substring(0, 120)}`;
+                    if (vocabBody) {
+                        vocabBody.innerHTML = `<tr><td colspan="4" style="color:#ef4444;text-align:center;padding:10px">${short}</td></tr>`;
+                        if (dictSection) dictSection.style.display = 'block';
+                    }
+                    return;
+                }
+
+                let rawJson = (data.generation || '[]').trim();
+                // Extract JSON array from response (strip markdown fences, leading text)
+                const arrMatch = rawJson.match(/\[[\s\S]*\]/);
+                if (arrMatch) rawJson = arrMatch[0];
+                // Repair: replace literal newlines inside strings with space
+                rawJson = rawJson
+                    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')  // strip control chars except \t \n \r
+                    .replace(/([^\\])\n/g, '$1 ')                         // bare newlines inside strings → space
+                    .replace(/([^\\])\r/g, '$1 ');
+
+                try {
+                    const vocab = JSON.parse(rawJson);
+                    callback(vocab);
+                } catch (parseError) {
+                    console.error('Failed to parse vocabulary JSON:', rawJson, parseError);
+                    const vocabBody = document.getElementById('vocab-body');
+                    const dictSection = document.getElementById('dictionary-section');
+                    if (vocabBody) {
+                        vocabBody.innerHTML = `<tr><td colspan="4" style="color:#ef4444;text-align:center;padding:10px">⚠️ AI returned invalid JSON. Try a shorter text or switch to OpenAI / Sarvam.</td></tr>`;
+                        if (dictSection) dictSection.style.display = 'block';
+                    }
+                }
+            } catch(e) {
+                console.error('Vocab fetch failed entirely', e);
+            }
+        }
+
+        function updateVocabulary(id, vocab) {
+            if (!vocab || vocab.length === 0) return;
+            state.rowVocabulary.set(id, vocab);
+            refreshVocabTable();
+        }
+
+        function refreshVocabTable() {
+            const dictSection = document.getElementById('dictionary-section');
+            const header = document.getElementById('vocab-header');
+            const body = document.getElementById('vocab-body');
+            if (!body) return;
+
+            // Update header to include Select column
+            if (header) {
+                header.innerHTML = '<th><input type="checkbox" id="vocab-select-all" title="Select All"></th><th>English</th><th>Meaning</th><th>Hindi</th><th>Telugu</th>';
+                const selectAllCb = header.querySelector('#vocab-select-all');
+                if (selectAllCb) {
+                    selectAllCb.onchange = (e) => {
+                        const allCbs = body.querySelectorAll('.vocab-print-cb');
+                        allCbs.forEach(cb => {
+                            cb.checked = e.target.checked;
+                            cb.closest('tr').classList.toggle('vocab-print-selected', e.target.checked);
+                        });
+                    };
+                }
+            }
+
+            body.innerHTML = '';
+            let hasAny = false;
+
+            state.rowVocabulary.forEach((vocabArr) => {
+                vocabArr.forEach(entry => {
+                    hasAny = true;
+                    const tr = document.createElement('tr');
+                    
+                    // Add checkbox td
+                    const selectTd = document.createElement('td');
+                    selectTd.innerHTML = '<input type="checkbox" class="vocab-print-cb">';
+                    const rowCb = selectTd.querySelector('input');
+                    rowCb.onchange = (e) => {
+                        tr.classList.toggle('vocab-print-selected', e.target.checked);
+                        // Update select-all state
+                        const allCbs = body.querySelectorAll('.vocab-print-cb');
+                        const allChecked = Array.from(allCbs).every(c => c.checked);
+                        const selectAllCb = document.getElementById('vocab-select-all');
+                        if (selectAllCb) selectAllCb.checked = allChecked;
+                    };
+                    tr.appendChild(selectTd);
+
+                    const fields = [entry.en || '', entry.meaning || '', entry.hi || '', entry.te || ''];
+                    const langs = ['en-US', null, 'hi-IN', 'te-IN'];
+                    fields.forEach((val, i) => {
+                        const td = document.createElement('td');
+                        if (langs[i] && val) {
+                            const sp = createWordElement(val, langs[i]);
+                            td.appendChild(sp);
+                        } else {
+                            td.textContent = val;
+                            td.style.color = '#64748b';
+                            td.style.fontStyle = 'italic';
+                            td.style.fontSize = '0.85rem';
+                        }
+                        tr.appendChild(td);
+                    });
+                    body.appendChild(tr);
+                });
+            });
+
+            if (dictSection) dictSection.style.display = hasAny ? 'block' : 'none';
+        }
+
+        function createWordElement(word, langCode) {
+            const span = document.createElement('span');
+            span.className = 'word';
+            span.innerText = word;
+
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tooltip';
+
+            const speakBtn = createBtn('🔊', (e) => speak(word, langCode, e.currentTarget));
+            const usageBtn = createBtn('📝', () => showUsageExamples(word));
+            const imgBtn = createBtn('🖼', () => window.open(`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(word)}`, '_blank'));
+            const vidBtn = createBtn('🎥', () => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(word)}`, '_blank'));
+
+            tooltip.append(speakBtn, usageBtn, imgBtn, vidBtn);
+            span.appendChild(tooltip);
+            return span;
+        }
+
+        function createBtn(label, onClick) {
+            const btn = document.createElement('button');
+            btn.className = 'tooltip-btn';
+            btn.innerText = label;
+            btn.onclick = onClick;
+            return btn;
+        }
+
+        let currentUtterance = null;
+        let activeSpeakBtn = null;
+
+        function stopAllAudio() {
+            speechSynthesis.cancel();
+            if (activeSpeakBtn) {
+                activeSpeakBtn.innerText = '🔊';
+                activeSpeakBtn = null;
+            }
+        }
+
+        function speak(text, lang, btn) {
+            // If already speaking THIS button -> STOP
+            if (activeSpeakBtn === btn && speechSynthesis.speaking) {
+                stopAllAudio();
+                return;
+            }
+
+            // Always stop previous before starting new
+            stopAllAudio();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang;
+            currentUtterance = utterance;
+
+            if (btn) {
+                activeSpeakBtn = btn;
+                btn.innerText = '⏹';
+            }
+
+            utterance.onend = () => {
+                if (activeSpeakBtn === btn) {
+                    btn.innerText = '🔊';
+                    activeSpeakBtn = null;
+                }
+            };
+
+            utterance.onerror = () => {
+                if (activeSpeakBtn === btn) {
+                    btn.innerText = '🔊';
+                    activeSpeakBtn = null;
+                }
+            };
+
+            speechSynthesis.speak(utterance);
+        }
+
+        async function showUsageExamples(word) {
+            const modal = document.getElementById('usage-modal');
+            const modalWord = document.getElementById('modal-word-display'); // matches HTML id
+            const modalBody = document.getElementById('modal-body');
+            if (!modal) return;
+            if (modalWord) modalWord.textContent = word;
+            modalBody.innerHTML = '<div class="loader"></div>';
+            modal.style.display = 'flex';
+
+            try {
+                const prompt = `Give 3 short example sentences using the word "${word}" in a natural context. Output ONLY a JSON array of strings: ["sentence1", "sentence2", "sentence3"]`;
+                const response = await fetch(`/ai/generate?message=${encodeURIComponent(prompt)}`);
+                const data = await response.json();
+                let rawJson = (data.generation || '["No examples found."]').replace(/[\x00-\x1F]/g,' ');
+                const match = rawJson.match(/\[[\s\S]*\]/);
+                if (match) rawJson = match[0];
+                const examples = JSON.parse(rawJson);
+                modalBody.innerHTML = examples.map(e => `<p style="margin:8px 0;padding:8px;background:#f8fafc;border-radius:6px;border-left:3px solid #6366f1">${e}</p>`).join('');
+            } catch(e) {
+                modalBody.innerHTML = '<p style="color:red">Failed to load examples.</p>';
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('usage-modal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function renderTranslations(container, trans, rowId) {
+            container.innerHTML = '';
+
+            const box = document.createElement('div');
+            box.className = 'translation-box inner-translation-box';
+
+            const allLangs = [
+                { k: 'en', l: 'EN', c: 'en-US' },
+                { k: 'hi', l: 'HI', c: 'hi-IN' },
+                { k: 'te', l: 'TE', c: 'te-IN' }
+            ];
+
+            const selectedLangs = Array.from(document.querySelectorAll('#lang-selector input:checked')).map(cb => cb.value);
+
+            allLangs.filter(l => selectedLangs.includes(l.k)).forEach(lang => {
+                const line = document.createElement('div');
+                line.className = 'translation-line';
+
+                const tag = document.createElement('div');
+                tag.className = `lang-tag lang-tag-${lang.k}`;
+                tag.innerText = lang.l;
+
+                const text = trans[lang.k] || '';
+
+                const textContainer = document.createElement('span');
+                textContainer.className = `sentence-text color-${lang.k}`;
+                text.split(/\s+/).filter(w => w).forEach((word, i) => {
+                    if (i > 0) textContainer.append(' ');
+                    const ws = document.createElement('span');
+                    ws.className = 'trans-word';
+                    ws.textContent = word;
+                    ws.dataset.word = word.replace(/[^\p{L}\p{N}]/gu, '').toLowerCase();
+                    ws.dataset.lang = lang.k;
+                    ws.dataset.row = rowId || '';
+                    ws.onmouseover = () => onWordHover(ws);
+                    ws.onmouseout = () => onWordOut();
+                    textContainer.appendChild(ws);
+                });
+
+                const speakBtn = document.createElement('button');
+                speakBtn.className = 'btn-speak-sentence';
+                speakBtn.innerHTML = '🔊';
+                speakBtn.onclick = (e) => speak(text, lang.c, e.currentTarget);
+
+                line.append(tag, textContainer, speakBtn);
+                box.appendChild(line);
+            });
+            container.appendChild(box);
+        }
+
+        async function onWordHover(spanEl) {
+            onWordOut();
+            const rawWord = spanEl.textContent.trim();
+            const lang = spanEl.dataset.lang;
+            const rowId = parseInt(spanEl.dataset.row);
+            if (!rawWord || rawWord.length < 2) return;
+
+            spanEl.classList.add('cross-highlight');
+
+            const parentBox = spanEl.closest('.inner-translation-box');
+            if (!parentBox) return;
+
+            const targetLangs = lang === 'en' ? ['hi', 'te'] : lang === 'hi' ? ['en', 'te'] : ['en', 'hi'];
+
+            await Promise.all(targetLangs.map(async (tl) => {
+                const cacheKey = `${rawWord.toLowerCase()}|${tl}`;
+                let translated = state.wordTransCache.get(cacheKey);
+                if (!translated) {
+                    try {
+                        translated = await fetchGoogleTranslate(rawWord, tl);
+                        state.wordTransCache.set(cacheKey, translated);
+                    } catch { return; }
+                }
+                if (!translated) return;
+                const transClean = translated.trim().toLowerCase();
+                parentBox.querySelectorAll(`.trans-word[data-lang="${tl}"]`).forEach(s => {
+                    if (s.textContent.trim().toLowerCase().includes(transClean) ||
+                        transClean.includes(s.textContent.trim().toLowerCase())) {
+                        s.classList.add('cross-highlight');
+                    }
+                });
+            }));
+        }
+
+        function onWordOut() {
+            document.querySelectorAll('.trans-word.cross-highlight').forEach(s => s.classList.remove('cross-highlight'));
+        }
+
+        init();
+    </script>
+</body>
+</html>
