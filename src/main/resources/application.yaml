@@ -10,20 +10,20 @@ spring:
     name: lal
   ai:
     openai:
-      api-key: ${OPENAI_API_KEY:YOUR_OPENAI_API_KEY}
+      api-key: ${OPENAI_API_KEY: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}
       chat:
         enabled: true
     huggingface:
-      api-key: ${HF_API_KEY:YOUR_HF_API_KEY}
+      api-key: ${HF_API_KEY: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}
     gemini:
-      api-key: ${GEMINI_API_KEY:YOUR_GEMINI_API_KEY}
+      api-key: ${GEMINI_API_KEY:AIzaSyBdY3WnbnXRkrNynYowAYI6W7KxUl1_jNE}
       chat:
         options:
           model: gemini-1.5-flash
     grok:
       api-key: ${GROK_API_KEY:YOUR_GROK_API_KEY_HERE}
     sarvam:
-      api-key: ${SARVAM_API_KEY:YOUR_SARVAM_API_KEY}
+      api-key: ${SARVAM_API_KEY:src/main/resources/application-local.yaml}
 
 app:
   users:
