@@ -107,4 +107,50 @@
     }
   },
   "timestamp" : "2026-02-25T09:59:37.524+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772013830,
+    "date" : "2026-02-25T10:03:50.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "A Helping Hand",
+    "story" : "Ravi saw his neighbor's garden had a broken fence. He asked his mom for help. Together, they fixed it with sticks and rope. The neighbor smiled and said, 'Thank you, Ravi!' Now they play together every day. Helping others makes everyone happy."
+  },
+  "timestamp" : "2026-02-25T10:03:50.093+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772013841,
+    "date" : "2026-02-25T10:04:01.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "[A Helping Hand]\n\nRavi saw his neighbor's garden had a broken fence. He asked his mom for help. Together, they fixed it with sticks and rope. The neighbor smiled and said, 'Thank you, Ravi!' Now they play together every day. Helping others makes everyone happy.",
+    "refined" : "[A Helping Hand]\n\nRavi noticed his neighbor's garden had a broken fence. He asked his mother for help. Together, they repaired it using sticks and rope. The neighbor smiled and thanked Ravi. Now, they play together every day. Helping others brings joy to everyone.",
+    "translations" : {
+      "en" : "[A Helping Hand]\n\nRavi noticed his neighbor's garden had a broken fence. He asked his mother for help. Together, they repaired it using sticks and rope. The neighbor smiled and thanked Ravi. Now, they play together every day. Helping others brings joy to everyone.",
+      "hi" : "[एक मदद का हाथ]\n\nरवि ने देखा कि उसके पड़ोसी के बगीचे की बाड़ टूटी हुई थी। उसने अपनी मां से मदद मांगी. सबने मिलकर लाठी और रस्सी से इसकी मरम्मत की। पड़ोसी ने मुस्कुराते हुए रवि को धन्यवाद दिया। अब, वे हर दिन एक साथ खेलते हैं। दूसरों की मदद करने से सभी को खुशी मिलती है।",
+      "te" : "[ఒక హెల్పింగ్ హ్యాండ్]\n\nతన పొరుగింటి తోటలో కంచె విరిగిపోయి ఉండడం రవి గమనించాడు. అతను సహాయం కోసం తన తల్లిని అడిగాడు. అందరూ కలిసి కర్రలు, తాడుతో మరమ్మతులు చేశారు. పక్కింటివాడు నవ్వుతూ రవికి కృతజ్ఞతలు చెప్పాడు. ఇప్పుడు, వారు ప్రతిరోజూ కలిసి ఆడుతున్నారు. ఇతరులకు సహాయం చేయడం అందరికీ ఆనందాన్ని కలిగిస్తుంది."
+    }
+  },
+  "timestamp" : "2026-02-25T10:04:01.430+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772013895,
+    "date" : "2026-02-25T10:04:55.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[A Helping Hand]\n\nRavi saw his neighbor's garden had a broken fence. He asked his mom for help. Together, they fixed it with sticks and rope. The neighbor smiled and said, 'Thank you, Ravi!' Now they play together every day. Helping others makes everyone happy.",
+    "translations" : {
+      "en" : "[A Helping Hand]\n\nRavi saw his neighbor's garden had a broken fence. He asked his mom for help. Together, they fixed it with sticks and rope. The neighbor smiled and said, 'Thank you, Ravi!' Now they play together every day. Helping others makes everyone happy.",
+      "hi" : "[एक मदद का हाथ]\n\nरवि ने देखा कि उसके पड़ोसी के बगीचे की बाड़ टूटी हुई थी। He asked his mom for help. Together, they fixed it with sticks and rope. The neighbor smiled and said, 'Thank you, Ravi!' Now they play together every day. Helping others makes everyone happy.",
+      "te" : "[ఒక హెల్పింగ్ హ్యాండ్]\n\nరవి తన పొరుగింటి తోటలో కంచె విరిగిపోయి ఉండడం చూశాడు. అతను సహాయం కోసం తన తల్లిని అడిగాడు. అందరూ కలిసి కర్రలు, తాడుతో సరిచేశారు. పక్కింటివాడు నవ్వి, 'ధన్యవాదాలు రవి!' ఇప్పుడు రోజూ కలిసి ఆడుకుంటున్నారు. ఇతరులకు సహాయం చేయడం ప్రతి ఒక్కరినీ సంతోషపరుస్తుంది."
+    }
+  },
+  "timestamp" : "2026-02-25T10:04:55.704+00:00"
 } ]
