@@ -153,4 +153,650 @@
     }
   },
   "timestamp" : "2026-02-25T10:04:55.704+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772014760,
+    "date" : "2026-02-25T10:19:20.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "Lily and the Big Slide",
+    "story" : "Lily saw a big slide. She was scared to go down. Her friend said, 'You can do it!' Lily took a deep breath. She went down and smiled!"
+  },
+  "timestamp" : "2026-02-25T10:19:20.894+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772014763,
+    "date" : "2026-02-25T10:19:23.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[Lily and the Big Slide]\n\nLily saw a big slide. She was scared to go down. Her friend said, 'You can do it!' Lily took a deep breath. She went down and smiled!",
+    "translations" : {
+      "en" : "[Lily and the Big Slide]\n\nLily saw a big slide. She was scared to go down. Her friend said, 'You can do it!' Lily took a deep breath. She went down and smiled!",
+      "hi" : "[लिली और बड़ी स्लाइड]\n\nलिली ने एक बड़ी स्लाइड देखी। वह नीचे जाने से डर रही थी. उसके दोस्त ने कहा, 'तुम यह कर सकते हो!' लिली ने गहरी साँस ली। वह नीचे गयी और मुस्कुरायी!",
+      "te" : "[లిల్లీ అండ్ ది బిగ్ స్లయిడ్]\n\nలిల్లీ ఒక పెద్ద స్లయిడ్ చూసింది. కిందకు దిగాలంటేనే భయం వేసింది. ఆమె స్నేహితురాలు, 'నువ్వు చేయగలవు!' లిల్లీ లోతైన శ్వాస తీసుకుంది. ఆమె కిందకి వెళ్లి నవ్వింది!"
+    }
+  },
+  "timestamp" : "2026-02-25T10:19:23.124+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772014787,
+    "date" : "2026-02-25T10:19:47.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "[Lily and the Big Slide]\n\nLily saw a big slide. She was scared to go down. Her friend said, 'You can do it!' Lily took a deep breath. She went down and smiled!",
+    "refined" : "[Lily and the Big Slide]\n\nLily saw a big slide. She felt scared to go down. Her friend encouraged her, saying, 'You can do it!' Lily took a deep breath, then went down the slide and smiled!",
+    "translations" : {
+      "en" : "[Lily and the Big Slide]\n\nLily saw a big slide. She felt scared to go down. Her friend encouraged her, saying, 'You can do it!' Lily took a deep breath, then went down the slide and smiled!",
+      "hi" : "[लिली और बड़ी स्लाइड]\n\nलिली ने एक बड़ी स्लाइड देखी। उसे नीचे जाने में डर लग रहा था. उसकी सहेली ने उसे प्रोत्साहित करते हुए कहा, 'तुम यह कर सकती हो!' लिली ने एक गहरी साँस ली, फिर स्लाइड से नीचे चली गई और मुस्कुराई!",
+      "te" : "[లిల్లీ అండ్ ది బిగ్ స్లయిడ్]\n\nలిల్లీ ఒక పెద్ద స్లయిడ్ చూసింది. కిందకు దిగాలంటే భయంగా అనిపించింది. నువ్వు చేయగలవు!’ అని ఆమె స్నేహితురాలు ఆమెను ప్రోత్సహించింది. లిల్లీ లోతైన శ్వాస తీసుకుంది, ఆపై స్లయిడ్‌లోకి వెళ్లి నవ్వింది!"
+    }
+  },
+  "timestamp" : "2026-02-25T10:19:47.630+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772015056,
+    "date" : "2026-02-25T10:24:16.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Brave Little Explorer",
+    "story" : "Lila saw a dark cave. She took a deep breath and went in. A big bear came out! Lila said, \"Hello, bear!\" The bear hugged her. They became friends."
+  },
+  "timestamp" : "2026-02-25T10:24:16.111+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772015058,
+    "date" : "2026-02-25T10:24:18.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Brave Little Explorer]\n\nLila saw a dark cave. She took a deep breath and went in. A big bear came out! Lila said, \"Hello, bear!\" The bear hugged her. They became friends.",
+    "translations" : {
+      "en" : "[The Brave Little Explorer]\n\nLila saw a dark cave. She took a deep breath and went in. A big bear came out! Lila said, \"Hello, bear!\" The bear hugged her. They became friends.",
+      "hi" : "[द ब्रेव लिटिल एक्सप्लोरर]\n\nलीला को एक अँधेरी गुफा दिखाई दी। उसने एक गहरी साँस ली और अंदर चली गई। एक बड़ा भालू बाहर आया! लीला ने कहा, \"हैलो, भालू!\" भालू ने उसे गले लगा लिया। वे दोस्त बन गये.",
+      "te" : "[ది బ్రేవ్ లిటిల్ ఎక్స్‌ప్లోరర్]\n\nలీల చీకటి గుహను చూసింది. ఆమె గట్టిగా ఊపిరి పీల్చుకుని లోపలికి వెళ్ళింది. ఒక పెద్ద ఎలుగుబంటి బయటకు వచ్చింది! లీల, \"హలో, బేర్!\" ఎలుగుబంటి ఆమెను కౌగిలించుకుంది. వారు స్నేహితులయ్యారు."
+    }
+  },
+  "timestamp" : "2026-02-25T10:24:18.277+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772015079,
+    "date" : "2026-02-25T10:24:39.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "how are you",
+    "refined" : "How are you?",
+    "translations" : {
+      "en" : "How are you?",
+      "hi" : "आप कैसे हैं?",
+      "te" : "మీరు ఎలా ఉన్నారు?"
+    }
+  },
+  "timestamp" : "2026-02-25T10:24:39.954+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772015824,
+    "date" : "2026-02-25T10:37:04.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Lost Teddy",
+    "story" : "Lily lost her teddy bear. She looked everywhere. Then she found it under the bed. Lily was very happy."
+  },
+  "timestamp" : "2026-02-25T10:37:04.560+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772015845,
+    "date" : "2026-02-25T10:37:25.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "[The Lost Teddy]\n\nLily lost her teddy bear. She looked everywhere. Then she found it under the bed. Lily was very happy.",
+    "refined" : "Lily lost her teddy bear. She searched all around her room. Finally, she found it under the bed. Lily felt very happy.",
+    "translations" : {
+      "en" : "Lily lost her teddy bear. She searched all around her room. Finally, she found it under the bed. Lily felt very happy.",
+      "hi" : "लिली ने अपना टेडी बियर खो दिया। उसने अपने कमरे के चारों ओर खोजबीन की। आख़िरकार, उसे यह बिस्तर के नीचे मिला। लिली को बहुत ख़ुशी हुई.",
+      "te" : "లిల్లీ తన టెడ్డి బేర్‌ను కోల్పోయింది. తన గది అంతా వెతికింది. చివరగా, ఆమె మంచం క్రింద కనుగొనబడింది. లిల్లీ చాలా సంతోషంగా అనిపించింది."
+    }
+  },
+  "timestamp" : "2026-02-25T10:37:25.834+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772015884,
+    "date" : "2026-02-25T10:38:04.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Lost Teddy]\n\nLily lost her teddy bear. She looked everywhere. Then she found it under the bed. Lily was very happy.",
+    "translations" : {
+      "en" : "[The Lost Teddy]\n\nLily lost her teddy bear. She looked everywhere. Then she found it under the bed. Lily was very happy.",
+      "hi" : "[द लॉस्ट टेडी]\n\nलिली ने अपना टेडी बियर खो दिया। उसने हर जगह देखा. तभी उसे यह बिस्तर के नीचे मिला। लिली बहुत खुश थी.",
+      "te" : "[ది లాస్ట్ టెడ్డీ]\n\nలిల్లీ తన టెడ్డి బేర్‌ను కోల్పోయింది. ఆమె ప్రతిచోటా చూసింది. అప్పుడు ఆమె దానిని మంచం క్రింద గుర్తించింది. లిల్లీ చాలా సంతోషించింది."
+    }
+  },
+  "timestamp" : "2026-02-25T10:38:04.111+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772016464,
+    "date" : "2026-02-25T10:47:44.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Lost Ball",
+    "story" : "Rahul lost his red ball in the park. He cried and searched everywhere. A kind dog found it under a tree. Rahul thanked the dog and smiled happily."
+  },
+  "timestamp" : "2026-02-25T10:47:44.309+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772016466,
+    "date" : "2026-02-25T10:47:46.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Lost Ball]\n\nRahul lost his red ball in the park. He cried and searched everywhere. A kind dog found it under a tree. Rahul thanked the dog and smiled happily.",
+    "translations" : {
+      "en" : "[The Lost Ball]\n\nRahul lost his red ball in the park. He cried and searched everywhere. A kind dog found it under a tree. Rahul thanked the dog and smiled happily.",
+      "hi" : "[द लॉस्ट बॉल]\n\nराहुल ने पार्क में अपनी लाल गेंद खो दी. वह रोया और हर जगह खोजा। एक दयालु कुत्ते को यह एक पेड़ के नीचे मिला। राहुल ने कुत्ते को धन्यवाद दिया और खुशी से मुस्कुराया।",
+      "te" : "[ది లాస్ట్ బాల్]\n\nరాహుల్ తన ఎర్ర బంతిని పార్క్‌లో కోల్పోయాడు. ఏడుస్తూ అన్నిచోట్లా వెతికాడు. ఒక దయగల కుక్క దానిని చెట్టు క్రింద కనుగొంది. రాహుల్ కుక్కకు కృతజ్ఞతలు తెలుపుతూ ఆనందంగా నవ్వాడు."
+    }
+  },
+  "timestamp" : "2026-02-25T10:47:46.578+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772021942,
+    "date" : "2026-02-25T12:19:02.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Big Red Ball",
+    "story" : "Tom saw a big red ball in the sky. He thought it was a toy. It was just the sun setting. Tom laughed."
+  },
+  "timestamp" : "2026-02-25T12:19:02.182+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772021944,
+    "date" : "2026-02-25T12:19:04.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Big Red Ball]\n\nTom saw a big red ball in the sky. He thought it was a toy. It was just the sun setting. Tom laughed.",
+    "translations" : {
+      "en" : "[The Big Red Ball]\n\nTom saw a big red ball in the sky. He thought it was a toy. It was just the sun setting. Tom laughed.",
+      "hi" : "[बड़ी लाल गेंद]\n\nटॉम ने आकाश में एक बड़ी लाल गेंद देखी। उसने सोचा कि यह कोई खिलौना है। अभी सूर्य अस्त हो रहा था। टॉम हँसे.",
+      "te" : "[ది బిగ్ రెడ్ బాల్]\n\nటామ్ ఆకాశంలో పెద్ద ఎర్రటి బంతిని చూశాడు. అదొక బొమ్మ అనుకున్నాడు. ఇది కేవలం సూర్యాస్తమయం. టామ్ నవ్వాడు."
+    }
+  },
+  "timestamp" : "2026-02-25T12:19:04.382+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772022216,
+    "date" : "2026-02-25T12:23:36.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "[The Big Red Ball]\n\nTom saw a big red ball in the sky. He thought it was a toy. It was just the sun setting. Tom laughed.",
+    "refined" : "The Big Red Ball\n\nTom saw a big red ball in the sky. He thought it was a toy, but it was just the sun setting. Tom laughed.",
+    "translations" : {
+      "en" : "The Big Red Ball\n\nTom saw a big red ball in the sky. He thought it was a toy, but it was just the sun setting. Tom laughed.",
+      "hi" : "बड़ी लाल गेंद\n\nटॉम ने आकाश में एक बड़ी लाल गेंद देखी। उसने सोचा कि यह एक खिलौना है, लेकिन यह तो बस सूरज डूब रहा था। टॉम हँसे.",
+      "te" : "ది బిగ్ రెడ్ బాల్\n\nటామ్ ఆకాశంలో పెద్ద ఎర్రటి బంతిని చూశాడు. అతను బొమ్మ అనుకున్నాడు, కానీ అది సూర్యాస్తమయం మాత్రమే. టామ్ నవ్వాడు."
+    }
+  },
+  "timestamp" : "2026-02-25T12:23:36.890+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772022244,
+    "date" : "2026-02-25T12:24:04.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "Tom saw a big red ball in the sky. He thought it was a toy. It was just the sun setting. Tom laughed.",
+    "refined" : "Tom saw a big red ball in the sky. He thought it was a toy, but it was just the sun setting. Tom laughed.",
+    "translations" : {
+      "en" : "Tom saw a big red ball in the sky. He thought it was a toy, but it was just the sun setting. Tom laughed.",
+      "hi" : "टॉम ने आकाश में एक बड़ी लाल गेंद देखी। उसने सोचा कि यह एक खिलौना है, लेकिन यह तो बस सूरज डूब रहा था। टॉम हँसे.",
+      "te" : "టామ్ ఆకాశంలో పెద్ద ఎర్రటి బంతిని చూశాడు. అతను బొమ్మ అనుకున్నాడు, కానీ అది సూర్యాస్తమయం మాత్రమే. టామ్ నవ్వాడు."
+    }
+  },
+  "timestamp" : "2026-02-25T12:24:04.960+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772022657,
+    "date" : "2026-02-25T12:30:57.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Little Rabbit's Big Fear",
+    "story" : "A little rabbit was scared of the dark. One night, his mom said,\"Don't worry, I'm here.\" The rabbit felt safe and slept. The end. Be brave, even when you're scared."
+  },
+  "timestamp" : "2026-02-25T12:30:57.139+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772022658,
+    "date" : "2026-02-25T12:30:58.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Little Rabbit's Big Fear]\n\nA little rabbit was scared of the dark. One night, his mom said,\"Don't worry, I'm here.\" The rabbit felt safe and slept. The end. Be brave, even when you're scared.",
+    "translations" : {
+      "en" : "[The Little Rabbit's Big Fear]\n\nA little rabbit was scared of the dark. One night, his mom said,\"Don't worry, I'm here.\" The rabbit felt safe and slept. The end. Be brave, even when you're scared.",
+      "hi" : "[छोटे खरगोश का बड़ा डर]\n\nएक छोटा खरगोश अँधेरे से डरता था। एक रात, उसकी माँ ने कहा, \"चिंता मत करो, मैं यहाँ हूँ।\" खरगोश को सुरक्षित महसूस हुआ और वह सो गया। अंत. जब आप डरे हुए हों तब भी बहादुर बनें।",
+      "te" : "[ది లిటిల్ రాబిట్ యొక్క పెద్ద భయం]\n\nఒక చిన్న కుందేలు చీకటికి భయపడింది. ఒక రాత్రి, అతని తల్లి, \"బాధపడకు, నేను ఇక్కడ ఉన్నాను.\" కుందేలు సురక్షితంగా భావించి నిద్రపోయింది. ముగింపు. మీరు భయపడినప్పుడు కూడా ధైర్యంగా ఉండండి."
+    }
+  },
+  "timestamp" : "2026-02-25T12:30:58.813+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772023267,
+    "date" : "2026-02-25T12:41:07.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Rainy Day Surprise",
+    "story" : "Ravi sat by the window on a rainy day. A little bird knocked, soaking wet. Ravi gave it dry bread. The bird chirped, \"Thank you!\" and flew away. Ravi smiled—his small act made a big difference."
+  },
+  "timestamp" : "2026-02-25T12:41:07.556+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772023269,
+    "date" : "2026-02-25T12:41:09.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Rainy Day Surprise]\n\nRavi sat by the window on a rainy day. A little bird knocked, soaking wet. Ravi gave it dry bread. The bird chirped, \"Thank you!\" and flew away. Ravi smiled—his small act made a big difference.",
+    "translations" : {
+      "en" : "[The Rainy Day Surprise]\n\nRavi sat by the window on a rainy day. A little bird knocked, soaking wet. Ravi gave it dry bread. The bird chirped, \"Thank you!\" and flew away. Ravi smiled—his small act made a big difference.",
+      "hi" : "[बरसात के दिन का आश्चर्य]\n\nएक बरसात के दिन रवि खिड़की के पास बैठा था। भीगते हुए एक छोटे पक्षी ने दस्तक दी। रवि ने उसे सूखी रोटी दी। चिड़िया चहकी, \"धन्यवाद!\" और उड़ गया. रवि मुस्कुराया- उसके छोटे से काम ने बड़ा बदलाव ला दिया।",
+      "te" : "[వర్షపు రోజు ఆశ్చర్యం]\n\nవర్షం కురుస్తున్న రోజు రవి కిటికీ దగ్గర కూర్చున్నాడు. ఒక చిన్న పక్షి తడిసి ముద్దయింది. రవి పొడి రొట్టె ఇచ్చాడు. పక్షి కిచకిచలాడుతూ, \"ధన్యవాదాలు!\" మరియు దూరంగా వెళ్లింది. రవి చిరునవ్వు నవ్వాడు-అతని చిన్న పని పెద్ద మార్పు తెచ్చింది."
+    }
+  },
+  "timestamp" : "2026-02-25T12:41:09.930+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772023895,
+    "date" : "2026-02-25T12:51:35.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Magic Stone",
+    "story" : "Ravi found a shiny stone in the park. When he touched it, flowers grew everywhere. He shared it with friends, and more flowers bloomed. The stone taught him kindness makes the world brighter."
+  },
+  "timestamp" : "2026-02-25T12:51:35.576+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772023897,
+    "date" : "2026-02-25T12:51:37.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Magic Stone]\n\nRavi found a shiny stone in the park. When he touched it, flowers grew everywhere. He shared it with friends, and more flowers bloomed. The stone taught him kindness makes the world brighter.",
+    "translations" : {
+      "en" : "[The Magic Stone]\n\nRavi found a shiny stone in the park. When he touched it, flowers grew everywhere. He shared it with friends, and more flowers bloomed. The stone taught him kindness makes the world brighter.",
+      "hi" : "[जादुई पत्थर]\n\nरवि को पार्क में एक चमकदार पत्थर मिला। जब उसने उसे छुआ तो हर जगह फूल उग आए। उसने इसे दोस्तों के साथ साझा किया, और अधिक फूल खिल गए। पत्थर ने उसे सिखाया कि दयालुता दुनिया को उज्जवल बनाती है।",
+      "te" : "[ది మ్యాజిక్ స్టోన్]\n\nరవికి పార్కులో మెరిసే రాయి దొరికింది. అతను దానిని తాకినప్పుడు, అక్కడక్కడ పువ్వులు పెరిగాయి. అతను దానిని స్నేహితులతో పంచుకున్నాడు మరియు మరిన్ని పువ్వులు వికసించాయి. రాయి అతనికి నేర్పిన దయ ప్రపంచాన్ని ప్రకాశవంతంగా చేస్తుంది."
+    }
+  },
+  "timestamp" : "2026-02-25T12:51:37.379+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772024558,
+    "date" : "2026-02-25T13:02:38.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Little Rabbit's Big Jump",
+    "story" : "A little rabbit was scared to jump. He watched other rabbits jump high. He tried and fell. He tried again and jumped a little. Soon, he jumped high like the others. Never give up!"
+  },
+  "timestamp" : "2026-02-25T13:02:38.150+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772024560,
+    "date" : "2026-02-25T13:02:40.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Little Rabbit's Big Jump]\n\nA little rabbit was scared to jump. He watched other rabbits jump high. He tried and fell. He tried again and jumped a little. Soon, he jumped high like the others. Never give up!",
+    "translations" : {
+      "en" : "[The Little Rabbit's Big Jump]\n\nA little rabbit was scared to jump. He watched other rabbits jump high. He tried and fell. He tried again and jumped a little. Soon, he jumped high like the others. Never give up!",
+      "hi" : "[छोटे खरगोश की बड़ी छलांग]\n\nएक छोटा खरगोश कूदने से डर रहा था। उसने अन्य खरगोशों को ऊंची छलांग लगाते देखा। उसने कोशिश की और गिर गया. उसने फिर कोशिश की और थोड़ा उछला. जल्द ही, वह दूसरों की तरह ऊंची छलांग लगाने लगा। कभी हार न मानना!",
+      "te" : "[ది లిటిల్ రాబిట్ యొక్క బిగ్ జంప్]\n\nఒక చిన్న కుందేలు దూకడానికి భయపడింది. అతను ఇతర కుందేళ్ళు ఎత్తుకు ఎగరడం చూశాడు. ప్రయత్నించి పడిపోయాడు. అతను మళ్ళీ ప్రయత్నించాడు మరియు కొద్దిగా దూకాడు. వెంటనే, అతను ఇతరుల మాదిరిగానే ఎత్తుకు దూకాడు. ఎప్పటికీ వదులుకోవద్దు!"
+    }
+  },
+  "timestamp" : "2026-02-25T13:02:40.125+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772024785,
+    "date" : "2026-02-25T13:06:25.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Lost Ball",
+    "story" : "Rahul lost his red ball in the park. He cried and searched everywhere. A kind dog found it under a tree. Rahul thanked the dog and smiled happily."
+  },
+  "timestamp" : "2026-02-25T13:06:25.732+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772024787,
+    "date" : "2026-02-25T13:06:27.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Lost Ball]\n\nRahul lost his red ball in the park. He cried and searched everywhere. A kind dog found it under a tree. Rahul thanked the dog and smiled happily.",
+    "translations" : {
+      "en" : "[The Lost Ball]\n\nRahul lost his red ball in the park. He cried and searched everywhere. A kind dog found it under a tree. Rahul thanked the dog and smiled happily.",
+      "hi" : "[द लॉस्ट बॉल]\n\nराहुल ने पार्क में अपनी लाल गेंद खो दी. वह रोया और हर जगह खोजा। एक दयालु कुत्ते को यह एक पेड़ के नीचे मिला। राहुल ने कुत्ते को धन्यवाद दिया और खुशी से मुस्कुराया।",
+      "te" : "[ది లాస్ట్ బాల్]\n\nరాహుల్ తన ఎర్ర బంతిని పార్క్‌లో కోల్పోయాడు. ఏడుస్తూ అన్నిచోట్లా వెతికాడు. ఒక దయగల కుక్క దానిని చెట్టు క్రింద కనుగొంది. రాహుల్ కుక్కకు కృతజ్ఞతలు తెలుపుతూ ఆనందంగా నవ్వాడు."
+    }
+  },
+  "timestamp" : "2026-02-25T13:06:27.252+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772024818,
+    "date" : "2026-02-25T13:06:58.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "[The Lost Ball]\n\nRahul lost his red ball in the park. He cried and searched everywhere. A kind dog found it under a tree. Rahul thanked the dog and smiled happily.",
+    "refined" : "[The Lost Ball]\n\nRahul lost his bright red ball in the park. He cried and looked everywhere. A friendly dog found it under a big tree. Rahul thanked the dog and smiled happily.",
+    "translations" : {
+      "en" : "[The Lost Ball]\n\nRahul lost his bright red ball in the park. He cried and looked everywhere. A friendly dog found it under a big tree. Rahul thanked the dog and smiled happily.",
+      "hi" : "[द लॉस्ट बॉल]\n\nराहुल ने पार्क में अपनी चमकदार लाल गेंद खो दी। वह रोया और हर जगह देखा। एक मिलनसार कुत्ते को यह एक बड़े पेड़ के नीचे मिला। राहुल ने कुत्ते को धन्यवाद दिया और खुशी से मुस्कुराया।",
+      "te" : "[ది లాస్ట్ బాల్]\n\nపార్క్‌లో రాహుల్ తన ప్రకాశవంతమైన ఎరుపు బంతిని కోల్పోయాడు. అతను ఏడుస్తూ అన్ని చోట్లా చూశాడు. స్నేహపూర్వక కుక్క దానిని ఒక పెద్ద చెట్టు క్రింద కనుగొంది. రాహుల్ కుక్కకు కృతజ్ఞతలు తెలుపుతూ ఆనందంగా నవ్వాడు."
+    }
+  },
+  "timestamp" : "2026-02-25T13:06:58.909+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772024942,
+    "date" : "2026-02-25T13:09:02.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "Ravi Learns to Ride a Bike",
+    "story" : "Ravi tried to ride a bike. He fell down. His dad held his hand. Ravi tried again. He rode! Ravi smiled. Practice helps."
+  },
+  "timestamp" : "2026-02-25T13:09:02.514+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772024945,
+    "date" : "2026-02-25T13:09:05.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[Ravi Learns to Ride a Bike]\n\nRavi tried to ride a bike. He fell down. His dad held his hand. Ravi tried again. He rode! Ravi smiled. Practice helps.",
+    "translations" : {
+      "en" : "[Ravi Learns to Ride a Bike]\n\nRavi tried to ride a bike. He fell down. His dad held his hand. Ravi tried again. He rode! Ravi smiled. Practice helps.",
+      "hi" : "[रवि ने बाइक चलाना सीखा]\n\nरवि ने बाइक चलाने की कोशिश की. वह गिर पड़ा। उसके पिता ने उसका हाथ पकड़ लिया. रवि ने फिर कोशिश की. वह सवार हो गया! रवि मुस्कुराया. अभ्यास से मदद मिलती है.",
+      "te" : "[రవి బైక్ నడపడం నేర్చుకుంటాడు]\n\nరవి బైక్‌పై వెళ్లేందుకు ప్రయత్నించాడు. కింద పడిపోయాడు. తండ్రి చేయి పట్టుకున్నాడు. రవి మళ్ళీ ప్రయత్నించాడు. అతను నడిపాడు! రవి నవ్వాడు. అభ్యాసం సహాయపడుతుంది."
+    }
+  },
+  "timestamp" : "2026-02-25T13:09:05.177+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772025050,
+    "date" : "2026-02-25T13:10:50.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Little Rabbit's Big Fear",
+    "story" : "A little rabbit was scared of the dark. One night, his mom said,\"Don't worry, I'm here.\" The rabbit felt safe and slept. The end. Be brave, even when you're scared."
+  },
+  "timestamp" : "2026-02-25T13:10:50.352+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772025051,
+    "date" : "2026-02-25T13:10:51.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Little Rabbit's Big Fear]\n\nA little rabbit was scared of the dark. One night, his mom said,\"Don't worry, I'm here.\" The rabbit felt safe and slept. The end. Be brave, even when you're scared.",
+    "translations" : {
+      "en" : "[The Little Rabbit's Big Fear]\n\nA little rabbit was scared of the dark. One night, his mom said,\"Don't worry, I'm here.\" The rabbit felt safe and slept. The end. Be brave, even when you're scared.",
+      "hi" : "[छोटे खरगोश का बड़ा डर]\n\nएक छोटा खरगोश अँधेरे से डरता था। एक रात, उसकी माँ ने कहा, \"चिंता मत करो, मैं यहाँ हूँ।\" खरगोश को सुरक्षित महसूस हुआ और वह सो गया। अंत. जब आप डरे हुए हों तब भी बहादुर बनें।",
+      "te" : "[ది లిటిల్ రాబిట్ యొక్క పెద్ద భయం]\n\nఒక చిన్న కుందేలు చీకటికి భయపడింది. ఒక రాత్రి, అతని తల్లి, \"బాధపడకు, నేను ఇక్కడ ఉన్నాను.\" కుందేలు సురక్షితంగా భావించి నిద్రపోయింది. ముగింపు. మీరు భయపడినప్పుడు కూడా ధైర్యంగా ఉండండి."
+    }
+  },
+  "timestamp" : "2026-02-25T13:10:51.927+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772025185,
+    "date" : "2026-02-25T13:13:05.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "A little rabbit was scared of the dark. One night, his mom said,\"Don't worry, I'm here.\" The rabbit felt safe and slept. The end. Be brave, even when you're scared.",
+    "translations" : {
+      "en" : "A little rabbit was scared of the dark. One night, his mom said,\"Don't worry, I'm here.\" The rabbit felt safe and slept. The end. Be brave, even when you're scared.",
+      "hi" : "एक छोटा खरगोश अँधेरे से डरता था। एक रात, उसकी माँ ने कहा, \"चिंता मत करो, मैं यहाँ हूँ।\" खरगोश को सुरक्षित महसूस हुआ और वह सो गया। अंत. जब आप डरे हुए हों तब भी बहादुर बनें।",
+      "te" : "ఒక చిన్న కుందేలు చీకటికి భయపడింది. ఒక రాత్రి, అతని తల్లి, \"బాధపడకు, నేను ఇక్కడ ఉన్నాను.\" కుందేలు సురక్షితంగా భావించి నిద్రపోయింది. ముగింపు. మీరు భయపడినప్పుడు కూడా ధైర్యంగా ఉండండి."
+    }
+  },
+  "timestamp" : "2026-02-25T13:13:05.924+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772025241,
+    "date" : "2026-02-25T13:14:01.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Magic Stone",
+    "story" : "Ravi found a shiny stone in the park. When he touched it, flowers grew everywhere. He shared it with friends, and more flowers bloomed. The stone taught him kindness makes the world brighter."
+  },
+  "timestamp" : "2026-02-25T13:14:01.328+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772025242,
+    "date" : "2026-02-25T13:14:02.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Magic Stone]\n\nRavi found a shiny stone in the park. When he touched it, flowers grew everywhere. He shared it with friends, and more flowers bloomed. The stone taught him kindness makes the world brighter.",
+    "translations" : {
+      "en" : "[The Magic Stone]\n\nRavi found a shiny stone in the park. When he touched it, flowers grew everywhere. He shared it with friends, and more flowers bloomed. The stone taught him kindness makes the world brighter.",
+      "hi" : "[जादुई पत्थर]\n\nरवि को पार्क में एक चमकदार पत्थर मिला। जब उसने उसे छुआ तो हर जगह फूल उग आए। उसने इसे दोस्तों के साथ साझा किया, और अधिक फूल खिल गए। पत्थर ने उसे सिखाया कि दयालुता दुनिया को उज्जवल बनाती है।",
+      "te" : "[ది మ్యాజిక్ స్టోన్]\n\nరవికి పార్కులో మెరిసే రాయి దొరికింది. అతను దానిని తాకినప్పుడు, అక్కడక్కడ పువ్వులు పెరిగాయి. అతను దానిని స్నేహితులతో పంచుకున్నాడు మరియు మరిన్ని పువ్వులు వికసించాయి. రాయి అతనికి నేర్పిన దయ ప్రపంచాన్ని ప్రకాశవంతంగా చేస్తుంది."
+    }
+  },
+  "timestamp" : "2026-02-25T13:14:02.829+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772025479,
+    "date" : "2026-02-25T13:17:59.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Little Secret Garden",
+    "story" : "Once, a little girl found a secret garden. She watered the plants every day. The flowers grew big and bright. The garden became her happy place."
+  },
+  "timestamp" : "2026-02-25T13:17:59.204+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772025481,
+    "date" : "2026-02-25T13:18:01.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Little Secret Garden]\n\nOnce, a little girl found a secret garden. She watered the plants every day. The flowers grew big and bright. The garden became her happy place.",
+    "translations" : {
+      "en" : "[The Little Secret Garden]\n\nOnce, a little girl found a secret garden. She watered the plants every day. The flowers grew big and bright. The garden became her happy place.",
+      "hi" : "[द लिटिल सीक्रेट गार्डन]\n\nएक बार, एक छोटी लड़की को एक गुप्त उद्यान मिला। वह प्रतिदिन पौधों को पानी देती थी। फूल बड़े और चमकीले हो गये। बगीचा उसकी ख़ुशी की जगह बन गया।",
+      "te" : "[ది లిటిల్ సీక్రెట్ గార్డెన్]\n\nఒకసారి, ఒక చిన్న అమ్మాయి ఒక రహస్య తోటను కనుగొంది. ఆమె ప్రతిరోజూ మొక్కలకు నీరు పెట్టింది. పువ్వులు పెద్దవిగా మరియు ప్రకాశవంతంగా పెరిగాయి. తోట ఆమెకు సంతోషకరమైన ప్రదేశంగా మారింది."
+    }
+  },
+  "timestamp" : "2026-02-25T13:18:01.309+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772025743,
+    "date" : "2026-02-25T13:22:23.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Lost Ball",
+    "story" : "Rahul lost his red ball in the park. He cried and searched everywhere. A kind dog found it under a tree. Rahul thanked the dog and smiled happily."
+  },
+  "timestamp" : "2026-02-25T13:22:23.910+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772025745,
+    "date" : "2026-02-25T13:22:25.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Lost Ball]\n\nRahul lost his red ball in the park. He cried and searched everywhere. A kind dog found it under a tree. Rahul thanked the dog and smiled happily.",
+    "translations" : {
+      "en" : "[The Lost Ball]\n\nRahul lost his red ball in the park. He cried and searched everywhere. A kind dog found it under a tree. Rahul thanked the dog and smiled happily.",
+      "hi" : "[द लॉस्ट बॉल]\n\nराहुल ने पार्क में अपनी लाल गेंद खो दी. वह रोया और हर जगह खोजा। एक दयालु कुत्ते को यह एक पेड़ के नीचे मिला। राहुल ने कुत्ते को धन्यवाद दिया और खुशी से मुस्कुराया।",
+      "te" : "[ది లాస్ట్ బాల్]\n\nరాహుల్ తన ఎర్ర బంతిని పార్క్‌లో కోల్పోయాడు. ఏడుస్తూ అన్నిచోట్లా వెతికాడు. ఒక దయగల కుక్క దానిని చెట్టు క్రింద కనుగొంది. రాహుల్ కుక్కకు కృతజ్ఞతలు తెలుపుతూ ఆనందంగా నవ్వాడు."
+    }
+  },
+  "timestamp" : "2026-02-25T13:22:25.521+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772026278,
+    "date" : "2026-02-25T13:31:18.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "im running now",
+    "translations" : {
+      "en" : "im running now",
+      "hi" : "मैं अब दौड़ रहा हूँ",
+      "te" : "నేను ఇప్పుడు నడుస్తున్నాను"
+    }
+  },
+  "timestamp" : "2026-02-25T13:31:18.326+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772026632,
+    "date" : "2026-02-25T13:37:12.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "im going for run",
+    "translations" : {
+      "en" : "im going for run",
+      "hi" : "मैं दौड़ने जा रहा हूँ",
+      "te" : "నేను పరుగు కోసం వెళ్తున్నాను"
+    }
+  },
+  "timestamp" : "2026-02-25T13:37:12.646+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772026960,
+    "date" : "2026-02-25T13:42:40.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "OTHER",
+  "content" : {
+    "type" : "DICTIONARY_LOOKUP",
+    "word" : "what",
+    "definition" : "Used to ask about the nature or identity of something, to introduce a clause expressing surprise or uncertainty, or as a noun to refer to the nature or identity of something."
+  },
+  "timestamp" : "2026-02-25T13:42:40.623+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772028366,
+    "date" : "2026-02-25T14:06:06.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "asdfa",
+    "translations" : {
+      "en" : "asdfa",
+      "hi" : "asdfa",
+      "te" : "asdfa"
+    }
+  },
+  "timestamp" : "2026-02-25T14:06:06.005+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772028528,
+    "date" : "2026-02-25T14:08:48.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "dsfadf",
+    "translations" : {
+      "en" : "dsfadf",
+      "hi" : "dsfadf",
+      "te" : "dsfadf"
+    }
+  },
+  "timestamp" : "2026-02-25T14:08:48.807+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772028529,
+    "date" : "2026-02-25T14:08:49.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "dsfadfasdfasdfdd",
+    "translations" : {
+      "en" : "dsfadfasdfasdfdd",
+      "hi" : "dsfadfasdfasdfdd",
+      "te" : "dsfadfasdfasdfdd"
+    }
+  },
+  "timestamp" : "2026-02-25T14:08:49.578+00:00"
 } ]

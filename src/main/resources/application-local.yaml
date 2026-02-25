@@ -1,11 +1,10 @@
-
 spring:
   ai:
     openai:
-      api-key: "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"
+      api-key: "YOUR_OPENAI_API_KEY"
     huggingface:
-      api-key: "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"
+      api-key: "YOUR_HUGGINGFACE_API_KEY"
     gemini:
-      api-key: "AIzaSyBdY3WnbnXRkrNynYowAYI6W7KxUl1_jNE"
+      api-key: "YOUR_GEMINI_API_KEY"
     sarvam:
-      api-key: "sk_qp6aaxff_wPn6kekwW8gqyYPF7u9ywE6F"
+      api-key: "YOUR_SARVAM_API_KEY"

@@ -16,13 +16,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${app.users.nirvaan.password}")
+    @Value("${app.users.nirvaan.password:123}")
     private String nirvaanPassword;
 
-    @Value("${app.users.devaansh.password}")
+    @Value("${app.users.devaansh.password:123}")
     private String devaanshPassword;
 
-    @Value("${app.users.admin.password}")
+    @Value("${app.users.admin.password:admin}")
     private String adminPassword;
 
     @Bean

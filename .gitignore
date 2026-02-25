@@ -34,3 +34,6 @@ build/
 
 ### Local Config ###
 src/main/resources/application-local.yaml
+target.old/
+target.test/
+data/app_secrets.json

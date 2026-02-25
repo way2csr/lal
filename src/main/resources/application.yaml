@@ -3,29 +3,32 @@ spring:
     allow-bean-definition-overriding: true
   data:
     mongodb:
-      uri: mongodb+srv://way2csr_db_user:Ma%409701425145%23@clusterlal.txjdw5x.mongodb.net/LingoLearn?retryWrites=true&w=majority&appName=ClusterLAL
+      # Embedded MongoDB will automatically start since no URI is provided.
+
   config:
     import: optional:file:./src/main/resources/application-local.yaml
   application:
     name: lal
   ai:
     openai:
-      api-key: ${OPENAI_API_KEY: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}
+      api-key: ${OPENAI_API_KEY:YOUR_OPENAI_API_KEY}
       chat:
         enabled: true
     huggingface:
-      api-key: ${HF_API_KEY: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}
+      api-key: ${HF_API_KEY:YOUR_HUGGINGFACE_API_KEY}
     gemini:
-      api-key: ${GEMINI_API_KEY:AIzaSyBdY3WnbnXRkrNynYowAYI6W7KxUl1_jNE}
+      api-key: ${GEMINI_API_KEY:YOUR_GEMINI_API_KEY}
       chat:
         options:
           model: gemini-1.5-flash
     grok:
       api-key: ${GROK_API_KEY:YOUR_GROK_API_KEY_HERE}
     sarvam:
-      api-key: ${SARVAM_API_KEY:src/main/resources/application-local.yaml}
+      api-key: ${SARVAM_API_KEY:YOUR_SARVAM_API_KEY}
 
 app:
+  git:
+    sync-dir: data
   users:
     nirvaan:
       password: "123"
@@ -52,3 +55,9 @@ management:
     web:
       exposure:
         include: shutdown
+
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 6.0.5
