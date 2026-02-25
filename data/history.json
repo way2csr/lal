@@ -1,0 +1,30 @@
+[ {
+  "_id" : {
+    "timestamp" : 1772013101,
+    "date" : "2026-02-25T09:51:41.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Little Star's Journey",
+    "story" : "A little star named Twinkle wanted to explore the big universe. She zoomed past planets and met a friendly rocket. Twinkle learned that being kind makes everyone happy. Now she shines bright, reminding us to be good friends."
+  },
+  "timestamp" : "2026-02-25T09:51:41.632+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772013103,
+    "date" : "2026-02-25T09:51:43.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Little Star's Journey]\n\nA little star named Twinkle wanted to explore the big universe. She zoomed past planets and met a friendly rocket. Twinkle learned that being kind makes everyone happy. Now she shines bright, reminding us to be good friends.",
+    "translations" : {
+      "en" : "[The Little Star's Journey]\n\nA little star named Twinkle wanted to explore the big universe. She zoomed past planets and met a friendly rocket. Twinkle learned that being kind makes everyone happy. Now she shines bright, reminding us to be good friends.",
+      "hi" : "[द लिटिल स्टार्स जर्नी]\n\nट्विंकल नाम का एक छोटा सितारा बड़े ब्रह्मांड का पता लगाना चाहता था। उसने पिछले ग्रहों को ज़ूम किया और एक दोस्ताना रॉकेट से मुलाकात की। ट्विंकल ने सीखा कि दयालु होने से सभी को खुशी मिलती है। अब वह चमकती है और हमें अच्छे दोस्त बनने की याद दिलाती है।",
+      "te" : "[ది లిటిల్ స్టార్స్ జర్నీ]\n\nట్వింకిల్ అనే చిన్న నక్షత్రం పెద్ద విశ్వాన్ని అన్వేషించాలని కోరుకుంది. ఆమె గత గ్రహాలను జూమ్ చేసింది మరియు స్నేహపూర్వక రాకెట్‌ను కలుసుకుంది. దయగా ఉండటం అందరినీ సంతోషపరుస్తుందని ట్వింకిల్ తెలుసుకుంది. ఇప్పుడు ఆమె ప్రకాశవంతంగా ప్రకాశిస్తుంది, మంచి స్నేహితులుగా ఉండాలని మాకు గుర్తుచేస్తుంది."
+    }
+  },
+  "timestamp" : "2026-02-25T09:51:43.676+00:00"
+} ]
