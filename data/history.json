@@ -27,4 +27,84 @@
     }
   },
   "timestamp" : "2026-02-25T09:51:43.676+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772013449,
+    "date" : "2026-02-25T09:57:29.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Rainy Day Surprise",
+    "story" : "On a rainy day, little Ravi saw a tiny frog jumping near his window. He gently picked it up and placed it under a leaf. Later, he found a shiny coin there. The frog was safe, and Ravi was happy!"
+  },
+  "timestamp" : "2026-02-25T09:57:29.892+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772013451,
+    "date" : "2026-02-25T09:57:31.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Rainy Day Surprise]\n\nOn a rainy day, little Ravi saw a tiny frog jumping near his window. He gently picked it up and placed it under a leaf. Later, he found a shiny coin there. The frog was safe, and Ravi was happy!",
+    "translations" : {
+      "en" : "[The Rainy Day Surprise]\n\nOn a rainy day, little Ravi saw a tiny frog jumping near his window. He gently picked it up and placed it under a leaf. Later, he found a shiny coin there. The frog was safe, and Ravi was happy!",
+      "hi" : "[बरसात के दिन का आश्चर्य]\n\nएक बरसात के दिन, छोटे रवि ने एक छोटे मेंढक को अपनी खिड़की के पास कूदते हुए देखा। उसने धीरे से उसे उठाया और एक पत्ते के नीचे रख दिया। बाद में उसे वहां एक चमकदार सिक्का मिला। मेंढक सुरक्षित था, और रवि खुश था!",
+      "te" : "[వర్షపు రోజు ఆశ్చర్యం]\n\nవర్షం కురుస్తున్న రోజు, చిన్న రవి తన కిటికీ దగ్గర ఒక చిన్న కప్ప దూకడం చూసాడు. మెల్లగా దాన్ని అందుకుని ఒక ఆకు కింద పెట్టాడు. తరువాత, అతనికి అక్కడ మెరిసే నాణెం కనిపించింది. కప్ప సురక్షితంగా ఉంది, రవి సంతోషించాడు!"
+    }
+  },
+  "timestamp" : "2026-02-25T09:57:31.927+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772013453,
+    "date" : "2026-02-25T09:57:33.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "[The Rainy Day Surprise]\n\nOn a rainy day, little Ravi saw a tiny frog jumping near his window. He gently picked it up and placed it under a leaf. Later, he found a shiny coin there. The frog was safe, and Ravi was happy!",
+    "refined" : "The Rainy Day Surprise\n\nOne rainy day, little Ravi spotted a tiny frog near his window. He carefully picked it up and placed it under a leaf. Later, he found a shiny coin there. The frog was safe, and Ravi was happy!",
+    "translations" : {
+      "en" : "The Rainy Day Surprise\n\nOne rainy day, little Ravi spotted a tiny frog near his window. He carefully picked it up and placed it under a leaf. Later, he found a shiny coin there. The frog was safe, and Ravi was happy!",
+      "hi" : "बरसात के दिन का आश्चर्य\n\nएक बरसात के दिन, छोटे रवि ने अपनी खिड़की के पास एक छोटे मेंढक को देखा। उसने सावधानी से उसे उठाया और एक पत्ते के नीचे रख दिया। बाद में उसे वहां एक चमकदार सिक्का मिला। मेंढक सुरक्षित था, और रवि खुश था!",
+      "te" : "ది రైనీ డే సర్‌ప్రైజ్\n\nఒక వర్షపు రోజు, చిన్న రవి తన కిటికీ దగ్గర ఒక చిన్న కప్పను గుర్తించాడు. అతను దానిని జాగ్రత్తగా తీసుకొని ఒక ఆకు క్రింద ఉంచాడు. తరువాత, అతనికి అక్కడ మెరిసే నాణెం కనిపించింది. కప్ప సురక్షితంగా ఉంది, రవి సంతోషించాడు!"
+    }
+  },
+  "timestamp" : "2026-02-25T09:57:33.331+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772013455,
+    "date" : "2026-02-25T09:57:35.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "[The Rainy Day Surprise]\n\nOn a rainy day, little Ravi saw a tiny frog jumping near his window. He gently picked it up and placed it under a leaf. Later, he found a shiny coin there. The frog was safe, and Ravi was happy!",
+    "refined" : "The Rainy Day Surprise\n\nOne rainy day, little Ravi spotted a tiny frog near his window. He carefully picked it up and placed it under a leaf. Later, he found a shiny coin there. The frog was safe, and Ravi was happy!",
+    "translations" : {
+      "en" : "The Rainy Day Surprise\n\nOne rainy day, little Ravi spotted a tiny frog near his window. He carefully picked it up and placed it under a leaf. Later, he found a shiny coin there. The frog was safe, and Ravi was happy!",
+      "hi" : "बरसात के दिन का आश्चर्य\n\nएक बरसात के दिन, छोटे रवि ने अपनी खिड़की के पास एक छोटे मेंढक को देखा। उसने सावधानी से उसे उठाया और एक पत्ते के नीचे रख दिया। बाद में उसे वहां एक चमकदार सिक्का मिला। मेंढक सुरक्षित था, और रवि खुश था!",
+      "te" : "ది రైనీ డే సర్‌ప్రైజ్\n\nఒక వర్షపు రోజు, చిన్న రవి తన కిటికీ దగ్గర ఒక చిన్న కప్పను గుర్తించాడు. అతను దానిని జాగ్రత్తగా తీసుకొని ఒక ఆకు క్రింద ఉంచాడు. తరువాత, అతనికి అక్కడ మెరిసే నాణెం కనిపించింది. కప్ప సురక్షితంగా ఉంది, రవి సంతోషించాడు!"
+    }
+  },
+  "timestamp" : "2026-02-25T09:57:35.304+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772013577,
+    "date" : "2026-02-25T09:59:37.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "[The Rainy Day Surprise]\n\nOn a rainy day, little Ravi saw a tiny frog jumping near his window. He gently picked it up and placed it under a leaf. Later, he found a shiny coin there. The frog was safe, and Ravi was happy!",
+    "refined" : "The Rainy Day Surprise\n\nOne rainy day, little Ravi spotted a tiny frog near his window. He carefully picked it up and placed it under a leaf. Later, he found a shiny coin there. The frog was safe, and Ravi was happy!",
+    "translations" : {
+      "en" : "The Rainy Day Surprise\n\nOne rainy day, little Ravi spotted a tiny frog near his window. He carefully picked it up and placed it under a leaf. Later, he found a shiny coin there. The frog was safe, and Ravi was happy!",
+      "hi" : "बरसात के दिन का आश्चर्य\n\nएक बरसात के दिन, छोटे रवि ने अपनी खिड़की के पास एक छोटे मेंढक को देखा। उसने सावधानी से उसे उठाया और एक पत्ते के नीचे रख दिया। बाद में उसे वहां एक चमकदार सिक्का मिला। मेंढक सुरक्षित था, और रवि खुश था!",
+      "te" : "ది రైనీ డే సర్‌ప్రైజ్\n\nఒక వర్షపు రోజు, చిన్న రవి తన కిటికీ దగ్గర ఒక చిన్న కప్పను గుర్తించాడు. అతను దానిని జాగ్రత్తగా తీసుకొని ఒక ఆకు క్రింద ఉంచాడు. తరువాత, అతనికి అక్కడ మెరిసే నాణెం కనిపించింది. కప్ప సురక్షితంగా ఉంది, రవి సంతోషించాడు!"
+    }
+  },
+  "timestamp" : "2026-02-25T09:59:37.524+00:00"
 } ]
