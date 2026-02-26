@@ -903,4 +903,33 @@
     }
   },
   "timestamp" : "2026-02-26T20:56:45.487+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772145065,
+    "date" : "2026-02-26T22:31:05.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "Ravi Learns to Draw",
+    "story" : "Ravi tried to draw a cat. His first draw was a blurry circle. He kept trying, and soon, he made a nice cat with ears and a tail. He smiled and said, 'I can do it!' Moral: Keep trying, you will learn."
+  },
+  "timestamp" : "2026-02-26T22:31:05.272+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772145066,
+    "date" : "2026-02-26T22:31:06.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[Ravi Learns to Draw]\n\nRavi tried to draw a cat. His first draw was a blurry circle. He kept trying, and soon, he made a nice cat with ears and a tail. He smiled and said, 'I can do it!' Moral: Keep trying, you will learn.",
+    "translations" : {
+      "en" : "[Ravi Learns to Draw]\n\nRavi tried to draw a cat. His first draw was a blurry circle. He kept trying, and soon, he made a nice cat with ears and a tail. He smiled and said, 'I can do it!' Moral: Keep trying, you will learn.",
+      "hi" : "[रवि ने चित्र बनाना सीखा]\n\nरवि ने एक बिल्ली का चित्र बनाने का प्रयास किया। उनका पहला ड्रा एक धुंधला वृत्त था। वह कोशिश करता रहा और जल्द ही, उसने कान और पूंछ वाली एक अच्छी बिल्ली बना ली। उन्होंने मुस्कुराते हुए कहा, 'मैं यह कर सकता हूं!' शिक्षा: प्रयास करते रहो, तुम सीख जाओगे।",
+      "te" : "[రవి గీయడం నేర్చుకుంటాడు]\n\nరవి పిల్లిని గీయడానికి ప్రయత్నించాడు. అతని మొదటి డ్రా అస్పష్టమైన వృత్తం. అతను ప్రయత్నిస్తూనే ఉన్నాడు మరియు వెంటనే, అతను చెవులు మరియు తోకతో ఒక మంచి పిల్లిని తయారు చేశాడు. అతను నవ్వి, 'నేను చేయగలను!' నీతి: ప్రయత్నిస్తూ ఉండండి, మీరు నేర్చుకుంటారు."
+    }
+  },
+  "timestamp" : "2026-02-26T22:31:06.869+00:00"
 } ]
