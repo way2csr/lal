@@ -1,64 +1,5 @@
 [ {
   "_id" : {
-    "timestamp" : 1772116743,
-    "date" : "2026-02-26T14:39:03.000+00:00"
-  },
-  "username" : "newuser_test",
-  "password" : "{bcrypt}$2a$10$tXiqA3RycLGf4oQb8xl5Qut.TBaz3o7ydFAwX80ZguNTF2XrE1vMu",
-  "roles" : [ "ROLE_USER" ],
-  "email" : "testuser@example.com",
-  "phoneNumber" : "1234567890",
-  "firstName" : "Test",
-  "lastName" : "User",
-  "age" : 30,
-  "fatherName" : "John",
-  "motherName" : "Jane"
-}, {
-  "_id" : {
-    "timestamp" : 1772116833,
-    "date" : "2026-02-26T14:40:33.000+00:00"
-  },
-  "username" : "tester_final",
-  "password" : "{bcrypt}$2a$10$V84tV8BNfcnMhGyQ7HpZ3eloTdx7iOl.Aot5V.Kr8/TwQ7EJ6pBm2",
-  "roles" : [ "ROLE_USER" ],
-  "email" : "test@test.com",
-  "phoneNumber" : "1234567890",
-  "firstName" : "Test",
-  "lastName" : "User",
-  "age" : 25,
-  "fatherName" : "Dad",
-  "motherName" : "Mom"
-}, {
-  "_id" : {
-    "timestamp" : 1772116918,
-    "date" : "2026-02-26T14:41:58.000+00:00"
-  },
-  "username" : "newuser_test_unique",
-  "password" : "{bcrypt}$2a$10$po.gIJv8kqmJWnKWKKofzeGwmVY5ubExnDsuTwHp3fgqjZOJcnLWe",
-  "roles" : [ "ROLE_USER" ],
-  "email" : "testuser@example.com",
-  "phoneNumber" : "1234567890",
-  "firstName" : "Test",
-  "lastName" : "User",
-  "age" : 30,
-  "fatherName" : "John",
-  "motherName" : "Jane"
-}, {
-  "_id" : {
-    "timestamp" : 1772116987,
-    "date" : "2026-02-26T14:43:07.000+00:00"
-  },
-  "username" : "testing_user",
-  "password" : "{bcrypt}$2a$10$uJXtrJ8a9YlsZJA4BF44quALZ88bK7DxOrtTALYvNk/5doNuHocrW",
-  "roles" : [ "ROLE_USER" ],
-  "email" : "",
-  "phoneNumber" : "",
-  "firstName" : "",
-  "lastName" : "",
-  "fatherName" : "",
-  "motherName" : ""
-}, {
-  "_id" : {
     "timestamp" : 1772117040,
     "date" : "2026-02-26T14:44:00.000+00:00"
   },
@@ -67,7 +8,7 @@
   "roles" : [ "ROLE_USER" ],
   "email" : "test@test.com",
   "phoneNumber" : "",
-  "firstName" : "Test",
+  "firstName" : "Test1",
   "lastName" : "User",
   "fatherName" : "",
   "motherName" : ""
