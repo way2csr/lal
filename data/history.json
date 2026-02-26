@@ -799,4 +799,62 @@
     }
   },
   "timestamp" : "2026-02-25T14:08:49.578+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772049815,
+    "date" : "2026-02-25T20:03:35.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "Ravi Learns to Draw",
+    "story" : "Ravi tried to draw a cat. His first draw was a blurry circle. He kept trying, and soon, he made a nice cat with ears and a tail. He smiled and said, 'I can do it!' Moral: Keep trying, you will learn."
+  },
+  "timestamp" : "2026-02-25T20:03:35.105+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772049817,
+    "date" : "2026-02-25T20:03:37.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[Ravi Learns to Draw]\n\nRavi tried to draw a cat. His first draw was a blurry circle. He kept trying, and soon, he made a nice cat with ears and a tail. He smiled and said, 'I can do it!' Moral: Keep trying, you will learn.",
+    "translations" : {
+      "en" : "[Ravi Learns to Draw]\n\nRavi tried to draw a cat. His first draw was a blurry circle. He kept trying, and soon, he made a nice cat with ears and a tail. He smiled and said, 'I can do it!' Moral: Keep trying, you will learn.",
+      "hi" : "[रवि ने चित्र बनाना सीखा]\n\nरवि ने एक बिल्ली का चित्र बनाने का प्रयास किया। उनका पहला ड्रा एक धुंधला वृत्त था। वह कोशिश करता रहा और जल्द ही, उसने कान और पूंछ वाली एक अच्छी बिल्ली बना ली। उन्होंने मुस्कुराते हुए कहा, 'मैं यह कर सकता हूं!' शिक्षा: प्रयास करते रहो, तुम सीख जाओगे।",
+      "te" : "[రవి గీయడం నేర్చుకుంటాడు]\n\nరవి పిల్లిని గీయడానికి ప్రయత్నించాడు. అతని మొదటి డ్రా అస్పష్టమైన వృత్తం. అతను ప్రయత్నిస్తూనే ఉన్నాడు మరియు వెంటనే, అతను చెవులు మరియు తోకతో ఒక మంచి పిల్లిని తయారు చేశాడు. అతను నవ్వి, 'నేను చేయగలను!' నీతి: ప్రయత్నిస్తూ ఉండండి, మీరు నేర్చుకుంటారు."
+    }
+  },
+  "timestamp" : "2026-02-25T20:03:37.456+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772049824,
+    "date" : "2026-02-25T20:03:44.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Brave Little Explorer",
+    "story" : "Lila saw a dark cave. She took her tiny flashlight and went in. A big bear was there! She was scared but said, \"Hello!\" The bear smiled and gave her a shiny rock. Lila learned bravery makes friends."
+  },
+  "timestamp" : "2026-02-25T20:03:44.405+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772049828,
+    "date" : "2026-02-25T20:03:48.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Brave Little Explorer]\n\nLila saw a dark cave. She took her tiny flashlight and went in. A big bear was there! She was scared but said, \"Hello!\" The bear smiled and gave her a shiny rock. Lila learned bravery makes friends.",
+    "translations" : {
+      "en" : "[The Brave Little Explorer] Lila saw a dark cave. She took her tiny flashlight and went in. A big bear was there! She was scared but said, 'Hello!' The bear smiled and gave her a shiny rock. Lila learned bravery makes friends.",
+      "hi" : "[बहादुर छोटा एक्सप्लोरर] लीला ने एक अंधेरी गुफा देखी। उसने अपनी छोटी टॉर्च ली और अंदर गई। वहाँ एक बड़ा भालू था! वह डरी हुई थी लेकिन उसने कहा, 'हेलो!' भालू मुस्कुराया और उसे एक चमकदार पत्थर दिया। लीला को पता चला कि बहादुरी से दोस्त बनते हैं।",
+      "te" : "[సాహసవంతురాలైన చిన్న అన్వేషకురాలు] లీల ఒక చీకటి గుహను చూసింది. ఆమె తన చిన్న ఫ్లాష్‌లైట్ తీసుకుని లోపలికి వెళ్ళింది. అక్కడ ఒక పెద్ద ఎలుగుబంటి ఉంది! ఆమె భయపడింది కానీ 'హలో!' అని చెప్పింది. ఎలుగుబంటి నవ్వి ఆమెకు మెరిసే రాయిని ఇచ్చింది. లీల బ్రేవరీ స్నేహితులను తయారు చేస్తుందని తెలుసుకుంది."
+    }
+  },
+  "timestamp" : "2026-02-25T20:03:48.197+00:00"
 } ]
