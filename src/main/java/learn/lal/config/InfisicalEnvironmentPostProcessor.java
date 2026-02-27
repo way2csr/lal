@@ -24,7 +24,7 @@ public class InfisicalEnvironmentPostProcessor implements EnvironmentPostProcess
     }
 
     private static final String PROPERTY_SOURCE_NAME = "infisical-secrets";
-    private static final String LOG_FILE = "/tmp/infisical_processor.log";
+    private static final String LOG_FILE = System.getProperty("java.io.tmpdir") + java.io.File.separator + "infisical_processor.log";
 
     private static final Map<String, String> KEY_MAPPING = new HashMap<>();
     static {
@@ -97,10 +97,10 @@ public class InfisicalEnvironmentPostProcessor implements EnvironmentPostProcess
             }
 
         } catch (InfisicalException e) {
-            System.err.println("❌ [Infisical] Failed to load secrets: " + e.getMessage());
+            System.err.println("❌ [Infisical] Failed to load secrets (InfisicalException): " + e.getMessage());
             logError("InfisicalException", e);
         } catch (Exception e) {
-            System.err.println("❌ [Infisical] Unexpected error: " + e.getMessage());
+            System.err.println("❌ [Infisical] Unexpected error during secret loading: " + e.getMessage());
             logError("Exception", e);
         }
     }

@@ -11,5 +11,5 @@ FOR /F "tokens=5" %%a IN ('netstat -aon ^| findstr :8080') DO (
 
 echo.
 echo 🚀 Starting LingoLearn Application...
-./mvnw spring-boot:run
+mvnw spring-boot:run
 pause
