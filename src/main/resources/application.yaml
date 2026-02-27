@@ -1,3 +1,10 @@
+infisical:
+  client-id: ${INFISICAL_CLIENT_ID:}
+  client-secret: ${INFISICAL_CLIENT_SECRET:}
+  project-id: ${INFISICAL_PROJECT_ID:397abbdb-c673-4d6e-8d8e-ed0bc928f2d6}
+  environment: ${INFISICAL_ENV:dev}
+  site-url: https://app.infisical.com
+
 spring:
   main:
     allow-bean-definition-overriding: true
@@ -11,20 +18,20 @@ spring:
     name: lal
   ai:
     openai:
-      api-key: ${OPENAI_API_KEY:YOUR_OPENAI_API_KEY}
+      api-key: ${OPENAI_API_KEY:}
       chat:
         enabled: true
     huggingface:
-      api-key: ${HF_API_KEY:YOUR_HUGGINGFACE_API_KEY}
+      api-key: ${HF_API_KEY:}
     gemini:
-      api-key: ${GEMINI_API_KEY:YOUR_GEMINI_API_KEY}
+      api-key: ${GEMINI_API_KEY:}
       chat:
         options:
           model: gemini-1.5-flash
     grok:
-      api-key: ${GROK_API_KEY:YOUR_GROK_API_KEY_HERE}
+      api-key: ${GROK_API_KEY:}
     sarvam:
-      api-key: ${SARVAM_API_KEY:YOUR_SARVAM_API_KEY}
+      api-key: ${SARVAM_API_KEY:}
 
 app:
   git:

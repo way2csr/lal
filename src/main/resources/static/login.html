@@ -1,197 +1,426 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login | LingoLearn AI</title>
     <style>
-        :root {
-            --primary: #6366f1;
-            --primary-light: #e0e7ff;
-            --bg: #f8fafc;
-            --text-dark: #1e293b;
-            --text-light: #64748b;
-            --white: #ffffff;
-            --shadow: 0 10px 25px rgba(0,0,0,0.05);
-            --radius: 16px;
-        }
+      :root {
+        --primary: #6366f1;
+        --primary-light: #e0e7ff;
+        --bg: #f8fafc;
+        --text-dark: #1e293b;
+        --text-light: #64748b;
+        --white: #ffffff;
+        --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        --radius: 16px;
+      }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
+      body {
+        background-color: var(--bg);
+        color: var(--text-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
 
-        .login-card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
+      .login-card {
+        background: var(--white);
+        padding: 2.5rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+      }
 
-        .login-card h1 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            font-size: 2rem;
-        }
+      .login-card h1 {
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        font-size: 2rem;
+      }
 
-        .login-card p {
-            color: var(--text-light);
-            margin-bottom: 2rem;
-        }
+      .login-card p {
+        color: var(--text-light);
+        margin-bottom: 2rem;
+      }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-        }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+      }
 
-        .input-group {
-            text-align: left;
-        }
+      .input-group {
+        text-align: left;
+      }
 
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-dark);
-            font-size: 0.9rem;
-        }
+      .input-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-dark);
+        font-size: 0.9rem;
+      }
 
-        .input-group input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.2s;
-        }
+      .input-group input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.2s;
+      }
 
-        .input-group input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-light);
-        }
+      .input-group input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--primary-light);
+      }
 
-        .btn-submit {
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 0.5rem;
-        }
+      .btn-submit {
+        background: var(--primary);
+        color: var(--white);
+        border: none;
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 0.5rem;
+      }
 
-        .btn-submit:hover {
-            background: #4f46e5;
-            transform: translateY(-1px);
-        }
+      .btn-submit:hover {
+        background: #4f46e5;
+        transform: translateY(-1px);
+      }
 
-        .alert {
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-            display: none;
-        }
+      .btn-secondary {
+        background: transparent;
+        color: var(--primary);
+        border: 1px solid var(--primary);
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 0.5rem;
+      }
 
-        .alert-error {
-            background: #fee2e2;
-            color: #b91c1c;
-            border: 1px solid #fecaca;
-        }
+      .btn-secondary:hover {
+        background: var(--primary-light);
+      }
 
-        .alert-success {
-            background: #d1fae5;
-            color: #047857;
-            border: 1px solid #a7f3d0;
-        }
+      .form-section {
+        display: none;
+      }
+
+      .form-section.active {
+        display: block;
+      }
+
+      .alert {
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+        display: none;
+      }
+
+      .alert-error {
+        background: #fee2e2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+      }
+
+      .alert-success {
+        background: #d1fae5;
+        color: #047857;
+        border: 1px solid #a7f3d0;
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <div class="login-card">
-        <h1>✨ LingoLearn AI</h1>
-        <p>Welcome back. Please sign in.</p>
+      <h1>✨ LingoLearn AI</h1>
+      <p id="form-subtitle">Welcome back. Please sign in.</p>
 
-        <div id="error-msg" class="alert alert-error">Invalid username or password.</div>
-        <div id="logout-msg" class="alert alert-success">You have been successfully logged out.</div>
+      <div id="error-msg" class="alert alert-error">
+        Invalid username or password.
+      </div>
+      <div id="logout-msg" class="alert alert-success">
+        You have been successfully logged out.
+      </div>
+      <div id="reg-error-msg" class="alert alert-error">
+        Registration failed.
+      </div>
+      <div id="reg-success-msg" class="alert alert-success">
+        Registration successful! You can now sign in.
+      </div>
 
+      <!-- Login Form -->
+      <div id="login-section" class="form-section active">
         <form action="/login" method="POST">
-            <div class="input-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required autocomplete="username">
-            </div>
-            
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required autocomplete="current-password">
-            </div>
+          <div class="input-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              required
+              autocomplete="username"
+            />
+          </div>
 
-            <button type="submit" class="btn-submit">Sign In</button>
-            
-            <div style="text-align:center; margin:10px 0; color:var(--text-light); font-size:0.9rem;">— OR —</div>
-            
-            <button type="button" class="btn-submit" style="background:#e2e8f0; color:#475569; margin-top:0;" onclick="guestLogin()" id="guest-btn">
-                👤 Continue as Guest
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              autocomplete="current-password"
+            />
+          </div>
+
+          <button type="submit" class="btn-submit">Sign In</button>
+
+          <div
+            style="
+              text-align: center;
+              margin: 10px 0;
+              color: var(--text-light);
+              font-size: 0.9rem;
+            "
+          >
+            — OR —
+          </div>
+
+          <button
+            type="button"
+            class="btn-submit"
+            style="background: #e2e8f0; color: #475569; margin-top: 0"
+            onclick="guestLogin()"
+            id="guest-btn"
+          >
+            👤 Continue as Guest
+          </button>
+
+          <div style="text-align: center; margin-top: 15px">
+            <span style="color: var(--text-light); font-size: 0.9rem"
+              >Don't have an account?</span
+            >
+            <button
+              type="button"
+              class="btn-secondary"
+              style="margin-top: 5px; width: 100%"
+              onclick="toggleForm('register')"
+            >
+              Sign Up
             </button>
+          </div>
         </form>
+      </div>
+
+      <!-- Registration Form -->
+      <div id="register-section" class="form-section">
+        <form id="register-form" onsubmit="registerUser(event)">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
+            <div class="input-group">
+              <label for="reg-username">Username *</label>
+              <input type="text" id="reg-username" required />
+            </div>
+            <div class="input-group">
+              <label for="reg-password">Password *</label>
+              <input type="password" id="reg-password" required />
+            </div>
+            <div class="input-group">
+              <label for="reg-firstname">First Name</label>
+              <input type="text" id="reg-firstname" />
+            </div>
+            <div class="input-group">
+              <label for="reg-lastname">Last Name</label>
+              <input type="text" id="reg-lastname" />
+            </div>
+            <div class="input-group">
+              <label for="reg-email">Email</label>
+              <input type="email" id="reg-email" />
+            </div>
+            <div class="input-group">
+              <label for="reg-phone">Phone Number</label>
+              <input type="tel" id="reg-phone" />
+            </div>
+            <div class="input-group">
+              <label for="reg-age">Age</label>
+              <input type="number" id="reg-age" />
+            </div>
+            <div class="input-group">
+              <label for="reg-father">Father's Name</label>
+              <input type="text" id="reg-father" />
+            </div>
+            <div class="input-group">
+              <label style="grid-column: 1 / -1" for="reg-mother"
+                >Mother's Name</label
+              >
+              <input type="text" id="reg-mother" />
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit" id="reg-submit-btn">
+            Register
+          </button>
+
+          <div style="text-align: center; margin-top: 15px">
+            <span style="color: var(--text-light); font-size: 0.9rem"
+              >Already have an account?</span
+            >
+            <button
+              type="button"
+              class="btn-secondary"
+              style="margin-top: 5px; width: 100%"
+              onclick="toggleForm('login')"
+            >
+              Sign In
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <script>
-        // Check URL parameters to show error or logout messages cleanly without Thymeleaf
-        const urlParams = new URLSearchParams(window.location.search);
-        
-        if (urlParams.has('error')) {
-            document.getElementById('error-msg').style.display = 'block';
-        }
-        
-        if (urlParams.has('logout')) {
-            document.getElementById('logout-msg').style.display = 'block';
-        }
+      // Check URL parameters to show error or logout messages cleanly without Thymeleaf
+      const urlParams = new URLSearchParams(window.location.search);
 
-        async function guestLogin() {
-            const btn = document.getElementById('guest-btn');
-            const originalContent = btn.innerHTML;
-            btn.innerHTML = '⏳ Setting up session...';
-            btn.disabled = true;
+      if (urlParams.has("error")) {
+        document.getElementById("error-msg").style.display = "block";
+      }
 
-            try {
-                const response = await fetch('/api/guest/login', {
-                    method: 'POST'
-                });
-                
-                if (response.ok) {
-                    window.location.href = '/learn.html';
-                } else {
-                    alert("Failed to continue as guest. Please try again.");
-                    btn.innerHTML = originalContent;
-                    btn.disabled = false;
-                }
-            } catch (err) {
-                console.error("Guest login error:", err);
-                alert("Error connecting to server.");
-                btn.innerHTML = originalContent;
-                btn.disabled = false;
-            }
+      if (urlParams.has("logout")) {
+        document.getElementById("logout-msg").style.display = "block";
+      }
+
+      // Display form toggling logic
+      function toggleForm(formType) {
+        const loginSection = document.getElementById("login-section");
+        const registerSection = document.getElementById("register-section");
+        const subtitle = document.getElementById("form-subtitle");
+
+        // Hide alerts
+        document
+          .querySelectorAll(".alert")
+          .forEach((a) => (a.style.display = "none"));
+
+        if (formType === "register") {
+          loginSection.classList.remove("active");
+          registerSection.classList.add("active");
+          subtitle.innerText = "Create a new account.";
+        } else {
+          registerSection.classList.remove("active");
+          loginSection.classList.add("active");
+          subtitle.innerText = "Welcome back. Please sign in.";
         }
+      }
+
+      // Registration Logic
+      async function registerUser(event) {
+        event.preventDefault();
+
+        const btn = document.getElementById("reg-submit-btn");
+        const errorMsg = document.getElementById("reg-error-msg");
+        const successMsg = document.getElementById("reg-success-msg");
+
+        btn.innerHTML = "⏳ Registering...";
+        btn.disabled = true;
+        errorMsg.style.display = "none";
+        successMsg.style.display = "none";
+
+        const payload = {
+          username: document.getElementById("reg-username").value,
+          password: document.getElementById("reg-password").value,
+          firstName: document.getElementById("reg-firstname").value,
+          lastName: document.getElementById("reg-lastname").value,
+          email: document.getElementById("reg-email").value,
+          phoneNumber: document.getElementById("reg-phone").value,
+          age: document.getElementById("reg-age").value
+            ? parseInt(document.getElementById("reg-age").value)
+            : null,
+          fatherName: document.getElementById("reg-father").value,
+          motherName: document.getElementById("reg-mother").value,
+        };
+
+        try {
+          const response = await fetch("/api/user/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+
+          if (response.ok) {
+            successMsg.style.display = "block";
+            document.getElementById("register-form").reset();
+            // Switch back to login slowly so they see success msg
+            setTimeout(() => {
+              toggleForm("login");
+              // Show success msg on login screen
+              successMsg.style.display = "block";
+            }, 2000);
+          } else {
+            const data = await response.json().catch(() => ({}));
+            errorMsg.innerText =
+              data.message || "Registration failed. Username might exist.";
+            errorMsg.style.display = "block";
+          }
+        } catch (err) {
+          console.error("Registration error:", err);
+          errorMsg.innerText = "Error connecting to server.";
+          errorMsg.style.display = "block";
+        } finally {
+          btn.innerHTML = "Register";
+          btn.disabled = false;
+        }
+      }
+
+      async function guestLogin() {
+        const btn = document.getElementById("guest-btn");
+        const originalContent = btn.innerHTML;
+        btn.innerHTML = "⏳ Setting up session...";
+        btn.disabled = true;
+
+        try {
+          const response = await fetch("/api/guest/login", {
+            method: "POST",
+          });
+
+          if (response.ok) {
+            window.location.href = "/learn.html";
+          } else {
+            alert("Failed to continue as guest. Please try again.");
+            btn.innerHTML = originalContent;
+            btn.disabled = false;
+          }
+        } catch (err) {
+          console.error("Guest login error:", err);
+          alert("Error connecting to server.");
+          btn.innerHTML = originalContent;
+          btn.disabled = false;
+        }
+      }
     </script>
-</body>
+  </body>
 </html>

@@ -40,8 +40,10 @@ public class CustomUserDetailsService implements UserDetailsService {
                 User mongoUser = mongoUserOpt.get();
                 // Ensure mongo passwords have an encoder prefix if they don't already
                 String pwd = mongoUser.getPassword();
+                // The password was already encoded using the delegating encoder during registration.
+                // We don't need to add {noop} here because it will already have a prefix like {bcrypt}.
                 if (pwd != null && !pwd.startsWith("{")) {
-                    pwd = "{noop}" + pwd;
+                    pwd = "{noop}" + pwd; // Only for legacy plaintext passwords
                 }
                 return org.springframework.security.core.userdetails.User.withUsername(mongoUser.getUsername())
                         .password(pwd)

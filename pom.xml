@@ -84,6 +84,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Infisical Secret Management SDK -->
+		<dependency>
+			<groupId>com.infisical</groupId>
+			<artifactId>sdk</artifactId>
+			<version>3.0.6</version>
+		</dependency>
+
 		<!-- Embedded MongoDB for local in-memory persistence -->
 		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>

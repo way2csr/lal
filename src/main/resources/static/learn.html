@@ -1429,6 +1429,8 @@
             👤 <span id="username-display">User</span> ▾
           </div>
           <div id="user-dropdown" class="user-dropdown-menu">
+            <button id="manage-users-btn" class="user-dropdown-btn" onclick="openAdminModal()" style="display:none;">👥 Manage Users</button>
+            <div id="manage-users-divider" style="height: 1px; background: #e5e7eb; margin: 4px 0; display:none;"></div>
             <button class="user-dropdown-btn" onclick="openConfigModal()">⚙️ Settings</button>
             <div style="height: 1px; background: #e5e7eb; margin: 4px 0;"></div>
             <button class="user-dropdown-btn" onclick="logoutUser(this)" style="color: #ef4444;">🚪 Logout</button>
@@ -1513,6 +1515,78 @@
           </thead>
           <tbody id="vocab-body"></tbody>
         </table>
+      </div>
+    </div>
+
+    <!-- Admin: Manage Users Modal -->
+    <div id="admin-modal" class="modal-overlay" style="display:none;" onclick="if(event.target===this)closeAdminModal()">
+      <div class="modal-content" style="max-width:900px;width:95%;max-height:90vh;">
+        <div class="modal-header">
+          <h2 style="color:#6366f1;">👥 Manage Users</h2>
+          <button onclick="closeAdminModal()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:#64748b;">&times;</button>
+        </div>
+
+        <!-- Users Table -->
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+            <thead>
+              <tr style="background:#f8fafc;">
+                <th style="padding:10px 14px;text-align:left;color:#64748b;font-weight:600;text-transform:uppercase;font-size:0.75rem;border-bottom:1px solid #e2e8f0;">Username</th>
+                <th style="padding:10px 14px;text-align:left;color:#64748b;font-weight:600;text-transform:uppercase;font-size:0.75rem;border-bottom:1px solid #e2e8f0;">Full Name</th>
+                <th style="padding:10px 14px;text-align:left;color:#64748b;font-weight:600;text-transform:uppercase;font-size:0.75rem;border-bottom:1px solid #e2e8f0;">Email</th>
+                <th style="padding:10px 14px;text-align:left;color:#64748b;font-weight:600;text-transform:uppercase;font-size:0.75rem;border-bottom:1px solid #e2e8f0;">Phone</th>
+                <th style="padding:10px 14px;text-align:left;color:#64748b;font-weight:600;text-transform:uppercase;font-size:0.75rem;border-bottom:1px solid #e2e8f0;">Role</th>
+                <th style="padding:10px 14px;text-align:left;color:#64748b;font-weight:600;text-transform:uppercase;font-size:0.75rem;border-bottom:1px solid #e2e8f0;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-users-tbody">
+              <tr><td colspan="6" style="text-align:center;color:#94a3b8;padding:20px;">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Edit Panel (appears below table) -->
+        <div id="admin-edit-panel" style="display:none;margin-top:1.5rem;border-top:1px solid #e2e8f0;padding-top:1.5rem;">
+          <h3 id="edit-user-title" style="color:#374151;margin-bottom:1rem;font-size:1rem;">Edit User</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div>
+              <label style="display:block;font-size:0.85rem;font-weight:500;margin-bottom:4px;">First Name</label>
+              <input id="edit-firstname" type="text" style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:0.9rem;outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.85rem;font-weight:500;margin-bottom:4px;">Last Name</label>
+              <input id="edit-lastname" type="text" style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:0.9rem;outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.85rem;font-weight:500;margin-bottom:4px;">Email</label>
+              <input id="edit-email" type="email" style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:0.9rem;outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.85rem;font-weight:500;margin-bottom:4px;">Phone Number</label>
+              <input id="edit-phone" type="tel" style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:0.9rem;outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.85rem;font-weight:500;margin-bottom:4px;">Age</label>
+              <input id="edit-age" type="number" style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:0.9rem;outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.85rem;font-weight:500;margin-bottom:4px;">Father's Name</label>
+              <input id="edit-father" type="text" style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:0.9rem;outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.85rem;font-weight:500;margin-bottom:4px;">Mother's Name</label>
+              <input id="edit-mother" type="text" style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:0.9rem;outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.85rem;font-weight:500;margin-bottom:4px;">New Password <span style="color:#94a3b8;font-weight:400;">(leave blank to keep)</span></label>
+              <input id="edit-password" type="password" placeholder="Enter new password to reset" style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:0.9rem;outline:none;">
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:1rem;">
+            <button onclick="saveEditUser()" style="background:#6366f1;color:white;border:none;padding:10px 24px;border-radius:8px;font-size:0.95rem;font-weight:600;cursor:pointer;">💾 Save Changes</button>
+            <button onclick="document.getElementById('admin-edit-panel').style.display='none'" style="background:#f1f5f9;color:#374151;border:1px solid #e2e8f0;padding:10px 24px;border-radius:8px;font-size:0.95rem;cursor:pointer;">Cancel</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1867,13 +1941,128 @@
           if (response.ok) {
             const data = await response.json();
             if (data.username) {
-              document.getElementById("username-display").textContent =
-                data.username;
+              document.getElementById("username-display").textContent = data.username;
               document.getElementById("user-badge").style.display = "block";
+            }
+            if (data.isAdmin) {
+              document.getElementById("manage-users-btn").style.display = "flex";
+              document.getElementById("manage-users-divider").style.display = "block";
             }
           }
         } catch (err) {
           console.error("Could not fetch user:", err);
+        }
+      }
+
+      // ==================== ADMIN USER MANAGEMENT ====================
+      let editingUserId = null;
+
+      async function openAdminModal() {
+        document.getElementById('user-dropdown').classList.remove('show');
+        document.getElementById('admin-modal').style.display = 'flex';
+        document.getElementById('admin-edit-panel').style.display = 'none';
+        await loadAdminUsers();
+      }
+
+      function closeAdminModal() {
+        document.getElementById('admin-modal').style.display = 'none';
+      }
+
+      let adminUsersMap = {}; // id -> user object
+
+      async function loadAdminUsers() {
+        const tbody = document.getElementById('admin-users-tbody');
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#94a3b8;">Loading...</td></tr>';
+        adminUsersMap = {};
+        try {
+          const resp = await fetch('/api/admin/users');
+          const users = await resp.json();
+          if (!users.length) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#94a3b8;">No users found.</td></tr>';
+            return;
+          }
+          users.forEach(u => { adminUsersMap[u.id] = u; });
+          tbody.innerHTML = users.map(u => `
+            <tr>
+              <td><strong>${u.username || '-'}</strong></td>
+              <td>${u.firstName || ''} ${u.lastName || ''}</td>
+              <td>${u.email || '-'}</td>
+              <td>${u.phoneNumber || '-'}</td>
+              <td><span style="font-size:0.75rem;background:#e0e7ff;color:#4338ca;padding:2px 8px;border-radius:10px;">${(u.roles||[]).join(', ')}</span></td>
+              <td style="display:flex;gap:8px;">
+                <button data-user-id="${u.id}" class="admin-edit-btn" style="background:#6366f1;color:white;border:none;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:0.8rem;">✏️ Edit</button>
+                <button data-user-id="${u.id}" data-username="${u.username}" class="admin-delete-btn" style="background:#ef4444;color:white;border:none;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:0.8rem;">🗑️ Delete</button>
+              </td>
+            </tr>`).join('');
+
+          // Attach event listeners after render
+          document.querySelectorAll('.admin-edit-btn').forEach(btn => {
+            btn.addEventListener('click', () => openEditUser(adminUsersMap[btn.dataset.userId]));
+          });
+          document.querySelectorAll('.admin-delete-btn').forEach(btn => {
+            btn.addEventListener('click', () => deleteAdminUser(btn.dataset.userId, btn.dataset.username));
+          });
+        } catch(e) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#ef4444;">Error loading users.</td></tr>';
+        }
+      }
+
+      async function deleteAdminUser(id, username) {
+        if (!confirm(`Delete user "${username}"? This cannot be undone.`)) return;
+        try {
+          const resp = await fetch(`/api/admin/users/${id}`, { method: 'DELETE' });
+          if (resp.ok) {
+            await loadAdminUsers();
+          } else {
+            alert('Failed to delete user.');
+          }
+        } catch(e) {
+          alert('Error deleting user.');
+        }
+      }
+
+      function openEditUser(user) {
+        editingUserId = user.id;
+        document.getElementById('edit-firstname').value = user.firstName || '';
+        document.getElementById('edit-lastname').value  = user.lastName  || '';
+        document.getElementById('edit-email').value     = user.email     || '';
+        document.getElementById('edit-phone').value     = user.phoneNumber|| '';
+        document.getElementById('edit-age').value       = user.age != null ? user.age : '';
+        document.getElementById('edit-father').value    = user.fatherName || '';
+        document.getElementById('edit-mother').value    = user.motherName || '';
+        document.getElementById('edit-password').value  = '';
+        document.getElementById('edit-user-title').textContent = `Edit: ${user.username}`;
+        document.getElementById('admin-edit-panel').style.display = 'block';
+        document.getElementById('admin-edit-panel').scrollIntoView({behavior:'smooth'});
+      }
+
+      async function saveEditUser() {
+        if (!editingUserId) return;
+        const body = {
+          firstName:   document.getElementById('edit-firstname').value,
+          lastName:    document.getElementById('edit-lastname').value,
+          email:       document.getElementById('edit-email').value,
+          phoneNumber: document.getElementById('edit-phone').value,
+          age:         document.getElementById('edit-age').value ? parseInt(document.getElementById('edit-age').value) : null,
+          fatherName:  document.getElementById('edit-father').value,
+          motherName:  document.getElementById('edit-mother').value,
+          newPassword: document.getElementById('edit-password').value || null
+        };
+        try {
+          const resp = await fetch(`/api/admin/users/${editingUserId}`, {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(body)
+          });
+          if (resp.ok) {
+            document.getElementById('admin-edit-panel').style.display = 'none';
+            editingUserId = null;
+            await loadAdminUsers();
+          } else {
+            alert('Failed to save changes.');
+          }
+        } catch(e) {
+          alert('Error saving user.');
         }
       }
 

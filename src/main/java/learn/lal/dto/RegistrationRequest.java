@@ -1,22 +1,8 @@
-package learn.lal.model;
+package learn.lal.dto;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
-import org.springframework.data.mongodb.core.mapping.FieldType;
-import java.util.List;
-
-@Document(collection = "users")
-public class User {
-
-    @Id
-    @MongoId(value = FieldType.STRING)
-    private String id;
-
+public class RegistrationRequest {
     private String username;
     private String password;
-    private List<String> roles;
-
     private String email;
     private String phoneNumber;
     private String firstName;
@@ -25,25 +11,7 @@ public class User {
     private String fatherName;
     private String motherName;
 
-    // Constructors
-    public User() {
-    }
-
-    public User(String username, String password, List<String> roles) {
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-    }
-
     // Getters and Setters
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -58,14 +26,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
     }
 
     public String getEmail() {
