@@ -1007,4 +1007,50 @@
     }
   },
   "timestamp" : "2026-02-27T19:36:45.071+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772222262,
+    "date" : "2026-02-27T19:57:42.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Brave Little Explorer",
+    "story" : "Lila saw a dark cave. She took her tiny flashlight and went in. A big bear was there! She was scared but said, \"Hello!\" The bear smiled and gave her a shiny rock. Lila learned bravery makes friends."
+  },
+  "timestamp" : "2026-02-27T19:57:42.746+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772222265,
+    "date" : "2026-02-27T19:57:45.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Brave Little Explorer]\n\nLila saw a dark cave. She took her tiny flashlight and went in. A big bear was there! She was scared but said, \"Hello!\" The bear smiled and gave her a shiny rock. Lila learned bravery makes friends.",
+    "translations" : {
+      "en" : "[The Brave Little Explorer]\n\nLila saw a dark cave. She took her tiny flashlight and went in. A big bear was there! She was scared but said, \"Hello!\" The bear smiled and gave her a shiny rock. Lila learned bravery makes friends.",
+      "hi" : "[द ब्रेव लिटिल एक्सप्लोरर]\n\nलीला को एक अँधेरी गुफा दिखाई दी। उसने अपनी छोटी टॉर्च ली और अंदर चली गई। वहाँ एक बड़ा भालू था! वह डरी हुई थी लेकिन बोली, \"हैलो!\" भालू मुस्कुराया और उसे एक चमकदार चट्टान दी। लीला ने सीखा कि बहादुरी से दोस्त बनते हैं।",
+      "te" : "[ది బ్రేవ్ లిటిల్ ఎక్స్‌ప్లోరర్]\n\nలీల చీకటి గుహను చూసింది. ఆమె తన చిన్న ఫ్లాష్‌లైట్ తీసుకొని లోపలికి వెళ్ళింది. అక్కడ ఒక పెద్ద ఎలుగుబంటి ఉంది! ఆమె భయపడింది కానీ \"హలో!\" ఎలుగుబంటి నవ్వి ఆమెకు మెరిసే రాయిని ఇచ్చింది. లీల ధైర్యం నేర్చుకుంది స్నేహితులను చేస్తుంది."
+    }
+  },
+  "timestamp" : "2026-02-27T19:57:45.113+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772222268,
+    "date" : "2026-02-27T19:57:48.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "[The Brave Little Explorer]\n\nLila saw a dark cave. She took her tiny flashlight and went in. A big bear was there! She was scared but said, \"Hello!\" The bear smiled and gave her a shiny rock. Lila learned bravery makes friends.",
+    "refined" : "[The Brave Little Explorer]\n\nLila spotted a dark cave. She grabbed her small flashlight and stepped inside. There was a big bear! Though she was scared, she said, \"Hello!\" The bear smiled and gave her a shiny rock. Lila realized that bravery can make friends.",
+    "translations" : {
+      "en" : "[The Brave Little Explorer]\n\nLila spotted a dark cave. She grabbed her small flashlight and stepped inside. There was a big bear! Though she was scared, she said, \"Hello!\" The bear smiled and gave her a shiny rock. Lila realized that bravery can make friends.",
+      "hi" : "[द ब्रेव लिटिल एक्सप्लोरर]\n\nलीला को एक अँधेरी गुफा दिखी। उसने अपनी छोटी टॉर्च उठाई और अंदर चली गई। वहाँ एक बड़ा भालू था! हालाँकि वह डरी हुई थी, फिर भी उसने कहा, \"हैलो!\" भालू मुस्कुराया और उसे एक चमकदार चट्टान दी। लीला को एहसास हुआ कि बहादुरी से दोस्त बनाए जा सकते हैं।",
+      "te" : "[ది బ్రేవ్ లిటిల్ ఎక్స్‌ప్లోరర్]\n\nలీల చీకటి గుహను గుర్తించింది. ఆమె తన చిన్న ఫ్లాష్‌లైట్‌ని పట్టుకుని లోపలికి అడుగు పెట్టింది. ఒక పెద్ద ఎలుగుబంటి ఉంది! ఆమె భయంగా ఉన్నా, \"హలో!\" ఎలుగుబంటి నవ్వి ఆమెకు మెరిసే రాయిని ఇచ్చింది. ధైర్యం స్నేహితులను చేయగలదని లీల గ్రహించింది."
+    }
+  },
+  "timestamp" : "2026-02-27T19:57:48.742+00:00"
 } ]
