@@ -961,4 +961,50 @@
     }
   },
   "timestamp" : "2026-02-27T15:11:04.715+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772220998,
+    "date" : "2026-02-27T19:36:38.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Little Mountain Adventure",
+    "story" : "Ravi and his family went on a small mountain trip. They saw big trees and happy birds. Ravi helped his mom carry a heavy bag. At the top, they ate yummy snacks and laughed together. The end."
+  },
+  "timestamp" : "2026-02-27T19:36:38.694+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772221000,
+    "date" : "2026-02-27T19:36:40.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Little Mountain Adventure]\n\nRavi and his family went on a small mountain trip. They saw big trees and happy birds. Ravi helped his mom carry a heavy bag. At the top, they ate yummy snacks and laughed together. The end.",
+    "translations" : {
+      "en" : "[The Little Mountain Adventure]\n\nRavi and his family went on a small mountain trip. They saw big trees and happy birds. Ravi helped his mom carry a heavy bag. At the top, they ate yummy snacks and laughed together. The end.",
+      "hi" : "[द लिटिल माउंटेन एडवेंचर]\n\nरवि और उसका परिवार एक छोटी पहाड़ी यात्रा पर गए। उन्होंने बड़े-बड़े पेड़ और प्रसन्न पक्षी देखे। रवि ने अपनी माँ को एक भारी बैग उठाने में मदद की। सबसे ऊपर, उन्होंने स्वादिष्ट नाश्ता खाया और साथ में हँसे। अंत.",
+      "te" : "[ది లిటిల్ మౌంటైన్ అడ్వెంచర్]\n\nరవి మరియు అతని కుటుంబం ఒక చిన్న పర్వత యాత్రకు వెళ్లారు. వారు పెద్ద చెట్లను మరియు సంతోషకరమైన పక్షులను చూశారు. రవి తన తల్లికి బరువైన బ్యాగ్ తీసుకువెళ్లడానికి సహాయం చేశాడు. ఎగువన, వారు రుచికరమైన స్నాక్స్ తిని, కలిసి నవ్వారు. ముగింపు."
+    }
+  },
+  "timestamp" : "2026-02-27T19:36:40.961+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772221005,
+    "date" : "2026-02-27T19:36:45.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "[The Little Mountain Adventure]\n\nRavi and his family went on a small mountain trip. They saw big trees and happy birds. Ravi helped his mom carry a heavy bag. At the top, they ate yummy snacks and laughed together. The end.",
+    "refined" : "[The Little Mountain Adventure]\n\nRavi and his family went on a small mountain trip. They saw tall trees and cheerful birds. Ravi helped his mom carry the heavy bag. At the top, they enjoyed tasty snacks and laughed together. The end.",
+    "translations" : {
+      "en" : "[The Little Mountain Adventure]\n\nRavi and his family went on a small mountain trip. They saw tall trees and cheerful birds. Ravi helped his mom carry the heavy bag. At the top, they enjoyed tasty snacks and laughed together. The end.",
+      "hi" : "[द लिटिल माउंटेन एडवेंचर]\n\nरवि और उसका परिवार एक छोटी पहाड़ी यात्रा पर गए। उन्होंने ऊँचे-ऊँचे पेड़ और प्रसन्न पक्षी देखे। रवि ने अपनी माँ को भारी बैग उठाने में मदद की। सबसे ऊपर, उन्होंने स्वादिष्ट स्नैक्स का आनंद लिया और साथ में हँसे। अंत.",
+      "te" : "[ది లిటిల్ మౌంటైన్ అడ్వెంచర్]\n\nరవి మరియు అతని కుటుంబం ఒక చిన్న పర్వత యాత్రకు వెళ్లారు. వారు పొడవైన చెట్లను మరియు ఉల్లాసమైన పక్షులను చూశారు. బరువైన బ్యాగ్ మోయడానికి రవి తన తల్లికి సహాయం చేశాడు. ఎగువన, వారు రుచికరమైన స్నాక్స్ ఆనందించారు మరియు కలిసి నవ్వారు. ముగింపు."
+    }
+  },
+  "timestamp" : "2026-02-27T19:36:45.071+00:00"
 } ]
