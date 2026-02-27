@@ -932,4 +932,33 @@
     }
   },
   "timestamp" : "2026-02-26T22:31:06.869+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772205062,
+    "date" : "2026-02-27T15:11:02.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "STORY",
+  "content" : {
+    "level" : 1,
+    "headline" : "The Little Star's Journey",
+    "story" : "A little star named Twinkle wanted to explore the universe. She zoomed past planets and met friendly aliens. Twinkle learned that everyone shines brightly when they are kind. Now Twinkle helps lost stars find their way home."
+  },
+  "timestamp" : "2026-02-27T15:11:02.208+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772205064,
+    "date" : "2026-02-27T15:11:04.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "[The Little Star's Journey]\n\nA little star named Twinkle wanted to explore the universe. She zoomed past planets and met friendly aliens. Twinkle learned that everyone shines brightly when they are kind. Now Twinkle helps lost stars find their way home.",
+    "translations" : {
+      "en" : "[The Little Star's Journey]\n\nA little star named Twinkle wanted to explore the universe. She zoomed past planets and met friendly aliens. Twinkle learned that everyone shines brightly when they are kind. Now Twinkle helps lost stars find their way home.",
+      "hi" : "[द लिटिल स्टार्स जर्नी]\n\nट्विंकल नाम का एक छोटा सितारा ब्रह्मांड का पता लगाना चाहता था। उसने पिछले ग्रहों का अवलोकन किया और मित्रतापूर्ण एलियंस से मुलाकात की। ट्विंकल ने सीखा कि दयालु होने पर हर कोई चमकता है। अब ट्विंकल खोए हुए सितारों को उनके घर पहुंचाने में मदद करती हैं।",
+      "te" : "[ది లిటిల్ స్టార్స్ జర్నీ]\n\nట్వింకిల్ అనే చిన్న నక్షత్రం విశ్వాన్ని అన్వేషించాలని కోరుకుంది. ఆమె గత గ్రహాలను జూమ్ చేసింది మరియు స్నేహపూర్వక గ్రహాంతరవాసులను కలుసుకుంది. ప్రతి ఒక్కరూ దయతో మెరుస్తారని ట్వింకిల్ తెలుసుకున్నారు. ఇప్పుడు ట్వింకిల్ కోల్పోయిన తారలు ఇంటికి వెళ్లేందుకు సహాయం చేస్తుంది."
+    }
+  },
+  "timestamp" : "2026-02-27T15:11:04.715+00:00"
 } ]
