@@ -19,21 +19,24 @@ public class AdminController {
     private final PasswordEncoder passwordEncoder;
     private final MongoTemplate mongoTemplate;
 
-    public AdminController(UserRepository userRepository, PasswordEncoder passwordEncoder, MongoTemplate mongoTemplate) {
+    public AdminController(UserRepository userRepository, PasswordEncoder passwordEncoder,
+            MongoTemplate mongoTemplate) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.mongoTemplate = mongoTemplate;
     }
 
     // GET /api/admin/users - list all users (password omitted)
-    // Uses username as the unique "id" key to avoid BSON ObjectId serialization issues
+    // Uses username as the unique "id" key to avoid BSON ObjectId serialization
+    // issues
     @GetMapping("/users")
     public List<Map<String, Object>> listUsers() {
         List<Document> rawDocs = mongoTemplate.getCollection("users").find().into(new ArrayList<>());
         List<Map<String, Object>> result = new ArrayList<>();
         for (Document doc : rawDocs) {
             String username = doc.getString("username");
-            if (username == null) continue;
+            if (username == null)
+                continue;
             Map<String, Object> m = new LinkedHashMap<>();
             m.put("id", username); // use username as the stable identifier
             m.put("username", username);
@@ -50,17 +53,25 @@ public class AdminController {
         return result;
     }
 
-    // PUT /api/admin/users/{username} - update user info / optionally reset password
+    // PUT /api/admin/users/{username} - update user info / optionally reset
+    // password
     @PutMapping("/users/{username}")
-    public Map<String, String> updateUser(@PathVariable String username, @RequestBody Map<String, Object> body) {
+    public Map<String, String> updateUser(@PathVariable("username") String username,
+            @RequestBody Map<String, Object> body) {
         Query query = Query.query(Criteria.where("username").is(username));
         Update update = new Update();
-        if (body.containsKey("firstName"))   update.set("firstName",   body.get("firstName"));
-        if (body.containsKey("lastName"))    update.set("lastName",    body.get("lastName"));
-        if (body.containsKey("email"))       update.set("email",       body.get("email"));
-        if (body.containsKey("phoneNumber")) update.set("phoneNumber", body.get("phoneNumber"));
-        if (body.containsKey("fatherName"))  update.set("fatherName",  body.get("fatherName"));
-        if (body.containsKey("motherName"))  update.set("motherName",  body.get("motherName"));
+        if (body.containsKey("firstName"))
+            update.set("firstName", body.get("firstName"));
+        if (body.containsKey("lastName"))
+            update.set("lastName", body.get("lastName"));
+        if (body.containsKey("email"))
+            update.set("email", body.get("email"));
+        if (body.containsKey("phoneNumber"))
+            update.set("phoneNumber", body.get("phoneNumber"));
+        if (body.containsKey("fatherName"))
+            update.set("fatherName", body.get("fatherName"));
+        if (body.containsKey("motherName"))
+            update.set("motherName", body.get("motherName"));
         if (body.containsKey("age") && body.get("age") != null) {
             update.set("age", ((Number) body.get("age")).intValue());
         }
@@ -78,7 +89,7 @@ public class AdminController {
 
     // DELETE /api/admin/users/{username} - delete a user
     @DeleteMapping("/users/{username}")
-    public Map<String, String> deleteUser(@PathVariable String username) {
+    public Map<String, String> deleteUser(@PathVariable("username") String username) {
         Query query = Query.query(Criteria.where("username").is(username));
         mongoTemplate.remove(query, "users");
         Map<String, String> resp = new HashMap<>();

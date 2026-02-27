@@ -41,7 +41,7 @@ public class HistoryController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteHistory(@PathVariable String id) {
+    public void deleteHistory(@PathVariable("id") String id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.isAuthenticated() && !auth.getPrincipal().equals("anonymousUser")) {
             historyRepository.deleteByIdAndUsername(id, auth.getName());
