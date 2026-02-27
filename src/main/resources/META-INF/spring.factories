@@ -1,0 +1,1 @@
+org.springframework.boot.env.EnvironmentPostProcessor=learn.lal.config.InfisicalEnvironmentPostProcessor,learn.lal.config.MongoSecretPropertySourceEnvironmentPostProcessor
