@@ -1053,4 +1053,154 @@
     }
   },
   "timestamp" : "2026-02-27T19:57:48.742+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772222611,
+    "date" : "2026-02-27T20:03:31.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "how are you",
+    "refined" : "How are you?",
+    "translations" : {
+      "en" : "How are you?",
+      "hi" : "आप कैसे हैं?",
+      "te" : "మీరు ఎలా ఉన్నారు?"
+    }
+  },
+  "timestamp" : "2026-02-27T20:03:31.138+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772222672,
+    "date" : "2026-02-27T20:04:32.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you",
+    "translations" : {
+      "en" : "how are you",
+      "hi" : "आप कैसे हैं",
+      "te" : "మీరు ఎలా ఉన్నారు"
+    }
+  },
+  "timestamp" : "2026-02-27T20:04:32.075+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772222680,
+    "date" : "2026-02-27T20:04:40.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you",
+    "translations" : {
+      "en" : "how are you",
+      "hi" : "आप कैसे हैं",
+      "te" : "మీరు ఎలా ఉన్నారో"
+    }
+  },
+  "timestamp" : "2026-02-27T20:04:40.706+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772222687,
+    "date" : "2026-02-27T20:04:47.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you",
+    "translations" : {
+      "en" : "how are you",
+      "hi" : "आप कैसे हैं",
+      "te" : "నువ్వు ఎలా ఉన్నావు"
+    }
+  },
+  "timestamp" : "2026-02-27T20:04:47.353+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772222703,
+    "date" : "2026-02-27T20:05:03.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you",
+    "translations" : {
+      "en" : "how are you",
+      "hi" : "आप कैसे हैं",
+      "te" : "ఎలా ఉన్నావు"
+    }
+  },
+  "timestamp" : "2026-02-27T20:05:03.490+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772222713,
+    "date" : "2026-02-27T20:05:13.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "OTHER",
+  "content" : {
+    "type" : "GRAMMAR_CHECK",
+    "original" : "how are you",
+    "analysis" : {
+      "status" : "Correct",
+      "correction" : "How are you?",
+      "explanation" : "The original phrase is grammatically correct, but capitalizing the first letter and adding a question mark at the end enhances its clarity and formality. This small adjustment helps indicate that you're asking a question, making it more polished.",
+      "tone" : "Casual"
+    }
+  },
+  "timestamp" : "2026-02-27T20:05:13.398+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772465024,
+    "date" : "2026-03-02T15:23:44.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "how are you",
+    "refined" : "How are you?",
+    "translations" : {
+      "en" : "How are you?",
+      "hi" : "आप कैसे हैं?",
+      "te" : "మీరు ఎలా ఉన్నారు?"
+    }
+  },
+  "timestamp" : "2026-03-02T15:23:44.955+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772465028,
+    "date" : "2026-03-02T15:23:48.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "OTHER",
+  "content" : {
+    "type" : "GRAMMAR_CHECK",
+    "original" : "how are you",
+    "analysis" : {
+      "status" : "Correct",
+      "correction" : "How are you?",
+      "explanation" : "The original text is grammatically correct but could be slightly improved by adding a question mark to make it a complete question. The correction maintains the original meaning while following standard punctuation rules.",
+      "tone" : "Casual"
+    }
+  },
+  "timestamp" : "2026-03-02T15:23:48.484+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1772465029,
+    "date" : "2026-03-02T15:23:49.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you",
+    "translations" : {
+      "en" : "how are you",
+      "hi" : "आप कैसे हैं",
+      "te" : "ఎలా ఉన్నావు"
+    }
+  },
+  "timestamp" : "2026-03-02T15:23:49.968+00:00"
 } ]
