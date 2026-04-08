@@ -26,4 +26,15 @@
   "lastName" : "dfsaf",
   "fatherName" : "",
   "motherName" : ""
+}, {
+  "_id" : "69d6c64a9bcbd646041bcbd9",
+  "username" : "testuser",
+  "password" : "{bcrypt}$2a$10$GPRo4U4/R8Xqdt8/zjteR.uV.Ssgvi7Mi9ncraOlI5sR2QvrzRZqi",
+  "roles" : [ "ROLE_USER" ],
+  "email" : "",
+  "phoneNumber" : "",
+  "firstName" : "",
+  "lastName" : "",
+  "fatherName" : "",
+  "motherName" : ""
 } ]
