@@ -1203,4 +1203,122 @@
     }
   },
   "timestamp" : "2026-03-02T15:23:49.968+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1775671785,
+    "date" : "2026-04-08T18:09:45.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you",
+    "translations" : {
+      "en" : "how are you",
+      "hi" : "आप कैसे हैं",
+      "te" : "ఎలా ఉన్నావు"
+    }
+  },
+  "timestamp" : "2026-04-08T18:09:45.660+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1775671858,
+    "date" : "2026-04-08T18:10:58.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you",
+    "translations" : {
+      "en" : "how are you",
+      "hi" : "आप कैसे हैं",
+      "te" : "ఎలా ఉన్నావు"
+    }
+  },
+  "timestamp" : "2026-04-08T18:10:58.127+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1775671865,
+    "date" : "2026-04-08T18:11:05.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "how are you",
+    "refined" : "How are you?",
+    "translations" : {
+      "en" : "How are you?",
+      "hi" : "आप कैसे हैं?",
+      "te" : "మీరు ఎలా ఉన్నారు?"
+    }
+  },
+  "timestamp" : "2026-04-08T18:11:05.942+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1775672175,
+    "date" : "2026-04-08T18:16:15.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "OTHER",
+  "content" : {
+    "type" : "GRAMMAR_CHECK",
+    "original" : "how do you do.",
+    "analysis" : {
+      "status" : "Incorrect",
+      "correction" : "How do you do?",
+      "explanation" : "The original text lacks proper capitalization and punctuation. Starting the sentence with a capital letter and ending it with a question mark makes it grammatically correct and clearer as a greeting. The correction enhances the professionalism of the phrase while maintaining its friendly intent.",
+      "tone" : "Formal"
+    }
+  },
+  "timestamp" : "2026-04-08T18:16:15.338+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1775672215,
+    "date" : "2026-04-08T18:16:55.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "OTHER",
+  "content" : {
+    "type" : "GRAMMAR_CHECK",
+    "original" : "How do you do? shall call i now",
+    "analysis" : {
+      "status" : "Incorrect",
+      "correction" : "How do you do? Shall I call now?",
+      "explanation" : "Great effort! In the original text, 'shall call i now' has a few issues. 'Shall' should be capitalized as it starts a new sentence, and 'I' should also be capitalized as it's a pronoun. Additionally, it's more common to say 'Shall I call now?' for clarity. The corrected version improves the structure and readability while maintaining the original intent.",
+      "tone" : "Formal"
+    }
+  },
+  "timestamp" : "2026-04-08T18:16:55.872+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1775672229,
+    "date" : "2026-04-08T18:17:09.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "How do you do? Shall I call now?",
+    "translations" : {
+      "en" : "How do you do? Shall I call now?",
+      "hi" : "आप कैसे हैं? क्या मैं अभी फ़ोन करूँ?",
+      "te" : "మీరు ఎలా చేస్తారు? నేను ఇప్పుడు కాల్ చేయాలా?"
+    }
+  },
+  "timestamp" : "2026-04-08T18:17:09.092+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1775672241,
+    "date" : "2026-04-08T18:17:21.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "How do you do? Shall I call now?",
+    "refined" : "Hello! Should I make the call now?",
+    "translations" : {
+      "en" : "Hello! Should I make the call now?",
+      "hi" : "नमस्ते! क्या मुझे अभी कॉल करना चाहिए?",
+      "te" : "హలో! నేను ఇప్పుడు కాల్ చేయాలా?"
+    }
+  },
+  "timestamp" : "2026-04-08T18:17:21.160+00:00"
 } ]
