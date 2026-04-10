@@ -1,0 +1,13 @@
+[ {
+  "id" : "default",
+  "displayName" : "Imported curriculum",
+  "level" : "",
+  "storageFile" : "default.json",
+  "deleted" : false
+}, {
+  "id" : "111111",
+  "displayName" : "level test",
+  "level" : "test sub",
+  "storageFile" : "111111.json",
+  "deleted" : false
+} ]
