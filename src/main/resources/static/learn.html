@@ -1436,6 +1436,24 @@
             <button class="user-dropdown-btn" onclick="logoutUser(this)" style="color: #ef4444;">🚪 Logout</button>
           </div>
         </div>
+        <a href="/abacus.html" style="
+          background: linear-gradient(135deg, #f59e0b, #ef4444);
+          color: white;
+          border: none;
+          padding: 7px 14px;
+          border-radius: 20px;
+          font-size: 0.85rem;
+          font-weight: 700;
+          text-decoration: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          box-shadow: 0 2px 8px rgba(245,158,11,0.4);
+          transition: transform 0.15s, box-shadow 0.15s;
+        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+          🧮 Abacus
+        </a>
       </div>
       <header>
         <h1>✨ LingoLearn AI</h1>
@@ -1462,9 +1480,9 @@
 
           <span style="margin-left: 10px">Teacher Model:</span>
           <select id="teacher-provider-select">
-            <option value="openai">OpenAI (Expert)</option>
+            <option value="openai" selected>OpenAI (Expert)</option>
             <option value="gemini">Google Gemini</option>
-            <option value="sarvam" selected>Sarvam AI</option>
+            <option value="sarvam">Sarvam AI</option>
             <option value="huggingface">Hugging Face</option>
           </select>
 
@@ -3289,14 +3307,27 @@ Output ONLY a strict JSON array of 4 objects. Format: [{"voice": "Active Voice",
 
           let resultObj = null;
           try {
+            // Robustly extract JSON — strip fences, find the {...} block, clean control chars
             let rawJson = generation
-              .replace(/\`\`\`json/g, "")
-              .replace(/\`\`\`/g, "")
+              .replace(/```json/gi, "")
+              .replace(/```/g, "")
               .trim();
+            // Try to pull out the first {...} block (handles extra surrounding text)
+            const match = rawJson.match(/\{[\s\S]*\}/);
+            if (match) rawJson = match[0];
+            // Strip control characters that break JSON.parse
+            rawJson = rawJson.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "");
             resultObj = JSON.parse(rawJson);
           } catch (e) {
-            console.error("Failed to parse Grammar JSON", e);
-            throw { error: "Bad JSON response from AI" };
+            console.error("Failed to parse Grammar JSON", e, generation);
+            // Graceful fallback: show the raw AI text instead of crashing
+            resultsDiv.innerHTML = `
+              <div style="background:#f8fafc; padding:15px; border-radius:8px; border-left:4px solid #f59e0b;">
+                <h3 style="margin:0 0 8px 0; color:#92400e;">⚠️ AI responded but not in expected format</h3>
+                <p style="margin:0; color:#334155; font-size:0.95rem; white-space:pre-wrap;">${generation || "No response received. Try switching the Teacher Model."}</p>
+                <p style="margin:8px 0 0 0; font-size:0.8rem; color:#94a3b8;">💡 Tip: Switch Teacher Model to <strong>OpenAI</strong> or <strong>Google Gemini</strong> for best results.</p>
+              </div>`;
+            return;
           }
 
           const statusColor =

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import java.util.Map;
+
 
 import org.springframework.core.env.Environment;
 
@@ -20,19 +20,6 @@ public class SecretMigrationRunner {
     @Bean
     public CommandLineRunner migrateSecrets(MongoTemplate mongoTemplate, Environment env) {
         return args -> {
-            // --- Infisical diagnostic ---
-            String clientId = env.getProperty("infisical.client-id", "<not set>");
-            log.info("=== Infisical Diagnostic ===");
-            log.info("infisical.client-id = {}", clientId.isEmpty() ? "<empty>" : clientId.substring(0, 8) + "...");
-            log.info("Property sources: {}",
-                ((org.springframework.core.env.ConfigurableEnvironment) env).getPropertySources().stream()
-                        .map(ps -> ps.getName()).collect(java.util.stream.Collectors.joining(", ")));
-            String openAiKey = env.getProperty("spring.ai.openai.api-key", "<empty>");
-            log.info("spring.ai.openai.api-key = {}", openAiKey.isEmpty() ? "<empty>" :
-                    openAiKey.substring(0, Math.min(12, openAiKey.length())) + "...");
-            log.info("=== End Infisical Diagnostic ===");
-            // --- end diagnostic ---
-
             boolean collectionExists = mongoTemplate.collectionExists("app_secrets");
 
             long count = collectionExists ? mongoTemplate.getCollection("app_secrets").countDocuments() : 0;

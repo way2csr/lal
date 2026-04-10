@@ -1,0 +1,2498 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abacus Math Drills | LingoLearn</title>
+    <meta name="description" content="Practice abacus math with configurable addition, subtraction, multiplication and division drills." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=SF+Pro+Display:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+      /* ── Design Tokens ── */
+      :root {
+        /* Apple-inspired palette */
+        --bg:          #f5f5f7;
+        --surface:     #ffffff;
+        --surface-2:   #f5f5f7;
+        --border:      #d2d2d7;
+        --border-subtle: #e8e8ed;
+
+        --text-primary:   #1d1d1f;
+        --text-secondary: #6e6e73;
+        --text-tertiary:  #aeaeb2;
+
+        /* Accent – Microsoft / Apple blue */
+        --blue:        #0071e3;
+        --blue-light:  #e8f2fd;
+        --blue-dark:   #0051a2;
+
+        /* Semantic */
+        --green:       #34c759;
+        --green-light: #e9f9ee;
+        --red:         #ff3b30;
+        --red-light:   #fff0ef;
+        --purple:      #5e5ce6;
+        --purple-light:#f0f0ff;
+
+        --radius-sm:   8px;
+        --radius:      12px;
+        --radius-lg:   18px;
+        --radius-xl:   24px;
+
+        --shadow-xs:   0 1px 3px rgba(0,0,0,0.08);
+        --shadow-sm:   0 2px 8px rgba(0,0,0,0.08), 0 0 1px rgba(0,0,0,0.04);
+        --shadow-md:   0 4px 16px rgba(0,0,0,0.10), 0 0 1px rgba(0,0,0,0.04);
+        --shadow-lg:   0 12px 40px rgba(0,0,0,0.12), 0 0 1px rgba(0,0,0,0.04);
+
+        --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      }
+
+      /* ── Reset ── */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { -webkit-font-smoothing: antialiased; }
+
+      body {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text-primary);
+        min-height: 100vh;
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      /* ── Top Navigation ── */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        background: rgba(255,255,255,0.88);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border-bottom: 1px solid var(--border-subtle);
+        height: 56px;
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+        gap: 16px;
+      }
+
+      .back-link {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: var(--blue);
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 6px;
+        transition: background 0.15s;
+      }
+      .back-link:hover { background: var(--blue-light); }
+      .back-link svg { flex-shrink: 0; }
+
+      .topbar-brand {
+        flex: 1;
+        text-align: center;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        letter-spacing: -0.02em;
+      }
+
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 140px;
+        justify-content: flex-end;
+      }
+
+      .timer-badge {
+        display: none;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        font-family: var(--font-mono);
+        color: var(--text-secondary);
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        padding: 4px 12px;
+        border-radius: 20px;
+      }
+
+      .btn-ghost {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--blue);
+        font-size: 0.82rem;
+        font-weight: 600;
+        padding: 5px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: var(--font);
+        display: none;
+        transition: background 0.15s, border-color 0.15s;
+      }
+      .btn-ghost:hover { background: var(--blue-light); border-color: var(--blue); }
+
+      /* ── Page Wrapper ── */
+      .page {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 40px 20px 80px;
+      }
+
+      /* ── Section visibility ── */
+      .section { display: none; }
+      .section.active { display: block; }
+
+      /* ── Page header text ── */
+      .page-heading {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .page-heading h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        color: var(--text-primary);
+        margin-bottom: 6px;
+      }
+      .page-heading p {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        font-weight: 400;
+      }
+
+      /* ── Cards ── */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        padding: 28px;
+      }
+
+      .card-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+      }
+
+      /* ── Config Layout ── */
+      /* Two-column: Operations left, Settings+Mode stacked right */
+      .config-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 16px;
+        margin-bottom: 32px;
+        align-items: start;
+      }
+      /* Operations card spans both rows in left column */
+      .config-grid .card:first-child {
+        grid-column: 1;
+        grid-row: 1 / 3;
+      }
+      /* Settings card: right column, row 1 */
+      .config-grid .card:nth-child(2) {
+        grid-column: 2;
+        grid-row: 1;
+      }
+      /* Mode card: right column, row 2 */
+      .config-grid .card:nth-child(3) {
+        grid-column: 2;
+        grid-row: 2;
+      }
+      @media (max-width: 680px) {
+        .config-grid {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto;
+        }
+        .config-grid .card:first-child,
+        .config-grid .card:nth-child(2),
+        .config-grid .card:nth-child(3) {
+          grid-column: 1;
+          grid-row: auto;
+        }
+      }
+
+      /* ── Operation Toggles ── */
+      .ops-group {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .op-toggle input[type=checkbox] { display: none; }
+
+      .op-toggle label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 58px;
+        height: 58px;
+        border: 2px solid var(--border);
+        border-radius: var(--radius);
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.18s;
+        background: var(--surface);
+        font-size: 2.2rem;
+        font-weight: 700;
+        font-family: var(--font-mono);
+      }
+      .op-toggle label:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+
+      .op-toggle.add label { color: #1a9c3e; border-color: #e9f9ee; background: #f6fcf8; }
+      .op-toggle.add input:checked + label { background: #e9f9ee; border-color: #1a9c3e; box-shadow: 0 0 0 3px rgba(26,156,62,0.15); transform: translateY(0); }
+
+      .op-toggle.sub label { color: #d4291f; border-color: #fff0ef; background: #fff8f8; }
+      .op-toggle.sub input:checked + label { background: #fff0ef; border-color: #d4291f; box-shadow: 0 0 0 3px rgba(212,41,31,0.15); transform: translateY(0); }
+
+      .op-toggle.mul label { color: var(--blue-dark); border-color: var(--blue-light); background: #f0f7ff; }
+      .op-toggle.mul input:checked + label { background: var(--blue-light); border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,113,227,0.15); transform: translateY(0); }
+
+      .op-toggle.div label { color: var(--purple); border-color: var(--purple-light); background: #fbf5ff; }
+      .op-toggle.div input:checked + label { background: var(--purple-light); border-color: var(--purple); box-shadow: 0 0 0 3px rgba(168,85,247,0.15); transform: translateY(0); }
+
+      /* ── Sliders ── */
+      .slider-stack { display: flex; flex-direction: column; gap: 20px; }
+
+      .slider-field label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-primary);
+      }
+
+      /* Editable number badge — replaces static span */
+      .val-input {
+        font-family: var(--font-mono);
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--blue);
+        background: var(--blue-light);
+        border: 1.5px solid transparent;
+        padding: 2px 8px;
+        border-radius: 20px;
+        width: 62px;
+        text-align: center;
+        outline: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+        -moz-appearance: textfield;
+      }
+      .val-input::-webkit-inner-spin-button,
+      .val-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+      .val-input:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
+        background: #d0e8fc;
+      }
+
+      input[type=range] {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 4px;
+        background: var(--border);
+        border-radius: 99px;
+        outline: none;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--blue);
+        box-shadow: 0 1px 4px rgba(0,113,227,0.4);
+        cursor: pointer;
+        transition: transform 0.15s, box-shadow 0.15s;
+      }
+      input[type=range]::-webkit-slider-thumb:hover {
+        transform: scale(1.15);
+        box-shadow: 0 2px 10px rgba(0,113,227,0.5);
+      }
+
+      /* ── Mode select ── */
+      .mode-group { display: flex; flex-direction: column; gap: 10px; }
+
+      .mode-toggle input[type=radio] { display: none; }
+      .mode-toggle label {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 16px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        cursor: pointer;
+        user-select: none;
+        transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+        background: var(--surface);
+      }
+      .mode-toggle label:hover { border-color: var(--blue); background: var(--blue-light); }
+      .mode-toggle input:checked + label {
+        border-color: var(--blue);
+        background: var(--blue-light);
+        box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
+      }
+
+      .mode-icon {
+        width: 30px; height: 30px; /* Reduced icon size */
+        border-radius: 8px;
+        background: var(--surface-2);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1rem; /* Smaller emoji */
+        flex-shrink: 0;
+      }
+      .mode-toggle input:checked + label .mode-icon { background: white; }
+
+      .mode-text strong { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); }
+      .mode-text small { font-size: 0.7rem; color: var(--text-secondary); }
+
+      /* Ultra Compact UI */
+      .compact-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        padding: 8px 16px;
+        background: var(--surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        margin: -20px auto 24px;
+        max-width: fit-content;
+      }
+      
+      .toolbar-group {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .toolbar-divider {
+        width: 1px;
+        height: 24px;
+        background: var(--border);
+        margin: 0 4px;
+      }
+
+      .micro-toggle input[type=radio], .micro-toggle input[type=checkbox] { display: none; }
+      .micro-toggle label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.15s;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        background: transparent;
+      }
+      .micro-toggle label:hover { background: var(--surface-2); color: var(--text-primary); }
+      .micro-toggle input:checked + label {
+        background: var(--blue-light);
+        color: var(--blue);
+        box-shadow: 0 0 0 1px rgba(0,113,227,0.15);
+      }
+      .micro-icon { font-size: 0.9rem; }
+
+      .micro-slider-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+      .micro-slider-container input[type=range] { width: 60px; height: 3px; }
+      .micro-slider-container input[type=range]::-webkit-slider-thumb { width: 12px; height: 12px; }
+      .micro-slider-val { color: var(--blue); width: 24px; text-align: right; }
+
+      /* Switch UI */
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 36px;
+        height: 20px;
+      }
+      .switch input { opacity: 0; width: 0; height: 0; }
+      .slider-toggle {
+        position: absolute;
+        cursor: pointer;
+        inset: 0;
+        background-color: var(--border);
+        transition: .3s;
+        border-radius: 20px;
+      }
+      .slider-toggle:before {
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 14px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: .3s;
+        border-radius: 50%;
+      }
+      input:checked + .slider-toggle { background-color: var(--blue); }
+      input:checked + .slider-toggle:before { transform: translateX(16px); }
+
+      /* ── Primary CTA ── */
+      .cta-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        max-width: 360px;
+        margin: 0 auto;
+        padding: 16px 24px;
+        background: var(--blue);
+        color: #fff;
+        font-family: var(--font);
+        font-size: 1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        letter-spacing: -0.01em;
+        transition: background 0.18s, transform 0.15s, box-shadow 0.15s;
+        box-shadow: 0 4px 16px rgba(0,113,227,0.35);
+      }
+      .cta-btn:hover {
+        background: var(--blue-dark);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 24px rgba(0,113,227,0.4);
+      }
+      .cta-btn:active { transform: translateY(0); }
+
+      /* ── Progress bar ── */
+      .session-bar {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 20px;
+        background: var(--surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-xs);
+        margin-bottom: 24px;
+      }
+      .session-count { font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); white-space: nowrap; }
+      .session-count span { color: var(--blue); font-weight: 700; }
+
+      .progress-track {
+        flex: 1;
+        height: 6px;
+        background: var(--border-subtle);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--blue);
+        border-radius: 99px;
+        transition: width 0.3s ease;
+        width: 0%;
+      }
+
+      .op-dots { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+      .op-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+      }
+
+      /* ── Question Grid ── */
+      .q-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .q-card {
+        background: var(--surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius);
+        padding: 18px 20px;
+        box-shadow: var(--shadow-xs);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        transition: border-color 0.18s, box-shadow 0.18s;
+      }
+      .q-card:focus-within {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(0,113,227,0.10), var(--shadow-xs);
+      }
+
+      .q-num {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--text-tertiary);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 4px;
+      }
+      .speaker-btn {
+        background: none;
+        border: none;
+        padding: 4px;
+        color: var(--text-tertiary);
+        cursor: pointer;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        margin-left: 2px;
+      }
+      .speaker-btn:hover {
+        background: var(--surface-2);
+        color: var(--blue);
+      }
+      .speaker-btn.active {
+        color: var(--blue);
+        animation: pulse-ring 1.2s infinite;
+      }
+      @keyframes pulse-ring {
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.4); }
+        70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(0, 113, 227, 0); }
+        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 113, 227, 0); }
+      }
+      .q-op-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px; height: 16px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        font-family: var(--font-mono);
+      }
+
+      /* ── Inline expression (default) ── */
+      .q-expr {
+        font-family: var(--font-mono);
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        letter-spacing: -0.01em;
+        padding: 6px 0 10px;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      /* ── Column / Abacus style ── */
+      .q-column {
+        font-family: var(--font-mono);
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        display: inline-flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2px;
+        padding: 6px 12px 0;
+        margin-left: auto; /* Push to right of card if needed */
+      }
+      .q-col-row {
+        display: flex;
+        justify-content: flex-end;
+        align-items: baseline;
+        width: 100%;
+        gap: 4px; /* Tight gap as requested */
+      }
+      .q-col-op {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        font-weight: 700;
+        min-width: 1rem;
+        text-align: center;
+      }
+      .q-col-num {
+        text-align: right;
+        min-width: 2.2rem;
+        color: var(--text-primary);
+        letter-spacing: 0.02em;
+      }
+      .q-col-line {
+        width: 100%;
+        height: 2px;
+        background: var(--text-primary);
+        border-radius: 1px;
+        margin: 6px 0 4px;
+      }
+
+      .q-input-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .q-input-label {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        flex-shrink: 0;
+      }
+      .q-input {
+        flex: 1;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--surface-2);
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        padding: 8px 12px;
+        text-align: center;
+        outline: none;
+        transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+        width: 100%;
+      }
+      .q-input:focus {
+        border-color: var(--blue);
+        background: var(--blue-light);
+        box-shadow: 0 0 0 3px rgba(0,113,227,0.10);
+      }
+      .q-input.correct {
+        border-color: var(--green);
+        background: var(--green-light);
+        color: #1a7a34;
+      }
+      .q-input.wrong {
+        border-color: var(--red);
+        background: var(--red-light);
+        color: #b81c14;
+      }
+
+      .q-feedback {
+        font-size: 0.78rem;
+        font-weight: 600;
+        min-height: 16px;
+      }
+      .q-feedback.correct { color: #1a7a34; }
+      .q-feedback.wrong   { color: #b81c14; }
+
+      /* ── Action row ── */
+      .action-row {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: var(--font);
+        font-size: 0.9rem;
+        font-weight: 600;
+        padding: 10px 22px;
+        border-radius: var(--radius-sm);
+        border: none;
+        cursor: pointer;
+        transition: all 0.18s;
+        white-space: nowrap;
+      }
+      .btn:hover { transform: translateY(-1px); }
+      .btn:active { transform: translateY(0); }
+
+      .btn-primary {
+        background: var(--blue);
+        color: white;
+        box-shadow: 0 2px 10px rgba(0,113,227,0.3);
+      }
+      .btn-primary:hover { background: var(--blue-dark); box-shadow: 0 4px 16px rgba(0,113,227,0.4); }
+
+      .btn-secondary {
+        background: var(--surface);
+        color: var(--text-primary);
+        border: 1.5px solid var(--border);
+      }
+      .btn-secondary:hover { border-color: var(--text-secondary); background: var(--surface-2); }
+
+      .btn-success {
+        background: #1a9c3e;
+        color: white;
+        box-shadow: 0 2px 10px rgba(26,156,62,0.25);
+      }
+      .btn-success:hover { background: #158533; }
+
+      /* ── Flash Mode ── */
+      .flash-shell {
+        display: flex; flex-direction: column;
+        align-items: center;
+        padding-top: 16px;
+      }
+
+      .flash-card {
+        background: var(--surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-md);
+        padding: 48px 40px;
+        text-align: center;
+        max-width: 440px;
+        width: 100%;
+        margin-bottom: 24px;
+      }
+
+      .flash-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-tertiary);
+        margin-bottom: 20px;
+      }
+
+      .flash-expr {
+        font-family: var(--font-mono);
+        font-size: 2.4rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        letter-spacing: -0.02em;
+        margin-bottom: 32px;
+        word-break: break-all;
+      }
+
+      .flash-input {
+        font-family: var(--font-mono);
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        border: 2px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface-2);
+        padding: 14px 20px;
+        width: 100%;
+        max-width: 220px;
+        text-align: center;
+        outline: none;
+        display: block;
+        margin: 0 auto 14px;
+        transition: border-color 0.18s, box-shadow 0.18s;
+      }
+      .flash-input:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 4px rgba(0,113,227,0.12);
+        background: var(--blue-light);
+      }
+
+      .flash-feedback {
+        font-size: 0.95rem;
+        font-weight: 600;
+        min-height: 22px;
+        transition: all 0.2s;
+      }
+      .flash-feedback.correct { color: #1a9c3e; }
+      .flash-feedback.wrong   { color: #d4291f; }
+
+      .flash-next-btn {
+        background: var(--blue);
+        color: white;
+        border: none;
+        border-radius: var(--radius);
+        font-family: var(--font);
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 13px 40px;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0,113,227,0.3);
+        transition: all 0.18s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .flash-next-btn:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+      /* ── Results ── */
+      .results-top {
+        text-align: center;
+        margin-bottom: 36px;
+      }
+
+      .score-ring-wrap { display: flex; justify-content: center; margin-bottom: 20px; }
+
+      .score-ring {
+        position: relative;
+        width: 156px; height: 156px;
+      }
+      .score-ring svg {
+        transform: rotate(-90deg);
+        width: 156px; height: 156px;
+      }
+      .score-ring circle {
+        fill: none;
+        stroke-width: 10;
+        stroke-linecap: round;
+      }
+      .ring-bg   { stroke: var(--border-subtle); }
+      .ring-fill {
+        stroke: url(#rg);
+        stroke-dasharray: 439.8;
+        transition: stroke-dashoffset 1s cubic-bezier(0.34,1.56,0.64,1);
+      }
+      .ring-center {
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+      }
+      .ring-pct {
+        font-size: 2rem; font-weight: 800;
+        font-family: var(--font-mono);
+        color: var(--text-primary);
+        letter-spacing: -0.04em;
+      }
+      .ring-sub { font-size: 0.72rem; color: var(--text-tertiary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+
+      .results-headline {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        letter-spacing: -0.02em;
+        margin-bottom: 6px;
+      }
+      .results-sub { font-size: 0.95rem; color: var(--text-secondary); }
+
+      /* Stats */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+        margin-bottom: 36px;
+      }
+      .stat-card {
+        background: var(--surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius);
+        padding: 20px 16px;
+        text-align: center;
+        box-shadow: var(--shadow-xs);
+      }
+      .stat-val {
+        font-size: 1.9rem;
+        font-weight: 800;
+        font-family: var(--font-mono);
+        letter-spacing: -0.04em;
+        margin-bottom: 4px;
+      }
+      .stat-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-secondary); }
+
+      /* Review grid */
+      .review-label {
+        font-size: 0.72rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.09em;
+        color: var(--text-secondary);
+        margin-bottom: 12px;
+      }
+      .review-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 10px;
+        margin-bottom: 32px;
+      }
+      .review-item {
+        background: var(--surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius);
+        padding: 12px 14px;
+        box-shadow: var(--shadow-xs);
+        border-left: 3px solid var(--green);
+      }
+      .review-item.bad { border-left-color: var(--red); }
+
+      .review-expr {
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+      }
+      .review-answers { font-size: 0.77rem; }
+      .ans-good { color: #1a9c3e; font-weight: 600; }
+      .ans-bad  { color: #d4291f; font-weight: 600; }
+
+      /* ── Animations ── */
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(16px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      .fade-up { animation: fadeUp 0.4s ease both; }
+
+      @keyframes popIn {
+        0%   { transform: scale(1); }
+        45%  { transform: scale(1.1); }
+        100% { transform: scale(1); }
+      }
+      .pop { animation: popIn 0.22s ease; }
+
+      /* ── Selection Tabs ── */
+      .mode-select-wrap {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 32px;
+      }
+      .tab-group {
+        display: inline-flex;
+        background: var(--surface-2);
+        padding: 4px;
+        border-radius: 12px;
+        border: 1px solid var(--border-subtle);
+      }
+      .tab-btn {
+        padding: 8px 20px;
+        border-radius: 9px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .tab-btn.active {
+        background: var(--surface);
+        color: var(--blue);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      }
+
+      /* ── Upload Area ── */
+      .upload-card {
+        text-align: center;
+        padding: 40px 20px;
+        border: 2px dashed var(--border);
+        border-radius: 16px;
+        background: var(--surface-2);
+        transition: all 0.2s;
+        cursor: pointer;
+        position: relative;
+      }
+      .upload-card:hover, .upload-card.dragover {
+        border-color: var(--blue);
+        background: var(--blue-light);
+      }
+      .upload-icon {
+        font-size: 2.5rem;
+        margin-bottom: 12px;
+        display: block;
+      }
+      .upload-text {
+        color: var(--text-primary);
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .upload-hint {
+        font-size: 0.78rem;
+        color: var(--text-tertiary);
+      }
+      #file-input {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      /* ── AI Loading ── */
+      .ai-loading-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(255,255,255,0.85);
+        backdrop-filter: blur(8px);
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        animation: fadeIn 0.3s ease;
+      }
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid var(--blue-light);
+        border-top-color: var(--blue);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 16px;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+      /* Confetti */
+      .confetti-host { position: fixed; inset: 0; pointer-events: none; z-index: 9999; overflow: hidden; }
+      .cf {
+        position: absolute;
+        width: 8px; height: 8px;
+        border-radius: 2px;
+        animation: cffall linear forwards;
+      }
+      @keyframes cffall {
+        from { transform: translateY(-30px) rotate(0deg); opacity: 1; }
+        to   { transform: translateY(110vh) rotate(780deg); opacity: 0; }
+      }
+
+      /* Speaker Button */
+      .spk-btn {
+        background: transparent;
+        border: 1px solid var(--border-subtle);
+        color: var(--text-tertiary);
+        width: 28px; height: 28px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        padding: 0;
+      }
+      .spk-btn:hover {
+        background: var(--blue-light);
+        color: var(--blue);
+        border-color: var(--blue);
+        transform: scale(1.05);
+      }
+      .spk-btn.active {
+        background: var(--blue);
+        color: white;
+        border-color: var(--blue);
+        animation: pulse-blue 1.5s infinite;
+      }
+      .spk-btn.waiting-manual {
+        background: var(--purple-light);
+        color: var(--purple);
+        border-color: var(--purple);
+        animation: pulse-purple 1s infinite;
+      }
+      @keyframes pulse-blue {
+        0% { box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(0, 113, 227, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(0, 113, 227, 0); }
+      }
+      @keyframes pulse-purple {
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(175, 82, 222, 0.4); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); box-shadow: 0 0 0 10px rgba(175, 82, 222, 0); }
+      }
+
+      /* Explicit Signs */
+      .q-col-op.explicit {
+          color: #ff9500 !important; /* Bright iOS Orange */
+          font-weight: 800;
+          opacity: 1 !important;
+      }
+
+      .btn-exit {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          background: var(--surface-2);
+          border: 1px solid var(--border);
+          color: #ff3b30; /* iOS Red */
+          font-size: 0.75rem;
+          font-weight: 600;
+          padding: 5px 10px;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.2s;
+      }
+      .btn-exit:hover {
+          background: #fff5f5;
+          border-color: #ff3b30;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 640px) {
+        .topbar { padding: 0 14px; }
+        .topbar-brand { font-size: 0.9rem; }
+        .page { padding: 24px 14px 60px; }
+        .page-heading h1 { font-size: 1.6rem; }
+        .flash-card { padding: 32px 20px; }
+        .flash-expr { font-size: 1.8rem; }
+        .q-grid { grid-template-columns: 1fr; }
+        .ops-group { flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ── Topbar ── -->
+    <nav class="topbar">
+      <a href="/learn.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        LingoLearn
+      </a>
+
+      <div class="topbar-brand">🧮 Abacus Math Drills</div>
+
+      <div class="topbar-right">
+        <div class="timer-badge" id="timer-badge">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <circle cx="6" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M6 4v2.5l1.5 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M4.5 1h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          <span id="timer-val">00:00</span>
+        </div>
+        <button class="btn-ghost" id="new-btn" onclick="goConfig()">⚙ New Session</button>
+      </div>
+    </nav>
+
+    <main class="page">
+
+      <!-- ════════════ CONFIG ════════════ -->
+      <section class="section active" id="sec-config">
+
+        <div class="page-heading fade-up">
+          <h1>🧮 Practice Sessions</h1>
+          <p>Master your abacus skills with interactive drills.</p>
+        </div>
+
+        <!-- Ultra Compact Common Preferences Toolbar -->
+        <div class="compact-toolbar fade-up" style="animation-delay:.02s;">
+            <!-- Mode Selection -->
+            <div class="toolbar-group">
+                <div class="micro-toggle">
+                    <input type="radio" id="m-all" name="mode" value="all" checked />
+                    <label for="m-all"><span class="micro-icon">📋</span> All</label>
+                </div>
+                <div class="micro-toggle">
+                    <input type="radio" id="m-flash" name="mode" value="flash" />
+                    <label for="m-flash"><span class="micro-icon">⚡</span> Flash</label>
+                </div>
+            </div>
+
+            <div class="toolbar-divider"></div>
+
+            <!-- Features -->
+            <div class="toolbar-group">
+                <div class="micro-toggle">
+                    <input type="checkbox" id="c-auto-voice" checked />
+                    <label for="c-auto-voice" title="Auto-read aloud"><span class="micro-icon">🔊</span> Voice</label>
+                </div>
+                <div class="micro-toggle">
+                    <input type="checkbox" id="c-auto-next" checked />
+                    <label for="c-auto-next" title="Skip to next on correct"><span class="micro-icon">⏭️</span> Auto Next</label>
+                </div>
+                <div class="micro-toggle">
+                    <input type="checkbox" id="c-manual-speech" />
+                    <label for="c-manual-speech" title="Press space for next utterance"><span class="micro-icon">⌨️</span> Space Key</label>
+                </div>
+            </div>
+
+            <div class="toolbar-divider"></div>
+
+            <!-- Sliders -->
+            <div class="toolbar-group" style="gap: 16px;">
+                <div class="micro-slider-container" title="Speech Gap (Seconds)">
+                    Gap: 
+                    <input type="range" id="r-gap" min="0" max="5" step="0.5" value="1.0"
+                           oninput="document.getElementById('r-gap-out').textContent = this.value;" />
+                    <span class="micro-slider-val" id="r-gap-out">1.0</span>s
+                </div>
+                <div class="micro-slider-container" title="Reading Speed">
+                    Speed: 
+                    <input type="range" id="r-rate" min="0.5" max="2" step="0.1" value="1.0"
+                           oninput="document.getElementById('r-rate-out').textContent = this.value;" />
+                    <span class="micro-slider-val" id="r-rate-out">1.0</span>x
+                </div>
+            </div>
+        </div>
+
+        <div class="mode-select-wrap fade-up" style="animation-delay:.1s">
+          <div class="tab-group">
+            <button class="tab-btn active" id="tab-gen" onclick="switchTab('generate')">
+              <span>🎲</span> Auto-Generate
+            </button>
+            <button class="tab-btn" id="tab-cur" onclick="switchTab('curriculum')">
+              <span>📚</span> Curriculum
+            </button>
+            <button class="tab-btn" id="tab-scan" onclick="switchTab('scan')">
+              <span>📸</span> Scan/Upload
+            </button>
+          </div>
+        </div>
+
+        <div id="view-generate">
+          <div class="config-grid">
+
+          <div class="card fade-up" style="animation-delay:.05s">
+            <div class="card-label">Operations</div>
+            <div class="ops-group">
+
+              <div class="op-toggle add">
+                <input type="checkbox" id="op-add" value="add" checked />
+                <label for="op-add">+</label>
+              </div>
+
+              <div class="op-toggle sub">
+                <input type="checkbox" id="op-sub" value="sub" checked />
+                <label for="op-sub">−</label>
+              </div>
+
+              <div class="op-toggle mul">
+                <input type="checkbox" id="op-mul" value="mul" />
+                <label for="op-mul">×</label>
+              </div>
+
+              <div class="op-toggle div">
+                <input type="checkbox" id="op-div" value="div" />
+                <label for="op-div">÷</label>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Numeric config -->
+          <div class="card fade-up" style="animation-delay:.1s">
+            <div class="card-label">Question Settings</div>
+            <div class="slider-stack">
+
+              <div class="slider-field">
+                <label>
+                  Number of Questions
+                  <input type="number" class="val-input" id="v-q" value="10" min="1" max="100"
+                    oninput="syncSlider('r-q',this,1,100)" />
+                </label>
+                <input type="range" id="r-q" min="1" max="100" step="1" value="10"
+                  oninput="syncInput('v-q',this)" />
+              </div>
+
+              <div class="slider-field">
+                <label>
+                  Digits per Number
+                  <input type="number" class="val-input" id="v-d" value="1" min="1" max="4"
+                    oninput="syncSlider('r-d',this,1,4)" />
+                </label>
+                <input type="range" id="r-d" min="1" max="4" step="1" value="1"
+                  oninput="syncInput('v-d',this)" />
+              </div>
+
+              <div class="slider-field">
+                <label>
+                  Numbers per Question
+                  <input type="number" class="val-input" id="v-o" value="2" min="2" max="10"
+                    oninput="syncSlider('r-o',this,2,10)" />
+                </label>
+                <input type="range" id="r-o" min="2" max="10" step="1" value="2"
+                  oninput="syncInput('v-o',this)" />
+              </div>
+
+            </div>
+          </div>
+
+
+
+        </div>
+
+        </div>
+
+          </div>
+        </div>
+
+        <!-- Curriculum View -->
+        <div id="view-curriculum" style="display:none;">
+          <div class="card fade-up" style="max-width:600px; margin:0 auto 32px;">
+            <div class="card-label">Level 2 Curriculum</div>
+            <p style="font-size:0.9rem; color:var(--gray-text); margin-bottom:16px;">Select a page and category to load practice questions.</p>
+            <div class="slider-stack" style="gap:20px;">
+              <div class="slider-field">
+                <label>Select Page</label>
+                <select id="cur-page-select" class="val-input" style="width:100%; height:44px; padding:0 12px;" onchange="renderCurTags()">
+                  <option value="">-- Choose Page --</option>
+                </select>
+              </div>
+              <div id="cur-tags-container" style="display:none;">
+                <label style="display:block; margin-bottom:8px; font-size:0.85rem; font-weight:600; color:var(--gray-text);">Select Category</label>
+                <div id="cur-tags-list" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+              </div>
+            </div>
+            <div id="cur-loading" style="display:none; align-items:center; gap:8px; margin-top:16px; color:var(--blue);">
+              <div class="spinner" style="width:16px; height:16px; border-width:2px;"></div>
+              <span style="font-size:0.85rem;">Loading curriculum...</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="view-scan" style="display:none;">
+          <div class="card fade-up" style="max-width:600px; margin:0 auto 32px; text-align:center; padding:40px 20px;">
+            <div class="ai-icon-box" style="margin:0 auto 20px;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+            </div>
+            <h3 style="margin-bottom:8px;">Load Questions</h3>
+            <p style="color:var(--gray-text); font-size:0.9rem; margin-bottom:24px;">Upload a photo of a worksheet or a JSON file.</p>
+            <div style="display:flex; justify-content:center; gap:12px;">
+              <button class="btn-primary" onclick="document.getElementById('file-input').click()"><span>📷</span> Scan Image</button>
+              <button class="btn-ghost" onclick="document.getElementById('json-input').click()"><span>📄</span> Upload JSON</button>
+            </div>
+            <input type="file" id="file-input" hidden accept="image/*" onchange="handleFileSelect(event)" />
+            <input type="file" id="json-input" hidden accept=".json" onchange="handleJsonFileSelect(event)" />
+            <div id="ai-loading" style="display:none; justify-content:center; align-items:center; gap:12px; margin-top:24px;">
+              <div class="spinner"></div>
+              <span style="font-weight:500; color:var(--blue);">AI is processing...</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="cta-btn" onclick="startDrill()" id="cta-start">
+          Start Practice Session →
+        </button>
+
+      </section>
+
+      <!-- ════════════ PRACTICE ════════════ -->
+      <section class="section" id="sec-practice">
+
+        <!-- Flash -->
+        <div id="flash-view" style="display:none;">
+          <div class="session-bar" style="max-width:440px;margin:0 auto 24px;">
+            <div class="session-count">Q <span id="f-cur">1</span> of <span id="f-tot">10</span></div>
+            <div class="progress-track"><div class="progress-fill" id="f-prog"></div></div>
+            <!-- Live layout toggle -->
+            <button id="flash-layout-toggle-btn" onclick="toggleLayout()"
+              style="flex-shrink:0; background:var(--surface-2); border:1px solid var(--border);
+                     color:var(--text-secondary); font-size:0.78rem; font-weight:600; font-family:var(--font);
+                     padding:5px 12px; border-radius:6px; cursor:pointer; white-space:nowrap;
+                     transition:all 0.15s; display:flex; align-items:center; gap:5px;"
+              title="Switch between inline and column style">
+              ↕ Column
+            </button>
+            <button class="btn-exit" onclick="goConfig()" title="Exit Practice">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              Exit
+            </button>
+          </div>
+
+          <div class="flash-shell">
+            <div class="flash-card fade-up">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+                <div class="flash-label">What is the answer?</div>
+                <button class="spk-btn" id="f-spk" onclick="speakQuestion(flashIdx)" title="Speak Question">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="flash-expr" id="f-expr">—</div>
+              <input type="number" class="flash-input" id="f-input" placeholder="?"
+                oninput="checkFlashAutoNext()"
+                onkeydown="if(event.key==='Enter') flashNext()" />
+              <div class="flash-feedback" id="f-fb"></div>
+            </div>
+            <button class="flash-next-btn" onclick="flashNext()">
+              Next
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- All at once -->
+        <div id="all-view">
+          <div class="session-bar">
+            <div class="session-count"><span id="a-cnt">10</span> Questions</div>
+            <div class="progress-track"><div class="progress-fill" id="a-prog"></div></div>
+            <div class="op-dots" id="a-dots"></div>
+            <!-- Live layout toggle -->
+            <button id="layout-toggle-btn" onclick="toggleLayout()"
+              style="flex-shrink:0; background:var(--surface-2); border:1px solid var(--border);
+                     color:var(--text-secondary); font-size:0.78rem; font-weight:600; font-family:var(--font);
+                     padding:5px 12px; border-radius:6px; cursor:pointer; white-space:nowrap;
+                     transition:all 0.15s; display:flex; align-items:center; gap:5px;"
+              title="Switch between inline and column style">
+              ↔ Inline
+            </button>
+            <button class="btn-exit" onclick="goConfig()" title="Exit Practice">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
+
+          <div class="q-grid" id="q-grid"></div>
+
+          <div class="action-row">
+            <button class="btn btn-secondary" onclick="clearAll()">Clear answers</button>
+            <button class="btn btn-success" onclick="evalAll()">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7.5L5.5 11L12 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Check Answers
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ════════════ RESULTS ════════════ -->
+      <section class="section" id="sec-results">
+
+        <div class="results-top fade-up">
+          <div class="score-ring-wrap">
+            <div class="score-ring">
+              <svg viewBox="0 0 156 156">
+                <defs>
+                  <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%"   stop-color="#0071e3" />
+                    <stop offset="100%" stop-color="#5e5ce6" />
+                  </linearGradient>
+                </defs>
+                <circle class="ring-bg"   cx="78" cy="78" r="70" />
+                <circle class="ring-fill" id="ring-fill" cx="78" cy="78" r="70" stroke-dashoffset="439.8" />
+              </svg>
+              <div class="ring-center">
+                <div class="ring-pct" id="ring-pct">0%</div>
+                <div class="ring-sub">Score</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="results-headline" id="r-headline">Great work!</div>
+          <div class="results-sub" id="r-sub">Here's how you did</div>
+        </div>
+
+        <div class="stats-grid fade-up" style="animation-delay:.1s">
+          <div class="stat-card">
+            <div class="stat-val" id="s-correct" style="color:#1a9c3e;">—</div>
+            <div class="stat-label">Correct</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="s-wrong" style="color:#d4291f;">—</div>
+            <div class="stat-label">Wrong</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="s-time" style="color:var(--blue);">—</div>
+            <div class="stat-label">Time</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="s-avg" style="color:var(--purple);">—</div>
+            <div class="stat-label">Avg / Question</div>
+          </div>
+        </div>
+
+        <div class="review-label">Question Review</div>
+        <div class="review-grid" id="r-grid"></div>
+
+        <div class="action-row" style="justify-content:center;gap:12px;">
+          <button class="btn btn-secondary" onclick="goConfig()">New Session</button>
+          <button class="btn btn-primary" onclick="retry()">Retry Same Questions</button>
+        </div>
+
+      </section>
+
+    </main>
+
+    <div class="ai-loading-overlay" id="ai-loading">
+      <div class="spinner"></div>
+      <div style="font-weight:600; color:var(--text-primary); margin-bottom:4px;">Analyzing Image</div>
+      <div style="font-size:0.85rem; color:var(--text-secondary);">Gemini is extracting questions...</div>
+    </div>
+
+    <div class="confetti-host" id="cf-host"></div>
+
+    <script>
+      // ─── State ────────────────────────────────────────────────────────────────
+      let questions = [], cfg = {}, flashIdx = 0, flashLog = [];
+      let timerSec = 0, timerIv = null;
+
+      const OP_SYM   = { add:'+', sub:'−', mul:'×', div:'÷' };
+      const OP_COLOR = { add:'#1a9c3e', sub:'#d4291f', mul:'#0071e3', div:'#5e5ce6' };
+      const OP_BG    = { add:'#e9f9ee', sub:'#fff0ef', mul:'#e8f2fd', div:'#f0f0ff' };
+
+      // ─── Voice & Audio ─────────────────────────────────────────────────────
+      let currentUtterance = null;
+      let audioCtx = null;
+      let speechTimeout = null;
+      
+      // Manual speech queue state
+      let speechQueue = [];
+      let speechQueueIdx = 0;
+      let speechActiveQ = -1; // -1 if not currently speaking a question
+
+      function getAudioCtx() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        return audioCtx;
+      }
+
+      function beep(freq, dur, vol = 0.1) {
+        try {
+          const ctx = getAudioCtx();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          gain.gain.setValueAtTime(vol, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + dur);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + dur);
+        } catch(e) {}
+      }
+
+      function playSuccessBeeps() {
+        // Three beeps: small, medium, big pitch
+        beep(440, 0.1);
+        setTimeout(() => beep(660, 0.12), 150);
+        setTimeout(() => beep(880, 0.2), 300);
+      }
+
+      let currentUt = null;
+      let speechVersion = 0;
+
+      function stopSpeech() {
+        speechVersion++; // Invalidate any pending callbacks
+        if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+           window.speechSynthesis.cancel();
+        }
+        if (speechTimeout) clearTimeout(speechTimeout);
+        // Clear UI states
+        document.querySelectorAll('.spk-btn.active').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.waiting-manual').forEach(b => b.classList.remove('waiting-manual'));
+      }
+
+      // Stop speech if tab is hidden
+      document.addEventListener('visibilitychange', () => {
+         if (document.hidden) stopSpeech();
+      });
+
+      function speakQuestion(i) {
+        stopSpeech();
+        const q = questions[i];
+        if (!q) return;
+
+        speechActiveQ = i;
+        updateSpeakerUI(i, true);
+        const gap = (cfg.speechGap || 0) * 1000;
+
+        speechQueue = [];
+        speechQueueIdx = 0;
+        speechQueue.push(`Question ${i + 1}`);
+
+        q.rows.forEach((r, idx) => {
+          if (idx === 0) {
+            speechQueue.push(`${r.num}`);
+          } else {
+            const opWord = r.op === 'add' ? 'plus' :
+                           r.op === 'sub' ? 'minus' :
+                           r.op === 'mul' ? 'times' :
+                           r.op === 'div' ? 'divided by' : '';
+            speechQueue.push(`${opWord} ${r.num}`);
+          }
+        });
+        speechQueue.push("Answer?");
+
+        function speakParts(idx) {
+          const myVersion = speechVersion;
+          if (idx >= speechQueue.length) {
+            speechActiveQ = -1;
+            updateSpeakerUI(i, false);
+            return;
+          }
+
+          speechQueueIdx = idx;
+          currentUt = new SpeechSynthesisUtterance(speechQueue[idx]);
+          currentUt.rate = cfg.speechRate || 1.0;
+          currentUt.onend = () => {
+             // Zombie check: if speechVersion changed, stop immediately
+             if (speechVersion !== myVersion) return;
+
+             if (idx < speechQueue.length - 1) {
+                if (cfg.manualSpeech) {
+                  updateManualFeedback(true);
+                } else {
+                  const isLastPrompt = (idx === speechQueue.length - 2);
+                  const delay = isLastPrompt ? 50 : (idx >= 1 ? gap : 400); 
+                  speechTimeout = setTimeout(() => {
+                     if (speechVersion === myVersion) speakParts(idx + 1);
+                  }, delay);
+                }
+             } else {
+                speechActiveQ = -1;
+                updateSpeakerUI(i, false);
+             }
+          };
+          currentUt.onerror = () => { 
+             if (speechVersion === myVersion) {
+                speechActiveQ = -1; 
+                updateSpeakerUI(i, false); 
+             }
+          };
+          window.speechSynthesis.speak(currentUt);
+        }
+
+        speakParts(0);
+      }
+
+      function advanceManualSpeech() {
+        if (speechActiveQ !== -1 && cfg.manualSpeech) {
+          if (!window.speechSynthesis.speaking) {
+            updateManualFeedback(false);
+            speakNextPart();
+          }
+        }
+      }
+
+      function speakNextPart() {
+        if (speechActiveQ === -1) return;
+        const nextIdx = speechQueueIdx + 1;
+        if (nextIdx < speechQueue.length) {
+          speakParticularPart(nextIdx, speechActiveQ);
+        }
+      }
+
+      function speakParticularPart(idx, qIdx) {
+        const myVersion = speechVersion;
+        if (idx >= speechQueue.length) {
+          speechActiveQ = -1;
+          updateSpeakerUI(qIdx, false);
+          updateManualFeedback(false);
+          return;
+        }
+        speechQueueIdx = idx;
+        updateManualFeedback(false);
+
+        currentUt = new SpeechSynthesisUtterance(speechQueue[idx]);
+        currentUt.rate = cfg.speechRate || 1.0;
+        currentUt.onend = () => {
+          if (speechVersion !== myVersion) return;
+          if (idx < speechQueue.length - 1) {
+            if (cfg.manualSpeech) updateManualFeedback(true);
+          } else {
+            speechActiveQ = -1;
+            updateSpeakerUI(qIdx, false);
+          }
+        };
+        window.speechSynthesis.speak(currentUt);
+      }
+
+      function updateManualFeedback(waiting) {
+        const btn = document.getElementById(`spk${speechActiveQ}`) || document.getElementById('f-spk');
+        if (btn) btn.classList.toggle('waiting-manual', waiting);
+      }
+
+      function updateSpeakerUI(i, active) {
+        // Update both session speaker and flash speaker if active
+        const btn = document.getElementById(`spk${i}`);
+        if (btn) btn.classList.toggle('active', active);
+        
+        const fBtn = document.getElementById('f-spk');
+        if (fBtn && flashIdx === i) fBtn.classList.toggle('active', active);
+      }
+
+      // ─── Selection Tabs ─────────────────────────────────────────────────────
+      let activeSource = 'generate'; 
+      let curriculumData = null;
+
+      async function switchTab(mode) {
+        activeSource = mode;
+        document.getElementById('tab-gen').classList.toggle('active', mode === 'generate');
+        document.getElementById('tab-cur').classList.toggle('active', mode === 'curriculum');
+        document.getElementById('tab-scan').classList.toggle('active', mode === 'scan');
+        
+        document.getElementById('view-generate').style.display = mode === 'generate' ? '' : 'none';
+        document.getElementById('view-curriculum').style.display = mode === 'curriculum' ? '' : 'none';
+        document.getElementById('view-scan').style.display = mode === 'scan' ? '' : 'none';
+        
+        document.getElementById('cta-start').style.display = mode === 'generate' ? 'flex' : 'none';
+
+        if (mode === 'curriculum' && !curriculumData) {
+          fetchCurriculum();
+        }
+      }
+
+      async function fetchCurriculum() {
+        const loading = document.getElementById('cur-loading');
+        loading.style.display = 'flex';
+        try {
+          const resp = await fetch('/api/questions/curriculum');
+          curriculumData = await resp.json();
+          renderCurPages();
+        } catch (err) {
+          console.error("Failed to load curriculum:", err);
+        } finally {
+          loading.style.display = 'none';
+        }
+      }
+
+      function renderCurPages() {
+        const select = document.getElementById('cur-page-select');
+        select.innerHTML = '<option value="">-- Choose Page --</option>';
+        if (!curriculumData) return;
+        
+        // Sort keys naturally (page_3, page_4...)
+        const sortedPages = Object.keys(curriculumData).sort((a,b) => {
+          const numA = parseInt(a.replace(/\D/g,'')) || 0;
+          const numB = parseInt(b.replace(/\D/g,'')) || 0;
+          return numA - numB;
+        });
+
+        sortedPages.forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p;
+          opt.textContent = p.replace('_',' ').replace(/\b\w/g, l => l.toUpperCase());
+          select.appendChild(opt);
+        });
+      }
+
+      function renderCurTags() {
+        const page = document.getElementById('cur-page-select').value;
+        const container = document.getElementById('cur-tags-container');
+        const list = document.getElementById('cur-tags-list');
+        
+        if (!page || !curriculumData[page]) {
+          container.style.display = 'none';
+          return;
+        }
+
+        list.innerHTML = '';
+        const tags = Object.keys(curriculumData[page]);
+        tags.forEach(t => {
+          const btn = document.createElement('button');
+          btn.className = 'tab-btn'; // Use tab-btn style for better pill look
+          btn.style.width = 'auto';
+          btn.style.padding = '10px 20px';
+          btn.style.fontSize = '0.85rem';
+          btn.style.height = 'auto';
+          btn.style.textTransform = 'capitalize';
+          btn.innerHTML = `<span>${t === 'abacus' ? '🧮' : t === 'visual' ? '👁️' : '✖️'}</span> ${t}`;
+          btn.onclick = () => loadCurriculumSet(page, t);
+          list.appendChild(btn);
+        });
+        container.style.display = 'block';
+      }
+
+      function startDrill(){
+        stopSpeech();
+        cfg={
+          qCount: +document.getElementById('v-q').value,
+          digits: +document.getElementById('v-d').value,
+          operands: +document.getElementById('v-o').value,
+          ops: Array.from(document.querySelectorAll('.op-toggle input:checked')).map(i=>i.value),
+          mode: document.querySelector('input[name="mode"]:checked').value,
+          layout: 'column',
+          autoVoice: document.getElementById('c-auto-voice').checked,
+          autoNext : document.getElementById('c-auto-next').checked,
+          manualSpeech: document.getElementById('c-manual-speech').checked,
+          speechGap: +document.getElementById('r-gap').value,
+          speechRate: +document.getElementById('r-rate').value
+        };
+        startTimer();
+        cfg.mode === 'flash' ? initFlash() : initAll();
+        showSec('sec-practice');
+      }
+
+      function loadCurriculumSet(page, tag) {
+        const raw = curriculumData[page][tag];
+        if (!raw || !raw.length) return;
+
+        questions = raw.map(q => {
+          const rows = parseExprToRows(q.q);
+          return {
+            expr: q.q,
+            answer: calcAnswer(rows),
+            op: rows[1]?.op || 'add',
+            rows: rows
+          };
+        });
+
+        startCurriculumSession();
+      }
+
+      function startCurriculumSession() {
+        cfg = {
+          mode: document.querySelector('input[name="mode"]:checked').value, 
+          layout: 'column',
+          autoVoice: document.getElementById('c-auto-voice').checked,
+          autoNext : document.getElementById('c-auto-next').checked,
+          manualSpeech: document.getElementById('c-manual-speech').checked,
+          speechGap: +document.getElementById('r-gap').value,
+          speechRate: +document.getElementById('r-rate').value,
+          ops: ['add', 'sub', 'mul', 'div'], // Initialize to avoid crashes
+          qCount: questions.length,
+          digits: 1, // dummy
+          operands: 2 // dummy
+        };
+        startTimer();
+        cfg.mode === 'flash' ? initFlash() : initAll();
+        showSec('sec-practice');
+      }
+
+      function handleFileSelect(e) {
+        const file = e.target.files[0];
+        if (file) processImage(file);
+      }
+
+      function handleJsonFileSelect(e) {
+        const file = e.target.files[0];
+        if (file) uploadJsonFile(file);
+      }
+
+      async function uploadJsonFile(file) {
+        const loading = document.getElementById('ai-loading');
+        loading.style.display = 'flex';
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+          const resp = await fetch('/api/questions/upload', { method: 'POST', body: formData });
+          const result = await resp.json();
+          
+          if (result.data) {
+             // For simplicity, we just use the first page found in the uploaded JSON
+             const firstPage = Object.keys(result.data)[0];
+             const firstTag = Object.keys(result.data[firstPage])[0];
+             curriculumData = result.data; // Temporarily swap or merge
+             loadCurriculumSet(firstPage, firstTag);
+          } else {
+             throw new Error("Invalid response format");
+          }
+        } catch (err) {
+          alert("Upload failed: " + err.message);
+        } finally {
+          loading.style.display = 'none';
+          document.getElementById('json-input').value = '';
+        }
+      }
+
+      function calcAnswer(rows) {
+        if (!rows.length) return 0;
+        let ans = rows[0].num;
+        for (let i = 1; i < rows.length; i++) {
+          const r = rows[i];
+          if (r.op === 'add') ans += r.num;
+          else if (r.op === 'sub') ans -= r.num;
+          else if (r.op === 'mul') ans *= r.num;
+          else if (r.op === 'div') ans /= r.num;
+        }
+        return ans;
+      }
+
+      async function processImage(file) {
+        const loading = document.getElementById('ai-loading');
+        loading.style.display = 'flex';
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+          const resp = await fetch('/ai/gemini/vision', { method: 'POST', body: formData });
+          const data = await resp.json();
+
+          if (data.error) throw new Error(data.error);
+
+          // Extract JSON array from Gemini's response (handles markdown fences if present)
+          let jsonStr = data.generation || '';
+          const match = jsonStr.match(/\[[\s\S]*\]/);
+          if (!match) throw new Error("Could not find question data in AI response");
+          
+          const rawQuestions = JSON.parse(match[0]);
+          
+          // Map to internal format
+          questions = rawQuestions.map(q => {
+            const rows = parseExprToRows(q.expr);
+            return {
+              expr: q.expr,
+              answer: q.answer,
+              op: rows[1]?.op || 'add',
+              rows: rows
+            };
+          });
+
+          if (!questions.length) throw new Error("No questions found in image");
+
+          // Success - Start Drill
+          cfg = { 
+            mode: document.querySelector('input[name="mode"]:checked').value, 
+            layout: 'column',
+            autoVoice: document.getElementById('c-auto-voice').checked,
+            autoNext : document.getElementById('c-auto-next').checked,
+            manualSpeech: document.getElementById('c-manual-speech').checked,
+            speechGap: +document.getElementById('r-gap').value,
+            speechRate: +document.getElementById('r-rate').value,
+            ops: ['add', 'sub'], // Generic default
+            qCount: questions.length
+          };
+          startTimer();
+          cfg.mode === 'flash' ? initFlash() : initAll();
+          showSec('sec-practice');
+
+        } catch (err) {
+          alert("Extraction failed: " + err.message);
+        } finally {
+          loading.style.display = 'none';
+          document.getElementById('file-input').value = ''; // clear input
+        }
+      }
+
+      function parseExprToRows(expr) {
+        // Robust parser for "10, -7, 6" or "40 x 7" or "10 + 20"
+        try {
+          const rows = [];
+          // Standardize separators to spaces, then split
+          const parts = expr.replace(/,/g, ' ').split(/\s+/).filter(x => x.length > 0);
+          
+          let currentOp = 'first';
+          for (let i = 0; i < parts.length; i++) {
+            let t = parts[i];
+            
+            // Check if token is just an operator
+            if (t === '+') { currentOp = 'add'; continue; }
+            if (t === '−' || t === '-' || t === '–') { currentOp = 'sub'; continue; }
+            if (t === '×' || t === 'x' || t === 'X') { currentOp = 'mul'; continue; }
+            if (t === '÷' || t === '/') { currentOp = 'div'; continue; }
+
+            // Check if token has an embedded operator (e.g., "-7", "x10")
+            let explicit = false;
+            let op = currentOp;
+            
+            if (t.startsWith('-') || t.startsWith('−')) {
+                explicit = true; op = 'sub'; t = t.substring(1);
+            } else if (t.startsWith('+')) {
+                explicit = true; op = 'add'; t = t.substring(1);
+            } else if (t.startsWith('x') || t.startsWith('X') || t.startsWith('×')) {
+                explicit = true; op = 'mul'; t = t.substring(1);
+            } else if (t.startsWith('/') || t.startsWith('÷')) {
+                explicit = true; op = 'div'; t = t.substring(1);
+            }
+
+            // If we are past the first number and didn't find an explicit sign, 
+            // it's an implicit add but explicit is false.
+            if (i > 0 && op === 'first' && !explicit) {
+                op = 'add';
+            }
+
+            const num = parseInt(t.replace(/,/g, ''));
+            if (!isNaN(num)) {
+              rows.push({ num, op, explicit });
+              currentOp = 'add'; // Default for next number if none found
+            }
+          }
+          return rows.length ? rows : [{ num: 0, op: 'first', explicit: false }];
+        } catch(e) {
+          return [{ num: 0, op: 'first', explicit: false }];
+        }
+      }
+
+      //  ─── Math ───────────────────────────────────────────────────────────────
+      function rand(a, b){ return Math.floor(Math.random()*(b-a+1))+a; }
+      function numD(d){ return rand(Math.pow(10,d-1), Math.pow(10,d)-1); }
+
+      function makeQ(ops, digits, operands) {
+        const rows = [];
+        let ans = 0;
+        let isDiv = ops.includes('div') && (ops.length === 1 || Math.random() > 0.7);
+
+        if (isDiv) {
+          // Special logic for division
+          let b = numD(Math.max(1, digits - 1)) || 1;
+          let a = b * rand(2, Math.pow(10, Math.max(1, digits - 1)));
+          rows.push({num: a, op: 'first'});
+          rows.push({num: b, op: 'div'});
+          ans = a / b;
+        } else {
+          // Addition, Subtraction, Multiplication
+          const filteredOps = ops.filter(o => o !== 'div');
+          const canMix = filteredOps.includes('add') && filteredOps.includes('sub');
+
+          for (let i = 0; i < operands; i++) {
+            let stepOp;
+            if (i === 0) {
+              stepOp = 'first';
+            } else if (canMix) {
+              stepOp = Math.random() > 0.5 ? 'add' : 'sub';
+            } else {
+              stepOp = filteredOps[rand(0, filteredOps.length - 1)];
+            }
+
+            let n = numD(digits);
+
+            if (i === 0) {
+              ans = n;
+            } else {
+              if (stepOp === 'sub' && ans - n < 0) n = rand(0, ans);
+              if (stepOp === 'add') ans += n;
+              else if (stepOp === 'sub') ans -= n;
+              else if (stepOp === 'mul') ans *= n;
+            }
+            rows.push({num: n, op: stepOp});
+          }
+        }
+
+        const expr = rows.map((r, idx) => idx === 0 ? r.num : `${OP_SYM[r.op]} ${r.num}`).join(' ');
+        return {expr, answer: ans, op: rows[1]?.op || 'add', rows};
+      }
+
+      // ─── Timer ───────────────────────────────────────────────────────────────
+      function startTimer(){
+        timerSec=0;
+        const badge=document.getElementById('timer-badge');
+        badge.style.display='flex';
+        badge.style.flexDirection='row';
+        updateTimerDisplay();
+        timerIv=setInterval(()=>{timerSec++;updateTimerDisplay();},1000);
+      }
+      function stopTimer(){ clearInterval(timerIv); timerIv=null; }
+      function updateTimerDisplay(){
+        const m=String(Math.floor(timerSec/60)).padStart(2,'0');
+        const s=String(timerSec%60).padStart(2,'0');
+        document.getElementById('timer-val').textContent=`${m}:${s}`;
+      }
+      function fmtTime(s){ return s<60?`${s}s`:`${Math.floor(s/60)}m ${s%60}s`; }
+
+      // ─── Section routing ─────────────────────────────────────────────────────
+      function showSec(id){
+        stopSpeech(); // Stop any audio when navigating between screens
+        document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+      }
+
+      // ─── Slider ↔ Input sync ──────────────────────────────────────────────────
+      function syncInput(inputId, slider) {
+        const inp = document.getElementById(inputId);
+        if (inp) inp.value = slider.value;
+      }
+      function syncSlider(sliderId, input, min, max) {
+        const slider = document.getElementById(sliderId);
+        let v = parseInt(input.value);
+        if (isNaN(v)) return;
+        v = Math.max(min, Math.min(max, v));
+        if (slider) slider.value = v;
+        input.value = v;
+      }
+
+      // ─── Layout toggle ───────────────────────────────────────────────────────
+      let currentLayout = 'column';
+
+      // Build the inner HTML for one question card
+      function buildCardHTML(q, i, layout) {
+        const primaryOp = q.rows[1]?.op || q.rows[0].op;
+        const opColor = OP_COLOR[primaryOp] || '#0071e3';
+        const opBg    = OP_BG[primaryOp] || '#e8f2fd';
+
+        let exprHtml;
+        if (layout === 'column') {
+          const rowHtml = q.rows.map((r, idx) => {
+            // Show symbol if explicit OR if NOT the first row and NOT implicit addition
+            const showSym = idx > 0 && (r.explicit || r.op !== 'add');
+            const sym = showSym ? (OP_SYM[r.op] || '') : '';
+            const color = OP_COLOR[r.op] || 'inherit';
+            const explicitClass = r.explicit ? 'explicit' : '';
+            
+            return `
+              <div class="q-col-row">
+                <span class="q-col-op ${explicitClass}" style="color:${color}">${sym}</span>
+                <span class="q-col-num">${r.num}</span>
+              </div>`;
+          }).join('');
+          exprHtml = `<div style="display:flex; justify-content:center; margin: 10px 0;"><div class="q-column">${rowHtml}<div class="q-col-line"></div></div></div>`;
+        } else {
+          exprHtml = `<div class="q-expr">${q.expr} = ?</div>`;
+        }
+
+        const pillSym = OP_SYM[primaryOp] || '±';
+
+        return `
+          <div class="q-num">
+            <div style="display:flex; align-items:center; gap:8px;">
+               <span class="q-op-pill" style="background:${opBg};color:${opColor}">${pillSym}</span>
+               Q${i+1}
+            </div>
+            <button class="spk-btn" id="spk${i}" onclick="speakQuestion(${i})" title="Speak Question">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+              </svg>
+            </button>
+          </div>
+          ${exprHtml}
+          <div class="q-input-row">
+            <span class="q-input-label">${layout === 'column' ? '=' : 'Answer'}</span>
+            <input type="number" class="q-input" id="a${i}"
+              onkeydown="if(event.key==='Enter'){document.getElementById('a${i+1}')?.focus()}"
+              oninput="tickProgress(); checkAllAutoNext(${i})" />
+          </div>
+          <div class="q-feedback" id="f${i}"></div>
+        `;
+      }
+
+      function applyLayout(layout) {
+        currentLayout = layout;
+        const grid = document.getElementById('q-grid');
+        const btnAll  = document.getElementById('layout-toggle-btn');
+        const btnFlash = document.getElementById('flash-layout-toggle-btn');
+        const btnLabel = layout === 'column' ? '↕ Column' : '↔ Inline';
+        
+        if (btnAll) btnAll.innerHTML = btnLabel;
+        if (btnFlash) btnFlash.innerHTML = btnLabel;
+
+        if (document.getElementById('flash-view').style.display !== 'none') {
+           if (flashIdx < questions.length) renderFlash();
+        }
+
+        if (grid) {
+          const cards = grid.querySelectorAll('.q-card');
+          cards.forEach((card, i) => {
+            if (!questions[i]) return;
+            const prevVal = document.getElementById(`a${i}`)?.value || '';
+            card.innerHTML = buildCardHTML(questions[i], i, layout);
+            const newInp = document.getElementById(`a${i}`);
+            if (newInp && prevVal) newInp.value = prevVal; // preserve entered answers
+          });
+        }
+      }
+
+      function toggleLayout() {
+        applyLayout(currentLayout === 'inline' ? 'column' : 'inline');
+      }
+
+      // ─── Start ───────────────────────────────────────────────────────────────
+      function startDrill(){
+        const ops=[...document.querySelectorAll('.op-toggle input:checked')].map(c=>c.value);
+        if(!ops.length){ alert('Select at least one operation.'); return; }
+        cfg={
+          ops,
+          qCount  : +document.getElementById('r-q').value,
+          digits  : +document.getElementById('r-d').value,
+          operands: +document.getElementById('r-o').value,
+          mode    : document.querySelector('input[name=mode]:checked').value,
+          layout  : 'column',
+          autoVoice: document.getElementById('c-auto-voice').checked,
+          autoNext : document.getElementById('c-auto-next').checked,
+          manualSpeech: document.getElementById('c-manual-speech').checked,
+          speechGap: +document.getElementById('r-gap').value,
+        };
+        questions=Array.from({length:cfg.qCount},()=>makeQ(cfg.ops,cfg.digits,cfg.operands));
+        flashIdx=0; flashLog=[];
+        document.getElementById('new-btn').style.display='flex';
+        startTimer();
+        cfg.mode==='flash' ? initFlash() : initAll();
+        showSec('sec-practice');
+        if (cfg.autoVoice) setTimeout(() => speakQuestion(0), 600);
+      }
+
+      // ─── ALL-AT-ONCE ─────────────────────────────────────────────────────────
+      function initAll(){
+        currentLayout = cfg.layout || 'inline';
+        const btn = document.getElementById('layout-toggle-btn');
+        if (btn) btn.innerHTML = currentLayout === 'column' ? '↕ Column' : '↔ Inline';
+        document.getElementById('all-view').style.display='';
+        document.getElementById('flash-view').style.display='none';
+        document.getElementById('a-cnt').textContent=questions.length;
+
+        // Op dots legend
+        const dots=document.getElementById('a-dots');
+        dots.innerHTML=cfg.ops.map(op=>
+          `<div style="display:flex;align-items:center;gap:4px;">
+            <div class="op-dot" style="background:${OP_COLOR[op]}"></div>
+            <span style="font-size:.72rem;color:var(--text-secondary);font-weight:600;">${op}</span>
+          </div>`).join('');
+
+        const grid=document.getElementById('q-grid');
+        grid.innerHTML='';
+        questions.forEach((q,i)=>{
+          const c=document.createElement('div');
+          c.className='q-card fade-up';
+          c.style.animationDelay=`${i*.03}s`;
+          c.innerHTML = buildCardHTML(q, i, currentLayout);
+          grid.appendChild(c);
+        });
+        setTimeout(()=>document.getElementById('a0')?.focus(),300);
+      }
+
+      function tickProgress(){
+        const filled=questions.filter((_,i)=>(document.getElementById(`a${i}`)?.value||'').trim()!=='').length;
+        document.getElementById('a-prog').style.width=(filled/questions.length*100)+'%';
+      }
+
+      function clearAll(){
+        questions.forEach((_,i)=>{
+          const inp=document.getElementById(`a${i}`);
+          if(inp){inp.value='';inp.className='q-input';}
+          const fb=document.getElementById(`f${i}`);
+          if(fb){fb.textContent='';fb.className='q-feedback';}
+        });
+        document.getElementById('a-prog').style.width='0%';
+        document.getElementById('a0')?.focus();
+      }
+
+      function evalAll(){
+        let correct=0;
+        const results=questions.map((q,i)=>{
+          const inp=document.getElementById(`a${i}`);
+          const fb=document.getElementById(`f${i}`);
+          const ua=parseFloat(inp?.value);
+          const ok=!isNaN(ua)&&Math.round(ua)===Math.round(q.answer);
+          if(inp) inp.className='q-input '+(ok?'correct':'wrong');
+          if(fb){ fb.className='q-feedback '+(ok?'correct':'wrong'); fb.textContent=ok?'✓ Correct!':`✗ Answer: ${q.answer}`; }
+          if(ok) correct++;
+          return {expr:q.expr,answer:q.answer,userAns:isNaN(ua)?'—':ua,ok};
+        });
+        stopTimer();
+        setTimeout(()=>showResults(correct,results),500);
+      }
+
+      // ─── FLASH ───────────────────────────────────────────────────────────────
+      function initFlash(){
+        document.getElementById('flash-view').style.display='';
+        document.getElementById('all-view').style.display='none';
+        document.getElementById('f-tot').textContent=questions.length;
+        renderFlash();
+      }
+
+      function checkFlashAutoNext() {
+        if (!cfg.autoNext) return;
+        const inp = document.getElementById('f-input');
+        const q = questions[flashIdx];
+        if (!q) return;
+
+        const val = parseFloat(inp.value);
+        if (!isNaN(val) && Math.round(val) === Math.round(q.answer)) {
+          // Success!
+          inp.disabled = true;
+          playSuccessBeeps();
+          setTimeout(() => {
+            inp.disabled = false;
+            flashNext();
+          }, 600);
+        }
+      }
+
+      function checkAllAutoNext(i) {
+        if (!cfg.autoNext) return;
+        const inp = document.getElementById(`a${i}`);
+        const q = questions[i];
+        if (!q || !inp) return;
+
+        const val = parseFloat(inp.value);
+        // We only trigger auto-next if it's correct AND hasn't been marked correct yet
+        if (!isNaN(val) && Math.round(val) === Math.round(q.answer)) {
+          if (inp.classList.contains('correct')) return;
+          
+          // Apply visual feedback immediately
+          inp.className = 'q-input correct';
+          playSuccessBeeps();
+          
+          setTimeout(() => {
+            const nextInp = document.getElementById(`a${i+1}`);
+            if (nextInp) {
+               nextInp.focus();
+               if (cfg.autoVoice) speakQuestion(i + 1);
+            }
+          }, 600);
+        }
+      }
+
+      function renderFlash(){
+        if(flashIdx>=questions.length){
+          stopTimer();
+          let correct=0;
+          const results=flashLog.map((l,i)=>{
+            if(l.ok) correct++;
+            return {expr:questions[i].expr,answer:questions[i].answer,userAns:l.ua,ok:l.ok};
+          });
+          setTimeout(()=>showResults(correct,results),400);
+          return;
+        }
+        const q=questions[flashIdx];
+        document.getElementById('f-cur').textContent=flashIdx+1;
+
+        let exprHtml;
+        if (currentLayout === 'column') {
+          const rowHtml = q.rows.map((r, idx) => {
+            const showSym = idx > 0 && (r.explicit || r.op !== 'add');
+            const sym = showSym ? (OP_SYM[r.op] || '') : '';
+            const color = OP_COLOR[r.op] || 'inherit';
+            const explicitClass = r.explicit ? 'explicit' : '';
+            return `
+              <div class="q-col-row" style="gap:12px;">
+                <span class="q-col-op ${explicitClass}" style="color:${color}; font-size:1.8rem; min-width:1.5rem;">${sym}</span>
+                <span class="q-col-num" style="min-width:3.5rem;">${r.num}</span>
+              </div>`;
+          }).join('');
+          exprHtml = `<div style="display:flex; justify-content:center; width:100%; margin-bottom:10px;">
+                        <div class="q-column" style="font-size:2.8rem; gap:4px; padding:0;">
+                          ${rowHtml}
+                          <div class="q-col-line" style="height:4px; margin: 12px 0;"></div>
+                        </div>
+                      </div>`;
+        } else {
+          exprHtml = q.expr + ' = ?';
+        }
+        document.getElementById('f-expr').innerHTML = exprHtml;
+
+        document.getElementById('f-input').value='';
+        document.getElementById('f-fb').textContent='';
+        document.getElementById('f-fb').className='flash-feedback';
+        document.getElementById('f-prog').style.width=(flashIdx/questions.length*100)+'%';
+        setTimeout(()=>document.getElementById('f-input')?.focus(),60);
+      }
+
+      function flashNext(){
+        const inp=document.getElementById('f-input');
+        const ua=parseFloat(inp?.value);
+        const q=questions[flashIdx];
+        const ok=!isNaN(ua)&&Math.round(ua)===Math.round(q.answer);
+
+        const fb=document.getElementById('f-fb');
+        fb.className='flash-feedback '+(ok?'correct':'wrong');
+        fb.textContent=ok?'✓ Correct!':`✗ The answer was ${q.answer}`;
+
+        const exprEl=document.getElementById('f-expr');
+        exprEl.classList.remove('pop'); void exprEl.offsetWidth; exprEl.classList.add('pop');
+
+        flashLog.push({ua:isNaN(ua)?'—':ua, ok});
+        flashIdx++;
+        
+        // Stop current speech if any
+        stopSpeech();
+
+        setTimeout(() => {
+          renderFlash();
+          if (cfg.autoVoice && flashIdx < questions.length) speakQuestion(flashIdx);
+        }, ok?400:820);
+      }
+
+      function checkFlashAutoNext() {
+        if (!cfg.autoNext) return;
+        const inp = document.getElementById('f-input');
+        const q = questions[flashIdx];
+        if (!q) return;
+
+        const val = parseFloat(inp.value);
+        if (!isNaN(val) && Math.round(val) === Math.round(q.answer)) {
+          // Success!
+          inp.disabled = true; // prevent further typing
+          playSuccessBeeps();
+          setTimeout(() => {
+            inp.disabled = false;
+            flashNext();
+          }, 600);
+        }
+      }
+
+      // ─── RESULTS ─────────────────────────────────────────────────────────────
+      function showResults(correct, results){
+        const total=results.length;
+        const pct=Math.round(correct/total*100);
+
+        const circ=2*Math.PI*70; // 439.8
+        document.getElementById('ring-fill').style.strokeDashoffset=circ*(1-pct/100);
+        document.getElementById('ring-pct').textContent=pct+'%';
+
+        let headline='Keep at it!', sub='Every practice builds skill.';
+        if(pct===100){ headline='Perfect Score! 🎉'; sub='Flawless — all '+total+' correct!'; }
+        else if(pct>=80){ headline='Excellent Work ⭐'; sub=`${correct} of ${total} correct.`; }
+        else if(pct>=60){ headline='Good Effort!'; sub=`${correct} of ${total} correct. Keep going!`; }
+        else { sub=`${correct} of ${total} correct. More practice will help.`; }
+
+        document.getElementById('r-headline').textContent=headline;
+        document.getElementById('r-sub').textContent=sub;
+
+        document.getElementById('s-correct').textContent=correct;
+        document.getElementById('s-wrong').textContent=total-correct;
+        document.getElementById('s-time').textContent=fmtTime(timerSec);
+        document.getElementById('s-avg').textContent=total?`${(timerSec/total).toFixed(1)}s`:'—';
+
+        const rg=document.getElementById('r-grid');
+        rg.innerHTML='';
+        results.forEach((r,i)=>{
+          const el=document.createElement('div');
+          el.className='review-item fade-up'+(r.ok?'':' bad');
+          el.style.animationDelay=`${i*.025}s`;
+          el.innerHTML=`
+            <div class="review-expr">${r.expr} = ${r.answer}</div>
+            <div class="review-answers">
+              ${r.ok
+                ? `<span class="ans-good">✓ Your answer: ${r.userAns}</span>`
+                : `<span class="ans-bad">✗ You: ${r.userAns}</span>&nbsp;&nbsp;<span class="ans-good">✓ Correct: ${r.answer}</span>`}
+            </div>`;
+          rg.appendChild(el);
+        });
+
+        if(pct>=80) confetti(pct===100?160:70);
+        document.getElementById('timer-badge').style.display='none';
+        showSec('sec-results');
+      }
+
+      // ─── Nav helpers ─────────────────────────────────────────────────────────
+      function goConfig(){
+        stopSpeech();
+        stopTimer();
+        document.getElementById('new-btn').style.display='none';
+        document.getElementById('timer-badge').style.display='none';
+        showSec('sec-config');
+      }
+
+      function retry(){
+        stopTimer();
+        questions=Array.from({length:cfg.qCount},()=>makeQ(cfg.ops,cfg.digits,cfg.operands));
+        flashIdx=0; flashLog=[];
+        startTimer();
+        cfg.mode==='flash'?initFlash():initAll();
+        showSec('sec-practice');
+      }
+
+      // ─── Confetti ────────────────────────────────────────────────────────────
+      function confetti(n=80){
+        const host=document.getElementById('cf-host');
+        host.innerHTML='';
+        const colors=['#0071e3','#5e5ce6','#34c759','#1d1d1f','#d2d2d7','#007aff','#30d158'];
+        for(let i=0;i<n;i++){
+          const el=document.createElement('div');
+          el.className='cf';
+          el.style.left=Math.random()*100+'vw';
+          el.style.background=colors[rand(0,colors.length-1)];
+          el.style.width=(5+Math.random()*7)+'px';
+          el.style.height=(5+Math.random()*7)+'px';
+          el.style.borderRadius=Math.random()>.5?'50%':'2px';
+          el.style.animationDuration=(1.8+Math.random()*2.5)+'s';
+          el.style.animationDelay=(Math.random()*.7)+'s';
+          host.appendChild(el);
+        }
+        setTimeout(()=>host.innerHTML='',5000);
+      }
+
+      // ─── Global Events ───────────────────────────────────────────────────────
+      window.addEventListener('keydown', e => {
+        if (e.code === 'Space') {
+          // If we are in practice mode and not speech is finished
+          if (document.getElementById('sec-practice').classList.contains('active')) {
+             if (speechActiveQ !== -1 && cfg.manualSpeech) {
+               e.preventDefault();
+               advanceManualSpeech();
+             }
+          }
+        }
+      });
+    </script>
+
+  </body>
+</html>
