@@ -4,7 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import learn.lal.model.Curriculum;
 import learn.lal.repository.CurriculumRepository;
-import org.springframework.core.io.ClassPathResource;
+import learn.lal.model.CurriculumManifestEntry;
+import learn.lal.service.CurriculumRegistryService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,24 +24,43 @@ public class QuestionController {
 
     private final CurriculumRepository curriculumRepository;
     private final ObjectMapper objectMapper;
+    private final CurriculumRegistryService curriculumRegistryService;
 
-    public QuestionController(CurriculumRepository curriculumRepository, ObjectMapper objectMapper) {
+    public QuestionController(CurriculumRepository curriculumRepository, ObjectMapper objectMapper,
+            CurriculumRegistryService curriculumRegistryService) {
         this.curriculumRepository = curriculumRepository;
         this.objectMapper = objectMapper;
+        this.curriculumRegistryService = curriculumRegistryService;
     }
 
     /**
-     * GET /api/questions/curriculum
-     * Returns the pre-defined Level 2 curriculum from resources.
+     * Active curricula for the picker (not soft-deleted).
+     */
+    @GetMapping("/curricula")
+    public Map<String, Object> listActiveCurricula() throws IOException {
+        List<Map<String, Object>> items = new ArrayList<>();
+        for (CurriculumManifestEntry e : curriculumRegistryService.listActive()) {
+            Map<String, Object> m = new LinkedHashMap<>();
+            m.put("id", e.getId());
+            m.put("displayName", e.getDisplayName());
+            m.put("level", e.getLevel() != null ? e.getLevel() : "");
+            items.add(m);
+        }
+        Map<String, Object> out = new LinkedHashMap<>();
+        out.put("items", items);
+        return out;
+    }
+
+    /**
+     * Question map for one curriculum. Pass {@code curriculumId}; if omitted, uses the first active curriculum.
      */
     @GetMapping("/curriculum")
-    public Map<String, Object> getCurriculum() throws IOException {
-        ClassPathResource resource = new ClassPathResource("questions/level2.json");
-        if (!resource.exists()) {
-            // Fallback or empty if not found
-            return new HashMap<>();
-        }
-        return objectMapper.readValue(resource.getInputStream(), new TypeReference<Map<String, Object>>() {});
+    public Map<String, Object> getCurriculum(@RequestParam(value = "curriculumId", required = false) String curriculumId)
+            throws IOException {
+        String id = (curriculumId == null || curriculumId.isBlank())
+                ? curriculumRegistryService.resolveDefaultActiveId()
+                : curriculumId;
+        return curriculumRegistryService.readCurriculumData(id);
     }
 
     /**

@@ -105,8 +105,31 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        min-width: 140px;
         justify-content: flex-end;
+      }
+
+      /* Compact session name input in topbar */
+      .topbar-session-input {
+        height: 32px;
+        padding: 0 10px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-family: var(--font);
+        font-size: 0.82rem;
+        color: var(--text-primary);
+        background: var(--surface-2);
+        width: 190px;
+        outline: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+      }
+      .topbar-session-input:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px var(--blue-light);
+        background: var(--surface);
+      }
+      .topbar-session-input::placeholder { color: var(--text-tertiary); }
+      @media (max-width: 640px) {
+        .topbar-session-input { width: 110px; font-size: 0.78rem; }
       }
 
       .timer-badge {
@@ -133,10 +156,15 @@
         border-radius: 6px;
         cursor: pointer;
         font-family: var(--font);
-        display: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
         transition: background 0.15s, border-color 0.15s;
       }
       .btn-ghost:hover { background: var(--blue-light); border-color: var(--blue); }
+
+      /* Shown only during / after an active drill (JS sets display:flex) */
+      #new-btn { display: none; }
 
       /* ── Page Wrapper ── */
       .page {
@@ -299,6 +327,36 @@
         background: #d0e8fc;
       }
 
+      /* Full-width JSON editor (do not use .val-input — that style is for small numeric pills) */
+      .abacus-json-editor {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        min-height: 320px;
+        margin: 0;
+        padding: 14px 16px;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        font-weight: 500;
+        line-height: 1.5;
+        color: var(--text-primary);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        text-align: left;
+        white-space: pre;
+        overflow: auto;
+        resize: vertical;
+        tab-size: 2;
+        -moz-tab-size: 2;
+        outline: none;
+      }
+      .abacus-json-editor:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
+        background: var(--surface-2);
+      }
+
       input[type=range] {
         -webkit-appearance: none;
         width: 100%;
@@ -411,6 +469,11 @@
         box-shadow: 0 0 0 1px rgba(0,113,227,0.15);
       }
       .micro-icon { font-size: 0.9rem; }
+
+      .plc-inner .micro-toggle label {
+        font-size: 0.74rem;
+        padding: 5px 9px;
+      }
 
       .micro-slider-container {
         display: flex;
@@ -1004,30 +1067,6 @@
         font-weight: 600;
         margin-bottom: 4px;
       }
-      .upload-hint {
-        font-size: 0.78rem;
-        color: var(--text-tertiary);
-      }
-      #file-input {
-        position: absolute;
-        inset: 0;
-        opacity: 0;
-        cursor: pointer;
-      }
-
-      /* ── AI Loading ── */
-      .ai-loading-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(255,255,255,0.85);
-        backdrop-filter: blur(8px);
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        animation: fadeIn 0.3s ease;
-      }
       .spinner {
         width: 40px;
         height: 40px;
@@ -1083,6 +1122,103 @@
         border-color: var(--purple);
         animation: pulse-purple 1s infinite;
       }
+
+      .practice-live-controls {
+        max-width: 880px;
+        margin: 0 auto 16px;
+        padding: 0 4px;
+      }
+      .plc-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px 20px;
+        padding: 12px 16px;
+        background: var(--surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-xs);
+      }
+      .plc-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.78rem;
+        color: var(--text-secondary);
+      }
+      .plc-lbl { font-weight: 600; min-width: 32px; }
+      .plc-item input[type="range"] { width: 100px; accent-color: var(--blue); }
+      .plc-val { font-family: var(--font-mono); font-weight: 600; color: var(--text-primary); min-width: 2rem; }
+      .plc-pause {
+        margin-left: auto;
+        font-family: var(--font);
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s;
+      }
+      .plc-pause:hover { background: var(--blue-light); border-color: var(--blue); color: var(--blue); }
+      .plc-pause.active-pause {
+        background: var(--purple-light);
+        border-color: var(--purple);
+        color: var(--purple);
+      }
+      .plc-repeat {
+        font-family: var(--font);
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s;
+        white-space: nowrap;
+      }
+      .plc-repeat:hover { background: var(--blue-light); border-color: var(--blue); color: var(--blue); }
+      .plc-repeat.repeat-on {
+        background: var(--green-light);
+        border-color: var(--green);
+        color: var(--green);
+      }
+      .plc-repeat-interval input[type="range"] {
+        width: 90px;
+        accent-color: var(--blue);
+        cursor: pointer;
+        vertical-align: middle;
+      }
+      .plc-repeat-sec-val {
+        display: inline-block;
+        min-width: 22px;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .q-edit-btn {
+        flex-shrink: 0;
+        width: 22px;
+        height: 22px;
+        padding: 0;
+        border: none;
+        border-radius: 4px;
+        background: transparent;
+        color: var(--text-tertiary);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.15s, background 0.15s;
+      }
+      .q-edit-btn:hover {
+        color: var(--blue);
+        background: var(--blue-light);
+      }
       @keyframes pulse-blue {
         0% { box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.4); }
         70% { box-shadow: 0 0 0 10px rgba(0, 113, 227, 0); }
@@ -1116,8 +1252,170 @@
           transition: all 0.2s;
       }
       .btn-exit:hover {
-          background: #fff5f5;
-          border-color: #ff3b30;
+        background: #fff5f5;
+        border-color: #ff3b30;
+      }
+
+      .abacus-history-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 500;
+        background: rgba(0,0,0,0.45);
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .abacus-history-backdrop.open { display: flex; }
+      .abacus-history-panel {
+        background: var(--surface);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        max-width: 520px;
+        width: 100%;
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--border-subtle);
+      }
+      .abacus-history-head {
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border-subtle);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .abacus-history-head h2 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin: 0;
+      }
+      .abacus-history-body {
+        padding: 12px 16px 16px;
+        overflow-y: auto;
+        flex: 1;
+        font-size: 0.9rem;
+      }
+      .abacus-hist-row {
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-sm);
+        padding: 12px;
+        margin-bottom: 10px;
+        background: var(--surface-2);
+      }
+      .abacus-hist-row .meta { color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 6px; }
+      .abacus-hist-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+      .abacus-hist-filter-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        cursor: pointer;
+        user-select: none;
+      }
+      .abacus-hist-filter-toggle input { accent-color: var(--blue); }
+      .abacus-hist-filter-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 12px;
+      }
+      @media (max-width: 480px) {
+        .abacus-hist-filter-grid { grid-template-columns: 1fr; }
+      }
+      .abacus-hist-filter-field label {
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-bottom: 4px;
+      }
+      .abacus-hist-filter-field .val-input {
+        width: 100%;
+        font-size: 0.85rem;
+        padding: 8px 10px;
+      }
+      .abacus-hist-filter-presets {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .abacus-hist-preset-btn {
+        font-family: var(--font);
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 5px 10px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        color: var(--blue);
+        cursor: pointer;
+      }
+      .abacus-hist-preset-btn:hover { background: var(--blue-light); }
+
+      /* ── Resume session banner ───────────────────────────────────────── */
+      .resume-banner {
+        display: none;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding: 14px 18px;
+        margin: 0 0 18px;
+        background: var(--blue-light, #e8f2fd);
+        border: 1.5px solid var(--blue, #0071e3);
+        border-radius: var(--radius, 12px);
+        font-size: 0.88rem;
+        color: var(--text-primary);
+      }
+      .resume-banner .resume-icon {
+        font-size: 1.4rem;
+        flex-shrink: 0;
+      }
+      .resume-banner .resume-info { flex: 1; min-width: 160px; }
+      .resume-banner .resume-info strong { display: block; font-size: 0.95rem; margin-bottom: 2px; }
+      .resume-banner .resume-info span { color: var(--text-secondary); font-size: 0.82rem; }
+      .resume-banner .resume-actions { display: flex; gap: 8px; flex-shrink: 0; }
+      .resume-btn-go {
+        padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer;
+        background: var(--blue, #0071e3); color: #fff;
+        font-weight: 700; font-size: 0.85rem; font-family: var(--font);
+        transition: opacity .15s;
+      }
+      .resume-btn-go:hover { opacity: .85; }
+      .resume-btn-dismiss {
+        padding: 8px 14px; border-radius: 8px; cursor: pointer;
+        background: transparent; border: 1px solid var(--border);
+        color: var(--text-secondary); font-size: 0.85rem; font-family: var(--font);
+        transition: background .15s;
+      }
+      .resume-btn-dismiss:hover { background: var(--surface-2); }
+
+      .abacus-admin-answer-tip {
+        position: fixed;
+        z-index: 32000;
+        display: none;
+        max-width: 260px;
+        padding: 8px 12px;
+        background: var(--text-primary);
+        color: #fff;
+        font-size: 0.82rem;
+        font-weight: 600;
+        font-family: var(--font-mono);
+        border-radius: 8px;
+        box-shadow: var(--shadow-lg);
+        pointer-events: none;
+        line-height: 1.35;
+      }
+      .abacus-q-label-left,
+      .abacus-flash-q-label,
+      body.abacus-user-admin .abacus-q-label-left,
+      body.abacus-user-admin .abacus-flash-q-label {
+        cursor: help;
       }
 
       /* ── Responsive ── */
@@ -1147,6 +1445,10 @@
       <div class="topbar-brand">🧮 Abacus Math Drills</div>
 
       <div class="topbar-right">
+        <div id="topbar-session-name-wrap" style="display:flex;align-items:center;" title="Optional — your history will show it together with your login name">
+          <input type="text" id="practice-session-label" class="topbar-session-input"
+            maxlength="120" autocomplete="off" placeholder="Session name (optional)" />
+        </div>
         <div class="timer-badge" id="timer-badge">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
             <circle cx="6" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.3"/>
@@ -1155,9 +1457,137 @@
           </svg>
           <span id="timer-val">00:00</span>
         </div>
+        <button class="btn-ghost" id="hist-btn" onclick="openAbacusHistoryModal()">History</button>
         <button class="btn-ghost" id="new-btn" onclick="goConfig()">⚙ New Session</button>
       </div>
     </nav>
+
+    <div class="abacus-history-backdrop" id="abacus-history-modal" onclick="if(event.target===this)closeAbacusHistoryModal()">
+      <div class="abacus-history-panel" onclick="event.stopPropagation()">
+        <div class="abacus-history-head">
+          <h2>Abacus session history</h2>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button type="button" class="btn-ghost" style="display:inline-flex;color:var(--red);border-color:var(--red);" onclick="clearAllAbacusHistory()">Clear all</button>
+            <button type="button" class="btn-ghost" style="display:inline-flex" onclick="closeAbacusHistoryModal()">Close</button>
+          </div>
+        </div>
+        <div class="abacus-history-body" style="padding-bottom:12px;border-bottom:1px solid var(--border-subtle);margin-bottom:12px;">
+          <label class="abacus-hist-filter-toggle">
+            <input type="checkbox" id="abacus-hist-use-filters" onchange="toggleAbacusHistoryFilterPanel(); renderAbacusHistoryList();" />
+            <span>Enable filters</span>
+          </label>
+          <div id="abacus-hist-filter-panel" style="display:none;margin-top:12px;">
+            <div class="abacus-hist-filter-grid">
+              <div class="abacus-hist-filter-field">
+                <label for="abacus-hist-name-q">Name / label</label>
+                <input type="text" id="abacus-hist-name-q" class="val-input" placeholder="Match login, session name, page…" autocomplete="off"
+                  oninput="debounceAbacusHistoryFilter()" />
+              </div>
+              <div class="abacus-hist-filter-field">
+                <label for="abacus-hist-date-from">From date</label>
+                <input type="date" id="abacus-hist-date-from" class="val-input" onchange="renderAbacusHistoryList()" />
+              </div>
+              <div class="abacus-hist-filter-field">
+                <label for="abacus-hist-date-to">To date</label>
+                <input type="date" id="abacus-hist-date-to" class="val-input" onchange="renderAbacusHistoryList()" />
+              </div>
+            </div>
+            <div class="abacus-hist-filter-presets">
+              <span style="font-size:0.75rem;color:var(--text-secondary);font-weight:600;">Quick range:</span>
+              <button type="button" class="abacus-hist-preset-btn" onclick="setAbacusHistoryPresetDays(7)">Last 7 days</button>
+              <button type="button" class="abacus-hist-preset-btn" onclick="setAbacusHistoryPresetDays(30)">Last 30 days</button>
+              <button type="button" class="abacus-hist-preset-btn" onclick="clearAbacusHistoryDates()">Clear dates</button>
+            </div>
+          </div>
+        </div>
+        <div class="abacus-history-body" id="abacus-history-list">Loading…</div>
+      </div>
+    </div>
+
+    <div class="abacus-history-backdrop" id="curriculum-edit-modal" onclick="if(event.target===this)closeCurriculumEditModal()">
+      <div class="abacus-history-panel" style="max-width:420px" onclick="event.stopPropagation()">
+        <div class="abacus-history-head">
+          <h2 style="font-size:1.05rem">Edit question</h2>
+          <button type="button" class="btn-ghost" style="display:inline-flex" onclick="closeCurriculumEditModal()">Close</button>
+        </div>
+        <div class="abacus-history-body" style="padding-top:0">
+          <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:10px;">Curriculum only — fix typos in the expression (same format as on the worksheet).</p>
+          <label style="font-size:0.75rem;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px;">Expression</label>
+          <textarea id="curriculum-edit-expr" rows="3" class="val-input" style="width:100%;min-height:72px;font-family:var(--font-mono);resize:vertical"></textarea>
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px;">
+            <button type="button" class="btn-ghost" style="display:inline-flex" onclick="closeCurriculumEditModal()">Cancel</button>
+            <button type="button" class="btn-primary" style="padding:8px 16px;border-radius:8px;border:none;background:var(--blue);color:#fff;font-weight:600;cursor:pointer;font-family:var(--font)" onclick="saveCurriculumQuestionEdit()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="abacus-history-backdrop" id="curriculum-full-json-modal" onclick="if(event.target===this)closeCurriculumFullJsonModal()">
+      <div class="abacus-history-panel" style="max-width:min(920px,96vw);width:96vw" onclick="event.stopPropagation()">
+        <div class="abacus-history-head">
+          <h2 style="font-size:1.05rem">Edit curriculum (full JSON)</h2>
+          <button type="button" class="btn-ghost" style="display:inline-flex" onclick="closeCurriculumFullJsonModal()">Close</button>
+        </div>
+        <div class="abacus-history-body" style="padding-top:0">
+          <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:10px;line-height:1.45;">
+            Saves the JSON for the curriculum you selected in the list above. Soft-deleted curricula stay on disk and can be restored from the admin panel.
+          </p>
+          <textarea id="curriculum-full-json-text" class="abacus-json-editor" rows="22" spellcheck="false" wrap="off"></textarea>
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap">
+            <button type="button" class="btn-ghost" style="display:inline-flex" onclick="closeCurriculumFullJsonModal()">Cancel</button>
+            <button type="button" class="btn-primary" style="padding:8px 16px;border-radius:8px;border:none;background:var(--blue);color:#fff;font-weight:600;cursor:pointer;font-family:var(--font)" onclick="saveCurriculumFullJson()">Save to disk</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete-with-reason modal -->
+    <div class="abacus-history-backdrop" id="curriculum-delete-modal" onclick="if(event.target===this)closeCurriculumDeleteModal()">
+      <div class="abacus-history-panel" style="max-width:460px" onclick="event.stopPropagation()">
+        <div class="abacus-history-head">
+          <h2 style="font-size:1.05rem" id="curriculum-delete-modal-title">Delete Curriculum</h2>
+          <button type="button" class="btn-ghost" style="display:inline-flex" onclick="closeCurriculumDeleteModal()">Close</button>
+        </div>
+        <div class="abacus-history-body" style="padding-top:0">
+
+          <!-- Soft-delete description (default) -->
+          <p id="curriculum-delete-desc-soft" style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:14px;line-height:1.5;">
+            <strong id="curriculum-delete-name"></strong> will be archived — its file is renamed on disk with the date, time and your username, and hidden from all learners. It can be reviewed later.
+          </p>
+          <!-- Permanent-delete description (shown when checkbox is ticked) -->
+          <p id="curriculum-delete-desc-perm" style="display:none;font-size:0.85rem;color:var(--text-secondary);margin-bottom:14px;line-height:1.5;">
+            <strong id="curriculum-delete-name-perm"></strong> will be <strong style="color:var(--red)">permanently erased</strong> — the file is deleted from disk and removed from all records.
+          </p>
+
+          <label style="font-size:0.78rem;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px;">Reason <span style="color:var(--red)">*</span></label>
+          <textarea id="curriculum-delete-reason" rows="3" class="val-input"
+            style="width:100%;min-height:76px;font-family:var(--font);resize:vertical;box-sizing:border-box;padding:10px 12px;border-radius:10px;"
+            placeholder="Describe why this curriculum is being deleted…"></textarea>
+
+          <!-- Permanent delete toggle -->
+          <label style="display:flex;align-items:center;gap:9px;margin-top:14px;cursor:pointer;user-select:none;">
+            <input type="checkbox" id="curriculum-delete-permanent" onchange="onPermanentDeleteToggle()"
+              style="width:16px;height:16px;accent-color:var(--red);cursor:pointer;flex-shrink:0;" />
+            <span style="font-size:0.85rem;font-weight:600;color:var(--text-primary);">Permanent delete</span>
+          </label>
+
+          <!-- Warning banner — only visible when checkbox is ticked -->
+          <div id="curriculum-delete-perm-warning" style="display:none;margin-top:10px;padding:10px 13px;border-radius:8px;background:var(--red-light);border:1px solid var(--red);font-size:0.82rem;color:var(--red);line-height:1.45;">
+            <strong>This cannot be undone.</strong> The file will be permanently erased from disk and cannot be recovered.
+          </div>
+
+          <div id="curriculum-delete-error" style="min-height:1.2em;font-size:0.82rem;color:var(--red);margin-top:8px;"></div>
+
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">
+            <button type="button" class="btn-ghost" style="display:inline-flex" onclick="closeCurriculumDeleteModal()">Cancel</button>
+            <button type="button" id="curriculum-delete-confirm-btn"
+              style="padding:8px 18px;border-radius:8px;border:none;background:var(--red);color:#fff;font-weight:600;cursor:pointer;font-family:var(--font)"
+              onclick="confirmCurriculumDelete()">Delete</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
 
     <main class="page">
 
@@ -1167,6 +1597,19 @@
         <div class="page-heading fade-up">
           <h1>🧮 Practice Sessions</h1>
           <p>Master your abacus skills with interactive drills.</p>
+        </div>
+
+        <!-- Resume in-progress session banner -->
+        <div class="resume-banner fade-up" id="resume-session-banner">
+          <div class="resume-icon">⏸️</div>
+          <div class="resume-info">
+            <strong>Unfinished session</strong>
+            <span>Saved at <span id="resume-session-time">—</span> · <span id="resume-session-progress">—</span> answered</span>
+          </div>
+          <div class="resume-actions">
+            <button class="resume-btn-go" onclick="resumeInProgressSession()">Resume session →</button>
+            <button class="resume-btn-dismiss" onclick="clearInProgressSession()">Dismiss</button>
+          </div>
         </div>
 
         <!-- Ultra Compact Common Preferences Toolbar -->
@@ -1193,7 +1636,13 @@
                 </div>
                 <div class="micro-toggle">
                     <input type="checkbox" id="c-auto-next" checked />
-                    <label for="c-auto-next" title="Skip to next on correct"><span class="micro-icon">⏭️</span> Auto Next</label>
+                    <label for="c-auto-next" title="Automatically advance to the next question when the answer is correct">
+                      <span class="micro-icon" style="display:inline-flex;align-items:center;gap:1px;">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="14 7 19 12 14 17"/></svg>
+                      </span>
+                      Next on Pass
+                    </label>
                 </div>
                 <div class="micro-toggle">
                     <input type="checkbox" id="c-manual-speech" />
@@ -1217,6 +1666,22 @@
                            oninput="document.getElementById('r-rate-out').textContent = this.value;" />
                     <span class="micro-slider-val" id="r-rate-out">1.0</span>x
                 </div>
+                <div class="toolbar-divider" style="height:20px;width:1px;background:var(--border);margin:0 2px;"></div>
+                <div class="micro-toggle">
+                    <input type="checkbox" id="c-repeat-until" onchange="onRepeatToggleChanged('config')" />
+                    <label for="c-repeat-until" title="Re-read the question after a pause while the answer box is still empty">
+                      <span class="micro-icon">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="m17 2 4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                      </span>
+                      Repeat question
+                    </label>
+                </div>
+                <div class="micro-slider-container" id="c-repeat-interval-wrap" title="Seconds to wait before repeating the question" style="display:none;align-items:center;gap:6px;">
+                    every
+                    <input type="range" id="r-repeat-sec" min="3" max="90" step="1" value="10"
+                      oninput="onRepeatSecInput()" onchange="syncCfgRepeatFromDom()" />
+                    <span class="micro-slider-val plc-repeat-sec-val" id="r-repeat-sec-out">10</span>s
+                </div>
             </div>
         </div>
 
@@ -1227,9 +1692,6 @@
             </button>
             <button class="tab-btn" id="tab-cur" onclick="switchTab('curriculum')">
               <span>📚</span> Curriculum
-            </button>
-            <button class="tab-btn" id="tab-scan" onclick="switchTab('scan')">
-              <span>📸</span> Scan/Upload
             </button>
           </div>
         </div>
@@ -1313,49 +1775,71 @@
 
         <!-- Curriculum View -->
         <div id="view-curriculum" style="display:none;">
-          <div class="card fade-up" style="max-width:600px; margin:0 auto 32px;">
-            <div class="card-label">Level 2 Curriculum</div>
-            <p style="font-size:0.9rem; color:var(--gray-text); margin-bottom:16px;">Select a page and category to load practice questions.</p>
-            <div class="slider-stack" style="gap:20px;">
+
+          <!-- Curriculum selector -->
+          <div class="card fade-up" style="max-width:600px; margin:0 auto 20px;">
+            <div class="card-label">Curriculum</div>
+            <div class="slider-stack" style="gap:16px;">
               <div class="slider-field">
-                <label>Select Page</label>
+                <label for="cur-curriculum-select">Curriculum set</label>
+                <select id="cur-curriculum-select" class="val-input" style="width:100%; height:44px; padding:0 12px; max-width:100%; border-radius:10px; text-align:left; font-weight:600;"
+                  onchange="onCurriculumSetPickerChange()">
+                  <option value="">Loading…</option>
+                </select>
+              </div>
+              <div class="slider-field">
+                <label>Page</label>
                 <select id="cur-page-select" class="val-input" style="width:100%; height:44px; padding:0 12px;" onchange="renderCurTags()">
-                  <option value="">-- Choose Page --</option>
+                  <option value="">— Choose Page —</option>
                 </select>
               </div>
               <div id="cur-tags-container" style="display:none;">
-                <label style="display:block; margin-bottom:8px; font-size:0.85rem; font-weight:600; color:var(--gray-text);">Select Category</label>
+                <label style="display:block; margin-bottom:8px; font-size:0.85rem; font-weight:600; color:var(--text-secondary);">Category</label>
                 <div id="cur-tags-list" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
               </div>
             </div>
             <div id="cur-loading" style="display:none; align-items:center; gap:8px; margin-top:16px; color:var(--blue);">
               <div class="spinner" style="width:16px; height:16px; border-width:2px;"></div>
-              <span style="font-size:0.85rem;">Loading curriculum...</span>
+              <span style="font-size:0.85rem;">Loading curriculum…</span>
             </div>
           </div>
-        </div>
 
-        <div id="view-scan" style="display:none;">
-          <div class="card fade-up" style="max-width:600px; margin:0 auto 32px; text-align:center; padding:40px 20px;">
-            <div class="ai-icon-box" style="margin:0 auto 20px;">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="17 8 12 3 7 8"></polyline>
-                <line x1="12" y1="3" x2="12" y2="15"></line>
-              </svg>
+          <!-- Admin panel (admins only) -->
+          <div id="curriculum-admin-panel" style="display:none; max-width:600px; margin:0 auto;">
+
+            <!-- Add curriculum -->
+            <div class="card fade-up" style="margin-bottom:16px;">
+              <div class="card-label">Add Curriculum</div>
+              <div class="slider-stack" style="gap:14px; margin-bottom:14px;">
+                <div class="slider-field">
+                  <label for="curriculum-add-session-name">Display name</label>
+                  <input type="text" id="curriculum-add-session-name" class="val-input"
+                    style="width:100%;max-width:100%;border-radius:10px;text-align:left;padding:10px 12px;box-sizing:border-box"
+                    maxlength="120" placeholder="e.g. Level 2 — Saturday drill" autocomplete="off" />
+                </div>
+                <div class="slider-field">
+                  <label for="curriculum-admin-file-input">JSON file</label>
+                  <input type="file" id="curriculum-admin-file-input" accept=".json,application/json"
+                    style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:10px;box-sizing:border-box;cursor:pointer;font-family:var(--font);font-size:0.88rem;background:var(--surface);" />
+                </div>
+              </div>
+              <div id="curriculum-add-validation" style="min-height:1.2em;font-size:0.82rem;margin-bottom:12px;white-space:pre-wrap;"></div>
+              <button type="button" class="btn-primary"
+                style="padding:10px 22px;border-radius:8px;border:none;font-weight:600;cursor:pointer;font-family:var(--font)"
+                onclick="addAdminCurriculumSubmit()">Upload &amp; Create</button>
             </div>
-            <h3 style="margin-bottom:8px;">Load Questions</h3>
-            <p style="color:var(--gray-text); font-size:0.9rem; margin-bottom:24px;">Upload a photo of a worksheet or a JSON file.</p>
-            <div style="display:flex; justify-content:center; gap:12px;">
-              <button class="btn-primary" onclick="document.getElementById('file-input').click()"><span>📷</span> Scan Image</button>
-              <button class="btn-ghost" onclick="document.getElementById('json-input').click()"><span>📄</span> Upload JSON</button>
+
+            <!-- Curricula list -->
+            <div class="card fade-up">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+                <div class="card-label" style="margin-bottom:0;">Manage Curricula</div>
+                <button type="button" class="btn-ghost"
+                  style="display:inline-flex;padding:6px 12px;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:var(--font);border:1px solid var(--border)"
+                  onclick="renderAdminCurriculumManifest()">Refresh</button>
+              </div>
+              <div id="curriculum-admin-manifest"></div>
             </div>
-            <input type="file" id="file-input" hidden accept="image/*" onchange="handleFileSelect(event)" />
-            <input type="file" id="json-input" hidden accept=".json" onchange="handleJsonFileSelect(event)" />
-            <div id="ai-loading" style="display:none; justify-content:center; align-items:center; gap:12px; margin-top:24px;">
-              <div class="spinner"></div>
-              <span style="font-weight:500; color:var(--blue);">AI is processing...</span>
-            </div>
+
           </div>
         </div>
 
@@ -1368,10 +1852,32 @@
       <!-- ════════════ PRACTICE ════════════ -->
       <section class="section" id="sec-practice">
 
+        <div class="practice-live-controls" id="practice-live-controls">
+          <div class="plc-inner">
+            <div class="plc-item" title="Pause between spoken parts">
+              <span class="plc-lbl">Gap</span>
+              <input type="range" id="p-gap" min="0" max="5" step="0.5" value="1" />
+              <span class="plc-val" id="p-gap-out">1.0</span><span style="font-size:0.72rem">s</span>
+            </div>
+            <div class="plc-item" title="Speech rate">
+              <span class="plc-lbl">Speed</span>
+              <input type="range" id="p-rate" min="0.5" max="2" step="0.1" value="1" />
+              <span class="plc-val" id="p-rate-out">1.0</span><span style="font-size:0.72rem">x</span>
+            </div>
+            <div class="micro-toggle" style="flex-shrink:0" title="Re-read the question until the answer is filled">
+              <input type="checkbox" id="p-repeat-until" onchange="onRepeatToggleChanged('practice')" />
+              <label for="p-repeat-until" style="padding:5px 8px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;display:block;"><path d="m17 2 4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+              </label>
+            </div>
+            <button type="button" class="plc-pause" id="btn-practice-pause">Pause</button>
+          </div>
+        </div>
+
         <!-- Flash -->
         <div id="flash-view" style="display:none;">
           <div class="session-bar" style="max-width:440px;margin:0 auto 24px;">
-            <div class="session-count">Q <span id="f-cur">1</span> of <span id="f-tot">10</span></div>
+            <div class="session-count abacus-flash-q-label" onmouseenter="abacusAdminOnFlashQlabelEnter(event)" onmouseleave="abacusAdminOnQlabelLeave()">Q <span id="f-cur">1</span> of <span id="f-tot">10</span></div>
             <div class="progress-track"><div class="progress-fill" id="f-prog"></div></div>
             <!-- Live layout toggle -->
             <button id="flash-layout-toggle-btn" onclick="toggleLayout()"
@@ -1392,17 +1898,22 @@
             <div class="flash-card fade-up">
               <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
                 <div class="flash-label">What is the answer?</div>
-                <button class="spk-btn" id="f-spk" onclick="speakQuestion(flashIdx)" title="Speak Question">
+                <div style="display:flex; align-items:center; gap:4px;">
+                  <button type="button" class="q-edit-btn" id="f-edit-q" onclick="openCurriculumQuestionEdit(flashIdx)" title="Edit question" style="display:none">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                  </button>
+                  <button class="spk-btn" id="f-spk" onclick="speakQuestion(flashIdx)" title="Speak Question">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                     <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                     <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
                   </svg>
                 </button>
+                </div>
               </div>
               <div class="flash-expr" id="f-expr">—</div>
               <input type="number" class="flash-input" id="f-input" placeholder="?"
-                oninput="checkFlashAutoNext()"
+                oninput="onAbacusAnswerInput(); checkFlashAutoNext()"
                 onkeydown="if(event.key==='Enter') flashNext()" />
               <div class="flash-feedback" id="f-fb"></div>
             </div>
@@ -1508,22 +2019,927 @@
 
     </main>
 
-    <div class="ai-loading-overlay" id="ai-loading">
-      <div class="spinner"></div>
-      <div style="font-weight:600; color:var(--text-primary); margin-bottom:4px;">Analyzing Image</div>
-      <div style="font-size:0.85rem; color:var(--text-secondary);">Gemini is extracting questions...</div>
-    </div>
-
     <div class="confetti-host" id="cf-host"></div>
+    <div id="abacus-admin-answer-tip" class="abacus-admin-answer-tip" role="status" aria-live="polite"></div>
 
     <script>
       // ─── State ────────────────────────────────────────────────────────────────
       let questions = [], cfg = {}, flashIdx = 0, flashLog = [];
       let timerSec = 0, timerIv = null;
+      let timerPaused = false;
+      let pauseSessionCount = 0;
+      let curriculumEditIndex = -1;
+      let lastSessionSnapshot = null;
+      let sessionMeta = { source: 'generate' };
+      let abacusLoginName = 'Guest';
+      let abacusIsAdmin = false;
+      const ADMIN_ANSWER_HOVER_MS = 600;
+      let abacusAdminAnswerHoverTimer = null;
+      window._abacusHistoryPayloads = {};
+      window._abacusHistoryRecords = [];
+      let abacusHistoryFilterDebounce = null;
+
+      async function refreshAbacusLoginName() {
+        try {
+          const r = await fetch('/api/user/me', { credentials: 'same-origin' });
+          if (!r.ok) return;
+          const j = await r.json();
+          if (j && j.username) abacusLoginName = j.username;
+          abacusIsAdmin = !!(j && j.isAdmin);
+          document.body.classList.toggle('abacus-user-admin', abacusIsAdmin);
+          updateCurriculumAdminPanelVisibility();
+        } catch (_) {}
+      }
+
+      function updateCurriculumAdminPanelVisibility() {
+        const panel = document.getElementById('curriculum-admin-panel');
+        if (panel) {
+          panel.style.display = abacusIsAdmin ? 'block' : 'none';
+          if (abacusIsAdmin) void renderAdminCurriculumManifest();
+        }
+      }
+
+      function setRepeatIntervalVisibility() {
+        const c = document.getElementById('c-repeat-until');
+        const on = !!(c && c.checked);
+        const wrapP = document.getElementById('p-repeat-interval-wrap');
+        const wrapC = document.getElementById('c-repeat-interval-wrap');
+        if (wrapP) wrapP.style.display = on ? 'inline-flex' : 'none';
+        if (wrapC) wrapC.style.display = on ? 'flex' : 'none';
+      }
+
+      function onRepeatToggleChanged(source) {
+        const c = document.getElementById('c-repeat-until');
+        const p = document.getElementById('p-repeat-until');
+        if (!c || !p) return;
+        const v = source === 'practice' ? p.checked : c.checked;
+        c.checked = v;
+        p.checked = v;
+        syncCfgRepeatFromDom();
+        setRepeatIntervalVisibility();
+        clearRepeatUntilSpeechSchedule();
+      }
+
+      function onRepeatSecInput() {
+        const rSlider = document.getElementById('r-repeat-sec');
+        const pSlider = document.getElementById('p-repeat-sec');
+        const active  = document.activeElement;
+        const raw = (active === pSlider && pSlider) ? pSlider.value : (rSlider ? rSlider.value : '10');
+        const v = Math.max(3, Math.min(90, parseInt(raw, 10) || 10));
+        const s = String(v);
+        if (rSlider) rSlider.value = s;
+        if (pSlider) pSlider.value = s;
+        const rOut = document.getElementById('r-repeat-sec-out');
+        const pOut = document.getElementById('p-repeat-sec-out');
+        if (rOut) rOut.textContent = s;
+        if (pOut) pOut.textContent = s;
+        if (cfg) cfg.repeatQuestionSec = v;
+        clearRepeatUntilSpeechSchedule();
+      }
+
+      function prettyPrintCurriculumJson(data) {
+        if (data == null) return '';
+        let obj = data;
+        if (typeof data === 'string') {
+          try {
+            obj = JSON.parse(data);
+          } catch (e) {
+            return data;
+          }
+        }
+        return JSON.stringify(obj, null, 2);
+      }
+
+      /** Mirrors server CurriculumRegistryService.validateCurriculumShape for client-side checks. */
+      function validateCurriculumShapeClient(data) {
+        if (data == null || typeof data !== 'object' || Array.isArray(data)) {
+          return 'Curriculum must be a JSON object (not an array).';
+        }
+        const pageKeys = Object.keys(data);
+        if (pageKeys.length === 0) {
+          return 'Curriculum must be a non-empty object with at least one page key (e.g. page_3).';
+        }
+        for (const pageKey of pageKeys) {
+          const pageVal = data[pageKey];
+          if (pageVal == null || typeof pageVal !== 'object' || Array.isArray(pageVal)) {
+            return 'Page "' + pageKey + '" must be an object whose properties are categories (not an array).';
+          }
+          for (const tagKey of Object.keys(pageVal)) {
+            const tagVal = pageVal[tagKey];
+            if (!Array.isArray(tagVal)) {
+              return 'Category "' + tagKey + '" under page "' + pageKey + '" must be an array of questions.';
+            }
+            for (let i = 0; i < tagVal.length; i++) {
+              const row = tagVal[i];
+              if (row == null || typeof row !== 'object' || Array.isArray(row)) {
+                return 'Question ' + (i + 1) + ' in "' + tagKey + '" / "' + pageKey + '" must be an object with a "q" field.';
+              }
+              const q = row.q;
+              if (q == null || String(q).trim() === '') {
+                return 'Each question needs a non-empty "q" string (check "' + tagKey + '" / "' + pageKey + '", row ' + (i + 1) + ').';
+              }
+            }
+          }
+        }
+        return null;
+      }
+
+      async function addAdminCurriculumSubmit() {
+        if (!abacusIsAdmin) return;
+        const v = document.getElementById('curriculum-add-validation');
+        const setMsg = (msg, ok) => {
+          if (!v) return;
+          v.style.color = ok ? 'var(--green)' : '#b00020';
+          v.textContent = msg;
+        };
+        setMsg('', false);
+
+        const displayName = (document.getElementById('curriculum-add-session-name')?.value || '').trim();
+        if (!displayName) { setMsg('Enter a display name.', false); return; }
+
+        const inp = document.getElementById('curriculum-admin-file-input');
+        const file = inp && inp.files && inp.files[0];
+        if (!file) { setMsg('Choose a JSON file to upload.', false); return; }
+
+        let parsed;
+        try {
+          parsed = JSON.parse(await file.text());
+        } catch (e) {
+          setMsg('Invalid JSON in file: ' + (e.message || e), false);
+          return;
+        }
+        const shapeErr = validateCurriculumShapeClient(parsed);
+        if (shapeErr) { setMsg(shapeErr, false); return; }
+
+        const fd = new FormData();
+        fd.append('file', new Blob([JSON.stringify(parsed)], { type: 'application/json' }), 'curriculum.json');
+        fd.append('displayName', displayName);
+        fd.append('level', '');
+        try {
+          setMsg('Uploading…', false);
+          const r = await fetch('/api/admin/curriculum/add', { method: 'POST', body: fd, credentials: 'same-origin' });
+          const body = await r.json().catch(() => ({}));
+          if (!r.ok) { setMsg('Upload failed: ' + (body.error || r.status), false); return; }
+          if (inp) inp.value = '';
+          const nameInp = document.getElementById('curriculum-add-session-name');
+          if (nameInp) nameInp.value = '';
+          await fetchCurriculaList();
+          if (body.id) {
+            selectedCurriculumId = body.id;
+            const sel = document.getElementById('cur-curriculum-select');
+            if (sel) sel.value = body.id;
+          }
+          await fetchCurriculum();
+          renderCurPages();
+          await renderAdminCurriculumManifest();
+          setMsg('Created: ' + (body.displayName || body.id), true);
+        } catch (e) {
+          setMsg('Upload failed: ' + (e.message || e), false);
+        }
+      }
+
+      async function openCurriculumFullJsonEditorForId(id) {
+        if (!abacusIsAdmin || !id) return;
+        curriculumJsonEditorTargetId = id;
+        try {
+          const r = await fetch('/api/admin/curriculum/' + encodeURIComponent(id) + '/data', { credentials: 'same-origin' });
+          const rawText = await r.text();
+          if (!r.ok) throw new Error(rawText);
+          let j;
+          try { j = JSON.parse(rawText); } catch (e) { throw new Error('Response was not valid JSON'); }
+          document.getElementById('curriculum-full-json-text').value = prettyPrintCurriculumJson(j);
+          document.getElementById('curriculum-full-json-modal').classList.add('open');
+        } catch (e) {
+          alert('Could not load curriculum: ' + (e.message || e));
+        }
+      }
+
+      function openCurriculumFullJsonEditor() {
+        openCurriculumFullJsonEditorForId(selectedCurriculumId || '');
+      }
+
+      function closeCurriculumFullJsonModal() {
+        document.getElementById('curriculum-full-json-modal').classList.remove('open');
+      }
+
+      async function saveCurriculumFullJson() {
+        if (!abacusIsAdmin) return;
+        const id = curriculumJsonEditorTargetId || selectedCurriculumId;
+        if (!id) {
+          alert('No curriculum selected.');
+          return;
+        }
+        let parsed;
+        try {
+          parsed = JSON.parse(document.getElementById('curriculum-full-json-text').value);
+        } catch (e) {
+          alert('Invalid JSON: ' + e.message);
+          return;
+        }
+        const shapeErrSave = validateCurriculumShapeClient(parsed);
+        if (shapeErrSave) {
+          alert('Invalid curriculum shape: ' + shapeErrSave);
+          return;
+        }
+        try {
+          const r = await fetch('/api/admin/curriculum/' + encodeURIComponent(id), {
+            method: 'PUT',
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(parsed),
+          });
+          const body = await r.json().catch(() => ({}));
+          if (!r.ok) {
+            alert('Save failed: ' + (body.error || r.status));
+            return;
+          }
+          curriculumData = parsed;
+          closeCurriculumFullJsonModal();
+          renderCurPages();
+          void renderAdminCurriculumManifest();
+          alert('Curriculum saved (' + (body.id || id) + ').');
+        } catch (e) {
+          alert('Save failed: ' + (e.message || e));
+        }
+      }
+
+      async function renderAdminCurriculumManifest() {
+        const host = document.getElementById('curriculum-admin-manifest');
+        if (!host || !abacusIsAdmin) return;
+        host.innerHTML = '<p style="color:var(--text-secondary);font-size:0.85rem;margin:0;">Loading…</p>';
+        try {
+          const r = await fetch('/api/admin/curriculum/manifest', { credentials: 'same-origin' });
+          const raw = await r.text();
+          if (!r.ok) throw new Error(raw);
+          const rows = JSON.parse(raw);
+          if (!rows.length) {
+            host.innerHTML = '<p style="color:var(--text-secondary);font-size:0.85rem;margin:0;">No curricula yet.</p>';
+            return;
+          }
+          let html = '<div style="display:flex;flex-direction:column;gap:10px;">';
+          for (const row of rows) {
+            const del = row.deleted;
+            // Use data-id / data-name attributes — avoids quote-escaping pitfalls in onclick strings
+            const safeId   = escapeHtml(String(row.id));
+            const safeName = escapeHtml(String(row.displayName || row.id));
+
+            const badge = del
+              ? '<span style="flex-shrink:0;font-size:0.72rem;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--red-light);color:var(--red);">Inactive</span>'
+              : '<span style="flex-shrink:0;font-size:0.72rem;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--green-light);color:var(--green);">Active</span>';
+
+            const editBtn = '<button type="button" class="btn-ghost cur-act-btn" data-action="edit" data-id="' + safeId + '" style="padding:6px 12px;font-size:0.78rem;border-radius:8px;font-weight:600;border:1px solid var(--border);cursor:pointer;white-space:nowrap">Edit JSON</button>';
+            const toggleBtn = del
+              ? '<button type="button" class="btn-ghost cur-act-btn" data-action="activate" data-id="' + safeId + '" style="padding:6px 12px;font-size:0.78rem;border-radius:8px;font-weight:600;border:1px solid var(--border);cursor:pointer;white-space:nowrap;color:var(--green)">Activate</button>'
+              : '<button type="button" class="btn-ghost cur-act-btn" data-action="deactivate" data-id="' + safeId + '" style="padding:6px 12px;font-size:0.78rem;border-radius:8px;font-weight:600;border:1px solid var(--border);cursor:pointer;white-space:nowrap;color:var(--text-secondary)">Deactivate</button>';
+            const deleteBtn = '<button type="button" class="cur-act-btn" data-action="delete" data-id="' + safeId + '" data-name="' + safeName + '" style="padding:6px 12px;font-size:0.78rem;border-radius:8px;font-weight:600;border:none;background:var(--red-light);color:var(--red);cursor:pointer;white-space:nowrap;font-family:var(--font)">Delete</button>';
+
+            html += '<div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);overflow:hidden;">';
+            html += '<div style="display:flex;align-items:center;gap:10px;padding:12px 14px;">';
+            html += '<div style="flex:1;min-width:0;">';
+            html += '<div style="font-weight:600;font-size:0.9rem;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escapeHtml(String(row.displayName || row.id)) + '</div>';
+            html += '<div style="font-size:0.75rem;color:var(--text-secondary);font-family:var(--font-mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escapeHtml(String(row.id)) + '</div>';
+            html += '</div>';
+            html += badge;
+            html += '<div style="display:flex;gap:6px;flex-shrink:0;">' + editBtn + toggleBtn + deleteBtn + '</div>';
+            html += '</div>';
+
+            if (del && (row.deletionReason || row.deletedBy || row.deletedAt)) {
+              html += '<div style="padding:8px 14px 10px;border-top:1px solid var(--border-subtle);font-size:0.78rem;color:var(--text-secondary);line-height:1.5;">';
+              if (row.deletionReason) html += '<div><strong>Reason:</strong> ' + escapeHtml(String(row.deletionReason)) + '</div>';
+              const meta = [row.deletedBy && 'by ' + escapeHtml(String(row.deletedBy)), row.deletedAt && 'at ' + escapeHtml(String(row.deletedAt))].filter(Boolean).join(' ');
+              if (meta) html += '<div style="margin-top:2px;">' + meta + '</div>';
+              html += '</div>';
+            }
+
+            html += '</div>';
+          }
+          html += '</div>';
+          host.innerHTML = html;
+          // Event delegation — one listener handles all row buttons
+          host.onclick = (e) => {
+            const btn = e.target.closest('.cur-act-btn');
+            if (!btn) return;
+            const action = btn.dataset.action;
+            const id     = btn.dataset.id;
+            const name   = btn.dataset.name;
+            if (action === 'edit')       openCurriculumFullJsonEditorForId(id);
+            else if (action === 'activate')   adminActivateCurriculum(id);
+            else if (action === 'deactivate') adminDeactivateCurriculum(id);
+            else if (action === 'delete')     openCurriculumDeleteModal(id, name);
+          };
+        } catch (e) {
+          host.innerHTML = '<p style="color:#b00020;font-size:0.85rem;margin:0;">Could not load curricula.</p>';
+        }
+      }
+
+      async function adminDeactivateCurriculum(id) {
+        if (!abacusIsAdmin || !id) return;
+        try {
+          const r = await fetch('/api/admin/curriculum/' + encodeURIComponent(id) + '/soft-delete', { method: 'POST', credentials: 'same-origin' });
+          const body = await r.json().catch(() => ({}));
+          if (!r.ok) { alert(body.error || r.status); return; }
+          if (selectedCurriculumId === id) { selectedCurriculumId = null; curriculumData = null; }
+          await fetchCurriculaList();
+          await fetchCurriculum();
+          renderCurPages();
+          await renderAdminCurriculumManifest();
+        } catch (e) { alert(e.message || e); }
+      }
+
+      async function adminActivateCurriculum(id) {
+        if (!abacusIsAdmin || !id) return;
+        try {
+          const r = await fetch('/api/admin/curriculum/' + encodeURIComponent(id) + '/restore', { method: 'POST', credentials: 'same-origin' });
+          const body = await r.json().catch(() => ({}));
+          if (!r.ok) { alert(body.error || r.status); return; }
+          await fetchCurriculaList();
+          await fetchCurriculum();
+          renderCurPages();
+          await renderAdminCurriculumManifest();
+        } catch (e) { alert(e.message || e); }
+      }
+
+      let _curriculumDeleteTargetId = null;
+
+      function openCurriculumDeleteModal(id, displayName) {
+        if (!abacusIsAdmin || !id) return;
+        _curriculumDeleteTargetId = id;
+        const label = displayName || id;
+        ['curriculum-delete-name', 'curriculum-delete-name-perm'].forEach(elId => {
+          const el = document.getElementById(elId);
+          if (el) el.textContent = label;
+        });
+        const ta = document.getElementById('curriculum-delete-reason');
+        if (ta) ta.value = '';
+        const errEl = document.getElementById('curriculum-delete-error');
+        if (errEl) errEl.textContent = '';
+        // Reset permanent-delete checkbox and its UI
+        const chk = document.getElementById('curriculum-delete-permanent');
+        if (chk) chk.checked = false;
+        onPermanentDeleteToggle();
+        document.getElementById('curriculum-delete-modal').classList.add('open');
+        setTimeout(() => { if (ta) ta.focus(); }, 80);
+      }
+
+      function onPermanentDeleteToggle() {
+        const perm = document.getElementById('curriculum-delete-permanent')?.checked;
+        document.getElementById('curriculum-delete-desc-soft').style.display  = perm ? 'none'  : '';
+        document.getElementById('curriculum-delete-desc-perm').style.display  = perm ? ''      : 'none';
+        document.getElementById('curriculum-delete-perm-warning').style.display = perm ? ''    : 'none';
+        const btn = document.getElementById('curriculum-delete-confirm-btn');
+        const title = document.getElementById('curriculum-delete-modal-title');
+        if (btn)   btn.textContent   = perm ? 'Permanently Delete' : 'Delete';
+        if (title) title.textContent = perm ? 'Permanently Delete Curriculum' : 'Delete Curriculum';
+      }
+
+      function closeCurriculumDeleteModal() {
+        document.getElementById('curriculum-delete-modal').classList.remove('open');
+        _curriculumDeleteTargetId = null;
+      }
+
+      async function confirmCurriculumDelete() {
+        if (!abacusIsAdmin || !_curriculumDeleteTargetId) return;
+        const reason = (document.getElementById('curriculum-delete-reason')?.value || '').trim();
+        const isPermanent = !!document.getElementById('curriculum-delete-permanent')?.checked;
+        const errEl = document.getElementById('curriculum-delete-error');
+        if (!reason) {
+          if (errEl) errEl.textContent = 'Please enter a reason before deleting.';
+          return;
+        }
+        if (errEl) errEl.textContent = '';
+        const id = _curriculumDeleteTargetId;
+        const endpoint = isPermanent
+          ? '/api/admin/curriculum/' + encodeURIComponent(id) + '/permanent-delete'
+          : '/api/admin/curriculum/' + encodeURIComponent(id) + '/delete';
+        try {
+          const fd = new FormData();
+          fd.append('reason', reason);
+          const r = await fetch(endpoint, { method: 'POST', body: fd, credentials: 'same-origin' });
+          const body = await r.json().catch(() => ({}));
+          if (!r.ok) {
+            if (errEl) errEl.textContent = body.error || ('Request failed: ' + r.status);
+            return;
+          }
+          closeCurriculumDeleteModal();
+          if (selectedCurriculumId === id) { selectedCurriculumId = null; curriculumData = null; }
+          await fetchCurriculaList();
+          await fetchCurriculum();
+          renderCurPages();
+          await renderAdminCurriculumManifest();
+        } catch (e) {
+          if (errEl) errEl.textContent = e.message || String(e);
+        }
+      }
+
+      function adminSoftDeleteCurriculum(id) { adminDeactivateCurriculum(id); }
+      function adminRestoreCurriculum(id) { adminActivateCurriculum(id); }
+
+      function abacusAdminHideAnswerTip() {
+        if (abacusAdminAnswerHoverTimer) {
+          clearTimeout(abacusAdminAnswerHoverTimer);
+          abacusAdminAnswerHoverTimer = null;
+        }
+        const tip = document.getElementById('abacus-admin-answer-tip');
+        if (tip) {
+          tip.style.display = 'none';
+          tip.textContent = '';
+        }
+      }
+
+      function abacusAdminShowAnswerTip(anchorEl, answer) {
+        const tip = document.getElementById('abacus-admin-answer-tip');
+        if (!tip || !anchorEl) return;
+        tip.textContent = 'Answer: ' + answer;
+        tip.style.display = 'block';
+        tip.style.left = '-9999px';
+        tip.style.top = '0px';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            const r = anchorEl.getBoundingClientRect();
+            const margin = 6;
+            let left = Math.round(r.left);
+            let top = Math.round(r.bottom + margin);
+            tip.style.left = left + 'px';
+            tip.style.top = top + 'px';
+            const tw = tip.offsetWidth;
+            const th = tip.offsetHeight;
+            if (left + tw > window.innerWidth - 8) {
+              left = Math.max(8, window.innerWidth - tw - 8);
+              tip.style.left = left + 'px';
+            }
+            if (top + th > window.innerHeight - 8) {
+              top = Math.max(8, r.top - th - margin);
+              tip.style.top = top + 'px';
+            }
+          });
+        });
+      }
+
+      function abacusAdminOnQlabelEnter(ev, qIndex) {
+        const anchor = ev.currentTarget;
+        abacusAdminHideAnswerTip();
+        abacusAdminAnswerHoverTimer = setTimeout(() => {
+          abacusAdminAnswerHoverTimer = null;
+          const q = questions[qIndex];
+          if (!q) return;
+          abacusAdminShowAnswerTip(anchor, q.answer);
+        }, ADMIN_ANSWER_HOVER_MS);
+      }
+
+      function abacusAdminOnQlabelLeave() {
+        abacusAdminHideAnswerTip();
+      }
+
+      function abacusAdminOnFlashQlabelEnter(ev) {
+        abacusAdminHideAnswerTip();
+        const anchor = ev.currentTarget;
+        abacusAdminAnswerHoverTimer = setTimeout(() => {
+          abacusAdminAnswerHoverTimer = null;
+          const q = questions[flashIdx];
+          if (!q) return;
+          abacusAdminShowAnswerTip(anchor, q.answer);
+        }, ADMIN_ANSWER_HOVER_MS);
+      }
+
+      function readPracticeSessionLabel() {
+        const el = document.getElementById('practice-session-label');
+        return (el && el.value ? el.value : '').trim();
+      }
+
+      function buildHistoryDisplayName(providedRaw) {
+        const p = (providedRaw != null ? String(providedRaw) : '').trim();
+        if (!p) return abacusLoginName;
+        return `${abacusLoginName} · ${p}`;
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function historyRecordId(record) {
+        let r = record.id ?? record._id;
+        if (r && typeof r === 'object' && r.$oid) return String(r.$oid);
+        return r != null ? String(r) : '';
+      }
+
+      function fmtHistoryTime(sec) {
+        if (sec == null || isNaN(sec)) return '—';
+        return sec < 60 ? `${sec}s` : `${Math.floor(sec / 60)}m ${sec % 60}s`;
+      }
+
+      async function saveAbacusHistory(content) {
+        try {
+          const resp = await fetch('/api/history', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ actionType: 'ABACUS', content }),
+          });
+          if (!resp.ok) console.warn('saveAbacusHistory HTTP', resp.status);
+        } catch (err) {
+          console.error('Failed to save abacus history', err);
+        }
+      }
+
+      function openAbacusHistoryModal() {
+        document.getElementById('abacus-history-modal').classList.add('open');
+        loadAbacusHistoryList();
+      }
+
+      function closeAbacusHistoryModal() {
+        document.getElementById('abacus-history-modal').classList.remove('open');
+      }
+
+      function parseHistoryRecordTime(rec) {
+        const t = rec && rec.timestamp;
+        if (t == null) return new Date(0);
+        return new Date(t);
+      }
+
+      function fmtDateInputLocal(d) {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${y}-${m}-${day}`;
+      }
+
+      function toggleAbacusHistoryFilterPanel() {
+        const on = document.getElementById('abacus-hist-use-filters')?.checked;
+        const p = document.getElementById('abacus-hist-filter-panel');
+        if (p) p.style.display = on ? 'block' : 'none';
+      }
+
+      function debounceAbacusHistoryFilter() {
+        clearTimeout(abacusHistoryFilterDebounce);
+        abacusHistoryFilterDebounce = setTimeout(() => renderAbacusHistoryList(), 280);
+      }
+
+      function setAbacusHistoryPresetDays(days) {
+        const to = new Date();
+        const from = new Date();
+        from.setDate(from.getDate() - days);
+        const cb = document.getElementById('abacus-hist-use-filters');
+        if (cb) cb.checked = true;
+        toggleAbacusHistoryFilterPanel();
+        const df = document.getElementById('abacus-hist-date-from');
+        const dt = document.getElementById('abacus-hist-date-to');
+        if (df) df.value = fmtDateInputLocal(from);
+        if (dt) dt.value = fmtDateInputLocal(to);
+        renderAbacusHistoryList();
+      }
+
+      function clearAbacusHistoryDates() {
+        const df = document.getElementById('abacus-hist-date-from');
+        const dt = document.getElementById('abacus-hist-date-to');
+        if (df) df.value = '';
+        if (dt) dt.value = '';
+        renderAbacusHistoryList();
+      }
+
+      function filterAbacusHistoryRecords(rows) {
+        const use = document.getElementById('abacus-hist-use-filters')?.checked;
+        if (!use) return rows;
+        const nameQ = (document.getElementById('abacus-hist-name-q')?.value || '').trim().toLowerCase();
+        const fromStr = document.getElementById('abacus-hist-date-from')?.value;
+        const toStr = document.getElementById('abacus-hist-date-to')?.value;
+        let fromD = null;
+        let toD = null;
+        if (fromStr) fromD = new Date(fromStr + 'T00:00:00');
+        if (toStr) toD = new Date(toStr + 'T23:59:59.999');
+        return rows.filter((rec) => {
+          const c = rec.content || {};
+          if (nameQ) {
+            const hay = [
+              rec.username,
+              c.historyDisplayName,
+              c.providedName,
+              c.curriculumPage,
+              c.curriculumTag,
+              c.source,
+            ]
+              .filter((x) => x != null && String(x).length)
+              .join(' ')
+              .toLowerCase();
+            if (!hay.includes(nameQ)) return false;
+          }
+          if (fromD || toD) {
+            const t = parseHistoryRecordTime(rec).getTime();
+            if (fromD && t < fromD.getTime()) return false;
+            if (toD && t > toD.getTime()) return false;
+          }
+          return true;
+        });
+      }
+
+      function renderAbacusHistoryList() {
+        const el = document.getElementById('abacus-history-list');
+        const rows = window._abacusHistoryRecords || [];
+        window._abacusHistoryPayloads = {};
+        if (!rows.length) {
+          el.innerHTML =
+            '<p style="color:var(--text-secondary)">No saved sessions yet. Finish a practice session to record it here.</p>';
+          return;
+        }
+        const filtered = filterAbacusHistoryRecords(rows);
+        if (!filtered.length) {
+          el.innerHTML =
+            '<p style="color:var(--text-secondary)">No sessions match the current filters.</p>';
+          return;
+        }
+        el.innerHTML = filtered
+          .map((rec) => {
+            const id = historyRecordId(rec);
+            const c = rec.content || {};
+            if (id) window._abacusHistoryPayloads[id] = c;
+            const perf = c.performance || {};
+            const src = c.source || '—';
+            const when = parseHistoryRecordTime(rec).toLocaleString();
+            const whoLabel =
+              c.historyDisplayName ||
+              (rec.username
+                ? c.providedName
+                  ? `${rec.username} · ${c.providedName}`
+                  : rec.username
+                : '');
+            const user = whoLabel ? ` · ${escapeHtml(whoLabel)}` : '';
+            const pauseNote =
+              (perf.pauseSessionCount || 0) > 0
+                ? ` · paused ${perf.pauseSessionCount}x`
+                : '';
+            const sum = `${perf.correct ?? '?'}/${perf.total ?? '?'} correct · ${perf.scorePct ?? '?'}% · ${fmtHistoryTime(perf.timerSec)}${pauseNote}`;
+            const srcLabel =
+              src === 'generate'
+                ? 'Auto-generated'
+                : src === 'curriculum'
+                  ? 'Curriculum'
+                  : escapeHtml(String(src));
+            const curLine =
+              c.curriculumPage
+                ? `<div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">${escapeHtml(String(c.curriculumPage))} / ${escapeHtml(String(c.curriculumTag || ''))}</div>`
+                : '';
+            return `<div class="abacus-hist-row">
+                <div class="meta">${when}${user}</div>
+                <div><strong>${srcLabel}</strong> · ${sum}</div>
+                ${curLine}
+                <div class="abacus-hist-actions">
+                  <button type="button" class="btn btn-primary" style="padding:8px 14px;font-size:0.85rem" onclick="retestAbacusHistory('${id}')">Retest same paper</button>
+                  <button type="button" class="btn" style="padding:8px 14px;font-size:0.85rem;background:transparent;border:1px solid var(--red);color:var(--red);" onclick="deleteAbacusHistoryRecord('${id}')">Delete</button>
+                </div>
+              </div>`;
+          })
+          .join('');
+      }
+
+      async function loadAbacusHistoryList() {
+        const el = document.getElementById('abacus-history-list');
+        el.innerHTML = 'Loading…';
+        window._abacusHistoryRecords = [];
+        window._abacusHistoryPayloads = {};
+        try {
+          const resp = await fetch('/api/history');
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          const all = await resp.json();
+          window._abacusHistoryRecords = all.filter((x) => x.actionType === 'ABACUS');
+          renderAbacusHistoryList();
+        } catch (e) {
+          el.innerHTML =
+            '<p style="color:var(--red)">Could not load history. Are you logged in?</p>';
+        }
+      }
+
+      function retestAbacusHistory(id) {
+        const c = window._abacusHistoryPayloads[id];
+        if (!c || !c.questions || !c.questions.length) {
+          alert('This history entry cannot be restored.');
+          return;
+        }
+        closeAbacusHistoryModal();
+        restoreSessionFromSnapshot(c, { clearAnswers: true });
+      }
+
+      async function deleteAbacusHistoryRecord(id) {
+        if (!confirm('Remove this session from your history?')) return;
+        try {
+          const resp = await fetch(`/api/history/${id}`, { method: 'DELETE' });
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          await loadAbacusHistoryList();
+        } catch (e) {
+          alert('Failed to delete history entry.');
+        }
+      }
+
+      async function clearAllAbacusHistory() {
+        if (!confirm('Clear ALL abacus history? This cannot be undone.')) return;
+        try {
+          const resp = await fetch('/api/history', { method: 'DELETE' });
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          await loadAbacusHistoryList();
+        } catch (e) {
+          alert('Failed to clear history.');
+        }
+      }
+
+      function cloneQuestionsFromSnapshot(qs) {
+        return qs.map((q) => ({
+          expr: q.expr,
+          answer: q.answer,
+          op: q.op,
+          rows: (q.rows || []).map((r) => ({
+            num: r.num,
+            op: r.op,
+            explicit: !!r.explicit,
+          })),
+        }));
+      }
+
+      function restoreSessionFromSnapshot(snap, opts) {
+        stopSpeech();
+        stopTimer();
+        cfg = JSON.parse(JSON.stringify(snap.cfg || {}));
+        if (cfg.speechRate == null)
+          cfg.speechRate = +document.getElementById('r-rate').value;
+        if (cfg.speechGap == null)
+          cfg.speechGap = +document.getElementById('r-gap').value;
+        if (cfg.repeatUntilAnswered == null)
+          cfg.repeatUntilAnswered = readRepeatSettingsFromDom().repeatUntilAnswered;
+        if (cfg.repeatQuestionSec == null)
+          cfg.repeatQuestionSec = readRepeatSettingsFromDom().repeatQuestionSec;
+        questions = cloneQuestionsFromSnapshot(snap.questions);
+        sessionMeta = {
+          source: snap.source || 'generate',
+          curriculumId: snap.curriculumId,
+          curriculumPage: snap.curriculumPage,
+          curriculumTag: snap.curriculumTag,
+          providedName: snap.providedName,
+        };
+        if (snap.curriculumId) {
+          selectedCurriculumId = snap.curriculumId;
+          const csel = document.getElementById('cur-curriculum-select');
+          if (csel) csel.value = snap.curriculumId;
+        }
+        flashIdx = 0;
+        flashLog = [];
+        currentLayout = cfg.layout || 'column';
+        document.getElementById('new-btn').style.display = 'flex';
+        document.getElementById('topbar-session-name-wrap').style.display = 'none';
+        clearInProgressSession();
+        startTimer();
+        cfg.mode === 'flash' ? initFlash() : initAll();
+        showSec('sec-practice');
+        _startInProgressAutoSave();
+        if (opts && opts.clearAnswers && cfg.mode !== 'flash') clearAll();
+        if (cfg.autoVoice) setTimeout(() => speakQuestion(0), 600);
+      }
 
       const OP_SYM   = { add:'+', sub:'−', mul:'×', div:'÷' };
       const OP_COLOR = { add:'#1a9c3e', sub:'#d4291f', mul:'#0071e3', div:'#5e5ce6' };
       const OP_BG    = { add:'#e9f9ee', sub:'#fff0ef', mul:'#e8f2fd', div:'#f0f0ff' };
+
+      function isCurriculumEditable() {
+        return sessionMeta && sessionMeta.source === 'curriculum';
+      }
+
+      function syncPracticeSlidersFromConfig() {
+        const pg = document.getElementById('p-gap');
+        const pr = document.getElementById('p-rate');
+        if (!pg || !pr) return;
+        const g =
+          cfg && cfg.speechGap != null
+            ? cfg.speechGap
+            : +document.getElementById('r-gap').value;
+        const r =
+          cfg && cfg.speechRate != null
+            ? cfg.speechRate
+            : +document.getElementById('r-rate').value;
+        pg.value = String(g);
+        pr.value = String(r);
+        const pgo = document.getElementById('p-gap-out');
+        const pro = document.getElementById('p-rate-out');
+        if (pgo) pgo.textContent = pg.value;
+        if (pro) pro.textContent = pr.value;
+        if (cfg) {
+          const chk = document.getElementById('c-repeat-until');
+          const pchk = document.getElementById('p-repeat-until');
+          const rs = document.getElementById('r-repeat-sec');
+          const psec = document.getElementById('p-repeat-sec');
+          const on = !!cfg.repeatUntilAnswered;
+          const sec = Math.max(3, Math.min(90, Number(cfg.repeatQuestionSec) || 10));
+          const s = String(sec);
+          if (chk) chk.checked = on;
+          if (pchk) pchk.checked = on;
+          if (rs) rs.value = s;
+          if (psec) psec.value = s;
+          const rOut = document.getElementById('r-repeat-sec-out');
+          const pOut = document.getElementById('p-repeat-sec-out');
+          if (rOut) rOut.textContent = s;
+          if (pOut) pOut.textContent = s;
+          setRepeatIntervalVisibility();
+        }
+      }
+
+      function bindPracticeControls() {
+        const pg = document.getElementById('p-gap');
+        const pr = document.getElementById('p-rate');
+        const rg = document.getElementById('r-gap');
+        const rr = document.getElementById('r-rate');
+        const rgo = document.getElementById('r-gap-out');
+        const rro = document.getElementById('r-rate-out');
+        if (!pg || !pr) return;
+        pg.addEventListener('input', () => {
+          const v = pg.value;
+          if (cfg) cfg.speechGap = +v;
+          if (rg) rg.value = v;
+          if (rgo) rgo.textContent = v;
+          const o = document.getElementById('p-gap-out');
+          if (o) o.textContent = v;
+        });
+        pr.addEventListener('input', () => {
+          const v = pr.value;
+          const r = parseFloat(v);
+          if (cfg) cfg.speechRate = Number.isFinite(r) ? r : 1;
+          if (rr) rr.value = v;
+          if (rro) rro.textContent = v;
+          const o = document.getElementById('p-rate-out');
+          if (o) o.textContent = v;
+        });
+        document.getElementById('btn-practice-pause')?.addEventListener('click', togglePracticePause);
+      }
+
+      function updateFlashCurriculumEditBtn() {
+        const b = document.getElementById('f-edit-q');
+        if (!b) return;
+        b.style.display = isCurriculumEditable() ? 'inline-flex' : 'none';
+      }
+
+      function openCurriculumQuestionEdit(i) {
+        if (!isCurriculumEditable()) return;
+        const q = questions[i];
+        if (!q) return;
+        curriculumEditIndex = i;
+        document.getElementById('curriculum-edit-expr').value = q.expr || '';
+        document.getElementById('curriculum-edit-modal').classList.add('open');
+      }
+
+      function closeCurriculumEditModal() {
+        document.getElementById('curriculum-edit-modal').classList.remove('open');
+        curriculumEditIndex = -1;
+      }
+
+      function saveCurriculumQuestionEdit() {
+        const i = curriculumEditIndex;
+        if (i < 0 || !questions[i]) {
+          closeCurriculumEditModal();
+          return;
+        }
+        const raw = document.getElementById('curriculum-edit-expr').value.trim();
+        if (!raw) {
+          alert('Enter an expression.');
+          return;
+        }
+        let rows;
+        try {
+          rows = parseExprToRows(raw);
+        } catch (e) {
+          alert('Could not parse expression.');
+          return;
+        }
+        if (!rows || !rows.length) {
+          alert('Invalid expression.');
+          return;
+        }
+        const ans = calcAnswer(rows);
+        if (!Number.isFinite(ans)) {
+          alert('Invalid expression.');
+          return;
+        }
+        const expr = rows
+          .map((r, idx) => (idx === 0 ? r.num : `${OP_SYM[r.op] || '+'} ${r.num}`))
+          .join(' ');
+        questions[i] = {
+          expr,
+          answer: ans,
+          op: rows[1]?.op || 'add',
+          rows,
+        };
+        closeCurriculumEditModal();
+        if (cfg.mode === 'flash') {
+          renderFlash();
+        } else {
+          const grid = document.getElementById('q-grid');
+          const cards = grid?.querySelectorAll('.q-card');
+          const card = cards && cards[i];
+          if (card) {
+            const prevVal = document.getElementById(`a${i}`)?.value || '';
+            card.innerHTML = buildCardHTML(questions[i], i, currentLayout);
+            const newInp = document.getElementById(`a${i}`);
+            if (newInp && prevVal) newInp.value = prevVal;
+          }
+        }
+        tickProgress();
+      }
 
       // ─── Voice & Audio ─────────────────────────────────────────────────────
       let currentUtterance = null;
@@ -1565,9 +2981,153 @@
 
       let currentUt = null;
       let speechVersion = 0;
+      let speakRequestSerial = 0;
+      let repeatUntilSpeechTimer = null;
+
+      function getEffectiveSpeechRate() {
+        let r = cfg && cfg.speechRate;
+        if (r == null || r === '' || !Number.isFinite(Number(r))) {
+          const el = document.getElementById('r-rate');
+          r = el ? +el.value : 1;
+        } else {
+          r = Number(r);
+        }
+        if (!Number.isFinite(r)) r = 1;
+        return Math.min(10, Math.max(0.1, r));
+      }
+
+      function pickSpeechVoice() {
+        try {
+          const voices = window.speechSynthesis.getVoices();
+          if (!voices || !voices.length) return null;
+          const lang = (navigator.language || 'en').slice(0, 2).toLowerCase();
+          const local = voices.filter((x) => x.localService === true);
+          const pool = local.length ? local : voices;
+          let v =
+            pool.find((x) => x.lang && x.lang.toLowerCase().startsWith(lang)) ||
+            pool.find((x) => x.lang && x.lang.toLowerCase().startsWith('en')) ||
+            pool[0];
+          return v || null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function applyUtteranceProsody(ut) {
+        const rate = getEffectiveSpeechRate();
+        ut.rate = rate;
+        ut.pitch = 1;
+        const voice = pickSpeechVoice();
+        if (voice) ut.voice = voice;
+      }
+
+      function whenSpeechVoicesReady(done) {
+        let ran = false;
+        let fallbackT = null;
+        function run() {
+          if (ran) return;
+          ran = true;
+          try {
+            window.speechSynthesis.removeEventListener('voiceschanged', onV);
+          } catch (e) {}
+          if (fallbackT != null) clearTimeout(fallbackT);
+          done();
+        }
+        function onV() {
+          run();
+        }
+        try {
+          window.speechSynthesis.getVoices();
+          if (window.speechSynthesis.getVoices().length) {
+            run();
+            return;
+          }
+          window.speechSynthesis.addEventListener('voiceschanged', onV);
+          fallbackT = setTimeout(run, 800);
+        } catch (e) {
+          done();
+        }
+      }
+
+      function clearRepeatUntilSpeechSchedule() {
+        if (repeatUntilSpeechTimer != null) {
+          clearTimeout(repeatUntilSpeechTimer);
+          repeatUntilSpeechTimer = null;
+        }
+      }
+
+      function readRepeatSettingsFromDom() {
+        const chk = document.getElementById('c-repeat-until');
+        const rs = document.getElementById('r-repeat-sec');
+        const psec = document.getElementById('p-repeat-sec');
+        const inPractice = document.getElementById('sec-practice')?.classList.contains('active');
+        const on = !!(chk && chk.checked);
+        const raw = inPractice && psec ? psec.value : (rs && rs.value);
+        let sec = parseInt(raw, 10);
+        if (!Number.isFinite(sec)) sec = 10;
+        sec = Math.max(3, Math.min(90, sec));
+        const s = String(sec);
+        if (rs) rs.value = s;
+        if (psec) psec.value = s;
+        const rOut = document.getElementById('r-repeat-sec-out');
+        const pOut = document.getElementById('p-repeat-sec-out');
+        if (rOut) rOut.textContent = s;
+        if (pOut) pOut.textContent = s;
+        return { repeatUntilAnswered: on, repeatQuestionSec: sec };
+      }
+
+      function syncCfgRepeatFromDom() {
+        const r = readRepeatSettingsFromDom();
+        if (cfg) {
+          cfg.repeatUntilAnswered = r.repeatUntilAnswered;
+          cfg.repeatQuestionSec = r.repeatQuestionSec;
+        }
+        const c = document.getElementById('c-repeat-until');
+        const p = document.getElementById('p-repeat-until');
+        if (c && p) {
+          p.checked = c.checked;
+        }
+        setRepeatIntervalVisibility();
+      }
+
+      function onAbacusAnswerInput() {
+        clearRepeatUntilSpeechSchedule();
+      }
+
+      function isAnswerStillEmptyForRepeat(qIdx) {
+        if (cfg.mode === 'flash') {
+          if (flashIdx !== qIdx) return false;
+          const inp = document.getElementById('f-input');
+          return !(inp && String(inp.value || '').trim());
+        }
+        const inp = document.getElementById('a' + qIdx);
+        return !(inp && String(inp.value || '').trim());
+      }
+
+      function scheduleRepeatAfterSpeechFinished(qIdx, myVersion) {
+        clearRepeatUntilSpeechSchedule();
+        if (!cfg || !cfg.repeatUntilAnswered) return;
+        let sec = Number(cfg.repeatQuestionSec);
+        if (!Number.isFinite(sec) || sec < 3) sec = 10;
+        const delayMs = sec * 1000;
+        function tick() {
+          repeatUntilSpeechTimer = null;
+          if (speechVersion !== myVersion) return;
+          if (!cfg || !cfg.repeatUntilAnswered) return;
+          if (timerPaused) {
+            repeatUntilSpeechTimer = setTimeout(tick, 400);
+            return;
+          }
+          if (!isAnswerStillEmptyForRepeat(qIdx)) return;
+          speakQuestion(qIdx);
+        }
+        repeatUntilSpeechTimer = setTimeout(tick, delayMs);
+      }
 
       function stopSpeech() {
+        speakRequestSerial++;
         speechVersion++; // Invalidate any pending callbacks
+        clearRepeatUntilSpeechSchedule();
         if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
            window.speechSynthesis.cancel();
         }
@@ -1582,14 +3142,29 @@
          if (document.hidden) stopSpeech();
       });
 
+      /** Move keyboard focus to the answer field for question idx (grid or flash). */
+      function focusAnswerForQuestionIndex(idx) {
+        if (!cfg || idx < 0 || idx >= questions.length) return;
+        const run = () => {
+          if (cfg.mode === 'flash') {
+            if (idx !== flashIdx) return;
+            document.getElementById('f-input')?.focus();
+          } else {
+            document.getElementById('a' + idx)?.focus();
+          }
+        };
+        requestAnimationFrame(() => requestAnimationFrame(run));
+      }
+
       function speakQuestion(i) {
         stopSpeech();
+        const req = speakRequestSerial;
         const q = questions[i];
         if (!q) return;
 
-        speechActiveQ = i;
-        updateSpeakerUI(i, true);
-        const gap = (cfg.speechGap || 0) * 1000;
+        focusAnswerForQuestionIndex(i);
+
+        const gap = (Number(cfg.speechGap) || 0) * 1000;
 
         speechQueue = [];
         speechQueueIdx = 0;
@@ -1618,7 +3193,7 @@
 
           speechQueueIdx = idx;
           currentUt = new SpeechSynthesisUtterance(speechQueue[idx]);
-          currentUt.rate = cfg.speechRate || 1.0;
+          applyUtteranceProsody(currentUt);
           currentUt.onend = () => {
              // Zombie check: if speechVersion changed, stop immediately
              if (speechVersion !== myVersion) return;
@@ -1636,18 +3211,30 @@
              } else {
                 speechActiveQ = -1;
                 updateSpeakerUI(i, false);
+                focusAnswerForQuestionIndex(i);
+                scheduleRepeatAfterSpeechFinished(i, myVersion);
              }
           };
           currentUt.onerror = () => { 
              if (speechVersion === myVersion) {
                 speechActiveQ = -1; 
                 updateSpeakerUI(i, false); 
+                focusAnswerForQuestionIndex(i);
              }
           };
           window.speechSynthesis.speak(currentUt);
         }
 
-        speakParts(0);
+        whenSpeechVoicesReady(() => {
+          if (req !== speakRequestSerial) return;
+          speechActiveQ = i;
+          updateSpeakerUI(i, true);
+          try {
+            window.speechSynthesis.cancel();
+          } catch (e) {}
+          focusAnswerForQuestionIndex(i);
+          speakParts(0);
+        });
       }
 
       function advanceManualSpeech() {
@@ -1679,7 +3266,7 @@
         updateManualFeedback(false);
 
         currentUt = new SpeechSynthesisUtterance(speechQueue[idx]);
-        currentUt.rate = cfg.speechRate || 1.0;
+        applyUtteranceProsody(currentUt);
         currentUt.onend = () => {
           if (speechVersion !== myVersion) return;
           if (idx < speechQueue.length - 1) {
@@ -1687,6 +3274,8 @@
           } else {
             speechActiveQ = -1;
             updateSpeakerUI(qIdx, false);
+            focusAnswerForQuestionIndex(qIdx);
+            scheduleRepeatAfterSpeechFinished(qIdx, myVersion);
           }
         };
         window.speechSynthesis.speak(currentUt);
@@ -1707,23 +3296,74 @@
       }
 
       // ─── Selection Tabs ─────────────────────────────────────────────────────
-      let activeSource = 'generate'; 
+      let activeSource = 'generate';
       let curriculumData = null;
+      let selectedCurriculumId = null;
+      let curriculumJsonEditorTargetId = null;
+
+      function onCurriculumSetPickerChange() {
+        const sel = document.getElementById('cur-curriculum-select');
+        selectedCurriculumId = sel && sel.value ? sel.value : null;
+        curriculumData = null;
+        const ps = document.getElementById('cur-page-select');
+        if (ps) ps.innerHTML = '<option value="">-- Choose Page --</option>';
+        const tc = document.getElementById('cur-tags-container');
+        if (tc) tc.style.display = 'none';
+        if (selectedCurriculumId) void fetchCurriculum();
+      }
+
+      async function fetchCurriculaList() {
+        const sel = document.getElementById('cur-curriculum-select');
+        if (!sel) return;
+        try {
+          const r = await fetch('/api/questions/curricula', { credentials: 'same-origin' });
+          if (!r.ok) throw new Error(await r.text());
+          const j = await r.json();
+          const items = j.items || [];
+          const prev = selectedCurriculumId;
+          sel.innerHTML = '';
+          if (!items.length) {
+            sel.innerHTML = '<option value="">No curricula available</option>';
+            selectedCurriculumId = null;
+            return;
+          }
+          items.forEach((it) => {
+            const opt = document.createElement('option');
+            opt.value = it.id;
+            let label = it.displayName || it.id;
+            if (it.level && String(it.level).trim()) label += ' — ' + String(it.level).trim();
+            opt.textContent = label;
+            sel.appendChild(opt);
+          });
+          if (prev && items.some((x) => x.id === prev)) {
+            sel.value = prev;
+            selectedCurriculumId = prev;
+          } else {
+            selectedCurriculumId = items[0].id;
+            sel.value = selectedCurriculumId;
+          }
+        } catch (e) {
+          sel.innerHTML = '<option value="">Error loading list</option>';
+          console.error(e);
+        }
+      }
 
       async function switchTab(mode) {
         activeSource = mode;
         document.getElementById('tab-gen').classList.toggle('active', mode === 'generate');
         document.getElementById('tab-cur').classList.toggle('active', mode === 'curriculum');
-        document.getElementById('tab-scan').classList.toggle('active', mode === 'scan');
-        
+
         document.getElementById('view-generate').style.display = mode === 'generate' ? '' : 'none';
         document.getElementById('view-curriculum').style.display = mode === 'curriculum' ? '' : 'none';
-        document.getElementById('view-scan').style.display = mode === 'scan' ? '' : 'none';
-        
+
         document.getElementById('cta-start').style.display = mode === 'generate' ? 'flex' : 'none';
 
-        if (mode === 'curriculum' && !curriculumData) {
-          fetchCurriculum();
+        if (mode === 'curriculum') {
+          void (async () => {
+            await fetchCurriculaList();
+            curriculumData = null;
+            await fetchCurriculum();
+          })();
         }
       }
 
@@ -1731,11 +3371,22 @@
         const loading = document.getElementById('cur-loading');
         loading.style.display = 'flex';
         try {
-          const resp = await fetch('/api/questions/curriculum');
+          if (!selectedCurriculumId) {
+            await fetchCurriculaList();
+          }
+          if (!selectedCurriculumId) {
+            curriculumData = null;
+            renderCurPages();
+            return;
+          }
+          const url = '/api/questions/curriculum?curriculumId=' + encodeURIComponent(selectedCurriculumId);
+          const resp = await fetch(url, { credentials: 'same-origin' });
+          if (!resp.ok) throw new Error(await resp.text());
           curriculumData = await resp.json();
           renderCurPages();
         } catch (err) {
           console.error("Failed to load curriculum:", err);
+          curriculumData = null;
         } finally {
           loading.style.display = 'none';
         }
@@ -1788,29 +3439,19 @@
         container.style.display = 'block';
       }
 
-      function startDrill(){
-        stopSpeech();
-        cfg={
-          qCount: +document.getElementById('v-q').value,
-          digits: +document.getElementById('v-d').value,
-          operands: +document.getElementById('v-o').value,
-          ops: Array.from(document.querySelectorAll('.op-toggle input:checked')).map(i=>i.value),
-          mode: document.querySelector('input[name="mode"]:checked').value,
-          layout: 'column',
-          autoVoice: document.getElementById('c-auto-voice').checked,
-          autoNext : document.getElementById('c-auto-next').checked,
-          manualSpeech: document.getElementById('c-manual-speech').checked,
-          speechGap: +document.getElementById('r-gap').value,
-          speechRate: +document.getElementById('r-rate').value
-        };
-        startTimer();
-        cfg.mode === 'flash' ? initFlash() : initAll();
-        showSec('sec-practice');
-      }
-
-      function loadCurriculumSet(page, tag) {
+      function loadCurriculumSet(page, tag, paperSource = 'curriculum') {
         const raw = curriculumData[page][tag];
         if (!raw || !raw.length) return;
+
+        const label = readPracticeSessionLabel();
+        sessionMeta = {
+          source: paperSource,
+          curriculumId: selectedCurriculumId,
+          curriculumPage: page,
+          curriculumTag: tag,
+          providedName: label || undefined,
+        };
+        lastSessionSnapshot = null;
 
         questions = raw.map(q => {
           const rows = parseExprToRows(q.q);
@@ -1822,10 +3463,11 @@
           };
         });
 
-        startCurriculumSession();
+        void startCurriculumSession();
       }
 
-      function startCurriculumSession() {
+      async function startCurriculumSession() {
+        await refreshAbacusLoginName();
         cfg = {
           mode: document.querySelector('input[name="mode"]:checked').value, 
           layout: 'column',
@@ -1837,49 +3479,19 @@
           ops: ['add', 'sub', 'mul', 'div'], // Initialize to avoid crashes
           qCount: questions.length,
           digits: 1, // dummy
-          operands: 2 // dummy
+          operands: 2, // dummy
+          ...readRepeatSettingsFromDom(),
         };
+        clearInProgressSession();
+        document.getElementById('new-btn').style.display = 'flex';
+        document.getElementById('topbar-session-name-wrap').style.display = 'none';
         startTimer();
         cfg.mode === 'flash' ? initFlash() : initAll();
         showSec('sec-practice');
+        _startInProgressAutoSave();
+        if (cfg.autoVoice) setTimeout(() => speakQuestion(0), 600);
       }
 
-      function handleFileSelect(e) {
-        const file = e.target.files[0];
-        if (file) processImage(file);
-      }
-
-      function handleJsonFileSelect(e) {
-        const file = e.target.files[0];
-        if (file) uploadJsonFile(file);
-      }
-
-      async function uploadJsonFile(file) {
-        const loading = document.getElementById('ai-loading');
-        loading.style.display = 'flex';
-        const formData = new FormData();
-        formData.append('file', file);
-
-        try {
-          const resp = await fetch('/api/questions/upload', { method: 'POST', body: formData });
-          const result = await resp.json();
-          
-          if (result.data) {
-             // For simplicity, we just use the first page found in the uploaded JSON
-             const firstPage = Object.keys(result.data)[0];
-             const firstTag = Object.keys(result.data[firstPage])[0];
-             curriculumData = result.data; // Temporarily swap or merge
-             loadCurriculumSet(firstPage, firstTag);
-          } else {
-             throw new Error("Invalid response format");
-          }
-        } catch (err) {
-          alert("Upload failed: " + err.message);
-        } finally {
-          loading.style.display = 'none';
-          document.getElementById('json-input').value = '';
-        }
-      }
 
       function calcAnswer(rows) {
         if (!rows.length) return 0;
@@ -1894,62 +3506,6 @@
         return ans;
       }
 
-      async function processImage(file) {
-        const loading = document.getElementById('ai-loading');
-        loading.style.display = 'flex';
-
-        const formData = new FormData();
-        formData.append('file', file);
-
-        try {
-          const resp = await fetch('/ai/gemini/vision', { method: 'POST', body: formData });
-          const data = await resp.json();
-
-          if (data.error) throw new Error(data.error);
-
-          // Extract JSON array from Gemini's response (handles markdown fences if present)
-          let jsonStr = data.generation || '';
-          const match = jsonStr.match(/\[[\s\S]*\]/);
-          if (!match) throw new Error("Could not find question data in AI response");
-          
-          const rawQuestions = JSON.parse(match[0]);
-          
-          // Map to internal format
-          questions = rawQuestions.map(q => {
-            const rows = parseExprToRows(q.expr);
-            return {
-              expr: q.expr,
-              answer: q.answer,
-              op: rows[1]?.op || 'add',
-              rows: rows
-            };
-          });
-
-          if (!questions.length) throw new Error("No questions found in image");
-
-          // Success - Start Drill
-          cfg = { 
-            mode: document.querySelector('input[name="mode"]:checked').value, 
-            layout: 'column',
-            autoVoice: document.getElementById('c-auto-voice').checked,
-            autoNext : document.getElementById('c-auto-next').checked,
-            manualSpeech: document.getElementById('c-manual-speech').checked,
-            speechGap: +document.getElementById('r-gap').value,
-            speechRate: +document.getElementById('r-rate').value,
-            ops: ['add', 'sub'], // Generic default
-            qCount: questions.length
-          };
-          startTimer();
-          cfg.mode === 'flash' ? initFlash() : initAll();
-          showSec('sec-practice');
-
-        } catch (err) {
-          alert("Extraction failed: " + err.message);
-        } finally {
-          loading.style.display = 'none';
-          document.getElementById('file-input').value = ''; // clear input
-        }
-      }
 
       function parseExprToRows(expr) {
         // Robust parser for "10, -7, 6" or "40 x 7" or "10 + 20"
@@ -2005,60 +3561,123 @@
       function numD(d){ return rand(Math.pow(10,d-1), Math.pow(10,d)-1); }
 
       function makeQ(ops, digits, operands) {
+        const d = Math.max(1, digits | 0);
+        const minN = Math.max(1, Math.pow(10, d - 1));
+        const maxN = Math.pow(10, d) - 1;
+        const pickNumD = () => rand(minN, maxN);
+        const rndRange = (lo, hi) => (hi < lo ? lo : rand(lo, hi));
+
         const rows = [];
-        let ans = 0;
         let isDiv = ops.includes('div') && (ops.length === 1 || Math.random() > 0.7);
 
         if (isDiv) {
-          // Special logic for division
-          let b = numD(Math.max(1, digits - 1)) || 1;
-          let a = b * rand(2, Math.pow(10, Math.max(1, digits - 1)));
-          rows.push({num: a, op: 'first'});
-          rows.push({num: b, op: 'div'});
-          ans = a / b;
+          let b = numD(Math.max(1, d - 1)) || 1;
+          let a = b * rand(2, Math.pow(10, Math.max(1, d - 1)));
+          rows.push({ num: a, op: 'first' });
+          rows.push({ num: b, op: 'div' });
         } else {
-          // Addition, Subtraction, Multiplication
-          const filteredOps = ops.filter(o => o !== 'div');
+          let filteredOps = ops.filter((o) => o !== 'div');
+          if (!filteredOps.length) filteredOps = ['add'];
           const canMix = filteredOps.includes('add') && filteredOps.includes('sub');
 
+          let ans = 0;
           for (let i = 0; i < operands; i++) {
             let stepOp;
             if (i === 0) {
               stepOp = 'first';
-            } else if (canMix) {
+              const n = pickNumD();
+              ans = n;
+              rows.push({ num: n, op: stepOp });
+              continue;
+            }
+
+            if (canMix) {
               stepOp = Math.random() > 0.5 ? 'add' : 'sub';
             } else {
               stepOp = filteredOps[rand(0, filteredOps.length - 1)];
             }
 
-            let n = numD(digits);
-
-            if (i === 0) {
-              ans = n;
+            let n;
+            if (stepOp === 'sub') {
+              const cap = Math.min(maxN, Math.max(0, Math.floor(ans)));
+              n = rndRange(0, cap);
+            } else if (stepOp === 'add' || stepOp === 'mul') {
+              n = pickNumD();
             } else {
-              if (stepOp === 'sub' && ans - n < 0) n = rand(0, ans);
-              if (stepOp === 'add') ans += n;
-              else if (stepOp === 'sub') ans -= n;
-              else if (stepOp === 'mul') ans *= n;
+              n = pickNumD();
             }
-            rows.push({num: n, op: stepOp});
+
+            if (stepOp === 'add') ans += n;
+            else if (stepOp === 'sub') ans -= n;
+            else if (stepOp === 'mul') ans *= n;
+
+            rows.push({ num: n, op: stepOp });
           }
         }
 
         const expr = rows.map((r, idx) => idx === 0 ? r.num : `${OP_SYM[r.op]} ${r.num}`).join(' ');
-        return {expr, answer: ans, op: rows[1]?.op || 'add', rows};
+        const answer = calcAnswer(rows);
+        return { expr, answer, op: rows[1]?.op || 'add', rows };
       }
 
       // ─── Timer ───────────────────────────────────────────────────────────────
-      function startTimer(){
-        timerSec=0;
-        const badge=document.getElementById('timer-badge');
-        badge.style.display='flex';
-        badge.style.flexDirection='row';
-        updateTimerDisplay();
-        timerIv=setInterval(()=>{timerSec++;updateTimerDisplay();},1000);
+      function resetPauseButton() {
+        const btn = document.getElementById('btn-practice-pause');
+        if (btn) {
+          btn.textContent = 'Pause';
+          btn.classList.remove('active-pause');
+        }
       }
-      function stopTimer(){ clearInterval(timerIv); timerIv=null; }
+
+      function togglePracticePause() {
+        if (!document.getElementById('sec-practice')?.classList.contains('active')) return;
+        const btn = document.getElementById('btn-practice-pause');
+        if (!timerPaused) {
+          stopSpeech();
+          timerPaused = true;
+          clearInterval(timerIv);
+          timerIv = null;
+          pauseSessionCount++;
+          if (btn) {
+            btn.textContent = 'Resume';
+            btn.classList.add('active-pause');
+          }
+        } else {
+          timerPaused = false;
+          if (btn) {
+            btn.textContent = 'Pause';
+            btn.classList.remove('active-pause');
+          }
+          timerIv = setInterval(() => {
+            timerSec++;
+            updateTimerDisplay();
+          }, 1000);
+        }
+      }
+
+      function startTimer() {
+        clearInterval(timerIv);
+        timerIv = null;
+        timerSec = 0;
+        timerPaused = false;
+        pauseSessionCount = 0;
+        resetPauseButton();
+        const badge = document.getElementById('timer-badge');
+        badge.style.display = 'flex';
+        badge.style.flexDirection = 'row';
+        updateTimerDisplay();
+        timerIv = setInterval(() => {
+          timerSec++;
+          updateTimerDisplay();
+        }, 1000);
+      }
+
+      function stopTimer() {
+        clearInterval(timerIv);
+        timerIv = null;
+        timerPaused = false;
+        resetPauseButton();
+      }
       function updateTimerDisplay(){
         const m=String(Math.floor(timerSec/60)).padStart(2,'0');
         const s=String(timerSec%60).padStart(2,'0');
@@ -2069,6 +3688,7 @@
       // ─── Section routing ─────────────────────────────────────────────────────
       function showSec(id){
         stopSpeech(); // Stop any audio when navigating between screens
+        abacusAdminHideAnswerTip();
         document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
       }
@@ -2117,13 +3737,22 @@
         }
 
         const pillSym = OP_SYM[primaryOp] || '±';
+        const editBtn = isCurriculumEditable()
+          ? `<button type="button" class="q-edit-btn" onclick="openCurriculumQuestionEdit(${i})" title="Edit question">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            </button>`
+          : '';
 
         return `
-          <div class="q-num">
-            <div style="display:flex; align-items:center; gap:8px;">
+          <div class="q-num" style="justify-content:space-between;width:100%;">
+            <div class="abacus-q-label-left" style="display:flex; align-items:center; gap:8px;"
+              onmouseenter="abacusAdminOnQlabelEnter(event, ${i})"
+              onmouseleave="abacusAdminOnQlabelLeave()">
                <span class="q-op-pill" style="background:${opBg};color:${opColor}">${pillSym}</span>
                Q${i+1}
             </div>
+            <div style="display:flex; align-items:center; gap:4px;">
+              ${editBtn}
             <button class="spk-btn" id="spk${i}" onclick="speakQuestion(${i})" title="Speak Question">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -2131,13 +3760,14 @@
                 <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
               </svg>
             </button>
+            </div>
           </div>
           ${exprHtml}
           <div class="q-input-row">
             <span class="q-input-label">${layout === 'column' ? '=' : 'Answer'}</span>
             <input type="number" class="q-input" id="a${i}"
               onkeydown="if(event.key==='Enter'){document.getElementById('a${i+1}')?.focus()}"
-              oninput="tickProgress(); checkAllAutoNext(${i})" />
+              oninput="onAbacusAnswerInput(); tickProgress(); checkAllAutoNext(${i})" />
           </div>
           <div class="q-feedback" id="f${i}"></div>
         `;
@@ -2174,9 +3804,14 @@
       }
 
       // ─── Start ───────────────────────────────────────────────────────────────
-      function startDrill(){
+      async function startDrill(){
         const ops=[...document.querySelectorAll('.op-toggle input:checked')].map(c=>c.value);
         if(!ops.length){ alert('Select at least one operation.'); return; }
+        await refreshAbacusLoginName();
+        const label = readPracticeSessionLabel();
+        sessionMeta = { source: 'generate', providedName: label || undefined };
+        lastSessionSnapshot = null;
+        clearInProgressSession();
         cfg={
           ops,
           qCount  : +document.getElementById('r-q').value,
@@ -2188,13 +3823,17 @@
           autoNext : document.getElementById('c-auto-next').checked,
           manualSpeech: document.getElementById('c-manual-speech').checked,
           speechGap: +document.getElementById('r-gap').value,
+          speechRate: +document.getElementById('r-rate').value,
+          ...readRepeatSettingsFromDom(),
         };
         questions=Array.from({length:cfg.qCount},()=>makeQ(cfg.ops,cfg.digits,cfg.operands));
         flashIdx=0; flashLog=[];
         document.getElementById('new-btn').style.display='flex';
+        document.getElementById('topbar-session-name-wrap').style.display='none';
         startTimer();
         cfg.mode==='flash' ? initFlash() : initAll();
         showSec('sec-practice');
+        _startInProgressAutoSave();
         if (cfg.autoVoice) setTimeout(() => speakQuestion(0), 600);
       }
 
@@ -2224,7 +3863,8 @@
           c.innerHTML = buildCardHTML(q, i, currentLayout);
           grid.appendChild(c);
         });
-        setTimeout(()=>document.getElementById('a0')?.focus(),300);
+        syncPracticeSlidersFromConfig();
+        setTimeout(() => focusAnswerForQuestionIndex(0), 300);
       }
 
       function tickProgress(){
@@ -2233,6 +3873,7 @@
       }
 
       function clearAll(){
+        clearRepeatUntilSpeechSchedule();
         questions.forEach((_,i)=>{
           const inp=document.getElementById(`a${i}`);
           if(inp){inp.value='';inp.className='q-input';}
@@ -2240,7 +3881,7 @@
           if(fb){fb.textContent='';fb.className='q-feedback';}
         });
         document.getElementById('a-prog').style.width='0%';
-        document.getElementById('a0')?.focus();
+        focusAnswerForQuestionIndex(0);
       }
 
       function evalAll(){
@@ -2256,7 +3897,7 @@
           return {expr:q.expr,answer:q.answer,userAns:isNaN(ua)?'—':ua,ok};
         });
         stopTimer();
-        setTimeout(()=>showResults(correct,results),500);
+        setTimeout(() => { void showResults(correct, results); }, 500);
       }
 
       // ─── FLASH ───────────────────────────────────────────────────────────────
@@ -2264,6 +3905,7 @@
         document.getElementById('flash-view').style.display='';
         document.getElementById('all-view').style.display='none';
         document.getElementById('f-tot').textContent=questions.length;
+        syncPracticeSlidersFromConfig();
         renderFlash();
       }
 
@@ -2303,7 +3945,7 @@
           setTimeout(() => {
             const nextInp = document.getElementById(`a${i+1}`);
             if (nextInp) {
-               nextInp.focus();
+               focusAnswerForQuestionIndex(i + 1);
                if (cfg.autoVoice) speakQuestion(i + 1);
             }
           }, 600);
@@ -2318,7 +3960,7 @@
             if(l.ok) correct++;
             return {expr:questions[i].expr,answer:questions[i].answer,userAns:l.ua,ok:l.ok};
           });
-          setTimeout(()=>showResults(correct,results),400);
+          setTimeout(() => { void showResults(correct, results); }, 400);
           return;
         }
         const q=questions[flashIdx];
@@ -2352,7 +3994,8 @@
         document.getElementById('f-fb').textContent='';
         document.getElementById('f-fb').className='flash-feedback';
         document.getElementById('f-prog').style.width=(flashIdx/questions.length*100)+'%';
-        setTimeout(()=>document.getElementById('f-input')?.focus(),60);
+        updateFlashCurriculumEditBtn();
+        setTimeout(() => focusAnswerForQuestionIndex(flashIdx), 60);
       }
 
       function flashNext(){
@@ -2399,7 +4042,8 @@
       }
 
       // ─── RESULTS ─────────────────────────────────────────────────────────────
-      function showResults(correct, results){
+      async function showResults(correct, results){
+        await refreshAbacusLoginName();
         const total=results.length;
         const pct=Math.round(correct/total*100);
 
@@ -2439,20 +4083,187 @@
 
         if(pct>=80) confetti(pct===100?160:70);
         document.getElementById('timer-badge').style.display='none';
+
+        const provided = (
+          sessionMeta.providedName != null && sessionMeta.providedName !== ''
+            ? String(sessionMeta.providedName)
+            : readPracticeSessionLabel()
+        ).trim();
+
+        lastSessionSnapshot = {
+          source: sessionMeta.source || 'generate',
+          curriculumId: sessionMeta.curriculumId,
+          curriculumPage: sessionMeta.curriculumPage,
+          curriculumTag: sessionMeta.curriculumTag,
+          providedName: provided || undefined,
+          historyDisplayName: buildHistoryDisplayName(provided),
+          cfg: JSON.parse(JSON.stringify(cfg)),
+          questions: cloneQuestionsFromSnapshot(questions),
+          results: JSON.parse(JSON.stringify(results)),
+          performance: {
+            correct,
+            total,
+            wrong: total - correct,
+            timerSec,
+            scorePct: pct,
+            avgSecPerQ: total ? +(timerSec / total).toFixed(2) : 0,
+            pauseSessionCount,
+          },
+          completedAt: new Date().toISOString(),
+        };
+        await saveAbacusHistory(lastSessionSnapshot);
+        _stopInProgressAutoSave();
+        clearInProgressSession();
+
         showSec('sec-results');
+      }
+
+      // ─── Session Resume ──────────────────────────────────────────────────────
+      const RESUME_SESSION_KEY = 'abacus_resume_session';
+      let _inProgressAutoSaveIv = null;
+
+      function saveInProgressSession() {
+        if (!questions || !questions.length) return;
+        if (!document.getElementById('sec-practice')?.classList.contains('active')) return;
+        const answers = {};
+        if (cfg.mode !== 'flash') {
+          questions.forEach((_, i) => {
+            const inp = document.getElementById(`a${i}`);
+            if (inp) answers[i] = inp.value;
+          });
+        }
+        const snap = {
+          savedAt: new Date().toISOString(),
+          timerSec,
+          questions: cloneQuestionsFromSnapshot(questions),
+          cfg: JSON.parse(JSON.stringify(cfg)),
+          sessionMeta: JSON.parse(JSON.stringify(sessionMeta)),
+          flashIdx,
+          flashLog: JSON.parse(JSON.stringify(flashLog)),
+          answers,
+        };
+        try { localStorage.setItem(RESUME_SESSION_KEY, JSON.stringify(snap)); } catch (_) {}
+      }
+
+      function clearInProgressSession() {
+        try { localStorage.removeItem(RESUME_SESSION_KEY); } catch (_) {}
+        const banner = document.getElementById('resume-session-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      function checkForInProgressSession() {
+        try {
+          const raw = localStorage.getItem(RESUME_SESSION_KEY);
+          if (!raw) return;
+          const snap = JSON.parse(raw);
+          if (!snap || !snap.questions || !snap.questions.length) { clearInProgressSession(); return; }
+          const banner = document.getElementById('resume-session-banner');
+          if (!banner) return;
+          const timeEl = document.getElementById('resume-session-time');
+          if (timeEl && snap.savedAt) {
+            timeEl.textContent = new Date(snap.savedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          }
+          const progEl = document.getElementById('resume-session-progress');
+          if (progEl) {
+            const answered = snap.cfg && snap.cfg.mode !== 'flash'
+              ? Object.values(snap.answers || {}).filter(v => v !== '').length
+              : (snap.flashIdx || 0);
+            progEl.textContent = `${answered} / ${snap.questions.length} questions`;
+          }
+          banner.style.display = 'flex';
+        } catch (_) { clearInProgressSession(); }
+      }
+
+      function resumeInProgressSession() {
+        let snap;
+        try {
+          const raw = localStorage.getItem(RESUME_SESSION_KEY);
+          if (!raw) return;
+          snap = JSON.parse(raw);
+        } catch (_) { return; }
+        if (!snap || !snap.questions || !snap.questions.length) { clearInProgressSession(); return; }
+
+        clearInProgressSession();
+        stopSpeech();
+        stopTimer();
+
+        cfg = JSON.parse(JSON.stringify(snap.cfg || {}));
+        questions = cloneQuestionsFromSnapshot(snap.questions);
+        sessionMeta = snap.sessionMeta || { source: 'generate' };
+        flashIdx = snap.flashIdx || 0;
+        flashLog = JSON.parse(JSON.stringify(snap.flashLog || []));
+        currentLayout = cfg.layout || 'column';
+        pauseSessionCount = 0;
+
+        document.getElementById('new-btn').style.display = 'flex';
+        document.getElementById('topbar-session-name-wrap').style.display = 'none';
+        syncCfgRepeatFromDom && syncCfgRepeatFromDom();
+
+        // Show practice section
+        showSec('sec-practice');
+
+        // Restore timer display at saved value, start paused
+        const savedSec = snap.timerSec || 0;
+        const badge = document.getElementById('timer-badge');
+        if (badge) { badge.style.display = 'flex'; badge.style.flexDirection = 'row'; }
+        timerSec = savedSec;
+        timerPaused = true;
+        timerIv = null;
+        updateTimerDisplay();
+        const pauseBtn = document.getElementById('btn-practice-pause');
+        if (pauseBtn) { pauseBtn.textContent = 'Resume'; pauseBtn.classList.add('active-pause'); }
+
+        if (cfg.mode === 'flash') {
+          initFlash();
+        } else {
+          initAll();
+          // Restore typed answers after DOM has rendered
+          setTimeout(() => {
+            const answers = snap.answers || {};
+            Object.entries(answers).forEach(([i, val]) => {
+              const inp = document.getElementById(`a${i}`);
+              if (inp && val !== '') inp.value = val;
+            });
+            tickProgress();
+          }, 120);
+        }
+
+        // Start auto-save for this resumed session
+        _startInProgressAutoSave();
+      }
+
+      function _startInProgressAutoSave() {
+        if (_inProgressAutoSaveIv) clearInterval(_inProgressAutoSaveIv);
+        _inProgressAutoSaveIv = setInterval(saveInProgressSession, 5000);
+      }
+
+      function _stopInProgressAutoSave() {
+        if (_inProgressAutoSaveIv) { clearInterval(_inProgressAutoSaveIv); _inProgressAutoSaveIv = null; }
       }
 
       // ─── Nav helpers ─────────────────────────────────────────────────────────
       function goConfig(){
+        const inPractice = document.getElementById('sec-practice')?.classList.contains('active');
+        if (inPractice && questions && questions.length) {
+          if (!confirm('Go back to home? Your progress will be saved and you can resume later.')) return;
+          saveInProgressSession();
+        }
+        _stopInProgressAutoSave();
         stopSpeech();
         stopTimer();
         document.getElementById('new-btn').style.display='none';
         document.getElementById('timer-badge').style.display='none';
+        document.getElementById('topbar-session-name-wrap').style.display='flex';
         showSec('sec-config');
+        checkForInProgressSession();
       }
 
       function retry(){
         stopTimer();
+        if (lastSessionSnapshot && lastSessionSnapshot.questions && lastSessionSnapshot.questions.length) {
+          restoreSessionFromSnapshot(lastSessionSnapshot, { clearAnswers: true });
+          return;
+        }
         questions=Array.from({length:cfg.qCount},()=>makeQ(cfg.ops,cfg.digits,cfg.operands));
         flashIdx=0; flashLog=[];
         startTimer();
@@ -2491,6 +4302,24 @@
              }
           }
         }
+      });
+
+      window.addEventListener('beforeunload', (e) => {
+        if (document.getElementById('sec-practice')?.classList.contains('active') && questions && questions.length) {
+          saveInProgressSession();
+          e.preventDefault();
+          e.returnValue = '';
+        }
+      });
+
+      window.addEventListener('load', () => {
+        void refreshAbacusLoginName();
+        bindPracticeControls();
+        setRepeatIntervalVisibility();
+        checkForInProgressSession();
+        try {
+          window.speechSynthesis.getVoices();
+        } catch (e) {}
       });
     </script>
 

@@ -1461,6 +1461,7 @@
           <span>Model:</span>
           <select id="provider-select">
             <option value="google">Google Translate (High Accuracy)</option>
+            <option value="microsoft">Microsoft Translator (Azure)</option>
             <option value="gemini">Google Gemini (1.5 Flash - Fast)</option>
             <option value="openai">OpenAI (GPT-4o-mini)</option>
             <option value="huggingface">Hugging Face (Qwen 2.5 72B)</option>
@@ -1471,6 +1472,7 @@
           <span style="margin-left: 10px">Vocab Model:</span>
           <select id="vocab-provider-select">
             <option value="google" selected>Google Translator (Free & Fast)</option>
+            <option value="microsoft">Microsoft Translator (Azure)</option>
             <option value="gemini">Google Gemini</option>
             <option value="huggingface">Hugging Face</option>
             <option value="openai">OpenAI</option>
@@ -1882,6 +1884,12 @@
               </button>
               <button
                 class="history-tab"
+                onclick="switchHistoryTab('tab-quizzes', this)"
+              >
+                Quizzes
+              </button>
+              <button
+                class="history-tab"
                 onclick="switchHistoryTab('tab-other', this)"
               >
                 Other
@@ -1914,6 +1922,19 @@
               >
                 🖨️ Print
               </button>
+              <button
+                class="btn-add"
+                style="
+                  background: #ef4444;
+                  width: auto;
+                  padding: 6px 15px;
+                  font-size: 0.85rem;
+                  border-radius: 8px;
+                "
+                onclick="clearAllHistory()"
+              >
+                🗑️ Clear All
+              </button>
             </div>
           </div>
           <div
@@ -1938,7 +1959,25 @@
         isSideBySide: false,
         vocabAbortControllers: new Map(), // rowId -> AbortController
         quizAbortControllers: new Map(), // rowId -> AbortController
+        quizSessions: new Map(), // rowId -> active quiz session (questions, timing, answers)
       };
+
+      window._historyQuizPayloads = {};
+
+      function escapeHtml(s) {
+        if (s == null) return "";
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function historyRecordId(record) {
+        let r = record.id ?? record._id;
+        if (r && typeof r === "object" && r.$oid) return String(r.$oid);
+        return r != null ? String(r) : "";
+      }
 
             function showBackendError(container, errData) {
         let msg = errData.error || errData.message || (typeof errData === 'string' ? errData : "An unknown error occurred");
@@ -2114,6 +2153,21 @@
         }
       }
 
+      async function clearAllHistory() {
+        if (!confirm("Clear ALL history? This cannot be undone.")) return;
+        try {
+          const response = await fetch("/api/history", { method: "DELETE" });
+          if (response.ok) {
+            await openHistoryModal(); // refresh
+          } else {
+            alert("Failed to clear history.");
+          }
+        } catch (err) {
+          console.error("Clear all failed", err);
+          alert("Failed to clear history.");
+        }
+      }
+
       function switchHistoryTab(tabId, btn) {
         document
           .querySelectorAll(".history-tab")
@@ -2188,6 +2242,7 @@
         try {
           const response = await fetch("/api/history");
           const history = await response.json();
+          window._historyQuizPayloads = {};
 
           if (history.length === 0) {
             container.innerHTML =
@@ -2200,6 +2255,7 @@
             TRANSLATE: [],
             BETTER_WAY: [],
             STORY: [],
+            QUIZ: [],
             OTHER: [],
           };
 
@@ -2209,6 +2265,7 @@
             else if (record.actionType === "BETTER_WAY")
               groups.BETTER_WAY.push(record);
             else if (record.actionType === "STORY") groups.STORY.push(record);
+            else if (record.actionType === "QUIZ") groups.QUIZ.push(record);
             else groups.OTHER.push(record);
           });
 
@@ -2217,7 +2274,11 @@
               return `<p style="color:var(--text-light)">${emptyMsg}</p>`;
             return records
               .map((record) => {
+                const rid = historyRecordId(record);
                 const date = new Date(record.timestamp).toLocaleString();
+                const who = record.username
+                  ? `<span style="color:var(--text-light);font-size:0.75rem;margin-left:8px;">${escapeHtml(record.username)}</span>`
+                  : "";
                 let contentHtml = "";
                 if (
                   record.actionType === "TRANSLATE" ||
@@ -2243,6 +2304,23 @@
                                 ${record.content.headline ? `<strong style="display:block;margin-bottom:6px;color:var(--primary)">[${record.content.headline}]</strong>` : ""}
                                 ${record.content.story}
                              </div>`;
+                } else if (record.actionType === "QUIZ") {
+                  const c = record.content || {};
+                  const durSec =
+                    typeof c.durationMs === "number"
+                      ? (c.durationMs / 1000).toFixed(1)
+                      : "?";
+                  const avgSec =
+                    typeof c.avgMsPerQuestion === "number"
+                      ? (c.avgMsPerQuestion / 1000).toFixed(1)
+                      : "?";
+                  if (rid) window._historyQuizPayloads[rid] = c;
+                  contentHtml = `<div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:10px; border-radius:8px;">
+                      <strong>Level ${c.level ?? "?"}</strong> — Score: <strong>${c.correctCount ?? "?"}/${c.totalQuestions ?? "?"}</strong>
+                      ${c.scorePercent != null ? ` (${c.scorePercent}%)` : ""}<br>
+                      <span style="font-size:0.9rem;color:#475569;">Duration: ${durSec}s total · ~${avgSec}s avg per question</span><br>
+                      <button type="button" class="level-btn" style="margin-top:10px" onclick="openQuizFromHistoryByRecordId('${rid}')">Open question paper</button>
+                    </div>`;
                 } else {
                   contentHtml = `<pre style="font-size:0.8rem">${JSON.stringify(record.content, null, 2)}</pre>`;
                 }
@@ -2251,11 +2329,11 @@
                             <div class="history-record-item" style="border-bottom: 1px solid #e2e8f0; padding:12px 0; display:flex; gap: 15px;">
                                 <div class="history-actions-col" style="display:flex; flex-direction:column; align-items:center; gap: 15px; padding-top: 5px;">
                                     <input type="checkbox" class="history-checkbox" style="width: 18px; height: 18px; cursor: pointer;">
-                                    <button onclick="deleteHistory('${record.id}')" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer;" title="Remove">🗑️</button>
+                                    <button onclick="deleteHistory('${rid}')" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer;" title="Remove">🗑️</button>
                                 </div>
                                 <div style="flex-grow: 1;">
                                     <div style="margin-bottom:5px;">
-                                        <span style="color:var(--text-light); font-size:0.8rem;">${date}</span>
+                                        <span style="color:var(--text-light); font-size:0.8rem;">${date}</span>${who}
                                     </div>
                                     <div>${contentHtml}</div>
                                 </div>
@@ -2275,6 +2353,9 @@
                     <div id="tab-stories" class="history-content-pane">
                         ${renderRecords(groups.STORY, "No story generation history.")}
                     </div>
+                    <div id="tab-quizzes" class="history-content-pane">
+                        ${renderRecords(groups.QUIZ, "No quiz history yet. Complete a quiz on a translation row.")}
+                    </div>
                     <div id="tab-other" class="history-content-pane">
                         ${renderRecords(groups.OTHER, "No other history items.")}
                     </div>
@@ -2288,6 +2369,218 @@
       }
       function closeHistoryModal() {
         document.getElementById("history-modal").style.display = "none";
+      }
+
+      function openQuizFromHistoryByRecordId(recId) {
+        const c = window._historyQuizPayloads && window._historyQuizPayloads[recId];
+        if (c) openQuizFromHistory(c);
+        else alert("Could not load this quiz. Try opening History again.");
+      }
+
+      function applyAnswerFeedback(id, qIndex, selectedIndex, correctIndex, explanation) {
+        const sid = String(id);
+        const questionDiv = document.getElementById(`q-${sid}-${qIndex}`);
+        const feedbackDiv = document.getElementById(`feedback-${sid}-${qIndex}`);
+        if (!questionDiv || !feedbackDiv) return;
+        const btns = questionDiv.querySelectorAll(".choice-btn");
+        btns.forEach((btn) => btn.classList.add("disabled"));
+        btns.forEach((btn) => (btn.onclick = null));
+        if (btns[selectedIndex])
+          btns[selectedIndex].classList.add(
+            selectedIndex === correctIndex ? "correct" : "incorrect",
+          );
+        if (selectedIndex !== correctIndex && btns[correctIndex]) {
+          btns[correctIndex].classList.add("correct");
+        }
+        feedbackDiv.style.display = "block";
+        feedbackDiv.style.color =
+          selectedIndex === correctIndex ? "#166534" : "#991b1b";
+        const ok = selectedIndex === correctIndex ? "Correct." : "Incorrect.";
+        feedbackDiv.innerHTML = `${ok} ${escapeHtml(explanation || "")}`;
+      }
+
+      function maybeFinalizeQuizSession(sid) {
+        const sess = state.quizSessions.get(sid);
+        if (!sess || sess.readOnly || sess.finalized) return;
+        if (!sess.answers.every((a) => a != null)) return;
+        sess.finalized = true;
+        const correctCount = sess.answers.filter((a) => a.isCorrect).length;
+        const total = sess.questions.length;
+        const durationMs = Date.now() - sess.startedAt;
+        const payload = {
+          rowId: sid,
+          level: sess.level,
+          sourceText: (sess.sourceText || "").slice(0, 8000),
+          questions: sess.questions,
+          userAnswers: sess.answers.map((a) => ({
+            selectedIndex: a.selectedIndex,
+            isCorrect: a.isCorrect,
+            timeMsForQuestion: a.timeMsForQuestion,
+          })),
+          correctCount,
+          totalQuestions: total,
+          scorePercent: total ? Math.round((correctCount / total) * 100) : 0,
+          durationMs,
+          avgMsPerQuestion: total ? Math.round(durationMs / total) : 0,
+          completedAt: new Date().toISOString(),
+        };
+        saveHistory("QUIZ", payload);
+      }
+
+      function renderQuizWithSession(id, questions, opts) {
+        const sid = String(id);
+        const content = document.getElementById(`quiz-content-${sid}`);
+        if (!content || !questions || questions.length === 0) return;
+        const level = opts.level ?? 1;
+        const sourceText = opts.sourceText ?? "";
+        const readOnly = !!opts.readOnly;
+        const userAnswers = opts.userAnswers;
+
+        if (!readOnly) {
+          state.quizSessions.set(sid, {
+            level,
+            sourceText,
+            questions: JSON.parse(JSON.stringify(questions)),
+            startedAt: Date.now(),
+            lastAnswerAt: null,
+            answers: questions.map(() => null),
+            finalized: false,
+            readOnly: false,
+          });
+        } else {
+          state.quizSessions.set(sid, {
+            questions: JSON.parse(JSON.stringify(questions)),
+            readOnly: true,
+          });
+        }
+
+        content.innerHTML = questions
+          .map(
+            (q, qIndex) => `
+                <div class="quiz-question" id="q-${sid}-${qIndex}">
+                    <h4>${qIndex + 1}. ${escapeHtml(q.q)}</h4>
+                    <div class="quiz-choices">
+                        ${q.options
+                          .map(
+                            (opt, oIndex) => `
+                            <button type="button" class="choice-btn" ${
+                              readOnly ? "disabled" : ""
+                            } onclick="checkAnswer('${sid}', ${qIndex}, ${oIndex})">
+                                ${escapeHtml(opt)}
+                            </button>
+                        `,
+                          )
+                          .join("")}
+                    </div>
+                    <div class="quiz-feedback" id="feedback-${sid}-${qIndex}" style="display:none"></div>
+                </div>
+            `,
+          )
+          .join("");
+
+        if (readOnly && userAnswers && userAnswers.length) {
+          userAnswers.forEach((ua, qIndex) => {
+            const q = questions[qIndex];
+            if (!q || ua.selectedIndex == null) return;
+            applyAnswerFeedback(
+              sid,
+              qIndex,
+              ua.selectedIndex,
+              q.correct,
+              q.explanation || "",
+            );
+          });
+        }
+      }
+
+      function checkAnswer(id, qIndex, selectedIndex) {
+        const sid = String(id);
+        const sess = state.quizSessions.get(sid);
+        if (!sess || !sess.questions || !sess.questions[qIndex]) return;
+        if (sess.readOnly) return;
+        if (sess.answers[qIndex] != null) return;
+        const q = sess.questions[qIndex];
+        const correctIndex = q.correct;
+        const explanation = q.explanation || "";
+        const now = Date.now();
+        const timeMsForQuestion = now - (sess.lastAnswerAt || sess.startedAt);
+        sess.lastAnswerAt = now;
+        sess.answers[qIndex] = {
+          selectedIndex,
+          correctIndex,
+          isCorrect: selectedIndex === correctIndex,
+          timeMsForQuestion,
+        };
+        applyAnswerFeedback(sid, qIndex, selectedIndex, correctIndex, explanation);
+        maybeFinalizeQuizSession(sid);
+      }
+
+      function openQuizFromHistory(content) {
+        closeHistoryModal();
+        if (!content || !content.questions || !content.questions.length) {
+          alert("Invalid quiz history entry.");
+          return;
+        }
+        let id = String(content.rowId || "");
+        let wrap = id ? document.getElementById(`wrapper-${id}`) : null;
+        if (!wrap) {
+          id = "restore-" + Date.now();
+          const root = document.getElementById("input-container");
+          const card = document.createElement("div");
+          card.className = "row-wrapper";
+          card.id = `wrapper-${id}`;
+          card.style.marginBottom = "16px";
+          card.style.border = "2px solid #3b82f6";
+          card.style.borderRadius = "10px";
+          const banner = document.createElement("div");
+          banner.style.cssText =
+            "padding:12px 14px;background:#eff6ff;border-radius:10px 10px 0 0;";
+          const completed = content.completedAt
+            ? new Date(content.completedAt).toLocaleString()
+            : "";
+          banner.innerHTML = `<strong>Quiz from history</strong><span style="color:#64748b;font-size:0.85rem;display:block;margin-top:4px;">Level ${content.level}${completed ? " · " + completed : ""} · Score ${content.correctCount}/${content.totalQuestions}</span>`;
+          const srcWrap = document.createElement("div");
+          srcWrap.style.cssText =
+            "padding:10px 14px;font-size:0.9rem;border-bottom:1px solid #e2e8f0;";
+          const det = document.createElement("details");
+          det.open = false;
+          const sum = document.createElement("summary");
+          sum.textContent = "Source passage";
+          const pre = document.createElement("pre");
+          pre.style.cssText =
+            "white-space:pre-wrap;margin:8px 0 0 0;font-family:inherit;font-size:0.88rem;";
+          pre.textContent = content.sourceText || "(Source text not stored)";
+          det.appendChild(sum);
+          det.appendChild(pre);
+          srcWrap.appendChild(det);
+          card.appendChild(banner);
+          card.appendChild(srcWrap);
+          root.insertBefore(card, root.firstChild);
+          appendRowActionBar(id, content.sourceText || "");
+        } else {
+          let bar = document.getElementById(`action-bar-${id}`);
+          if (!bar) appendRowActionBar(id, content.sourceText || "");
+          bar = document.getElementById(`action-bar-${id}`);
+          if (bar && content.sourceText) bar.dataset.sourceText = content.sourceText;
+        }
+        const qWrap = document.getElementById(`quiz-container-${id}`);
+        if (qWrap) {
+          qWrap.style.display = "block";
+          qWrap.innerHTML = `
+                <div class="quiz-level-selector">
+                    <strong>Level ${content.level}</strong> — restored from history
+                </div>
+                <div id="quiz-content-${id}"></div>
+            `;
+        }
+        renderQuizWithSession(id, content.questions, {
+          level: content.level,
+          sourceText: content.sourceText,
+          readOnly: true,
+          userAnswers: content.userAnswers,
+        });
+        wrap = document.getElementById(`wrapper-${id}`);
+        if (wrap) wrap.scrollIntoView({ behavior: "smooth", block: "start" });
       }
 
       /* Configuration Modal Scripts */
@@ -3259,6 +3552,28 @@ Output ONLY a strict JSON array of 4 objects. Format: [{"voice": "Active Voice",
         }
       }
 
+      /**
+       * Calls the backend proxy /ai/microsoft-translate which forwards to Azure
+       * Cognitive Services Text Translation v3. The API key never leaves the server.
+       *
+       * @param {string}   text        - Source text to translate (auto-detected language)
+       * @param {string[]} targetLangs - Array of BCP-47 lang codes, e.g. ["hi", "te", "en"]
+       * @returns {Object|null}  Map of { langCode: translatedText } or null on error
+       */
+      async function fetchMicrosoftTranslate(text, targetLangs) {
+        try {
+          const params = new URLSearchParams({ text });
+          targetLangs.forEach((l) => params.append("to", l));
+          const response = await fetch(`/ai/microsoft-translate?${params}`);
+          const data = await response.json();
+          if (data.error) throw new Error(data.error);
+          return JSON.parse(data.generation || "{}");
+        } catch (err) {
+          console.error("Microsoft Translator Error:", err);
+          return null;
+        }
+      }
+
       async function handleTranslate(id) {
         await processInput(id, "translate");
       }
@@ -3507,6 +3822,31 @@ Output ONLY a strict JSON array of 4 objects. Format: [{"voice": "Active Voice",
           return;
         }
 
+        // Microsoft Translator path (backend proxy → Azure Cognitive Services)
+        if (provider === "microsoft") {
+          try {
+            const translations = await fetchMicrosoftTranslate(text, selectedLangs);
+            if (!translations) throw new Error("Microsoft Translator returned no result.");
+            renderTranslations(resultsDiv, translations, id);
+            appendRowActionBar(id, text);
+            saveHistory("TRANSLATE", { original: text, translations, provider: "microsoft" });
+          } catch (err) {
+            // Graceful fallback to Google Translate
+            console.warn("Microsoft Translator failed, falling back to Google:", err);
+            resultsDiv.innerHTML = `<div class="system-message" style="color:#f59e0b;">⚠️ Microsoft Translator unavailable — falling back to Google. <div class="loader"></div></div>`;
+            try {
+              const transPromises = selectedLangs.map(async (l) => [l, await fetchGoogleTranslate(text, l)]);
+              const translations = Object.fromEntries(await Promise.all(transPromises));
+              renderTranslations(resultsDiv, translations, id);
+              appendRowActionBar(id, text);
+              saveHistory("TRANSLATE", { original: text, translations, provider: "google-fallback" });
+            } catch (fallbackErr) {
+              showBackendError(resultsDiv, fallbackErr);
+            }
+          }
+          return;
+        }
+
         // LLM Translation Path
         const langNames = { en: "English", hi: "Hindi", te: "Telugu" };
         const targets = selectedLangs.map((l) => langNames[l]).join(", ");
@@ -3736,13 +4076,16 @@ Output ONLY a strict JSON array of 4 objects. Format: [{"voice": "Active Voice",
             text,
             level,
             (quiz) => {
-              renderQuiz(id, quiz);
+              renderQuizWithSession(id, quiz, {
+                level,
+                sourceText: text.trim(),
+              });
             },
             ctrl.signal,
           );
         } catch (e) {
           if (e.name !== "AbortError") {
-            showBackendError(content, err);
+            showBackendError(content, e);
           }
         } finally {
           state.quizAbortControllers.delete(id);
@@ -3794,62 +4137,6 @@ Output ONLY a strict JSON array of 4 objects. Format: [{"voice": "Active Voice",
         }
       }
 
-      function renderQuiz(id, questions) {
-        const content = document.getElementById(`quiz-content-${id}`);
-        if (!content || !questions || questions.length === 0) return;
-
-        content.innerHTML = questions
-          .map(
-            (q, qIndex) => `
-                <div class="quiz-question" id="q-${id}-${qIndex}">
-                    <h4>${qIndex + 1}. ${q.q}</h4>
-                    <div class="quiz-choices">
-                        ${q.options
-                          .map(
-                            (opt, oIndex) => `
-                            <button class="choice-btn" onclick="checkAnswer('${id}', ${qIndex}, ${oIndex}, ${q.correct}, '${q.explanation.replace(/'/g, "\\'")}')">
-                                ${opt}
-                            </button>
-                        `,
-                          )
-                          .join("")}
-                    </div>
-                    <div class="quiz-feedback" id="feedback-${id}-${qIndex}"></div>
-                </div>
-            `,
-          )
-          .join("");
-      }
-
-      function checkAnswer(
-        id,
-        qIndex,
-        selectedIndex,
-        correctIndex,
-        explanation,
-      ) {
-        const questionDiv = document.getElementById(`q-${id}-${qIndex}`);
-        const feedbackDiv = document.getElementById(`feedback-${id}-${qIndex}`);
-        const btns = questionDiv.querySelectorAll(".choice-btn");
-
-        // Disable all buttons for this question
-        btns.forEach((btn) => btn.classList.add("disabled"));
-        btns.forEach((btn) => (btn.onclick = null));
-
-        // Highlight answers
-        btns[selectedIndex].classList.add(
-          selectedIndex === correctIndex ? "correct" : "incorrect",
-        );
-        if (selectedIndex !== correctIndex) {
-          btns[correctIndex].classList.add("correct");
-        }
-
-        // Show feedback
-        feedbackDiv.style.display = "block";
-        feedbackDiv.style.color =
-          selectedIndex === correctIndex ? "#166534" : "#991b1b";
-        feedbackDiv.innerHTML = `${selectedIndex === correctIndex ? "✅ Correct!" : "❌ Incorrect."} ${explanation}`;
-      }
 
       function toggleRowLayout(id, btn) {
         const resultsDiv = document.getElementById(`results-${id}`);
@@ -3997,6 +4284,33 @@ Output ONLY a valid JSON array (no markdown, no extra text):
                   vocabBody.innerHTML = `<tr><td colspan="6" style="color:#ef4444;text-align:center;padding:10px">⚠️ Google API Rate Limit Exceeded (429). Please try again later or switch to an AI model.</td></tr>`;
                   return;
                 }
+              }
+            }
+            callback(vocab);
+            return;
+          }
+
+          // Microsoft Translator vocab: translate each word word-by-word via backend proxy
+          if (vocabProvider === "microsoft") {
+            const vocabBody = document.getElementById("vocab-body");
+            const dictSection = document.getElementById("dictionary-section");
+            if (vocabBody) {
+              vocabBody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:20px"><div class="loader"></div> Translating via Microsoft...</td></tr>`;
+              if (dictSection) dictSection.style.display = "block";
+            }
+            const vocab = [];
+            for (const word of contentWords) {
+              if (signal && signal.aborted) break;
+              try {
+                const translations = await fetchMicrosoftTranslate(word, ["hi", "te"]);
+                vocab.push({
+                  en: word,
+                  meaning: word,
+                  hi: (translations && translations.hi) || word,
+                  te: (translations && translations.te) || word,
+                });
+              } catch (err) {
+                console.error("Microsoft vocab error for word:", word, err);
               }
             }
             callback(vocab);
