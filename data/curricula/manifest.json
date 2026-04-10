@@ -2,12 +2,26 @@
   "id" : "default",
   "displayName" : "Imported curriculum",
   "level" : "",
-  "storageFile" : "default.json",
-  "deleted" : false
+  "storageFile" : "default__deleted_20260410_201319_admin.json",
+  "deleted" : true,
+  "deletedBy" : "admin",
+  "deletedAt" : "2026-04-10T20:13:19.938934700Z",
+  "deletionReason" : "its default one.",
+  "originalStorageFile" : "default.json"
 }, {
   "id" : "111111",
   "displayName" : "level test",
   "level" : "test sub",
-  "storageFile" : "111111.json",
+  "storageFile" : "111111__deleted_20260410_201420_admin.json",
+  "deleted" : true,
+  "deletedBy" : "admin",
+  "deletedAt" : "2026-04-10T20:14:20.926530300Z",
+  "deletionReason" : "no need",
+  "originalStorageFile" : "111111.json"
+}, {
+  "id" : "level-2",
+  "displayName" : "Level-2",
+  "level" : "",
+  "storageFile" : "level-2.json",
   "deleted" : false
 } ]
