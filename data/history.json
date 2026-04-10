@@ -1353,4 +1353,1298 @@
     }
   },
   "timestamp" : "2026-04-10T18:42:53.746+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1775846968,
+    "date" : "2026-04-10T18:49:28.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "ABACUS",
+  "content" : {
+    "source" : "generate",
+    "cfg" : {
+      "ops" : [ "add", "sub" ],
+      "qCount" : 10,
+      "digits" : 1,
+      "operands" : 2,
+      "mode" : "all",
+      "layout" : "column",
+      "autoVoice" : true,
+      "autoNext" : true,
+      "manualSpeech" : false,
+      "speechGap" : 1,
+      "speechRate" : 1
+    },
+    "questions" : [ {
+      "expr" : "3 − 2",
+      "answer" : 1,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 3,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 2,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "8 − 2",
+      "answer" : 6,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 8,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 2,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "5 + 2",
+      "answer" : 7,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 5,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 2,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "7 − 5",
+      "answer" : 2,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 7,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 5,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "6 − 3",
+      "answer" : 3,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 6,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 3,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "3 + 5",
+      "answer" : 8,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 3,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 5,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "1 + 6",
+      "answer" : 7,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 1,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 6,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "4 − 2",
+      "answer" : 2,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 4,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 2,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "1 + 5",
+      "answer" : 6,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 1,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 5,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "9 − 1",
+      "answer" : 8,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 9,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 1,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    } ],
+    "results" : [ {
+      "expr" : "3 − 2",
+      "answer" : 1,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "8 − 2",
+      "answer" : 6,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "5 + 2",
+      "answer" : 7,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "7 − 5",
+      "answer" : 2,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "6 − 3",
+      "answer" : 3,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "3 + 5",
+      "answer" : 8,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "1 + 6",
+      "answer" : 7,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "4 − 2",
+      "answer" : 2,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "1 + 5",
+      "answer" : 6,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "9 − 1",
+      "answer" : 8,
+      "userAns" : "—",
+      "ok" : false
+    } ],
+    "performance" : {
+      "correct" : 0,
+      "total" : 10,
+      "wrong" : 10,
+      "timerSec" : 3,
+      "scorePct" : 0,
+      "avgSecPerQ" : 0.3
+    },
+    "completedAt" : "2026-04-10T18:49:28.046Z"
+  },
+  "timestamp" : "2026-04-10T18:49:28.054+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1775847099,
+    "date" : "2026-04-10T18:51:39.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "ABACUS",
+  "content" : {
+    "source" : "generate",
+    "cfg" : {
+      "ops" : [ "add", "sub" ],
+      "qCount" : 10,
+      "digits" : 1,
+      "operands" : 2,
+      "mode" : "all",
+      "layout" : "column",
+      "autoVoice" : true,
+      "autoNext" : true,
+      "manualSpeech" : false,
+      "speechGap" : 1,
+      "speechRate" : 1
+    },
+    "questions" : [ {
+      "expr" : "9 − 3",
+      "answer" : 6,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 9,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 3,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "6 + 3",
+      "answer" : 9,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 6,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 3,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "2 + 6",
+      "answer" : 8,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 2,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 6,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "9 − 4",
+      "answer" : 5,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 9,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 4,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "2 − 2",
+      "answer" : 0,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 2,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 2,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "6 + 3",
+      "answer" : 9,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 6,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 3,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "7 − 4",
+      "answer" : 3,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 7,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 4,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "1 + 6",
+      "answer" : 7,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 1,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 6,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "8 − 1",
+      "answer" : 7,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 8,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 1,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "2 + 4",
+      "answer" : 6,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 2,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 4,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    } ],
+    "results" : [ {
+      "expr" : "9 − 3",
+      "answer" : 6,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "6 + 3",
+      "answer" : 9,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "2 + 6",
+      "answer" : 8,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "9 − 4",
+      "answer" : 5,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "2 − 2",
+      "answer" : 0,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "6 + 3",
+      "answer" : 9,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "7 − 4",
+      "answer" : 3,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "1 + 6",
+      "answer" : 7,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "8 − 1",
+      "answer" : 7,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "2 + 4",
+      "answer" : 6,
+      "userAns" : "—",
+      "ok" : false
+    } ],
+    "performance" : {
+      "correct" : 0,
+      "total" : 10,
+      "wrong" : 10,
+      "timerSec" : 6,
+      "scorePct" : 0,
+      "avgSecPerQ" : 0.6
+    },
+    "completedAt" : "2026-04-10T18:51:39.078Z"
+  },
+  "timestamp" : "2026-04-10T18:51:39.082+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1775847275,
+    "date" : "2026-04-10T18:54:35.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "ABACUS",
+  "content" : {
+    "source" : "generate",
+    "cfg" : {
+      "ops" : [ "add", "sub" ],
+      "qCount" : 10,
+      "digits" : 1,
+      "operands" : 2,
+      "mode" : "all",
+      "layout" : "column",
+      "autoVoice" : true,
+      "autoNext" : true,
+      "manualSpeech" : false,
+      "speechGap" : 1,
+      "speechRate" : 1
+    },
+    "questions" : [ {
+      "expr" : "7 − 6",
+      "answer" : 1,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 7,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 6,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "5 + 8",
+      "answer" : 13,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 5,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 8,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "5 + 5",
+      "answer" : 10,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 5,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 5,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "4 + 9",
+      "answer" : 13,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 4,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 9,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "4 + 3",
+      "answer" : 7,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 4,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 3,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "4 + 6",
+      "answer" : 10,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 4,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 6,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "1 − 1",
+      "answer" : 0,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 1,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 1,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "2 − 0",
+      "answer" : 2,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 2,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 0,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "4 + 5",
+      "answer" : 9,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 4,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 5,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "3 − 0",
+      "answer" : 3,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 3,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 0,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    } ],
+    "results" : [ {
+      "expr" : "7 − 6",
+      "answer" : 1,
+      "userAns" : 1,
+      "ok" : true
+    }, {
+      "expr" : "5 + 8",
+      "answer" : 13,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "5 + 5",
+      "answer" : 10,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "4 + 9",
+      "answer" : 13,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "4 + 3",
+      "answer" : 7,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "4 + 6",
+      "answer" : 10,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "1 − 1",
+      "answer" : 0,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "2 − 0",
+      "answer" : 2,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "4 + 5",
+      "answer" : 9,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "3 − 0",
+      "answer" : 3,
+      "userAns" : "—",
+      "ok" : false
+    } ],
+    "performance" : {
+      "correct" : 1,
+      "total" : 10,
+      "wrong" : 9,
+      "timerSec" : 11,
+      "scorePct" : 10,
+      "avgSecPerQ" : 1.1
+    },
+    "completedAt" : "2026-04-10T18:54:35.149Z"
+  },
+  "timestamp" : "2026-04-10T18:54:35.156+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1775847450,
+    "date" : "2026-04-10T18:57:30.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "ABACUS",
+  "content" : {
+    "source" : "generate",
+    "historyDisplayName" : "admin",
+    "cfg" : {
+      "ops" : [ "add", "sub" ],
+      "qCount" : 10,
+      "digits" : 1,
+      "operands" : 2,
+      "mode" : "all",
+      "layout" : "column",
+      "autoVoice" : true,
+      "autoNext" : true,
+      "manualSpeech" : false,
+      "speechGap" : 1,
+      "speechRate" : 1
+    },
+    "questions" : [ {
+      "expr" : "1 + 9",
+      "answer" : 10,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 1,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 9,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "8 + 9",
+      "answer" : 17,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 8,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 9,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "6 − 0",
+      "answer" : 6,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 6,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 0,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "1 + 6",
+      "answer" : 7,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 1,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 6,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "3 + 9",
+      "answer" : 12,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 3,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 9,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "2 − 0",
+      "answer" : 2,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 2,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 0,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "8 + 7",
+      "answer" : 15,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 8,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 7,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "5 + 5",
+      "answer" : 10,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 5,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 5,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "5 + 7",
+      "answer" : 12,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 5,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 7,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "9 + 8",
+      "answer" : 17,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 9,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 8,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    } ],
+    "results" : [ {
+      "expr" : "1 + 9",
+      "answer" : 10,
+      "userAns" : 10,
+      "ok" : true
+    }, {
+      "expr" : "8 + 9",
+      "answer" : 17,
+      "userAns" : 17,
+      "ok" : true
+    }, {
+      "expr" : "6 − 0",
+      "answer" : 6,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "1 + 6",
+      "answer" : 7,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "3 + 9",
+      "answer" : 12,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "2 − 0",
+      "answer" : 2,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "8 + 7",
+      "answer" : 15,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "5 + 5",
+      "answer" : 10,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "5 + 7",
+      "answer" : 12,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "9 + 8",
+      "answer" : 17,
+      "userAns" : "—",
+      "ok" : false
+    } ],
+    "performance" : {
+      "correct" : 2,
+      "total" : 10,
+      "wrong" : 8,
+      "timerSec" : 6,
+      "scorePct" : 20,
+      "avgSecPerQ" : 0.6
+    },
+    "completedAt" : "2026-04-10T18:57:30.912Z"
+  },
+  "timestamp" : "2026-04-10T18:57:30.915+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1775847475,
+    "date" : "2026-04-10T18:57:55.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "ABACUS",
+  "content" : {
+    "source" : "generate",
+    "providedName" : "Nirvaan",
+    "historyDisplayName" : "admin · Nirvaan",
+    "cfg" : {
+      "ops" : [ "add", "sub" ],
+      "qCount" : 10,
+      "digits" : 1,
+      "operands" : 2,
+      "mode" : "all",
+      "layout" : "column",
+      "autoVoice" : true,
+      "autoNext" : true,
+      "manualSpeech" : false,
+      "speechGap" : 1,
+      "speechRate" : 1
+    },
+    "questions" : [ {
+      "expr" : "7 + 7",
+      "answer" : 14,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 7,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 7,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "6 + 6",
+      "answer" : 12,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 6,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 6,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "7 + 4",
+      "answer" : 11,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 7,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 4,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "5 + 7",
+      "answer" : 12,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 5,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 7,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "1 − 1",
+      "answer" : 0,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 1,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 1,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "7 − 4",
+      "answer" : 3,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 7,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 4,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "8 + 6",
+      "answer" : 14,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 8,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 6,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "5 − 4",
+      "answer" : 1,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 5,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 4,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "5 − 4",
+      "answer" : 1,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 5,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 4,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "5 − 4",
+      "answer" : 1,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 5,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 4,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    } ],
+    "results" : [ {
+      "expr" : "7 + 7",
+      "answer" : 14,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "6 + 6",
+      "answer" : 12,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "7 + 4",
+      "answer" : 11,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "5 + 7",
+      "answer" : 12,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "1 − 1",
+      "answer" : 0,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "7 − 4",
+      "answer" : 3,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "8 + 6",
+      "answer" : 14,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "5 − 4",
+      "answer" : 1,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "5 − 4",
+      "answer" : 1,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "5 − 4",
+      "answer" : 1,
+      "userAns" : "—",
+      "ok" : false
+    } ],
+    "performance" : {
+      "correct" : 0,
+      "total" : 10,
+      "wrong" : 10,
+      "timerSec" : 3,
+      "scorePct" : 0,
+      "avgSecPerQ" : 0.3
+    },
+    "completedAt" : "2026-04-10T18:57:55.790Z"
+  },
+  "timestamp" : "2026-04-10T18:57:55.794+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1775847692,
+    "date" : "2026-04-10T19:01:32.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "ABACUS",
+  "content" : {
+    "source" : "generate",
+    "historyDisplayName" : "admin",
+    "cfg" : {
+      "ops" : [ "add", "sub" ],
+      "qCount" : 10,
+      "digits" : 1,
+      "operands" : 2,
+      "mode" : "all",
+      "layout" : "column",
+      "autoVoice" : false,
+      "autoNext" : false,
+      "manualSpeech" : false,
+      "speechGap" : 1,
+      "speechRate" : 1
+    },
+    "questions" : [ {
+      "expr" : "7 − 0",
+      "answer" : 7,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 7,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 0,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "4 − 1",
+      "answer" : 3,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 4,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 1,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "4 + 1",
+      "answer" : 5,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 4,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 1,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "6 + 6",
+      "answer" : 12,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 6,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 6,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "6 − 5",
+      "answer" : 1,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 6,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 5,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "1 + 8",
+      "answer" : 9,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 1,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 8,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "1 − 0",
+      "answer" : 1,
+      "op" : "sub",
+      "rows" : [ {
+        "num" : 1,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 0,
+        "op" : "sub",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "4 + 5",
+      "answer" : 9,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 4,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 5,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "3 + 2",
+      "answer" : 5,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 3,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 2,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    }, {
+      "expr" : "9 + 1",
+      "answer" : 10,
+      "op" : "add",
+      "rows" : [ {
+        "num" : 9,
+        "op" : "first",
+        "explicit" : false
+      }, {
+        "num" : 1,
+        "op" : "add",
+        "explicit" : false
+      } ]
+    } ],
+    "results" : [ {
+      "expr" : "7 − 0",
+      "answer" : 7,
+      "userAns" : 7,
+      "ok" : true
+    }, {
+      "expr" : "4 − 1",
+      "answer" : 3,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "4 + 1",
+      "answer" : 5,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "6 + 6",
+      "answer" : 12,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "6 − 5",
+      "answer" : 1,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "1 + 8",
+      "answer" : 9,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "1 − 0",
+      "answer" : 1,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "4 + 5",
+      "answer" : 9,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "3 + 2",
+      "answer" : 5,
+      "userAns" : "—",
+      "ok" : false
+    }, {
+      "expr" : "9 + 1",
+      "answer" : 10,
+      "userAns" : "—",
+      "ok" : false
+    } ],
+    "performance" : {
+      "correct" : 1,
+      "total" : 10,
+      "wrong" : 9,
+      "timerSec" : 6,
+      "scorePct" : 10,
+      "avgSecPerQ" : 0.6
+    },
+    "completedAt" : "2026-04-10T19:01:32.067Z"
+  },
+  "timestamp" : "2026-04-10T19:01:32.072+00:00"
 } ]
