@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LAL Academy | Little Achievers Learning</title>
+  <meta name="description" content="LAL Academy – premium kids learning programs in Abacus, Vedic Math, Phonetics, Calligraphy, Rubik's Cube and Smart Write. Book a free demo today!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Design Tokens ──────────────────────────────────────────── */
+    :root {
+      --bg:          #f8f9ff;
+      --surface:     #ffffff;
+      --border:      #e5e7f0;
+      --text-dark:   #1a1d2e;
+      --text-mid:    #4a5068;
+      --text-soft:   #8890a4;
+
+      --brand:       #6c3ef4;
+      --brand-light: #ede9ff;
+      --brand-dark:  #4f23d6;
+
+      --abacus:      #f97316;
+      --abacus-bg:   #fff7ed;
+      --vedic:       #8b5cf6;
+      --vedic-bg:    #f3eeff;
+      --phonetics:   #ec4899;
+      --phonetics-bg:#fdf0f7;
+      --calligraphy: #14b8a6;
+      --calligraphy-bg:#edfaf8;
+      --rubiks:      #3b82f6;
+      --rubiks-bg:   #eff6ff;
+      --smartwrite:  #22c55e;
+      --smartwrite-bg:#f0fdf4;
+
+      --radius-sm:   8px;
+      --radius:      14px;
+      --radius-lg:   20px;
+      --radius-xl:   28px;
+
+      --shadow-sm:   0 1px 4px rgba(108,62,244,0.08);
+      --shadow:      0 4px 20px rgba(108,62,244,0.10);
+      --shadow-lg:   0 12px 48px rgba(108,62,244,0.14);
+
+      --nav-height:  64px;
+      --font-body:   'Inter', system-ui, -apple-system, sans-serif;
+      --font-head:   'Nunito', 'Inter', sans-serif;
+    }
+
+    /* ─── Reset ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text-dark); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ul, ol { list-style: none; }
+
+    /* ─── Utility ───────────────────────────────────────────────── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 80px 0; }
+    .section-label {
+      display: inline-block; font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--brand); background: var(--brand-light);
+      padding: 6px 16px; border-radius: 100px; margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: var(--font-head); font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; color: var(--text-dark); line-height: 1.2;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--text-mid); max-width: 600px; margin: 12px auto 0;
+    }
+    .text-center { text-align: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 700; border-radius: 100px; cursor: pointer;
+      border: none; transition: all 0.22s ease; font-family: var(--font-body);
+    }
+    .btn-primary {
+      background: var(--brand); color: #fff; padding: 14px 28px; font-size: 1rem;
+      box-shadow: 0 4px 16px rgba(108,62,244,0.35);
+    }
+    .btn-primary:hover { background: var(--brand-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108,62,244,0.40); }
+    .btn-outline {
+      background: transparent; color: var(--brand); padding: 13px 27px;
+      font-size: 1rem; border: 2px solid var(--brand);
+    }
+    .btn-outline:hover { background: var(--brand-light); transform: translateY(-2px); }
+    .btn-whatsapp {
+      background: #25d366; color: #fff; padding: 14px 28px; font-size: 1rem;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.35);
+    }
+    .btn-whatsapp:hover { background: #1ebe5d; transform: translateY(-2px); }
+
+    /* ─── Navbar ─────────────────────────────────────────────────── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-height);
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(229,231,240,0.7);
+      display: flex; align-items: center;
+    }
+    .navbar .container {
+      display: flex; align-items: center; justify-content: space-between; width: 100%;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-head); font-size: 1.4rem; font-weight: 900;
+      color: var(--brand);
+    }
+    .nav-logo-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, var(--brand), #9b6bff);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: #fff;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 32px;
+    }
+    .nav-links a {
+      font-size: 0.92rem; font-weight: 600; color: var(--text-mid);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--brand); }
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+    .nav-demo-btn {
+      background: var(--brand); color: #fff; padding: 10px 22px;
+      border-radius: 100px; font-size: 0.9rem; font-weight: 700;
+      border: none; cursor: pointer; transition: all 0.2s;
+    }
+    .nav-demo-btn:hover { background: var(--brand-dark); transform: translateY(-1px); }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 6px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px; background: var(--text-dark);
+      border-radius: 2px; transition: all 0.3s;
+    }
+
+    .mobile-menu {
+      display: none; position: fixed; top: var(--nav-height); left: 0; right: 0;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 20px 24px 24px; z-index: 999;
+      box-shadow: var(--shadow-lg); flex-direction: column; gap: 16px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-weight: 600; color: var(--text-mid); padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    /* ─── Hero ───────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      padding-top: var(--nav-height);
+      display: flex; align-items: center;
+      background: linear-gradient(145deg, #f0ecff 0%, #f8f9ff 40%, #fff7ed 100%);
+      overflow: hidden; position: relative;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(108,62,244,0.12) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: -100px; left: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(249,115,22,0.10) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero .container {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center; padding: 60px 24px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 100px; padding: 8px 16px; font-size: 0.82rem;
+      font-weight: 600; color: var(--text-mid); margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .hero-badge-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--smartwrite); animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { transform: scale(1); opacity:1; }
+      50% { transform: scale(1.4); opacity:0.7; }
+    }
+    .hero-title {
+      font-family: var(--font-head); font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 900; line-height: 1.15; margin-bottom: 20px;
+      color: var(--text-dark);
+    }
+    .hero-title .highlight {
+      background: linear-gradient(135deg, var(--brand), #ec4899);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-desc {
+      font-size: 1.1rem; color: var(--text-mid); line-height: 1.7;
+      margin-bottom: 36px; max-width: 480px;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 48px; padding-top: 32px;
+      border-top: 1px solid var(--border); flex-wrap: wrap;
+    }
+    .hero-stat-num {
+      font-family: var(--font-head); font-size: 1.8rem; font-weight: 900;
+      color: var(--brand);
+    }
+    .hero-stat-label { font-size: 0.82rem; color: var(--text-soft); font-weight: 500; }
+
+    .hero-visual { position: relative; }
+    .hero-card-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; position: relative; z-index: 1;
+    }
+    .hero-course-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 20px;
+      box-shadow: var(--shadow); transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .hero-course-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .hero-course-card .icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 12px;
+    }
+    .hero-course-card .name {
+      font-family: var(--font-head); font-weight: 800; font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .hero-course-card .ages {
+      font-size: 0.75rem; color: var(--text-soft); font-weight: 500;
+    }
+    .hero-course-card.abacus .icon { background: var(--abacus-bg); color: var(--abacus); }
+    .hero-course-card.vedic .icon { background: var(--vedic-bg); color: var(--vedic); }
+    .hero-course-card.phonetics .icon { background: var(--phonetics-bg); color: var(--phonetics); }
+    .hero-course-card.calligraphy .icon { background: var(--calligraphy-bg); color: var(--calligraphy); }
+    .hero-course-card.rubiks .icon { background: var(--rubiks-bg); color: var(--rubiks); }
+    .hero-course-card.smartwrite .icon { background: var(--smartwrite-bg); color: var(--smartwrite); }
+    .hero-floating-badge {
+      position: absolute; background: var(--surface);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 10px 16px; box-shadow: var(--shadow-lg);
+      font-weight: 700; font-size: 0.82rem; white-space: nowrap;
+      animation: float 4s ease-in-out infinite;
+    }
+    .hero-floating-badge.top { top: -20px; right: -20px; }
+    .hero-floating-badge.bottom { bottom: -20px; left: -20px; }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ─── Stats Bar ──────────────────────────────────────────────── */
+    .stats-bar {
+      background: var(--brand);
+      padding: 28px 0;
+    }
+    .stats-bar .container {
+      display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;
+    }
+    .stat-item { text-align: center; color: #fff; }
+    .stat-number {
+      font-family: var(--font-head); font-size: 2rem; font-weight: 900;
+      line-height: 1;
+    }
+    .stat-text { font-size: 0.85rem; opacity: 0.85; margin-top: 4px; }
+
+    /* ─── Courses Section ────────────────────────────────────────── */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-top: 48px;
+    }
+    .course-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-xl); overflow: hidden;
+      box-shadow: var(--shadow-sm); transition: all 0.3s ease;
+      display: flex; flex-direction: column;
+    }
+    .course-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: transparent;
+    }
+    .course-card-banner {
+      height: 120px; display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; position: relative; overflow: hidden;
+    }
+    .course-card-banner::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.08) 100%);
+    }
+    .course-card.abacus .course-card-banner { background: linear-gradient(135deg, #fff7ed, #fed7aa); }
+    .course-card.vedic .course-card-banner { background: linear-gradient(135deg, #f3eeff, #ddd6fe); }
+    .course-card.phonetics .course-card-banner { background: linear-gradient(135deg, #fdf0f7, #fbcfe8); }
+    .course-card.calligraphy .course-card-banner { background: linear-gradient(135deg, #edfaf8, #99f6e4); }
+    .course-card.rubiks .course-card-banner { background: linear-gradient(135deg, #eff6ff, #bfdbfe); }
+    .course-card.smartwrite .course-card-banner { background: linear-gradient(135deg, #f0fdf4, #bbf7d0); }
+
+    .course-card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .course-tag {
+      display: inline-block; font-size: 0.7rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 100px; margin-bottom: 12px;
+    }
+    .course-card.abacus .course-tag { background: var(--abacus-bg); color: var(--abacus); }
+    .course-card.vedic .course-tag { background: var(--vedic-bg); color: var(--vedic); }
+    .course-card.phonetics .course-tag { background: var(--phonetics-bg); color: var(--phonetics); }
+    .course-card.calligraphy .course-tag { background: var(--calligraphy-bg); color: var(--calligraphy); }
+    .course-card.rubiks .course-tag { background: var(--rubiks-bg); color: var(--rubiks); }
+    .course-card.smartwrite .course-tag { background: var(--smartwrite-bg); color: var(--smartwrite); }
+
+    .course-title {
+      font-family: var(--font-head); font-size: 1.2rem; font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .course-ages { font-size: 0.8rem; color: var(--text-soft); margin-bottom: 12px; font-weight: 600; }
+    .course-desc { font-size: 0.88rem; color: var(--text-mid); line-height: 1.6; margin-bottom: 16px; flex: 1; }
+    .course-tags-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+    .course-pill {
+      font-size: 0.7rem; font-weight: 600; padding: 4px 10px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 100px; color: var(--text-mid);
+    }
+    .course-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px; border-top: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .course-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-weight: 700; font-size: 0.88rem; padding: 10px 20px;
+      border-radius: 100px; cursor: pointer; border: none;
+      transition: all 0.2s; text-decoration: none;
+    }
+    .course-card.abacus .course-cta { background: var(--abacus); color: #fff; }
+    .course-card.abacus .course-cta:hover { background: #ea6c10; transform: translateY(-1px); }
+    .course-card.vedic .course-cta { background: var(--vedic); color: #fff; }
+    .course-card.vedic .course-cta:hover { background: #7c3aed; }
+    .course-card.phonetics .course-cta { background: var(--phonetics); color: #fff; }
+    .course-card.phonetics .course-cta:hover { background: #db2777; }
+    .course-card.calligraphy .course-cta { background: var(--calligraphy); color: #fff; }
+    .course-card.calligraphy .course-cta:hover { background: #0d9488; }
+    .course-card.rubiks .course-cta { background: var(--rubiks); color: #fff; }
+    .course-card.rubiks .course-cta:hover { background: #2563eb; }
+    .course-card.smartwrite .course-cta { background: var(--smartwrite); color: #fff; }
+    .course-card.smartwrite .course-cta:hover { background: #16a34a; }
+
+    .free-badge {
+      font-size: 0.75rem; font-weight: 700; color: var(--smartwrite);
+      background: var(--smartwrite-bg); padding: 4px 10px; border-radius: 100px;
+    }
+
+    /* ─── Why LAL Section ────────────────────────────────────────── */
+    .why-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-top: 48px;
+    }
+    .why-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px;
+      transition: all 0.3s; text-align: center;
+    }
+    .why-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .why-icon {
+      width: 56px; height: 56px; border-radius: var(--radius);
+      background: var(--brand-light); display: flex; align-items: center;
+      justify-content: center; font-size: 1.5rem; margin: 0 auto 16px;
+    }
+    .why-title { font-family: var(--font-head); font-weight: 800; font-size: 1rem; margin-bottom: 8px; }
+    .why-desc { font-size: 0.88rem; color: var(--text-mid); line-height: 1.6; }
+
+    /* ─── How It Works ───────────────────────────────────────────── */
+    .how-bg { background: linear-gradient(145deg, #f0ecff 0%, #f8f9ff 100%); }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 24px; margin-top: 48px; position: relative;
+    }
+    .steps-grid::before {
+      content: ''; position: absolute; top: 28px; left: 10%; right: 10%;
+      height: 2px; background: linear-gradient(90deg, var(--brand-light), var(--brand), var(--brand-light));
+      z-index: 0;
+    }
+    .step-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px 20px; text-align: center;
+      position: relative; z-index: 1;
+    }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--brand); color: #fff;
+      font-family: var(--font-head); font-weight: 900; font-size: 1.3rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px; box-shadow: 0 4px 16px rgba(108,62,244,0.4);
+    }
+    .step-title { font-family: var(--font-head); font-weight: 800; margin-bottom: 8px; }
+    .step-desc { font-size: 0.85rem; color: var(--text-mid); }
+
+    /* ─── Testimonials ───────────────────────────────────────────── */
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-top: 48px;
+    }
+    .testimonial-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px;
+    }
+    .stars { color: #fbbf24; font-size: 0.9rem; margin-bottom: 12px; letter-spacing: 2px; }
+    .testimonial-text { font-size: 0.92rem; color: var(--text-mid); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.9rem; color: #fff;
+    }
+    .author-name { font-weight: 700; font-size: 0.88rem; }
+    .author-role { font-size: 0.78rem; color: var(--text-soft); }
+
+    /* ─── Demo CTA Section ───────────────────────────────────────── */
+    .demo-section {
+      background: linear-gradient(135deg, var(--brand) 0%, #9b6bff 50%, #ec4899 100%);
+      padding: 80px 0; position: relative; overflow: hidden;
+    }
+    .demo-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .demo-section .container { position: relative; z-index: 1; }
+    .demo-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    .demo-text h2 {
+      font-family: var(--font-head); font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 900; color: #fff; margin-bottom: 16px; line-height: 1.25;
+    }
+    .demo-text p { font-size: 1.05rem; color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 28px; }
+    .demo-features { display: flex; flex-direction: column; gap: 12px; }
+    .demo-feature {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.92rem; color: rgba(255,255,255,0.9); font-weight: 500;
+    }
+    .demo-feature-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.2); display: flex; align-items: center;
+      justify-content: center; font-size: 0.75rem; flex-shrink: 0;
+    }
+
+    .demo-form-card {
+      background: var(--surface); border-radius: var(--radius-xl);
+      padding: 36px; box-shadow: var(--shadow-lg);
+    }
+    .demo-form-card h3 {
+      font-family: var(--font-head); font-size: 1.4rem; font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .demo-form-card p { font-size: 0.88rem; color: var(--text-soft); margin-bottom: 24px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-mid);
+      margin-bottom: 6px;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 12px 14px; font-size: 0.92rem;
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      background: var(--bg); color: var(--text-dark);
+      transition: border-color 0.2s; outline: none; font-family: var(--font-body);
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--brand); background: #fff;
+    }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .submit-btn {
+      width: 100%; padding: 14px; background: var(--brand); color: #fff;
+      border: none; border-radius: 100px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; font-family: var(--font-body);
+    }
+    .submit-btn:hover { background: var(--brand-dark); transform: translateY(-2px); }
+    .form-or { text-align: center; color: var(--text-soft); font-size: 0.82rem; margin: 14px 0; }
+    .whatsapp-btn {
+      width: 100%; padding: 13px; background: #25d366; color: #fff;
+      border: none; border-radius: 100px; font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; font-family: var(--font-body);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .whatsapp-btn:hover { background: #1ebe5d; transform: translateY(-2px); }
+
+    /* ─── Footer ─────────────────────────────────────────────────── */
+    .footer { background: var(--text-dark); color: rgba(255,255,255,0.75); padding: 64px 0 32px; }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+    .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 280px; }
+    .footer-social { display: flex; gap: 12px; margin-top: 20px; }
+    .social-btn {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(255,255,255,0.1); display: flex; align-items: center;
+      justify-content: center; font-size: 0.9rem; transition: all 0.2s; cursor: pointer;
+    }
+    .social-btn:hover { background: var(--brand); }
+    .footer-col h4 {
+      font-family: var(--font-head); font-weight: 800; color: #fff;
+      margin-bottom: 16px; font-size: 0.95rem;
+    }
+    .footer-col a {
+      display: block; font-size: 0.85rem; margin-bottom: 10px;
+      color: rgba(255,255,255,0.65); transition: color 0.2s;
+    }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 24px; display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: gap;
+      font-size: 0.82rem;
+    }
+
+    /* ─── Toast ──────────────────────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: var(--text-dark); color: #fff;
+      padding: 14px 24px; border-radius: var(--radius); font-size: 0.9rem;
+      font-weight: 600; box-shadow: var(--shadow-lg);
+      transform: translateY(80px); opacity: 0; transition: all 0.3s ease;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { background: var(--smartwrite); }
+
+    /* ─── Back to Top ────────────────────────────────────────────── */
+    .back-to-top {
+      position: fixed; bottom: 24px; left: 24px; z-index: 999;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--brand); color: #fff; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow); font-size: 1rem;
+      opacity: 0; transform: translateY(16px);
+      transition: all 0.3s;
+    }
+    .back-to-top.visible { opacity: 1; transform: translateY(0); }
+    .back-to-top:hover { background: var(--brand-dark); transform: translateY(-2px); }
+
+    /* ─── Responsive ─────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .courses-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid::before { display: none; }
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 768px) {
+      .hero .container { grid-template-columns: 1fr; gap: 40px; padding: 40px 24px 60px; }
+      .hero-visual { display: none; }
+      .hero-stats { gap: 20px; }
+      .courses-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .demo-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .stats-bar .container { justify-content: center; gap: 24px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ─── Scroll animation ───────────────────────────────────────── */
+    .fade-up {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ─── Navbar ─────────────────────────────────────────────────── -->
+<nav class="navbar" aria-label="Main navigation">
+  <div class="container">
+    <a href="home.html" class="nav-logo" aria-label="LAL Academy Home">
+      <div class="nav-logo-icon" aria-hidden="true">🎓</div>
+      LAL Academy
+    </a>
+    <div class="nav-links" role="navigation">
+      <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:0.82rem;padding:6px 14px;border-radius:100px;border:1.5px solid var(--border);color:var(--text-mid);transition:all .2s;" onmouseover="this.style.borderColor='var(--brand)';this.style.color='var(--brand)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-mid)'">← Home</a>
+      <a href="#courses">Courses</a>
+      <a href="#why-lal">Why Us</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#testimonials">Reviews</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <!-- show when NOT logged in -->
+      <a data-auth="show-logged-out" href="login.html"
+         class="btn btn-outline" style="padding:10px 20px;font-size:0.9rem;">Login</a>
+      <!-- show when logged in -->
+      <span data-auth="show-logged-in"
+            style="display:none;align-items:center;gap:10px">
+        <span style="font-size:0.85rem;font-weight:600;color:var(--text-mid)">
+          👤 <span data-auth="username"></span>
+        </span>
+        <a href="/logout"
+           style="font-size:0.85rem;font-weight:700;color:#ef4444;padding:8px 16px;
+                  border-radius:100px;border:1.5px solid #fecaca;background:#fff0ef;
+                  text-decoration:none">Logout</a>
+      </span>
+      <button class="nav-demo-btn" onclick="scrollToDemo()">Book Free Demo</button>
+    </div>
+    <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="index.html" style="color:var(--text-soft);font-size:0.9rem;">← Home</a>
+  <a href="#courses" onclick="toggleMenu()">Courses</a>
+  <a href="#why-lal" onclick="toggleMenu()">Why Us</a>
+  <a href="#how-it-works" onclick="toggleMenu()">How It Works</a>
+  <a href="#testimonials" onclick="toggleMenu()">Reviews</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <a href="login.html" data-auth="show-logged-out">Login</a>
+  <a href="/logout" data-auth="show-logged-in" style="display:none;color:#ef4444;">Logout (<span data-auth="username"></span>)</a>
+  <a href="#demo" onclick="toggleMenu()" style="color:var(--brand);">📅 Book Free Demo</a>
+</div>
+
+<!-- ─── Hero Section ───────────────────────────────────────────── -->
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Now Enrolling – Batch Starting Soon
+      </div>
+      <h1 class="hero-title" id="hero-heading">
+        Unlock Your Child's<br/>
+        <span class="highlight">Hidden Potential</span><br/>
+        with Expert Coaching
+      </h1>
+      <p class="hero-desc">
+        LAL Academy offers 6 scientifically designed programs for kids aged 3–16.
+        From mental math to beautiful handwriting — we nurture skills that last a lifetime.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="scrollToDemo()">
+          📅 Book a Free Demo
+        </button>
+        <a href="#courses" class="btn btn-outline">
+          Explore Courses →
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">5,000+</div>
+          <div class="hero-stat-label">Happy Students</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">98%</div>
+          <div class="hero-stat-label">Parent Satisfaction</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">6</div>
+          <div class="hero-stat-label">Expert Programs</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">10+</div>
+          <div class="hero-stat-label">Years Experience</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-floating-badge top">🏆 100+ Competition Winners</div>
+      <div class="hero-card-grid">
+        <a href="abacus.html" class="hero-course-card abacus">
+          <div class="icon">🧮</div>
+          <div class="name">Abacus</div>
+          <div class="ages">Ages 4–14</div>
+        </a>
+        <a href="vedic-math.html" class="hero-course-card vedic">
+          <div class="icon">🔢</div>
+          <div class="name">Vedic Math</div>
+          <div class="ages">Ages 8–16</div>
+        </a>
+        <a href="phonetics.html" class="hero-course-card phonetics">
+          <div class="icon">🗣️</div>
+          <div class="name">Phonetics</div>
+          <div class="ages">Ages 3–8</div>
+        </a>
+        <a href="calligraphy.html" class="hero-course-card calligraphy">
+          <div class="icon">✍️</div>
+          <div class="name">Calligraphy</div>
+          <div class="ages">Ages 5–15</div>
+        </a>
+        <a href="rubiks-cube.html" class="hero-course-card rubiks">
+          <div class="icon">🎲</div>
+          <div class="name">Rubik's Cube</div>
+          <div class="ages">Ages 6–16</div>
+        </a>
+        <a href="smart-write.html" class="hero-course-card smartwrite">
+          <div class="icon">📝</div>
+          <div class="name">Smart Write</div>
+          <div class="ages">Ages 4–12</div>
+        </a>
+      </div>
+      <div class="hero-floating-badge bottom">⭐ 4.9 / 5.0 Average Rating</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Stats Bar ──────────────────────────────────────────────── -->
+<div class="stats-bar" aria-label="Academy statistics">
+  <div class="container">
+    <div class="stat-item">
+      <div class="stat-number">5,000+</div>
+      <div class="stat-text">Students Trained</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">6</div>
+      <div class="stat-text">Unique Programs</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">50+</div>
+      <div class="stat-text">Expert Trainers</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">100+</div>
+      <div class="stat-text">Competition Medals</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">10+</div>
+      <div class="stat-text">Years of Excellence</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Courses Section ────────────────────────────────────────── -->
+<section class="section" id="courses" aria-labelledby="courses-heading">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">Our Programs</span>
+      <h2 class="section-title" id="courses-heading">
+        6 Life-Changing Programs<br/>Designed for Kids
+      </h2>
+      <p class="section-sub">
+        Each program is crafted by domain experts and backed by research — helping children build skills, confidence, and a love for learning.
+      </p>
+    </div>
+
+    <div class="courses-grid">
+      <!-- Abacus -->
+      <div class="course-card abacus fade-up">
+        <div class="course-card-banner">🧮</div>
+        <div class="course-card-body">
+          <span class="course-tag">Ages 4–14</span>
+          <h3 class="course-title">Abacus – Mental Math</h3>
+          <p class="course-ages">🎯 Beginner to Advanced • 3 Levels</p>
+          <p class="course-desc">Master mental arithmetic with the ancient Japanese abacus method. Build lightning-fast calculation skills while enhancing memory, focus, and overall brain development.</p>
+          <div class="course-tags-row">
+            <span class="course-pill">Speed Calculations</span>
+            <span class="course-pill">Brain Development</span>
+            <span class="course-pill">Concentration</span>
+            <span class="course-pill">Memory Boost</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <a href="abacus.html" class="course-cta">Start Learning →</a>
+          <span class="free-badge">Free Demo</span>
+        </div>
+      </div>
+
+      <!-- Vedic Math -->
+      <div class="course-card vedic fade-up">
+        <div class="course-card-banner">🔢</div>
+        <div class="course-card-body">
+          <span class="course-tag">Ages 8–16</span>
+          <h3 class="course-title">Vedic Math</h3>
+          <p class="course-ages">🎯 Intermediate to Expert • 4 Levels</p>
+          <p class="course-desc">Unlock ancient Indian mathematical techniques that make complex calculations simple. Perfect for competitive exam preparation and faster problem solving.</p>
+          <div class="course-tags-row">
+            <span class="course-pill">Ancient Techniques</span>
+            <span class="course-pill">Mental Shortcuts</span>
+            <span class="course-pill">Exam Prep</span>
+            <span class="course-pill">Speed Math</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <a href="vedic-math.html" class="course-cta">Start Learning →</a>
+          <span class="free-badge">Free Demo</span>
+        </div>
+      </div>
+
+      <!-- Phonetics -->
+      <div class="course-card phonetics fade-up">
+        <div class="course-card-banner">🗣️</div>
+        <div class="course-card-body">
+          <span class="course-tag">Ages 3–8</span>
+          <h3 class="course-title">Phonetics & Reading</h3>
+          <p class="course-ages">🎯 Foundation Level • 2 Levels</p>
+          <p class="course-desc">Build strong reading foundations through systematic phonics instruction. Develop pronunciation, vocabulary, and language confidence with fun, interactive methods.</p>
+          <div class="course-tags-row">
+            <span class="course-pill">Reading Fluency</span>
+            <span class="course-pill">Pronunciation</span>
+            <span class="course-pill">Vocabulary</span>
+            <span class="course-pill">Language Confidence</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <a href="phonetics.html" class="course-cta">Start Learning →</a>
+          <span class="free-badge">Free Demo</span>
+        </div>
+      </div>
+
+      <!-- Calligraphy -->
+      <div class="course-card calligraphy fade-up">
+        <div class="course-card-banner">✍️</div>
+        <div class="course-card-body">
+          <span class="course-tag">Ages 5–15</span>
+          <h3 class="course-title">Calligraphy – Art of Writing</h3>
+          <p class="course-ages">🎯 Beginner to Advanced • 3 Levels</p>
+          <p class="course-desc">Transform handwriting into art. Learn beautiful lettering styles while developing fine motor skills, artistic expression, patience, and discipline through structured practice.</p>
+          <div class="course-tags-row">
+            <span class="course-pill">Beautiful Handwriting</span>
+            <span class="course-pill">Fine Motor Skills</span>
+            <span class="course-pill">Artistic Expression</span>
+            <span class="course-pill">Patience & Discipline</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <a href="calligraphy.html" class="course-cta">Start Learning →</a>
+          <span class="free-badge">Free Demo</span>
+        </div>
+      </div>
+
+      <!-- Rubik's Cube -->
+      <div class="course-card rubiks fade-up">
+        <div class="course-card-banner">🎲</div>
+        <div class="course-card-body">
+          <span class="course-tag">Ages 6–16</span>
+          <h3 class="course-title">Rubik's Cube Solving</h3>
+          <p class="course-ages">🎯 Beginner to Speed Solver • 4 Levels</div>
+          <p class="course-desc">Master the world's most popular puzzle from beginner solve to speed cubing. Develop exceptional logical thinking, spatial reasoning, problem solving, and memory enhancement.</p>
+          <div class="course-tags-row">
+            <span class="course-pill">Logical Thinking</span>
+            <span class="course-pill">Problem Solving</span>
+            <span class="course-pill">Memory Enhancement</span>
+            <span class="course-pill">Speed Solving</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <a href="rubiks-cube.html" class="course-cta">Start Learning →</a>
+          <span class="free-badge">Free Demo</span>
+        </div>
+      </div>
+
+      <!-- Smart Write -->
+      <div class="course-card smartwrite fade-up">
+        <div class="course-card-banner">📝</div>
+        <div class="course-card-body">
+          <span class="course-tag">Ages 4–12</span>
+          <h3 class="course-title">Smart Write – Handwriting</h3>
+          <p class="course-ages">🎯 Foundation to Advanced • 3 Levels</p>
+          <p class="course-desc">Develop proper posture, correct letter formation, and consistent writing speed. Build the foundation for neat, legible handwriting that serves children through their entire academic life.</p>
+          <div class="course-tags-row">
+            <span class="course-pill">Proper Posture</span>
+            <span class="course-pill">Letter Formation</span>
+            <span class="course-pill">Writing Speed</span>
+            <span class="course-pill">Neat Handwriting</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <a href="smart-write.html" class="course-cta">Start Learning →</a>
+          <span class="free-badge">Free Demo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Why LAL Section ────────────────────────────────────────── -->
+<section class="section" id="why-lal" style="background: linear-gradient(145deg,#f0ecff 0%,#f8f9ff 100%);" aria-labelledby="why-heading">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">Why LAL Academy</span>
+      <h2 class="section-title" id="why-heading">
+        The LAL Difference
+      </h2>
+      <p class="section-sub">We go beyond lessons — we build champions.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card fade-up">
+        <div class="why-icon">🏅</div>
+        <h3 class="why-title">Certified Expert Trainers</h3>
+        <p class="why-desc">All our instructors are nationally certified with 5+ years of experience teaching children and bringing out the best in every student.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-icon">📱</div>
+        <h3 class="why-title">Online & Offline Options</h3>
+        <p class="why-desc">Flexible learning modes — attend live online classes from home or visit our center for hands-on practice sessions and personal coaching.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-icon">📊</div>
+        <h3 class="why-title">Progress Tracking</h3>
+        <p class="why-desc">Parents receive detailed weekly progress reports. Our student dashboard tracks performance, attendance, and milestone achievements in real time.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-icon">🎖️</div>
+        <h3 class="why-title">Competition Exposure</h3>
+        <p class="why-desc">We actively prepare students for district, state, and national competitions — building confidence and rewarding excellence with certificates and medals.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-icon">👨‍👩‍👧</div>
+        <h3 class="why-title">Small Batch Sizes</h3>
+        <p class="why-desc">Maximum 8–10 students per batch ensures every child receives personal attention, personalized pacing, and custom feedback from instructors.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-icon">💰</div>
+        <h3 class="why-title">Affordable Excellence</h3>
+        <p class="why-desc">World-class coaching at accessible prices. We believe quality education should be available to every child regardless of economic background.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── How It Works Section ──────────────────────────────────── -->
+<section class="section how-bg" id="how-it-works" aria-labelledby="how-heading">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">Simple Process</span>
+      <h2 class="section-title" id="how-heading">
+        Getting Started is Easy
+      </h2>
+      <p class="section-sub">Four simple steps to begin your child's learning journey.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card fade-up">
+        <div class="step-num">1</div>
+        <h3 class="step-title">Book a Free Demo</h3>
+        <p class="step-desc">Fill out our simple form or WhatsApp us. We'll schedule a free 30-minute demo class within 24 hours.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">2</div>
+        <h3 class="step-title">Assessment & Placement</h3>
+        <p class="step-desc">Our expert trainer evaluates your child's current level and recommends the perfect program and batch.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">3</div>
+        <h3 class="step-title">Enroll & Start</h3>
+        <p class="step-desc">Complete enrollment, get access to study materials, and start your first regular class — online or at our center.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">4</div>
+        <h3 class="step-title">Track & Excel</h3>
+        <p class="step-desc">Monitor progress through our parent dashboard, participate in competitions, and celebrate every milestone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Testimonials ───────────────────────────────────────────── -->
+<section class="section" id="testimonials" aria-labelledby="testimonials-heading">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">Parent Reviews</span>
+      <h2 class="section-title" id="testimonials-heading">
+        What Parents Are Saying
+      </h2>
+      <p class="section-sub">Real stories from real families who transformed their children's futures.</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up">
+        <div class="stars" aria-label="5 stars">★★★★★</div>
+        <p class="testimonial-text">"My 7-year-old solved 100 math problems in 3 minutes after just 6 months of Abacus training! Her teacher at school couldn't believe the improvement. LAL Academy changed her relationship with numbers entirely."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: var(--abacus);">PR</div>
+          <div>
+            <div class="author-name">Priya Reddy</div>
+            <div class="author-role">Parent of Ananya, Age 7 • Abacus</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-up">
+        <div class="stars" aria-label="5 stars">★★★★★</div>
+        <p class="testimonial-text">"The Rubik's Cube course is phenomenal. My 10-year-old went from never solving it to finishing in under 45 seconds in just 4 months. His concentration and problem-solving skills have improved dramatically."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: var(--rubiks);">VK</div>
+          <div>
+            <div class="author-name">Venkat Kumar</div>
+            <div class="author-role">Parent of Arjun, Age 10 • Rubik's Cube</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-up">
+        <div class="stars" aria-label="5 stars">★★★★★</div>
+        <p class="testimonial-text">"My daughter's handwriting was illegible before Smart Write. After 3 months, her calligraphy pieces look like artwork! The trainers are incredibly patient and motivating. Highly recommended!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: var(--calligraphy);">SN</div>
+          <div>
+            <div class="author-name">Sunita Nair</div>
+            <div class="author-role">Parent of Meera, Age 9 • Smart Write & Calligraphy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Demo / Contact Section ────────────────────────────────── -->
+<section class="demo-section" id="demo" id="contact" aria-labelledby="demo-heading">
+  <div class="container">
+    <div class="demo-grid">
+      <div class="demo-text">
+        <h2 id="demo-heading">Book Your Child's<br/>Free Demo Class Today</h2>
+        <p>Experience the LAL Academy difference firsthand. Our free 30-minute demo class is designed to excite and inspire your child while giving you full confidence in our teaching methodology.</p>
+        <div class="demo-features">
+          <div class="demo-feature">
+            <div class="demo-feature-icon">✓</div>
+            100% Free — No commitment required
+          </div>
+          <div class="demo-feature">
+            <div class="demo-feature-icon">✓</div>
+            30-minute live interactive session
+          </div>
+          <div class="demo-feature">
+            <div class="demo-feature-icon">✓</div>
+            Expert trainer assessment included
+          </div>
+          <div class="demo-feature">
+            <div class="demo-feature-icon">✓</div>
+            Personalized course recommendation
+          </div>
+          <div class="demo-feature">
+            <div class="demo-feature-icon">✓</div>
+            Available online & at our center
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-form-card">
+        <h3>Book Free Demo</h3>
+        <p>Fill out the form and we'll reach out within 2 hours!</p>
+
+        <form id="demo-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="parent-name">Parent Name *</label>
+              <input type="text" id="parent-name" name="parent_name" placeholder="Your full name" required />
+            </div>
+            <div class="form-group">
+              <label for="child-name">Child's Name *</label>
+              <input type="text" id="child-name" name="child_name" placeholder="Child's name" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required />
+            </div>
+            <div class="form-group">
+              <label for="child-age">Child's Age *</label>
+              <input type="number" id="child-age" name="child_age" placeholder="e.g. 8" min="3" max="16" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="course-interest">Course Interested In *</label>
+            <select id="course-interest" name="course" required>
+              <option value="">Select a course…</option>
+              <option value="abacus">Abacus – Mental Math (Ages 4–14)</option>
+              <option value="vedic">Vedic Math (Ages 8–16)</option>
+              <option value="phonetics">Phonetics & Reading (Ages 3–8)</option>
+              <option value="calligraphy">Calligraphy (Ages 5–15)</option>
+              <option value="rubiks">Rubik's Cube (Ages 6–16)</option>
+              <option value="smartwrite">Smart Write – Handwriting (Ages 4–12)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="preferred-mode">Preferred Mode</label>
+            <select id="preferred-mode" name="mode">
+              <option value="online">Online (Live Video Class)</option>
+              <option value="offline">Offline (Visit Our Center)</option>
+              <option value="either">Either Works</option>
+            </select>
+          </div>
+          <button type="submit" class="submit-btn">📅 Book My Free Demo</button>
+        </form>
+
+        <div class="form-or">— or reach us instantly —</div>
+
+        <button class="whatsapp-btn" onclick="openWhatsApp()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chat on WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Footer ─────────────────────────────────────────────────── -->
+<footer class="footer" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="color:#fff; margin-bottom:14px;">
+          <div class="nav-logo-icon">🎓</div>
+          LAL Academy
+        </div>
+        <p>Empowering children with skills that last a lifetime. Join 5,000+ families who trust LAL Academy for their child's holistic development.</p>
+        <div class="footer-social" aria-label="Social media links">
+          <div class="social-btn" role="button" tabindex="0" aria-label="Facebook">📘</div>
+          <div class="social-btn" role="button" tabindex="0" aria-label="Instagram">📸</div>
+          <div class="social-btn" role="button" tabindex="0" aria-label="YouTube">▶️</div>
+          <div class="social-btn" role="button" tabindex="0" aria-label="WhatsApp">💬</div>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Courses</h4>
+        <a href="abacus.html">Abacus Math</a>
+        <a href="vedic-math.html">Vedic Math</a>
+        <a href="phonetics.html">Phonetics</a>
+        <a href="calligraphy.html">Calligraphy</a>
+        <a href="rubiks-cube.html">Rubik's Cube</a>
+        <a href="smart-write.html">Smart Write</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="index.html">← Platform Home</a>
+        <a href="#courses">Programs</a>
+        <a href="#why-lal">About Us</a>
+        <a href="#demo">Book Demo</a>
+        <a href="login.html">Student Login</a>
+        <a href="learn.html">Learning Tools</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <a href="tel:+919876543210">📞 +91 98765 43210</a>
+        <a href="mailto:info@lalacademy.in">✉️ info@lalacademy.in</a>
+        <a href="#demo">📍 Visit Our Center</a>
+        <a href="#" onclick="openWhatsApp()">💬 WhatsApp Us</a>
+        <a href="#demo">📅 Book Free Demo</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2024 LAL Academy. All rights reserved.</span>
+      <span style="opacity:0.5;">Made with ❤️ for every child's bright future</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top Button -->
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+<script>
+  // ── Mobile Menu ──
+  function toggleMenu() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('open');
+  }
+  document.addEventListener('click', (e) => {
+    const menu = document.getElementById('mobile-menu');
+    if (!e.target.closest('.hamburger') && !e.target.closest('.mobile-menu')) {
+      menu.classList.remove('open');
+    }
+  });
+
+  // ── Scroll to Demo ──
+  function scrollToDemo() {
+    document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ── WhatsApp CTA ──
+  function openWhatsApp() {
+    const phone = '919876543210'; // PLACEHOLDER: replace with actual number
+    const msg = encodeURIComponent('Hi LAL Academy! I\'d like to book a free demo class for my child.');
+    window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+  }
+
+  // ── Demo Form Submit ──
+  document.getElementById('demo-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const data = new FormData(this);
+    const name = data.get('parent_name');
+    const child = data.get('child_name');
+    const phone = data.get('phone');
+    const course = data.get('course');
+
+    if (!name || !child || !phone || !course) {
+      showToast('Please fill in all required fields.', 'error');
+      return;
+    }
+
+    // PLACEHOLDER: Replace with actual API call to backend
+    // fetch('/api/demo-booking', { method: 'POST', body: JSON.stringify(Object.fromEntries(data)), headers: {'Content-Type': 'application/json'} })
+
+    const waPhone = '919876543210'; // PLACEHOLDER
+    const msg = encodeURIComponent(
+      `Demo Booking Request:\nParent: ${name}\nChild: ${child}\nPhone: ${phone}\nCourse: ${course}\nAge: ${data.get('child_age')}`
+    );
+    window.open(`https://wa.me/${waPhone}?text=${msg}`, '_blank');
+    showToast('🎉 Demo booked! We\'ll contact you within 2 hours.', 'success');
+    this.reset();
+  });
+
+  // ── Toast ──
+  function showToast(msg, type = 'info') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast show' + (type === 'success' ? ' success' : '');
+    setTimeout(() => t.classList.remove('show'), 4000);
+  }
+
+  // ── Back to Top ──
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('back-to-top');
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+
+  // ── Intersection Observer for animations ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+<script src="/js/auth.js"></script>
+<script>LALAuth.init();</script>
+</body>
+</html>
