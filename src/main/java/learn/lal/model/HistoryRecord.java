@@ -11,7 +11,7 @@ public class HistoryRecord {
     private String id;
     
     private String username;
-    private String actionType; // TRANSLATE, DICTIONARY, STORY
+    private String actionType; // TRANSLATE, BETTER_WAY, STORY, QUIZ, ABACUS, OTHER, ...
     private Object content; // Flexible JSON payload
     private LocalDateTime timestamp;
 

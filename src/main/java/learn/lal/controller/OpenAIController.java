@@ -13,7 +13,7 @@ public class OpenAIController {
     private final ChatModel chatModel;
 
     public OpenAIController(
-            @org.springframework.beans.factory.annotation.Qualifier("openAiChatModel") ChatModel chatModel) {
+            @org.springframework.beans.factory.annotation.Qualifier("customOpenAiChatModel") ChatModel chatModel) {
         this.chatModel = chatModel;
     }
 

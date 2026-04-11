@@ -1,13 +1,15 @@
-infisical:
-  client-id: ${INFISICAL_CLIENT_ID:}
-  client-secret: ${INFISICAL_CLIENT_SECRET:}
-  project-id: ${INFISICAL_PROJECT_ID:397abbdb-c673-4d6e-8d8e-ed0bc928f2d6}
-  environment: ${INFISICAL_ENV:dev}
-  site-url: https://app.infisical.com
-
 spring:
   main:
     allow-bean-definition-overriding: true
+  autoconfigure:
+    exclude:
+      # Starter registers OpenAI clients even with no key; chat is provided by learn.lal.config.AiConfig.
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiAudioSpeechAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiAudioTranscriptionAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiChatAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiEmbeddingAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiImageAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiModerationAutoConfiguration
   data:
     mongodb:
       # Embedded MongoDB will automatically start since no URI is provided.
@@ -21,6 +23,15 @@ spring:
       api-key: ${OPENAI_API_KEY:}
       chat:
         enabled: true
+      audio:
+        speech:
+          enabled: false
+        transcription:
+          enabled: false
+      image:
+        enabled: false
+      embedding:
+        enabled: false
     huggingface:
       api-key: ${HF_API_KEY:}
     gemini:
@@ -33,7 +44,16 @@ spring:
     sarvam:
       api-key: ${SARVAM_API_KEY:}
 
+azure:
+  translator:
+    api-key: ${AZURE_TRANSLATOR_KEY:}
+
 app:
+  curriculum:
+    # Multi-curriculum storage: manifest.json + files/*.json (see CurriculumRegistryService)
+    dir: data/curricula
+    # If set and manifest is missing, this single file is imported once as id "default"
+    legacy-file: data/abacus-curriculum.json
   git:
     sync-dir: data
   users:

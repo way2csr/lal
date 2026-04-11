@@ -84,12 +84,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Infisical Secret Management SDK -->
-		<dependency>
-			<groupId>com.infisical</groupId>
-			<artifactId>sdk</artifactId>
-			<version>3.0.6</version>
-		</dependency>
 
 		<!-- Embedded MongoDB for local in-memory persistence -->
 		<dependency>
@@ -131,6 +125,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<mainClass>learn.lal.LalApplication</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>

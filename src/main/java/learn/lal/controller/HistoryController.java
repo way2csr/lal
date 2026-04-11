@@ -47,4 +47,12 @@ public class HistoryController {
             historyRepository.deleteByIdAndUsername(id, auth.getName());
         }
     }
+
+    @DeleteMapping
+    public void clearAllHistory() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && !auth.getPrincipal().equals("anonymousUser")) {
+            historyRepository.deleteByUsername(auth.getName());
+        }
+    }
 }

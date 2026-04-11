@@ -23,7 +23,7 @@ public class AiConfig {
 
     @Bean
     @Primary
-    public ChatModel openAiChatModel() {
+    public ChatModel customOpenAiChatModel() {
         var openAiApi = OpenAiApi.builder()
                 .apiKey(openAiApiKey)
                 .build();

@@ -7,4 +7,5 @@ import java.util.List;
 public interface HistoryRepository extends MongoRepository<HistoryRecord, String> {
     List<HistoryRecord> findByUsernameOrderByTimestampDesc(String username);
     void deleteByIdAndUsername(String id, String username);
+    void deleteByUsername(String username);
 }
