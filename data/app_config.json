@@ -1,0 +1,12 @@
+[ {
+  "_id" : "flash-anzan-display",
+  "value" : {
+    "fontSize" : 30,
+    "offsetX" : 0,
+    "offsetY" : 0,
+    "stageW" : 920,
+    "stageH" : 660
+  },
+  "updatedBy" : "admin",
+  "updatedAt" : "2026-04-12T18:20:50.584+00:00"
+} ]
