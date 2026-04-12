@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rubik's Cube Practice | LAL Academy</title>
+  <meta name="description" content="Interactive Rubik's Cube learning — algorithm flashcards, move trainer, 2D cube visualizer, speed timer. Ages 6–16." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent:#3b82f6;--al:#eff6ff;--ad:#2563eb;
+      --grad:linear-gradient(135deg,#3b82f6,#8b5cf6);
+      --bg:#f8f9ff;--surf:#fff;--border:#e5e7f0;
+      --td:#1a1d2e;--tm:#4a5068;--ts:#8890a4;
+      --brand:#6c3ef4;
+      --r:14px;--rl:20px;--rxl:28px;
+      --sh:0 4px 20px rgba(59,130,246,.10);
+      --shl:0 12px 48px rgba(59,130,246,.14);
+      --nav:64px;--font:'Inter',system-ui,sans-serif;--fh:'Nunito','Inter',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+    body{font-family:var(--font);background:var(--bg);color:var(--td);line-height:1.6}
+    a{text-decoration:none;color:inherit}
+    .topbar{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.92);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(229,231,240,.7);height:var(--nav);display:flex;align-items:center}
+    .topbar .inner{max-width:1200px;margin:0 auto;padding:0 24px;width:100%;display:flex;align-items:center;justify-content:space-between}
+    .back-link{display:flex;align-items:center;gap:8px;font-size:.88rem;font-weight:600;color:var(--tm);padding:8px 16px;border-radius:100px;border:1px solid var(--border);background:var(--surf);transition:all .2s}
+    .back-link:hover{color:var(--accent);border-color:var(--accent);background:var(--al)}
+    .topbar-logo{font-family:var(--fh);font-size:1.2rem;font-weight:900;color:var(--brand);display:flex;align-items:center;gap:8px}
+    .topbar-logo-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--brand),#9b6bff);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:#fff}
+    .demo-btn{background:var(--accent);color:#fff;border:none;cursor:pointer;padding:10px 22px;border-radius:100px;font-size:.88rem;font-weight:700;transition:all .2s;font-family:var(--font)}
+    .demo-btn:hover{background:var(--ad)}
+    .page-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);background:var(--surf);position:sticky;top:var(--nav);z-index:100;padding:0 24px;overflow-x:auto}
+    .tab-btn{padding:14px 24px;font-weight:700;font-size:.9rem;color:var(--ts);border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;font-family:var(--font);transition:all .2s}
+    .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+    .tab-btn:hover{color:var(--accent)}
+    .tab-panel{display:none}.tab-panel.active{display:block}
+    .section{padding:48px 0}
+    .container{max-width:1100px;margin:0 auto;padding:0 24px}
+    .section-label{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--al);padding:6px 16px;border-radius:100px;margin-bottom:12px}
+    .section-title{font-family:var(--fh);font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:var(--td);line-height:1.2;margin-bottom:8px}
+    .section-sub{font-size:.95rem;color:var(--tm);max-width:560px}
+    .text-center{text-align:center}.text-center .section-sub{margin:0 auto}
+    .hero-mini{background:var(--grad);padding:40px 0;color:#fff;text-align:center}
+    .hero-mini h1{font-family:var(--fh);font-size:clamp(1.6rem,4vw,2.6rem);font-weight:900;margin-bottom:10px}
+    .hero-mini p{font-size:1rem;opacity:.9;max-width:520px;margin:0 auto 20px}
+    .htab{background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.5);color:#fff;padding:10px 20px;border-radius:100px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s;font-family:var(--font)}
+    .htab:hover,.htab.active{background:#fff;color:var(--accent)}
+    .hero-tabs-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+    /* ── CUBE VISUALIZER ── */
+    .cube-layout{display:flex;flex-direction:column;align-items:center;gap:4px;margin:28px auto;max-width:480px}
+    .cube-row{display:flex;gap:4px;justify-content:center}
+    .face{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:4px;background:#333;border-radius:6px}
+    .cell{width:36px;height:36px;border-radius:4px;cursor:pointer;transition:all .2s;border:1px solid rgba(0,0,0,.2)}
+    .cell:hover{transform:scale(1.12);box-shadow:0 0 0 2px #fff}
+    .face-label{font-size:.65rem;font-weight:700;color:var(--ts);text-transform:uppercase;text-align:center;margin-bottom:2px}
+    .color-U{background:#ffffff}.color-D{background:#ffff00}.color-F{background:#ff0000}
+    .color-B{background:#ffa500}.color-L{background:#00cc00}.color-R{background:#0000ff}
+    .cube-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+    .move-btn{padding:10px 14px;background:var(--surf);border:2px solid var(--border);border-radius:var(--r);font-weight:800;font-size:.85rem;cursor:pointer;transition:all .2s;font-family:'Courier New',monospace;min-width:52px;text-align:center}
+    .move-btn:hover{border-color:var(--accent);background:var(--al);transform:translateY(-2px)}
+    .move-btn.prime{color:var(--accent)}
+    .move-seq-display{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;font-family:'Courier New',monospace;font-weight:700;font-size:.9rem;color:var(--accent);min-height:40px;text-align:center;margin-top:12px;word-break:break-all}
+    .btn-scramble{background:var(--accent);color:#fff;border:none;padding:12px 24px;border-radius:100px;font-weight:700;cursor:pointer;font-family:var(--font);font-size:.95rem;transition:all .2s}
+    .btn-scramble:hover{background:var(--ad);transform:translateY(-2px)}
+    .btn-reset-cube{background:var(--bg);color:var(--tm);border:1.5px solid var(--border);padding:12px 24px;border-radius:100px;font-weight:700;cursor:pointer;font-family:var(--font);font-size:.95rem;transition:all .2s}
+    .btn-reset-cube:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* ── ALGORITHM FLASHCARDS ── */
+    .alg-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+    .alg-filter-btn{padding:8px 16px;border-radius:100px;border:1.5px solid var(--border);background:var(--surf);font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s}
+    .alg-filter-btn.active,.alg-filter-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .flashcard-area{perspective:1000px;margin:20px auto;max-width:480px}
+    .flashcard{background:var(--surf);border:1px solid var(--border);border-radius:var(--rxl);padding:36px;text-align:center;box-shadow:var(--sh);cursor:pointer;position:relative;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all .3s}
+    .flashcard:hover{box-shadow:var(--shl);transform:translateY(-3px)}
+    .fc-category{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:var(--al);padding:5px 14px;border-radius:100px;margin-bottom:16px}
+    .fc-name{font-family:var(--fh);font-size:1.4rem;font-weight:900;color:var(--td);margin-bottom:8px}
+    .fc-notation{font-family:'Courier New',monospace;font-size:1rem;font-weight:700;color:var(--accent);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 16px;margin:10px 0;letter-spacing:.1em}
+    .fc-desc{font-size:.85rem;color:var(--tm);line-height:1.6;margin-top:8px}
+    .fc-tap-hint{font-size:.72rem;color:var(--ts);margin-top:16px}
+    .fc-mini-cube{display:flex;gap:3px;justify-content:center;margin:10px 0;flex-wrap:wrap}
+    .fc-mini-cell{width:18px;height:18px;border-radius:3px;border:1px solid rgba(0,0,0,.15)}
+    .fc-controls{display:flex;gap:12px;justify-content:center;margin-top:16px}
+    .fc-nav{padding:10px 24px;border-radius:100px;font-weight:700;cursor:pointer;transition:all .2s;font-family:var(--font)}
+    .fc-prev{background:var(--bg);border:1.5px solid var(--border);color:var(--tm)}
+    .fc-prev:hover{border-color:var(--accent);color:var(--accent)}
+    .fc-next{background:var(--accent);color:#fff;border:none}
+    .fc-next:hover{background:var(--ad);transform:translateY(-2px)}
+    .fc-counter{font-size:.82rem;color:var(--ts);font-weight:600;align-self:center}
+    .fc-progress{background:var(--border);border-radius:100px;height:6px;margin:8px 0}
+    .fc-progress-fill{height:100%;border-radius:100px;background:var(--grad);transition:width .3s}
+
+    /* ── SPEED TIMER ── */
+    .timer-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--rxl);padding:36px;text-align:center;max-width:480px;margin:28px auto;box-shadow:var(--sh)}
+    .big-timer{font-family:var(--fh);font-size:5rem;font-weight:900;color:var(--accent);margin:16px 0;letter-spacing:.04em;cursor:default}
+    .timer-instruction{font-size:.9rem;color:var(--ts);margin-bottom:12px}
+    .timer-stats{display:flex;gap:24px;justify-content:center;margin:16px 0;flex-wrap:wrap}
+    .ts-item{text-align:center}
+    .ts-num{font-family:var(--fh);font-size:1.4rem;font-weight:900;color:var(--accent)}
+    .ts-label{font-size:.72rem;color:var(--ts);font-weight:600}
+    .btn-space{background:var(--accent);color:#fff;border:none;padding:16px 40px;border-radius:100px;font-weight:800;font-size:1.1rem;cursor:pointer;font-family:var(--font);transition:all .2s;box-shadow:0 4px 16px rgba(59,130,246,.35)}
+    .btn-space:hover{background:var(--ad);transform:translateY(-2px)}
+    .btn-space.running{background:#ef4444;box-shadow:0 4px 16px rgba(239,68,68,.35)}
+    .solve-list{margin-top:16px;max-height:160px;overflow-y:auto}
+    .solve-entry{display:flex;justify-content:space-between;padding:6px 12px;border-radius:8px;background:var(--bg);margin-bottom:4px;font-size:.85rem}
+    .solve-time{font-weight:700;color:var(--accent)}
+    .solve-num{color:var(--ts)}
+
+    /* ── Learn section ── */
+    .learn-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:28px}
+    .learn-step{background:var(--surf);border:1px solid var(--border);border-radius:var(--rl);padding:22px;position:relative;overflow:hidden}
+    .learn-step::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--grad)}
+    .step-label{font-family:var(--fh);font-size:.72rem;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+    .step-title{font-family:var(--fh);font-weight:800;margin-bottom:6px}
+    .step-desc{font-size:.83rem;color:var(--tm);line-height:1.5}
+    .step-alg{font-family:'Courier New',monospace;font-size:.82rem;font-weight:700;color:var(--accent);background:var(--al);border:1px solid rgba(59,130,246,.2);padding:6px 10px;border-radius:6px;margin-top:8px;display:inline-block}
+
+    .info-accordion{border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-top:28px}
+    .acc-item{border-bottom:1px solid var(--border)}.acc-item:last-child{border-bottom:none}
+    .acc-header{padding:16px 20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:space-between;background:var(--surf);transition:background .2s;font-size:.95rem}
+    .acc-header:hover{background:var(--al)}
+    .acc-arrow{transition:transform .3s;font-size:.8rem}
+    .acc-body{display:none;padding:16px 20px;background:var(--bg);font-size:.88rem;color:var(--tm);line-height:1.7}
+    .acc-item.open .acc-body{display:block}
+    .acc-item.open .acc-arrow{transform:rotate(180deg)}
+    .demo-strip{background:var(--grad);padding:32px;border-radius:var(--rxl);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:32px;color:#fff}
+    .demo-strip h3{font-family:var(--fh);font-size:1.2rem;font-weight:800}
+    .demo-strip p{font-size:.9rem;opacity:.9;margin-top:4px}
+    .btn-demo-white{background:#fff;color:var(--accent);border:none;padding:12px 24px;border-radius:100px;font-weight:800;cursor:pointer;font-family:var(--font);font-size:.95rem;transition:all .2s}
+    .btn-demo-white:hover{transform:translateY(-2px)}
+    .footer-strip{background:#1a1d2e;color:rgba(255,255,255,.7);padding:20px 0;text-align:center;font-size:.85rem}
+    .footer-strip a{color:#93c5fd;font-weight:600}
+    @media(max-width:600px){.big-timer{font-size:3.5rem}.fc-notation{font-size:.85rem}}
+  </style>
+</head>
+<body>
+
+<nav class="topbar" aria-label="Navigation">
+  <div class="inner">
+    <a href="home.html" class="back-link">← Home</a>
+    <a href="home.html" class="topbar-logo"><div class="topbar-logo-icon">🎓</div>LAL Academy</a>
+    <button class="demo-btn" onclick="openWhatsApp()">📅 Free Demo</button>
+  </div>
+</nav>
+
+<div class="hero-mini">
+  <h1>🎲 Rubik's Cube Mastery</h1>
+  <p>Learn algorithms, practise with the interactive cube, and time your solves!</p>
+  <div class="hero-tabs-row">
+    <button class="htab active" onclick="showTab('cube')">🎲 Interactive Cube</button>
+    <button class="htab" onclick="showTab('algorithms')">📚 Algorithms</button>
+    <button class="htab" onclick="showTab('timer')">⏱️ Solve Timer</button>
+    <button class="htab" onclick="showTab('learn')">🎓 Learn to Solve</button>
+    <button class="htab" onclick="showTab('course')">📋 Course Info</button>
+  </div>
+</div>
+
+<div class="page-tabs" role="tablist">
+  <button class="tab-btn active" role="tab" onclick="showTab('cube')">🎲 Cube</button>
+  <button class="tab-btn" role="tab" onclick="showTab('algorithms')">📚 Algorithms</button>
+  <button class="tab-btn" role="tab" onclick="showTab('timer')">⏱️ Timer</button>
+  <button class="tab-btn" role="tab" onclick="showTab('learn')">🎓 Learn</button>
+  <button class="tab-btn" role="tab" onclick="showTab('course')">📋 Info</button>
+</div>
+
+<!-- ══ INTERACTIVE CUBE ══ -->
+<div id="tab-cube" class="tab-panel active">
+  <div class="section">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label">Interactive Cube</span>
+        <h2 class="section-title">Click Moves to Transform the Cube</h2>
+        <p class="section-sub">Click move buttons to rotate faces. The cube updates in real time. Scramble to practise, Reset to start fresh.</p>
+      </div>
+      <div id="cube-vis"></div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+        <button class="btn-scramble" onclick="scrambleCube()">🔀 Scramble</button>
+        <button class="btn-reset-cube" onclick="resetCube()">↺ Reset</button>
+      </div>
+      <div style="font-size:.82rem;color:var(--ts);text-align:center;margin-top:8px">Move sequence applied:</div>
+      <div class="move-seq-display" id="move-seq">—</div>
+      <div class="cube-controls" aria-label="Cube moves">
+        <button class="move-btn" onclick="applyMove('U')" title="Up face clockwise">U</button>
+        <button class="move-btn prime" onclick="applyMove('U\'')" title="Up face counter-clockwise">U'</button>
+        <button class="move-btn" onclick="applyMove('D')" title="Down face clockwise">D</button>
+        <button class="move-btn prime" onclick="applyMove('D\'')" title="Down face counter-clockwise">D'</button>
+        <button class="move-btn" onclick="applyMove('R')" title="Right face clockwise">R</button>
+        <button class="move-btn prime" onclick="applyMove('R\'')" title="Right face counter-clockwise">R'</button>
+        <button class="move-btn" onclick="applyMove('L')" title="Left face clockwise">L</button>
+        <button class="move-btn prime" onclick="applyMove('L\'')" title="Left face counter-clockwise">L'</button>
+        <button class="move-btn" onclick="applyMove('F')" title="Front face clockwise">F</button>
+        <button class="move-btn prime" onclick="applyMove('F\'')" title="Front face counter-clockwise">F'</button>
+        <button class="move-btn" onclick="applyMove('B')" title="Back face clockwise">B</button>
+        <button class="move-btn prime" onclick="applyMove('B\'')" title="Back face counter-clockwise">B'</button>
+        <button class="move-btn" onclick="applyMove('M')" title="Middle layer (L-R)">M</button>
+        <button class="move-btn" onclick="applyMove('U2')" title="Up face 180°">U2</button>
+        <button class="move-btn" onclick="applyMove('R2')" title="Right face 180°">R2</button>
+        <button class="move-btn" onclick="applyMove('F2')" title="Front face 180°">F2</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ALGORITHM FLASHCARDS ══ -->
+<div id="tab-algorithms" class="tab-panel">
+  <div class="section">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label">Algorithm Library</span>
+        <h2 class="section-title">Flashcard Algorithm Practice</h2>
+        <p class="section-sub">Memorise all essential algorithms with flashcard drills. Filter by stage.</p>
+      </div>
+      <div class="alg-filter" id="alg-filter"></div>
+      <div class="fc-progress"><div class="fc-progress-fill" id="fc-prog"></div></div>
+      <div class="flashcard-area">
+        <div class="flashcard" id="flashcard">
+          <div class="fc-category" id="fc-cat">—</div>
+          <div class="fc-name" id="fc-name">—</div>
+          <div class="fc-notation" id="fc-notation">—</div>
+          <div class="fc-mini-cube" id="fc-mini"></div>
+          <div class="fc-desc" id="fc-desc">—</div>
+          <div class="fc-tap-hint">💡 Tap the card to flip &amp; see usage tip</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;align-items:center;margin-top:12px">
+        <button class="fc-nav fc-prev" onclick="fcNav(-1)">‹ Prev</button>
+        <span class="fc-counter" id="fc-count">1 / 20</span>
+        <button class="fc-nav fc-next" onclick="fcNav(1)">Next ›</button>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:12px">
+        <button style="padding:8px 20px;border-radius:100px;border:1.5px solid var(--border);background:var(--bg);font-weight:700;cursor:pointer;font-size:.85rem" onclick="shuffleAlgs()">🔀 Shuffle</button>
+        <button style="padding:8px 20px;border-radius:100px;background:var(--accent);color:#fff;border:none;font-weight:700;cursor:pointer;font-size:.85rem" onclick="markKnown()">✅ Mark Known</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SPEED TIMER ══ -->
+<div id="tab-timer" class="tab-panel">
+  <div class="section">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label">Solve Timer</span>
+        <h2 class="section-title">Time Your Rubik's Cube Solves</h2>
+        <p class="section-sub">Press Space or tap the button to start/stop. Track your best, average, and latest times.</p>
+      </div>
+      <div class="timer-card">
+        <div class="timer-stats">
+          <div class="ts-item"><div class="ts-num" id="t-best" style="color:#22c55e">—</div><div class="ts-label">Best</div></div>
+          <div class="ts-item"><div class="ts-num" id="t-avg" style="color:var(--accent)">—</div><div class="ts-label">Average</div></div>
+          <div class="ts-item"><div class="ts-num" id="t-count" style="color:var(--ts)">0</div><div class="ts-label">Solves</div></div>
+        </div>
+        <div class="timer-instruction" id="t-instruction">Press SPACE or button below to start</div>
+        <div class="big-timer" id="big-timer">0:00.00</div>
+        <button class="btn-space" id="timer-btn" onclick="toggleTimer()">▶ Start</button>
+        <div class="solve-list" id="solve-list" aria-label="Solve history"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LEARN TO SOLVE ══ -->
+<div id="tab-learn" class="tab-panel">
+  <div class="section">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label">Beginner's Guide</span>
+        <h2 class="section-title">Layer-by-Layer Method (7 Steps)</h2>
+        <p class="section-sub">The universal beginner's method to solve any 3×3 Rubik's Cube — start here!</p>
+      </div>
+      <div class="learn-steps">
+        <div class="learn-step">
+          <div class="step-label">Step 1</div>
+          <div class="step-title">🤍 White Cross</div>
+          <div class="step-desc">Form a white cross on top face with edges matching centre colours on each side face.</div>
+          <div class="step-alg">No algorithm needed — intuitive</div>
+        </div>
+        <div class="learn-step">
+          <div class="step-label">Step 2</div>
+          <div class="step-title">🤍 White Corners</div>
+          <div class="step-desc">Place white corner pieces to complete the white face. Use the right-hand algorithm.</div>
+          <div class="step-alg">R U R' U' (repeat)</div>
+        </div>
+        <div class="learn-step">
+          <div class="step-label">Step 3</div>
+          <div class="step-title">🔷 Middle Layer</div>
+          <div class="step-desc">Insert the four middle layer edges by moving them left or right.</div>
+          <div class="step-alg">U R U' R' U' F' U F</div>
+        </div>
+        <div class="learn-step">
+          <div class="step-label">Step 4</div>
+          <div class="step-title">💛 Yellow Cross</div>
+          <div class="step-desc">Create a yellow cross on the top face (ignore corner positions for now).</div>
+          <div class="step-alg">F R U R' U' F'</div>
+        </div>
+        <div class="learn-step">
+          <div class="step-label">Step 5</div>
+          <div class="step-title">💛 Orient Yellow Edges</div>
+          <div class="step-desc">Move the yellow edge pieces so they match their side-face centre colours.</div>
+          <div class="step-alg">R U R' U R U2 R'</div>
+        </div>
+        <div class="learn-step">
+          <div class="step-label">Step 6</div>
+          <div class="step-title">💛 Position Yellow Corners</div>
+          <div class="step-desc">Cycle the yellow corners until each corner is in its correct position.</div>
+          <div class="step-alg">U R U' L' U R' U' L</div>
+        </div>
+        <div class="learn-step">
+          <div class="step-label">Step 7</div>
+          <div class="step-title">✅ Orient Yellow Corners</div>
+          <div class="step-desc">Twist the yellow corners in place to complete the cube!</div>
+          <div class="step-alg">R' D' R D (repeat)</div>
+        </div>
+        <div class="learn-step" style="border:2px solid var(--accent)">
+          <div class="step-label" style="color:#22c55e">🏆 Done!</div>
+          <div class="step-title">Cube Solved!</div>
+          <div class="step-desc">Congratulations! Practice daily until you can solve it in under 5 minutes, then move to CFOP method.</div>
+          <div class="step-alg">Target: Under 5 min</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ COURSE INFO ══ -->
+<div id="tab-course" class="tab-panel">
+  <div class="section">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label">About the Course</span>
+        <h2 class="section-title">Rubik's Cube Program</h2>
+        <p class="section-sub">4 structured levels from beginner to competition-ready speed solver.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:28px 0">
+        <div style="background:var(--surf);border:1px solid var(--border);border-radius:var(--rl);padding:24px;text-align:center"><div style="font-family:var(--fh);font-size:1.8rem;font-weight:900;color:var(--accent)">6–16</div><div style="font-size:.8rem;color:var(--ts)">Age Group</div></div>
+        <div style="background:var(--surf);border:1px solid var(--border);border-radius:var(--rl);padding:24px;text-align:center"><div style="font-family:var(--fh);font-size:1.8rem;font-weight:900;color:var(--accent)">&lt;60s</div><div style="font-size:.8rem;color:var(--ts)">Target Solve Time</div></div>
+        <div style="background:var(--surf);border:1px solid var(--border);border-radius:var(--rl);padding:24px;text-align:center"><div style="font-family:var(--fh);font-size:1.8rem;font-weight:900;color:var(--accent)">4</div><div style="font-size:.8rem;color:var(--ts)">Learning Levels</div></div>
+      </div>
+      <div class="info-accordion">
+        <div class="acc-item open"><div class="acc-header" onclick="toggleAcc(this)">📘 Level 1 – First Solve (3 months)<span class="acc-arrow">▼</span></div><div class="acc-body">Cube anatomy, move notation, white cross, white corners, middle layer, yellow cross &amp; corners. Goal: First complete solve.</div></div>
+        <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)">📗 Level 2 – Efficiency (3 months)<span class="acc-arrow">▼</span></div><div class="acc-body">F2L basics, OLL introduction, all 21 PLL algorithms, ergonomic finger tricks. Goal: Under 2 minutes.</div></div>
+        <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)">📙 Level 3 – CFOP (4 months)<span class="acc-arrow">▼</span></div><div class="acc-body">Full CFOP method, intuitive F2L, all 57 OLL algorithms, lookahead training. Goal: Sub-1-minute.</div></div>
+        <div class="acc-item"><div class="acc-header" onclick="toggleAcc(this)">📕 Level 4 – Competition (5 months)<span class="acc-arrow">▼</span></div><div class="acc-body">Advanced F2L, sub-45s techniques, 4×4 &amp; 5×5 cubes, WCA competition preparation. Goal: Sub-45 seconds.</div></div>
+      </div>
+      <div class="demo-strip" id="demo">
+        <div><h3>Get Your Free Demo + Rubik's Cube!</h3><p>First demo students receive a FREE Rubik's Cube to take home.</p></div>
+        <button class="btn-demo-white" onclick="openWhatsApp()">💬 Book Free Demo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer-strip">
+  <a href="home.html">← LAL Academy Home</a> &nbsp;|&nbsp; © 2024 LAL Academy
+</footer>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn,.htab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('.tab-btn,.htab').forEach(b=>{
+    if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+id+"'"))b.classList.add('active');
+  });
+}
+function toggleAcc(h){h.closest('.acc-item').classList.toggle('open')}
+function openWhatsApp(){window.open(`https://wa.me/919876543210?text=${encodeURIComponent("Hi! Interested in Rubik's Cube course.")}`, '_blank')}
+
+// ══════════════════════════════════════════
+// 2D CUBE VISUALIZER
+// ══════════════════════════════════════════
+const FACES = ['U','L','F','R','B','D'];
+const FACE_COLORS = {U:'#ffffff',D:'#ffff00',F:'#ff0000',B:'#ffa500',L:'#00cc00',R:'#0000ff'};
+let cube = {}, moveHistory = [];
+
+function initCube() {
+  FACES.forEach(f => { cube[f] = Array(9).fill(FACE_COLORS[f]); });
+  moveHistory = [];
+  renderCube();
+}
+
+function renderCube() {
+  const vis = document.getElementById('cube-vis');
+  // Layout: top=U, middle row=L,F,R,B, bottom=D
+  const faces_layout = [
+    {face:'U', label:'U (Top)', row:0},
+    {face:'L', label:'L (Left)', row:1},
+    {face:'F', label:'F (Front)', row:1},
+    {face:'R', label:'R (Right)', row:1},
+    {face:'B', label:'B (Back)', row:1},
+    {face:'D', label:'D (Bottom)', row:2},
+  ];
+  vis.innerHTML = '';
+  const layout = document.createElement('div');
+  layout.className = 'cube-layout';
+
+  // Row 0: U face centered
+  const r0 = document.createElement('div');
+  r0.className = 'cube-row';
+  r0.style.justifyContent = 'center';
+  r0.appendChild(makeFaceEl('U', 'Top (U)'));
+  layout.appendChild(r0);
+
+  // Row 1: L F R B
+  const r1 = document.createElement('div');
+  r1.className = 'cube-row';
+  ['L','F','R','B'].forEach(f => r1.appendChild(makeFaceEl(f, f)));
+  layout.appendChild(r1);
+
+  // Row 2: D face centered
+  const r2 = document.createElement('div');
+  r2.className = 'cube-row';
+  r2.appendChild(makeFaceEl('D', 'Bottom (D)'));
+  layout.appendChild(r2);
+
+  vis.appendChild(layout);
+  document.getElementById('move-seq').textContent = moveHistory.length ? moveHistory.join(' ') : '—';
+}
+
+function makeFaceEl(face, label) {
+  const wrap = document.createElement('div');
+  const lbl = document.createElement('div');
+  lbl.className = 'face-label';
+  lbl.textContent = label;
+  wrap.appendChild(lbl);
+  const faceEl = document.createElement('div');
+  faceEl.className = 'face';
+  cube[face].forEach((color, i) => {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.style.background = color;
+    cell.title = `${face}${i}`;
+    faceEl.appendChild(cell);
+  });
+  wrap.appendChild(faceEl);
+  return wrap;
+}
+
+function rotFace(f, cw=true) {
+  const c = [...cube[f]];
+  if (cw) cube[f] = [c[6],c[3],c[0],c[7],c[4],c[1],c[8],c[5],c[2]];
+  else cube[f] = [c[2],c[5],c[8],c[1],c[4],c[7],c[0],c[3],c[6]];
+}
+
+function cycleEdges(arr, indices_sets, rev=false) {
+  // arr: array of [face, indices] groups, cycle in order
+  const vals = arr.map(([f, ixs]) => ixs.map(i => cube[f][i]));
+  if (rev) vals.unshift(vals.pop());
+  else vals.push(vals.shift());
+  arr.forEach(([f, ixs], g) => ixs.forEach((i, k) => cube[f][i] = vals[g][k]));
+}
+
+function applyMove(m) {
+  const rev = m.includes("'");
+  const double = m.includes("2");
+  const base = m[0];
+  const times = double ? 2 : 1;
+  for (let t=0; t<times; t++) {
+    if (base==='U') {
+      rotFace('U', !rev);
+      cycleEdges([['F',[0,1,2]],['R',[0,1,2]],['B',[0,1,2]],['L',[0,1,2]]], [], rev);
+      // manual U move
+      const tmp = [cube.F[0],cube.F[1],cube.F[2]];
+      if (!rev) {
+        [cube.F[0],cube.F[1],cube.F[2]] = [cube.L[0],cube.L[1],cube.L[2]];
+        [cube.L[0],cube.L[1],cube.L[2]] = [cube.B[0],cube.B[1],cube.B[2]];
+        [cube.B[0],cube.B[1],cube.B[2]] = [cube.R[0],cube.R[1],cube.R[2]];
+        [cube.R[0],cube.R[1],cube.R[2]] = tmp;
+      } else {
+        [cube.F[0],cube.F[1],cube.F[2]] = [cube.R[0],cube.R[1],cube.R[2]];
+        [cube.R[0],cube.R[1],cube.R[2]] = [cube.B[0],cube.B[1],cube.B[2]];
+        [cube.B[0],cube.B[1],cube.B[2]] = [cube.L[0],cube.L[1],cube.L[2]];
+        [cube.L[0],cube.L[1],cube.L[2]] = tmp;
+      }
+    } else if (base==='R') {
+      rotFace('R', !rev);
+      if (!rev) {
+        const tmp=[cube.F[2],cube.F[5],cube.F[8]];
+        [cube.F[2],cube.F[5],cube.F[8]]=[cube.D[2],cube.D[5],cube.D[8]];
+        [cube.D[2],cube.D[5],cube.D[8]]=[cube.B[6],cube.B[3],cube.B[0]];
+        [cube.B[6],cube.B[3],cube.B[0]]=[cube.U[2],cube.U[5],cube.U[8]];
+        [cube.U[2],cube.U[5],cube.U[8]]=tmp;
+      } else {
+        const tmp=[cube.F[2],cube.F[5],cube.F[8]];
+        [cube.F[2],cube.F[5],cube.F[8]]=[cube.U[2],cube.U[5],cube.U[8]];
+        [cube.U[2],cube.U[5],cube.U[8]]=[cube.B[6],cube.B[3],cube.B[0]];
+        [cube.B[6],cube.B[3],cube.B[0]]=[cube.D[2],cube.D[5],cube.D[8]];
+        [cube.D[2],cube.D[5],cube.D[8]]=tmp;
+      }
+    } else if (base==='F') {
+      rotFace('F', !rev);
+      if (!rev) {
+        const tmp=[cube.U[6],cube.U[7],cube.U[8]];
+        [cube.U[6],cube.U[7],cube.U[8]]=[cube.L[8],cube.L[5],cube.L[2]];
+        [cube.L[8],cube.L[5],cube.L[2]]=[cube.D[0],cube.D[1],cube.D[2]];
+        [cube.D[0],cube.D[1],cube.D[2]]=[cube.R[6],cube.R[3],cube.R[0]];
+        [cube.R[6],cube.R[3],cube.R[0]]=tmp;
+      } else {
+        const tmp=[cube.U[6],cube.U[7],cube.U[8]];
+        [cube.U[6],cube.U[7],cube.U[8]]=[cube.R[0],cube.R[3],cube.R[6]];
+        [cube.R[0],cube.R[3],cube.R[6]]=[cube.D[2],cube.D[1],cube.D[0]];
+        [cube.D[2],cube.D[1],cube.D[0]]=[cube.L[2],cube.L[5],cube.L[8]];
+        [cube.L[2],cube.L[5],cube.L[8]]=tmp;
+      }
+    } else if (base==='D') {
+      rotFace('D', !rev);
+      if (!rev) {
+        const tmp=[cube.F[6],cube.F[7],cube.F[8]];
+        [cube.F[6],cube.F[7],cube.F[8]]=[cube.R[6],cube.R[7],cube.R[8]];
+        [cube.R[6],cube.R[7],cube.R[8]]=[cube.B[6],cube.B[7],cube.B[8]];
+        [cube.B[6],cube.B[7],cube.B[8]]=[cube.L[6],cube.L[7],cube.L[8]];
+        [cube.L[6],cube.L[7],cube.L[8]]=tmp;
+      } else {
+        const tmp=[cube.F[6],cube.F[7],cube.F[8]];
+        [cube.F[6],cube.F[7],cube.F[8]]=[cube.L[6],cube.L[7],cube.L[8]];
+        [cube.L[6],cube.L[7],cube.L[8]]=[cube.B[6],cube.B[7],cube.B[8]];
+        [cube.B[6],cube.B[7],cube.B[8]]=[cube.R[6],cube.R[7],cube.R[8]];
+        [cube.R[6],cube.R[7],cube.R[8]]=tmp;
+      }
+    } else if (base==='L') {
+      rotFace('L', !rev);
+      if (!rev) {
+        const tmp=[cube.F[0],cube.F[3],cube.F[6]];
+        [cube.F[0],cube.F[3],cube.F[6]]=[cube.U[0],cube.U[3],cube.U[6]];
+        [cube.U[0],cube.U[3],cube.U[6]]=[cube.B[8],cube.B[5],cube.B[2]];
+        [cube.B[8],cube.B[5],cube.B[2]]=[cube.D[0],cube.D[3],cube.D[6]];
+        [cube.D[0],cube.D[3],cube.D[6]]=tmp;
+      } else {
+        const tmp=[cube.F[0],cube.F[3],cube.F[6]];
+        [cube.F[0],cube.F[3],cube.F[6]]=[cube.D[0],cube.D[3],cube.D[6]];
+        [cube.D[0],cube.D[3],cube.D[6]]=[cube.B[8],cube.B[5],cube.B[2]];
+        [cube.B[8],cube.B[5],cube.B[2]]=[cube.U[0],cube.U[3],cube.U[6]];
+        [cube.U[0],cube.U[3],cube.U[6]]=tmp;
+      }
+    } else if (base==='B') {
+      rotFace('B', !rev);
+      if (!rev) {
+        const tmp=[cube.U[0],cube.U[1],cube.U[2]];
+        [cube.U[0],cube.U[1],cube.U[2]]=[cube.R[2],cube.R[5],cube.R[8]];
+        [cube.R[2],cube.R[5],cube.R[8]]=[cube.D[8],cube.D[7],cube.D[6]];
+        [cube.D[8],cube.D[7],cube.D[6]]=[cube.L[0],cube.L[3],cube.L[6]];
+        [cube.L[0],cube.L[3],cube.L[6]]=tmp;
+      } else {
+        const tmp=[cube.U[0],cube.U[1],cube.U[2]];
+        [cube.U[0],cube.U[1],cube.U[2]]=[cube.L[6],cube.L[3],cube.L[0]];
+        [cube.L[6],cube.L[3],cube.L[0]]=[cube.D[6],cube.D[7],cube.D[8]];
+        [cube.D[6],cube.D[7],cube.D[8]]=[cube.R[8],cube.R[5],cube.R[2]];
+        [cube.R[8],cube.R[5],cube.R[2]]=tmp;
+      }
+    } else if (base==='M') {
+      // Middle slice (like L)
+      const tmp=[cube.F[1],cube.F[4],cube.F[7]];
+      [cube.F[1],cube.F[4],cube.F[7]]=[cube.U[1],cube.U[4],cube.U[7]];
+      [cube.U[1],cube.U[4],cube.U[7]]=[cube.B[7],cube.B[4],cube.B[1]];
+      [cube.B[7],cube.B[4],cube.B[1]]=[cube.D[1],cube.D[4],cube.D[7]];
+      [cube.D[1],cube.D[4],cube.D[7]]=tmp;
+    }
+  }
+  if (!moveHistory.includes('…')) moveHistory.push(m);
+  if (moveHistory.length > 20) { moveHistory = ['…', ...moveHistory.slice(-19)]; }
+  renderCube();
+}
+
+function scrambleCube() {
+  const moves = ['U','U\'','D','D\'','R','R\'','L','L\'','F','F\'','B','B\'','U2','R2','F2'];
+  const seq = Array.from({length:20}, () => moves[Math.floor(Math.random()*moves.length)]);
+  initCube();
+  moveHistory = [];
+  seq.forEach(m => applyMove(m));
+}
+
+function resetCube() { initCube(); }
+initCube();
+
+// ══════════════════════════════════════════
+// ALGORITHM FLASHCARDS
+// ══════════════════════════════════════════
+const ALGORITHMS = [
+  {cat:'Beginner',name:'Right-Hand Algorithm',alg:'R U R\' U\'',desc:'The most fundamental algorithm. Used to cycle corner pieces out of the top layer.',tip:'This move sequence "pops" a corner piece out.'},
+  {cat:'Beginner',name:'Left-Hand Algorithm',alg:'L\' U\' L U',desc:'Mirror of right-hand algorithm. Used when the corner needs to exit to the left.',tip:'Use when corner is on the left side of the working edge.'},
+  {cat:'Beginner',name:'Edge Insert Right',alg:'U R U\' R\' U\' F\' U F',desc:'Inserts a middle-layer edge piece by moving it to the right.',tip:'Align edge on top-right, then execute.'},
+  {cat:'Beginner',name:'Edge Insert Left',alg:'U\' L\' U L U F U\' F\'',desc:'Inserts a middle-layer edge piece by moving it to the left.',tip:'Align edge on top-left, then execute.'},
+  {cat:'Beginner',name:'Yellow Cross (Line)',alg:'F R U R\' U\' F\'',desc:'Turns a line on the yellow face into a cross.',tip:'Hold the line horizontally, then execute.'},
+  {cat:'Beginner',name:'Yellow Cross (L-shape)',alg:'F R U R\' U\' F\' (twice)',desc:'Used when yellow cross shows an L-shape or dot.',tip:'May need to apply twice if starting with a dot.'},
+  {cat:'OLL',name:'Sune',alg:'R U R\' U R U2 R\'',desc:'One of the most common OLL cases. Orients 5 yellow pieces.',tip:'Very fast to execute — a key speed algorithm.'},
+  {cat:'OLL',name:'Anti-Sune',alg:'R\' U\' R U\' R\' U2 R',desc:'Mirror of Sune. Equally common in OLL.'},
+  {cat:'OLL',name:'H-OLL',alg:'F R U R\' U\' F\' f R U R\' U\' f\'',desc:'Two parallel headlights — symmetric OLL case.'},
+  {cat:'OLL',name:'Pi-OLL',alg:'R U2 R2 U\' R2 U\' R2 U2 R',desc:'Two adjacent headlights facing same direction.'},
+  {cat:'PLL',name:'T-Permutation',alg:'R U R\' U\' R\' F R2 U\' R\' U\' R U R\' F\'',desc:'Swaps one pair of adjacent corners + one pair of edges.'},
+  {cat:'PLL',name:'U-Permutation (a)',alg:'R2 U\' R\' U\' R U R U R U\' R',desc:'Three-cycle of edges — most common PLL.'},
+  {cat:'PLL',name:'U-Permutation (b)',alg:'R\' U R\' U\' R\' U\' R\' U R U R2',desc:'Three-cycle of edges (reverse direction).'},
+  {cat:'PLL',name:'H-Permutation',alg:'M2 U M2 U2 M2 U M2',desc:'Swaps two pairs of opposite edges. Very distinctive "H" pattern.'},
+  {cat:'PLL',name:'Z-Permutation',alg:'M2 U M2 U M\' U2 M2 U2 M\'',desc:'Swaps two pairs of adjacent edges in a Z-pattern.'},
+  {cat:'PLL',name:'A-Permutation',alg:'x R\' U R\' D2 R U\' R\' D2 R2',desc:'Three-cycle of corners. One face looks fully solved.'},
+  {cat:'PLL',name:'Y-Permutation',alg:'F R U\' R\' U\' R U R\' F\' R U R\' U\' R\' F R F\'',desc:'Swaps one pair of adjacent corners + one pair of adjacent edges.'},
+  {cat:'PLL',name:'J-Permutation',alg:'R U R\' F\' R U R\' U\' R\' F R2 U\' R\'',desc:'Swaps one pair of adjacent corners and the pair of edges between them.'},
+  {cat:'F2L',name:'Basic F2L Insert',alg:'R U R\' (right slot)',desc:'Fundamental F2L pair insertion into the right-front slot.',tip:'White corner on top, colour facing front.'},
+  {cat:'F2L',name:'Sexy Move F2L',alg:'(R U R\' U\') x6 ≈ identity',desc:'Six repetitions return cube to original state! Great for finger trick practice.',tip:'Count to 6 rotations to verify!'},
+];
+let fcFiltered = [...ALGORITHMS], fcIdx = 0;
+
+function buildAlgFilter() {
+  const cats = [...new Set(ALGORITHMS.map(a => a.cat))];
+  const f = document.getElementById('alg-filter');
+  const all = document.createElement('button');
+  all.className = 'alg-filter-btn active'; all.textContent = 'All';
+  all.onclick = () => { fcFiltered=[...ALGORITHMS]; fcIdx=0; renderFC(); setFilterActive(all); };
+  f.appendChild(all);
+  cats.forEach(cat => {
+    const b = document.createElement('button');
+    b.className = 'alg-filter-btn'; b.textContent = cat;
+    b.onclick = () => { fcFiltered=ALGORITHMS.filter(a=>a.cat===cat); fcIdx=0; renderFC(); setFilterActive(b); };
+    f.appendChild(b);
+  });
+}
+
+function setFilterActive(btn) {
+  document.querySelectorAll('.alg-filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+let fcFlipped = false;
+function renderFC() {
+  const a = fcFiltered[fcIdx];
+  document.getElementById('fc-cat').textContent = a.cat;
+  document.getElementById('fc-name').textContent = a.name;
+  document.getElementById('fc-notation').textContent = a.alg;
+  document.getElementById('fc-desc').textContent = fcFlipped ? (a.tip || a.desc) : a.desc;
+  document.getElementById('fc-count').textContent = `${fcIdx+1} / ${fcFiltered.length}`;
+  document.getElementById('fc-prog').style.width = ((fcIdx+1)/fcFiltered.length*100)+'%';
+  document.getElementById('flashcard').style.background = fcFlipped ? 'var(--al)' : 'var(--surf)';
+  fcFlipped = false;
+}
+
+function fcNav(dir) {
+  fcIdx = (fcIdx + dir + fcFiltered.length) % fcFiltered.length;
+  fcFlipped = false;
+  renderFC();
+}
+
+function shuffleAlgs() {
+  fcFiltered = [...fcFiltered].sort(() => Math.random()-.5);
+  fcIdx = 0; renderFC();
+}
+
+function markKnown() {
+  const card = document.getElementById('flashcard');
+  card.style.borderColor = '#22c55e';
+  setTimeout(() => { card.style.borderColor = ''; fcNav(1); }, 400);
+}
+
+document.getElementById('flashcard').addEventListener('click', function() {
+  fcFlipped = !fcFlipped;
+  const a = fcFiltered[fcIdx];
+  document.getElementById('fc-desc').textContent = fcFlipped ? (a.tip || 'Good luck memorising this one!') : a.desc;
+  this.style.background = fcFlipped ? 'var(--al)' : 'var(--surf)';
+});
+
+buildAlgFilter();
+renderFC();
+
+// ══════════════════════════════════════════
+// SPEED TIMER
+// ══════════════════════════════════════════
+let timerRunning=false, timerStart=0, timerInterval=null, solves=[];
+
+function toggleTimer() {
+  if (!timerRunning) {
+    timerRunning=true; timerStart=performance.now();
+    document.getElementById('timer-btn').textContent='■ Stop';
+    document.getElementById('timer-btn').classList.add('running');
+    document.getElementById('t-instruction').textContent='Solving... press Stop when done';
+    timerInterval = setInterval(updateTimerDisplay, 10);
+  } else {
+    timerRunning=false; clearInterval(timerInterval);
+    const elapsed=(performance.now()-timerStart)/1000;
+    solves.unshift(elapsed);
+    if (solves.length > 10) solves.pop();
+    document.getElementById('timer-btn').textContent='▶ Start';
+    document.getElementById('timer-btn').classList.remove('running');
+    document.getElementById('t-instruction').textContent='Solve recorded! Press Start for next solve.';
+    updateTimerStats();
+  }
+}
+
+function updateTimerDisplay() {
+  const elapsed=(performance.now()-timerStart)/1000;
+  document.getElementById('big-timer').textContent=formatTime(elapsed);
+}
+
+function updateTimerStats() {
+  if (solves.length===0) return;
+  const best=Math.min(...solves), avg=solves.reduce((a,b)=>a+b)/solves.length;
+  document.getElementById('t-best').textContent=formatTime(best);
+  document.getElementById('t-avg').textContent=formatTime(avg);
+  document.getElementById('t-count').textContent=solves.length;
+  const list=document.getElementById('solve-list');
+  list.innerHTML=solves.map((s,i)=>`<div class="solve-entry"><span class="solve-num">#${i+1}</span><span class="solve-time">${formatTime(s)}</span></div>`).join('');
+}
+
+function formatTime(s) {
+  const m=Math.floor(s/60), sec=s%60;
+  return `${m}:${sec.toFixed(2).padStart(5,'0')}`;
+}
+
+document.addEventListener('keydown', e => { if(e.code==='Space'&&document.getElementById('tab-timer').classList.contains('active')){ e.preventDefault(); toggleTimer(); } });
+</script>
+<script src="/js/auth.js"></script>
+<script>LALAuth.init();</script>
+</body>
+</html>

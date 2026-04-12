@@ -35,6 +35,8 @@
       --rubiks-bg:   #eff6ff;
       --smartwrite:  #22c55e;
       --smartwrite-bg:#f0fdf4;
+      --reading:     #0891b2;
+      --reading-bg:  #ecfeff;
 
       --radius-sm:   8px;
       --radius:      14px;
@@ -249,6 +251,7 @@
     .hero-course-card.calligraphy .icon { background: var(--calligraphy-bg); color: var(--calligraphy); }
     .hero-course-card.rubiks .icon { background: var(--rubiks-bg); color: var(--rubiks); }
     .hero-course-card.smartwrite .icon { background: var(--smartwrite-bg); color: var(--smartwrite); }
+    .hero-course-card.reading .icon { background: var(--reading-bg); color: var(--reading); }
     .hero-floating-badge {
       position: absolute; background: var(--surface);
       border: 1px solid var(--border); border-radius: var(--radius);
@@ -309,6 +312,7 @@
     .course-card.calligraphy .course-card-banner { background: linear-gradient(135deg, #edfaf8, #99f6e4); }
     .course-card.rubiks .course-card-banner { background: linear-gradient(135deg, #eff6ff, #bfdbfe); }
     .course-card.smartwrite .course-card-banner { background: linear-gradient(135deg, #f0fdf4, #bbf7d0); }
+    .course-card.reading .course-card-banner { background: linear-gradient(135deg, #ecfeff, #a5f3fc); }
 
     .course-card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
     .course-tag {
@@ -321,6 +325,7 @@
     .course-card.calligraphy .course-tag { background: var(--calligraphy-bg); color: var(--calligraphy); }
     .course-card.rubiks .course-tag { background: var(--rubiks-bg); color: var(--rubiks); }
     .course-card.smartwrite .course-tag { background: var(--smartwrite-bg); color: var(--smartwrite); }
+    .course-card.reading .course-tag { background: var(--reading-bg); color: var(--reading); }
 
     .course-title {
       font-family: var(--font-head); font-size: 1.2rem; font-weight: 800;
@@ -722,6 +727,11 @@
           <div class="name">Smart Write</div>
           <div class="ages">Ages 4–12</div>
         </a>
+        <a href="reading-practice.html" class="hero-course-card reading">
+          <div class="icon">📖</div>
+          <div class="name">Rapid Reading</div>
+          <div class="ages">EN · తెలుగు · हिन्दी</div>
+        </a>
       </div>
       <div class="hero-floating-badge bottom">⭐ 4.9 / 5.0 Average Rating</div>
     </div>
@@ -891,6 +901,27 @@
         <div class="course-card-footer">
           <a href="smart-write.html" class="course-cta">Start Learning →</a>
           <span class="free-badge">Free Demo</span>
+        </div>
+      </div>
+
+      <!-- Rapid Reading -->
+      <div class="course-card reading fade-up">
+        <div class="course-card-banner">📖</div>
+        <div class="course-card-body">
+          <span class="course-tag">All Ages</span>
+          <h3 class="course-title">Rapid Reading Practice</h3>
+          <p class="course-ages">🎯 English · Telugu · Hindi • 4 Levels each</p>
+          <p class="course-desc">Build world-class reading fluency with timed passages, real-time WPM tracking, progressive difficulty, and a confidence meter. Train your eyes and brain to read faster and comprehend better.</p>
+          <div class="course-tags-row">
+            <span class="course-pill">Speed Tracking</span>
+            <span class="course-pill">3 Languages</span>
+            <span class="course-pill">Confidence Meter</span>
+            <span class="course-pill">Progressive Levels</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <a href="reading-practice.html" class="course-cta">Start Reading →</a>
+          <span class="free-badge">Free</span>
         </div>
       </div>
     </div>
@@ -1146,6 +1177,7 @@
         <a href="calligraphy.html">Calligraphy</a>
         <a href="rubiks-cube.html">Rubik's Cube</a>
         <a href="smart-write.html">Smart Write</a>
+        <a href="reading-practice.html">Rapid Reading</a>
       </div>
 
       <div class="footer-col">

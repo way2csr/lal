@@ -156,8 +156,8 @@
   </head>
   <body>
     <div class="login-card">
-      <h1>✨ LingoLearn AI</h1>
-      <p id="form-subtitle">Welcome back. Please sign in.</p>
+      <h1>🎓 LAL Platform</h1>
+      <p id="form-subtitle">Welcome back. Please sign in to continue.</p>
 
       <div id="error-msg" class="alert alert-error">
         Invalid username or password.
@@ -174,7 +174,7 @@
 
       <!-- Login Form -->
       <div id="login-section" class="form-section active">
-        <form action="/login" method="POST">
+        <form action="/login" method="POST" onsubmit="saveRedirect()"
           <div class="input-group">
             <label for="username">Username</label>
             <input
@@ -214,7 +214,7 @@
             type="button"
             class="btn-submit"
             style="background: #e2e8f0; color: #475569; margin-top: 0"
-            onclick="guestLogin()"
+            onclick="guestLoginAndRedirect('/index.html')"
             id="guest-btn"
           >
             👤 Continue as Guest
@@ -301,124 +301,76 @@
       </div>
     </div>
 
+    <script src="/js/auth.js"></script>
     <script>
-      // Check URL parameters to show error or logout messages cleanly without Thymeleaf
+      // ── Show error / logout banners from URL params ──────────────────
       const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("error"))  document.getElementById("error-msg").style.display = "block";
+      if (urlParams.has("logout")) document.getElementById("logout-msg").style.display = "block";
 
-      if (urlParams.has("error")) {
-        document.getElementById("error-msg").style.display = "block";
-      }
+      // ── If already logged in, skip the login page ────────────────────
+      LALAuth.init().then(status => {
+        if (status.loggedIn) window.location.replace('/index.html');
+      });
 
-      if (urlParams.has("logout")) {
-        document.getElementById("logout-msg").style.display = "block";
-      }
+      // Spring Security's form POST will redirect to /index.html on success
+      // (configured via defaultSuccessUrl in SecurityConfig)
+      function saveRedirect() { /* no-op — kept for hook if needed */ }
 
-      // Display form toggling logic
+      // ── Form toggle ──────────────────────────────────────────────────
       function toggleForm(formType) {
-        const loginSection = document.getElementById("login-section");
-        const registerSection = document.getElementById("register-section");
-        const subtitle = document.getElementById("form-subtitle");
-
-        // Hide alerts
-        document
-          .querySelectorAll(".alert")
-          .forEach((a) => (a.style.display = "none"));
-
-        if (formType === "register") {
-          loginSection.classList.remove("active");
-          registerSection.classList.add("active");
-          subtitle.innerText = "Create a new account.";
-        } else {
-          registerSection.classList.remove("active");
-          loginSection.classList.add("active");
-          subtitle.innerText = "Welcome back. Please sign in.";
-        }
+        document.querySelectorAll(".alert").forEach(a => a.style.display = "none");
+        const isReg = formType === "register";
+        document.getElementById("login-section").classList.toggle("active", !isReg);
+        document.getElementById("register-section").classList.toggle("active", isReg);
+        document.getElementById("form-subtitle").innerText = isReg
+          ? "Create a new account."
+          : "Welcome back. Please sign in to continue.";
       }
 
-      // Registration Logic
+      // ── Registration ─────────────────────────────────────────────────
       async function registerUser(event) {
         event.preventDefault();
-
         const btn = document.getElementById("reg-submit-btn");
         const errorMsg = document.getElementById("reg-error-msg");
         const successMsg = document.getElementById("reg-success-msg");
 
-        btn.innerHTML = "⏳ Registering...";
-        btn.disabled = true;
-        errorMsg.style.display = "none";
-        successMsg.style.display = "none";
+        btn.innerHTML = "⏳ Registering…"; btn.disabled = true;
+        errorMsg.style.display = "none"; successMsg.style.display = "none";
 
         const payload = {
-          username: document.getElementById("reg-username").value,
-          password: document.getElementById("reg-password").value,
-          firstName: document.getElementById("reg-firstname").value,
-          lastName: document.getElementById("reg-lastname").value,
-          email: document.getElementById("reg-email").value,
+          username:    document.getElementById("reg-username").value,
+          password:    document.getElementById("reg-password").value,
+          firstName:   document.getElementById("reg-firstname").value,
+          lastName:    document.getElementById("reg-lastname").value,
+          email:       document.getElementById("reg-email").value,
           phoneNumber: document.getElementById("reg-phone").value,
-          age: document.getElementById("reg-age").value
-            ? parseInt(document.getElementById("reg-age").value)
-            : null,
-          fatherName: document.getElementById("reg-father").value,
-          motherName: document.getElementById("reg-mother").value,
+          age:         document.getElementById("reg-age").value
+                         ? parseInt(document.getElementById("reg-age").value) : null,
+          fatherName:  document.getElementById("reg-father").value,
+          motherName:  document.getElementById("reg-mother").value,
         };
 
         try {
           const response = await fetch("/api/user/register", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
           });
 
           if (response.ok) {
             successMsg.style.display = "block";
             document.getElementById("register-form").reset();
-            // Switch back to login slowly so they see success msg
-            setTimeout(() => {
-              toggleForm("login");
-              // Show success msg on login screen
-              successMsg.style.display = "block";
-            }, 2000);
+            setTimeout(() => { toggleForm("login"); successMsg.style.display = "block"; }, 2000);
           } else {
             const data = await response.json().catch(() => ({}));
-            errorMsg.innerText =
-              data.message || "Registration failed. Username might exist.";
+            errorMsg.innerText = data.message || "Registration failed. Username might already exist.";
             errorMsg.style.display = "block";
           }
-        } catch (err) {
-          console.error("Registration error:", err);
-          errorMsg.innerText = "Error connecting to server.";
-          errorMsg.style.display = "block";
+        } catch {
+          errorMsg.innerText = "Error connecting to server."; errorMsg.style.display = "block";
         } finally {
-          btn.innerHTML = "Register";
-          btn.disabled = false;
-        }
-      }
-
-      async function guestLogin() {
-        const btn = document.getElementById("guest-btn");
-        const originalContent = btn.innerHTML;
-        btn.innerHTML = "⏳ Setting up session...";
-        btn.disabled = true;
-
-        try {
-          const response = await fetch("/api/guest/login", {
-            method: "POST",
-          });
-
-          if (response.ok) {
-            window.location.href = "/learn.html";
-          } else {
-            alert("Failed to continue as guest. Please try again.");
-            btn.innerHTML = originalContent;
-            btn.disabled = false;
-          }
-        } catch (err) {
-          console.error("Guest login error:", err);
-          alert("Error connecting to server.");
-          btn.innerHTML = originalContent;
-          btn.disabled = false;
+          btn.innerHTML = "Register"; btn.disabled = false;
         }
       }
     </script>

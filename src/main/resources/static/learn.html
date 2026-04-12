@@ -1353,13 +1353,27 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <!-- LAL Academy Home Navigation -->
+    <div class="no-print" style="position:fixed;top:0;left:0;right:0;z-index:10000;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid #e2e8f0;height:48px;display:flex;align-items:center;padding:0 16px;gap:12px;">
+      <a href="index.html" style="display:flex;align-items:center;gap:6px;font-size:0.85rem;font-weight:700;color:#6c3ef4;text-decoration:none;padding:6px 12px;border-radius:100px;border:1px solid #ede9ff;background:#ede9ff;transition:all 0.2s;" onmouseover="this.style.background='#ddd6fe'" onmouseout="this.style.background='#ede9ff'">
+        ← Home
+      </a>
+      <a href="home.html" style="display:flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:600;color:#6c3ef4;text-decoration:none;padding:5px 12px;border-radius:100px;border:1px solid #ede9ff;background:#f5f3ff;transition:all 0.2s;" onmouseover="this.style.background='#ddd6fe'" onmouseout="this.style.background='#f5f3ff'">
+        🎓 LAL Academy
+      </a>
+      <a href="abacus.html" style="display:flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:600;color:#f97316;text-decoration:none;padding:5px 12px;border-radius:100px;border:1px solid #fed7aa;background:#fff7ed;transition:all 0.2s;" onmouseover="this.style.background='#fed7aa'" onmouseout="this.style.background='#fff7ed'">
+        🧮 Abacus Drills
+      </a>
+      <span style="font-size:0.8rem;color:#64748b;font-weight:500;margin-left:4px;">| LingoLearn – AI Language Tool</span>
+    </div>
+
+    <div class="container" style="padding-top:56px;">
       <!-- Top Left: Actions -->
       <div
         class="no-print"
         style="
           position: absolute;
-          top: 10px;
+          top: 68px;
           left: 10px;
           display: flex;
           gap: 10px;

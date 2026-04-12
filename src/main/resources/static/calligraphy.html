@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calligraphy – Art of Writing | LAL Academy</title>
+  <meta name="description" content="Transform handwriting into art. Learn beautiful lettering, develop fine motor skills, artistic expression, and discipline. Ages 5–15." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent:       #14b8a6;
+      --accent-light: #edfaf8;
+      --accent-dark:  #0d9488;
+      --accent-grad:  linear-gradient(135deg, #14b8a6, #6366f1);
+      --bg:           #f8f9ff;
+      --surface:      #ffffff;
+      --border:       #e5e7f0;
+      --text-dark:    #1a1d2e;
+      --text-mid:     #4a5068;
+      --text-soft:    #8890a4;
+      --brand:        #6c3ef4;
+      --brand-light:  #ede9ff;
+      --radius-sm:    8px;
+      --radius:       14px;
+      --radius-lg:    20px;
+      --radius-xl:    28px;
+      --shadow-sm:    0 1px 4px rgba(20,184,166,0.08);
+      --shadow:       0 4px 20px rgba(20,184,166,0.10);
+      --shadow-lg:    0 12px 48px rgba(20,184,166,0.14);
+      --nav-h:        64px;
+      --font:         'Inter', system-ui, sans-serif;
+      --font-head:    'Nunito', 'Inter', sans-serif;
+      --font-calli:   'Playfair Display', Georgia, serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text-dark); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    .topbar { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid rgba(229,231,240,0.7); height: var(--nav-h); display: flex; align-items: center; }
+    .topbar .inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+    .back-link { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 600; color: var(--text-mid); padding: 8px 16px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); transition: all 0.2s; }
+    .back-link:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-light); }
+    .topbar-logo { font-family: var(--font-head); font-size: 1.2rem; font-weight: 900; color: var(--brand); display: flex; align-items: center; gap: 8px; }
+    .topbar-logo-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--brand), #9b6bff); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: #fff; }
+    .book-demo-btn { background: var(--accent); color: #fff; border: none; cursor: pointer; padding: 10px 22px; border-radius: 100px; font-size: 0.88rem; font-weight: 700; transition: all 0.2s; font-family: var(--font); }
+    .book-demo-btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+    .hero { background: linear-gradient(135deg, #edfaf8 0%, #f0fdf4 50%, #f0ecff 100%); padding: calc(var(--nav-h) + 60px) 0 80px; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(20,184,166,0.15) 0%, transparent 70%); border-radius: 50%; }
+    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-light); border: 1px solid rgba(20,184,166,0.2); border-radius: 100px; padding: 6px 16px; font-size: 0.8rem; font-weight: 700; color: var(--accent); margin-bottom: 20px; }
+    .hero-title { font-family: var(--font-head); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 900; line-height: 1.15; margin-bottom: 16px; }
+    .hero-title .grad { background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-desc { font-size: 1.05rem; color: var(--text-mid); line-height: 1.7; margin-bottom: 28px; max-width: 500px; }
+    .hero-meta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+    .hero-meta-item { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 8px 16px; font-size: 0.82rem; font-weight: 600; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; padding: 14px 28px; border-radius: 100px; font-weight: 700; border: none; cursor: pointer; font-size: 1rem; font-family: var(--font); transition: all 0.2s; box-shadow: 0 4px 16px rgba(20,184,166,0.35); }
+    .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); }
+    .btn-outline { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--accent); padding: 13px 27px; border-radius: 100px; font-weight: 700; border: 2px solid var(--accent); cursor: pointer; font-size: 1rem; font-family: var(--font); transition: all 0.2s; }
+    .btn-outline:hover { background: var(--accent-light); transform: translateY(-2px); }
+
+    .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+    .course-emblem { width: 280px; height: 280px; border-radius: 40px; background: var(--accent-grad); display: flex; align-items: center; justify-content: center; font-size: 8rem; box-shadow: var(--shadow-lg); animation: gentle-float 5s ease-in-out infinite; }
+    @keyframes gentle-float { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-14px) rotate(2deg); } }
+    .hero-badge-float { position: absolute; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 16px; box-shadow: var(--shadow-lg); font-weight: 700; font-size: 0.82rem; white-space: nowrap; animation: float-badge 4s ease-in-out infinite; }
+    .hero-badge-float.b1 { top: 10px; right: -10px; }
+    .hero-badge-float.b2 { bottom: 10px; left: -10px; animation-delay: 1.5s; }
+    .hero-badge-float.b3 { top: 50%; right: -30px; transform: translateY(-50%); animation-delay: 0.8s; }
+    @keyframes float-badge { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    .section { padding: 80px 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-label { display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 6px 16px; border-radius: 100px; margin-bottom: 16px; }
+    .section-title { font-family: var(--font-head); font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 800; color: var(--text-dark); line-height: 1.2; margin-bottom: 12px; }
+    .section-sub { font-size: 1rem; color: var(--text-mid); max-width: 580px; }
+    .text-center { text-align: center; }
+    .text-center .section-sub { margin: 0 auto; }
+
+    /* Calligraphy Styles Preview */
+    .styles-showcase { margin-top: 44px; }
+    .styles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .style-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 28px; text-align: center; transition: all 0.3s; overflow: hidden; position: relative; }
+    .style-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent-grad); }
+    .style-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .style-sample { font-size: 2.2rem; margin-bottom: 12px; line-height: 1.3; }
+    .style-name { font-family: var(--font-head); font-weight: 800; font-size: 1rem; margin-bottom: 6px; color: var(--accent); }
+    .style-desc { font-size: 0.82rem; color: var(--text-mid); }
+    .italic-style { font-style: italic; }
+    .serif-style { font-family: Georgia, serif; }
+    .script-style { font-family: var(--font-calli); font-style: italic; }
+
+    .benefits-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 44px; }
+    .benefit-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; text-align: center; transition: all 0.3s; }
+    .benefit-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: rgba(20,184,166,0.3); }
+    .benefit-icon { width: 52px; height: 52px; border-radius: var(--radius); background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin: 0 auto 14px; }
+    .benefit-title { font-family: var(--font-head); font-weight: 800; margin-bottom: 8px; font-size: 0.95rem; }
+    .benefit-desc { font-size: 0.83rem; color: var(--text-mid); line-height: 1.5; }
+
+    .curr-bg { background: linear-gradient(145deg, #edfaf8 0%, #f0fdf4 100%); }
+    .curriculum-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; }
+    .level-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .level-header { background: var(--accent-grad); color: #fff; padding: 16px 24px; display: flex; align-items: center; gap: 12px; }
+    .level-num { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.9rem; flex-shrink: 0; }
+    .level-title { font-family: var(--font-head); font-weight: 800; font-size: 1rem; }
+    .level-subtitle { font-size: 0.78rem; opacity: 0.85; margin-top: 2px; }
+    .level-body { padding: 20px 24px; }
+    .level-topics { display: flex; flex-direction: column; gap: 8px; }
+    .topic-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; color: var(--text-mid); }
+    .topic-icon { color: var(--accent); font-size: 0.8rem; flex-shrink: 0; margin-top: 3px; }
+
+    .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 44px; }
+    .info-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; text-align: center; }
+    .info-card .big { font-family: var(--font-head); font-size: 2rem; font-weight: 900; color: var(--accent); }
+    .info-card .label { font-size: 0.82rem; color: var(--text-soft); margin-top: 4px; }
+    .info-card .desc { font-size: 0.88rem; color: var(--text-mid); margin-top: 8px; }
+
+    .cta-banner { background: var(--accent-grad); border-radius: var(--radius-xl); padding: 48px; text-align: center; color: #fff; position: relative; overflow: hidden; }
+    .cta-banner h2 { font-family: var(--font-head); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 900; margin-bottom: 12px; }
+    .cta-banner p { font-size: 1rem; opacity: 0.9; margin-bottom: 28px; }
+    .cta-banner .btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-white { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--accent); padding: 14px 28px; border-radius: 100px; font-weight: 800; font-size: 1rem; font-family: var(--font); border: none; cursor: pointer; transition: all 0.2s; }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .btn-wa { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.2); color: #fff; padding: 14px 28px; border-radius: 100px; font-weight: 700; font-size: 1rem; border: 2px solid rgba(255,255,255,0.5); cursor: pointer; transition: all 0.2s; font-family: var(--font); }
+    .btn-wa:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
+
+    .form-section { background: var(--bg); }
+    .form-wrapper { max-width: 700px; margin: 44px auto 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 40px; box-shadow: var(--shadow-lg); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-mid); margin-bottom: 6px; }
+    .form-group input, .form-group select { width: 100%; padding: 12px 14px; font-size: 0.92rem; border: 1.5px solid var(--border); border-radius: var(--radius); background: var(--bg); color: var(--text-dark); transition: border-color 0.2s; outline: none; font-family: var(--font); }
+    .form-group input:focus, .form-group select:focus { border-color: var(--accent); background: #fff; }
+    .submit-full { width: 100%; padding: 14px; background: var(--accent); color: #fff; border: none; border-radius: 100px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: var(--font); transition: all 0.2s; }
+    .submit-full:hover { background: var(--accent-dark); transform: translateY(-2px); }
+    .or-divider { text-align: center; color: var(--text-soft); font-size: 0.82rem; margin: 14px 0; }
+    .wa-full { width: 100%; padding: 13px; background: #25d366; color: #fff; border: none; border-radius: 100px; font-size: 0.95rem; font-weight: 700; cursor: pointer; font-family: var(--font); transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .wa-full:hover { background: #1ebe5d; transform: translateY(-2px); }
+
+    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: var(--text-dark); color: #fff; padding: 14px 24px; border-radius: var(--radius); font-size: 0.9rem; font-weight: 600; box-shadow: var(--shadow-lg); transform: translateY(80px); opacity: 0; transition: all 0.3s ease; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { background: #22c55e; }
+    .footer-strip { background: #1a1d2e; color: rgba(255,255,255,0.7); padding: 24px 0; text-align: center; font-size: 0.85rem; }
+    .footer-strip a { color: #5eead4; font-weight: 600; }
+
+    @media (max-width: 900px) { .hero-inner { grid-template-columns: 1fr; } .hero-visual { display: none; } .benefits-grid { grid-template-columns: repeat(2, 1fr); } .curriculum-grid { grid-template-columns: 1fr; } .styles-grid { grid-template-columns: 1fr; } .info-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .benefits-grid { grid-template-columns: 1fr; } .styles-grid { grid-template-columns: 1fr; } .info-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } .hero { padding: calc(var(--nav-h) + 30px) 0 50px; } }
+  </style>
+</head>
+<body>
+
+<nav class="topbar" aria-label="Page navigation">
+  <div class="inner">
+    <a href="index.html" class="back-link">← Home</a>
+    <a href="home.html" class="topbar-logo">
+      <div class="topbar-logo-icon">🎓</div>
+      LAL Academy
+    </a>
+    <div style="display:flex;align-items:center;gap:8px">
+      <a data-auth="show-logged-out" href="/login.html" style="display:none;font-size:.82rem;font-weight:700;padding:8px 16px;border-radius:100px;border:1.5px solid #e5e7f0;color:#4a5068;text-decoration:none;background:#fff">Login</a>
+      <span data-auth="show-logged-in" style="display:none;align-items:center;gap:8px;font-size:.82rem;font-weight:600;color:#4a5068">👤 <span data-auth="username"></span></span>
+      <a data-auth="show-logged-in" href="/logout" style="display:none;font-size:.8rem;font-weight:700;color:#ef4444;padding:6px 14px;border-radius:100px;border:1.5px solid #fecaca;background:#fff0ef;text-decoration:none">Logout</a>
+      <button class="book-demo-btn" onclick="scrollToForm()">📅 Free Demo</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">✍️ Artistic • Disciplined • Beautiful</div>
+      <h1 class="hero-title" id="hero-heading">
+        Transform Writing into<br/><span class="grad">Timeless Art</span>
+      </h1>
+      <p class="hero-desc">
+        Calligraphy is more than beautiful handwriting — it is a form of meditation, self-expression, and discipline. Our program develops fine motor skills, patience, and an artistic eye that children carry for life.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">🎂 Ages 5–15</div>
+        <div class="hero-meta-item">🎨 3 Levels</div>
+        <div class="hero-meta-item">⏱️ 4 Months per Level</div>
+        <div class="hero-meta-item">🖋️ 4 Script Styles</div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="scrollToForm()">📅 Book Free Demo</button>
+        <a href="#curriculum" class="btn-outline">View Curriculum →</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-badge-float b1">🏆 Best Handwriting Award</div>
+      <div class="course-emblem">✍️</div>
+      <div class="hero-badge-float b2">🖊️ 4 Lettering Styles</div>
+      <div class="hero-badge-float b3">🌿 Fine Motor Skills</div>
+    </div>
+  </div>
+</section>
+
+<!-- Styles Showcase -->
+<section class="section" aria-labelledby="styles-heading">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">Lettering Styles</span>
+      <h2 class="section-title" id="styles-heading">Four Beautiful Scripts Your Child Will Master</h2>
+    </div>
+    <div class="styles-showcase">
+      <div class="styles-grid">
+        <div class="style-card">
+          <div class="style-sample script-style" style="color:#14b8a6;">Beautiful</div>
+          <div class="style-name">Italic Script</div>
+          <div class="style-desc">Flowing, elegant letterforms with consistent slant. The foundation of classical calligraphy.</div>
+        </div>
+        <div class="style-card">
+          <div class="style-sample" style="font-family:'Times New Roman',serif; font-weight:bold; color:#6366f1; font-size:1.8rem;">Beautiful</div>
+          <div class="style-name">Roman Caps</div>
+          <div class="style-desc">Crisp, structured uppercase letters inspired by ancient Roman inscriptions and monuments.</div>
+        </div>
+        <div class="style-card">
+          <div class="style-sample" style="font-family:Georgia,serif; font-style:italic; color:#ec4899; font-size:1.8rem;">Beautiful</div>
+          <div class="style-name">Copperplate</div>
+          <div class="style-desc">Delicate hairlines and thick downstrokes creating the most ornate and elegant script style.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Benefits -->
+<section class="section curr-bg" aria-labelledby="benefits-heading">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">Why Calligraphy?</span>
+      <h2 class="section-title" id="benefits-heading">More Than Beautiful Writing</h2>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">✋</div>
+        <h3 class="benefit-title">Fine Motor Skills</h3>
+        <p class="benefit-desc">Precise pen control develops fine motor coordination that improves overall handwriting, drawing, and even sports performance.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🧘</div>
+        <h3 class="benefit-title">Mindfulness & Focus</h3>
+        <p class="benefit-desc">The deliberate, rhythmic nature of calligraphy is meditative — reducing stress and building the ability to focus deeply.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🎨</div>
+        <h3 class="benefit-title">Artistic Expression</h3>
+        <p class="benefit-desc">Children discover their unique artistic voice through lettering, creating personalized artwork, cards, and projects.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⭐</div>
+        <h3 class="benefit-title">Academic Advantage</h3>
+        <p class="benefit-desc">Beautiful, legible handwriting impresses teachers and earns higher marks in all written examinations and assignments.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Curriculum -->
+<section class="section" id="curriculum" aria-labelledby="curriculum-heading">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">Our Syllabus</span>
+      <h2 class="section-title" id="curriculum-heading">3-Level Mastery Program</h2>
+    </div>
+    <div class="curriculum-grid">
+      <div class="level-card">
+        <div class="level-header">
+          <div class="level-num">1</div>
+          <div>
+            <div class="level-title">Beginner – Foundation</div>
+            <div class="level-subtitle">Ages 5–8 • 4 Months</div>
+          </div>
+        </div>
+        <div class="level-body">
+          <div class="level-topics">
+            <div class="topic-item"><span class="topic-icon">▸</span>Pen holding & posture fundamentals</div>
+            <div class="topic-item"><span class="topic-icon">▸</span>Basic strokes & warm-up exercises</div>
+            <div class="topic-item"><span class="topic-icon">▸</span>Lowercase italic alphabets (a–z)</div>
+            <div class="topic-item"><span class="topic-icon">▸</span>Consistent letter height & spacing</div>
+            <div class="topic-item"><span class="topic-icon">▸</span>Simple words & short sentences</div>
+          </div>
+        </div>
+      </div>
+      <div class="level-card">
+        <div class="level-header">
+          <div class="level-num">2</div>
+          <div>
+            <div class="level-title">Intermediate – Refinement</div>
+            <div class="level-subtitle">Ages 8–12 • 4 Months</div>
+          </div>
+        </div>
+        <div class="level-body">
+          <div class="level-topics">
+            <div class="topic-item"><span class="topic-icon">▸</span>Uppercase alphabets & numerals</div>
+            <div class="topic-item"><span class="topic-icon">▸</span>Roman capital letterforms</div>
+            <div class="topic-item"><span class="topic-icon">▸</span>Paragraph writing with uniform style</div>
+            <div class="topic-item"><span class="topic-icon">▸</span>Introduction to Copperplate basics</div>
+            <div class="topic-item"><span class="topic-icon">▸</span>Decorative borders & flourishes</div>
+          </div>
+        </div>
+      </div>
+      <div class="level-card">
+        <div class="level-header">
+          <div class="level-num">3</div>
+          <div>
+            <div class="level-title">Advanced – Mastery</div>
+            <div class="level-subtitle">Ages 12–15 • 4 Months</div>
+          </div>
+        </div>
+        <div class="level-body">
+          <div class="level-topics">
+            <div class="topic-item"><span class="topic-icon">▸</span>Copperplate & pointed pen technique</div>
+            <div class="topic-item"><span class="topic-icon">▸</span>Multi-script artistic compositions</div>
+            <div class="topic-item"><span class="topic-icon">▸</span>Certificate & invitation design</div>
+            <div class="topic-item"><span class="topic-icon">▸</span>Color calligraphy with watercolor inks</div>
+            <div class="topic-item"><span class="topic-icon">▸</span>Personal portfolio creation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Info Cards -->
+<section class="section curr-bg" aria-label="Course information">
+  <div class="container">
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="big">5–15</div>
+        <div class="label">Age Group</div>
+        <div class="desc">Ideal start age is 5–7 when fine motor development is optimal. Adults welcome too!</div>
+      </div>
+      <div class="info-card">
+        <div class="big">2×/wk</div>
+        <div class="label">Class Frequency</div>
+        <div class="desc">Two 60-minute sessions per week. Daily 15-min practice at home using our worksheets.</div>
+      </div>
+      <div class="info-card">
+        <div class="big">3 Lvls</div>
+        <div class="label">Learning Levels</div>
+        <div class="desc">Foundation → Refinement → Mastery. All tools & materials provided by LAL Academy.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Banner -->
+<section class="section" aria-label="Call to action">
+  <div class="container">
+    <div class="cta-banner">
+      <h2>Let Your Child's Writing Become Their Signature Art</h2>
+      <p>Join 800+ students who have transformed their handwriting into a lifelong artistic skill.</p>
+      <div class="btn-group">
+        <button class="btn-white" onclick="scrollToForm()">📅 Book Free Demo Class</button>
+        <button class="btn-wa" onclick="openWhatsApp()">💬 WhatsApp Us Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Demo Form -->
+<section class="section form-section" id="book-demo" aria-labelledby="form-heading">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">Get Started</span>
+      <h2 class="section-title" id="form-heading">Book Your Free Calligraphy Demo</h2>
+      <p class="section-sub">Experience the art of beautiful writing in one free session.</p>
+    </div>
+    <div class="form-wrapper">
+      <form id="demo-form" novalidate>
+        <div class="form-row">
+          <div class="form-group"><label for="pname">Parent Name *</label><input type="text" id="pname" name="parent_name" placeholder="Your name" required /></div>
+          <div class="form-group"><label for="cname">Child's Name *</label><input type="text" id="cname" name="child_name" placeholder="Child's name" required /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="phone">Phone Number *</label><input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required /></div>
+          <div class="form-group"><label for="age">Child's Age *</label><input type="number" id="age" name="age" placeholder="5–15" min="5" max="15" required /></div>
+        </div>
+        <div class="form-group">
+          <label for="mode">Preferred Mode</label>
+          <select id="mode" name="mode">
+            <option value="online">Online (Live Video Class)</option>
+            <option value="offline">Offline (Visit Our Center)</option>
+          </select>
+        </div>
+        <button type="submit" class="submit-full">📅 Book My Free Calligraphy Demo</button>
+      </form>
+      <div class="or-divider">— or —</div>
+      <button class="wa-full" onclick="openWhatsApp()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chat on WhatsApp
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CALLIGRAPHY PRACTICE CANVAS ══ -->
+<section style="padding:56px 0;background:#f8f9ff">
+  <div style="max-width:920px;margin:0 auto;padding:0 24px">
+    <div style="text-align:center;margin-bottom:28px">
+      <div style="display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#14b8a6;background:#f0fdfa;padding:6px 16px;border-radius:100px;margin-bottom:12px">🖋️ Practice Studio</div>
+      <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:#1a1d2e;margin-bottom:8px">Calligraphy Practice Canvas</h2>
+      <p style="font-size:.95rem;color:#4a5068">Use the canvas below to practise calligraphy strokes. Choose a nib style, letter guide, and ink colour.</p>
+    </div>
+
+    <div style="background:#fff;border:1px solid #e5e7f0;border-radius:20px;padding:24px;box-shadow:0 4px 20px rgba(20,184,166,.10)">
+      <!-- Toolbar -->
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center">
+        <select id="callig-nib" style="padding:9px 13px;border:1.5px solid #e5e7f0;border-radius:10px;font-size:.88rem;font-family:inherit;background:#fff;outline:none;cursor:pointer">
+          <option value="round">Round Nib (3px)</option>
+          <option value="broad">Broad Nib (8px)</option>
+          <option value="italic">Italic Nib (5px oblique)</option>
+        </select>
+        <select id="callig-guide" style="padding:9px 13px;border:1.5px solid #e5e7f0;border-radius:10px;font-size:.88rem;font-family:inherit;background:#fff;outline:none;cursor:pointer" onchange="setCalligGuide()">
+          <option value="none">No Guide</option>
+          <option value="classic">Classic Ruled (4-line)</option>
+          <option value="slant">Slanted Guide (55°)</option>
+          <option value="grid">Grid Paper</option>
+        </select>
+        <div style="display:flex;gap:6px;align-items:center">
+          <div class="color-swatch-c" data-color="#1a1d2e" style="width:26px;height:26px;border-radius:50%;background:#1a1d2e;cursor:pointer;border:3px solid #1a1d2e" onclick="setCalligColor(this)"></div>
+          <div class="color-swatch-c" data-color="#1d4ed8" style="width:26px;height:26px;border-radius:50%;background:#1d4ed8;cursor:pointer;border:3px solid transparent" onclick="setCalligColor(this)"></div>
+          <div class="color-swatch-c" data-color="#7c2d12" style="width:26px;height:26px;border-radius:50%;background:#7c2d12;cursor:pointer;border:3px solid transparent" onclick="setCalligColor(this)"></div>
+          <div class="color-swatch-c" data-color="#064e3b" style="width:26px;height:26px;border-radius:50%;background:#064e3b;cursor:pointer;border:3px solid transparent" onclick="setCalligColor(this)"></div>
+          <div class="color-swatch-c" data-color="#7e22ce" style="width:26px;height:26px;border-radius:50%;background:#7e22ce;cursor:pointer;border:3px solid transparent" onclick="setCalligColor(this)"></div>
+          <div class="color-swatch-c" data-color="#c2410c" style="width:26px;height:26px;border-radius:50%;background:#c2410c;cursor:pointer;border:3px solid transparent" onclick="setCalligColor(this)"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
+          <span style="font-size:.75rem;color:#8890a4">Opacity</span>
+          <input type="range" id="callig-opacity" min="20" max="100" value="90" style="width:70px;accent-color:#14b8a6" oninput="calligOpacity=parseInt(this.value)/100" />
+        </div>
+      </div>
+
+      <!-- Stroke guide row -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <span style="font-size:.78rem;font-weight:700;color:#8890a4;align-self:center">Practice stroke:</span>
+        <button class="callig-stroke-btn" onclick="loadStrokeGuide('thin-thick')">Thin→Thick</button>
+        <button class="callig-stroke-btn" onclick="loadStrokeGuide('oval')">Oval O</button>
+        <button class="callig-stroke-btn" onclick="loadStrokeGuide('upstroke')">Upstroke</button>
+        <button class="callig-stroke-btn" onclick="loadStrokeGuide('loop')">Entry Loop</button>
+        <button class="callig-stroke-btn" onclick="loadStrokeGuide('uppercase-a')">Uppercase A</button>
+        <button class="callig-stroke-btn" onclick="loadStrokeGuide('letter-m')">Minuscule m</button>
+      </div>
+
+      <!-- Canvas -->
+      <div style="border-radius:12px;overflow:hidden;border:1px solid #e5e7f0;position:relative">
+        <canvas id="callig-canvas" width="860" height="380" style="display:block;cursor:crosshair;touch-action:none"></canvas>
+      </div>
+
+      <!-- Controls -->
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:14px">
+        <div style="font-size:.8rem;color:#8890a4">💡 Tip: <span id="callig-tip">Calligraphy is about controlled, intentional strokes. Move slowly!</span></div>
+        <div style="display:flex;gap:10px">
+          <button onclick="clearCalligCanvas()" style="padding:9px 20px;border-radius:100px;border:1.5px solid #e5e7f0;background:#f8f9ff;font-weight:700;cursor:pointer;font-size:.85rem;font-family:inherit;transition:all .2s">✕ Clear</button>
+          <button onclick="saveCalligCanvas()" style="padding:9px 20px;border-radius:100px;background:#14b8a6;color:#fff;border:none;font-weight:700;cursor:pointer;font-size:.85rem;font-family:inherit;transition:all .2s">💾 Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .callig-stroke-btn{padding:6px 14px;border-radius:100px;border:1.5px solid #e5e7f0;background:#f8f9ff;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;color:#4a5068}
+  .callig-stroke-btn:hover{background:#14b8a6;color:#fff;border-color:#14b8a6}
+</style>
+
+<footer class="footer-strip">
+  <a href="index.html">← Home</a> &nbsp;|&nbsp; <a href="home.html" style="color:#5eead4">LAL Academy</a> &nbsp;|&nbsp; © 2024 LAL Academy.
+</footer>
+<div class="toast" id="toast" role="alert" aria-live="polite"></div>
+<script>
+  function scrollToForm() { document.getElementById('book-demo').scrollIntoView({ behavior: 'smooth' }); }
+  function openWhatsApp() {
+    const phone = '919876543210'; // PLACEHOLDER
+    const msg = encodeURIComponent("Hi LAL Academy! I'm interested in the Calligraphy course for my child.");
+    window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+  }
+  function showToast(msg, type='info') {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.className = 'toast show' + (type==='success' ? ' success' : '');
+    setTimeout(() => t.classList.remove('show'), 4000);
+  }
+  document.getElementById('demo-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const d = new FormData(this);
+    if (!d.get('parent_name') || !d.get('child_name') || !d.get('phone') || !d.get('age')) { showToast('Please fill in all required fields.'); return; }
+    const p = '919876543210'; // PLACEHOLDER
+    const m = encodeURIComponent(`Calligraphy Demo Request\nParent: ${d.get('parent_name')}\nChild: ${d.get('child_name')}\nPhone: ${d.get('phone')}\nAge: ${d.get('age')}`);
+    window.open(`https://wa.me/${p}?text=${m}`, '_blank');
+    showToast('🎉 Demo booked! We\'ll contact you shortly.', 'success');
+    this.reset();
+  });
+
+  // ══ CALLIGRAPHY CANVAS ══
+  const cCanvas = document.getElementById('callig-canvas');
+  const cCtx = cCanvas.getContext('2d');
+  let cDrawing=false, cLastX=0, cLastY=0, cColor='#1a1d2e', calligOpacity=0.9, cGuide='none';
+  const CALLIG_TIPS = {
+    'thin-thick':'Apply light pressure upstroke, heavy downstroke. This is the key to calligraphy.',
+    oval:'The oval O is the parent of many letters: a, d, g, q. Master it first.',
+    upstroke:'Light pressure, move upward at a slight angle. The foundation of every letter.',
+    loop:'Ascender loops rise 2× the body height. Keep the loop narrow, not wide.',
+    'uppercase-a':'Two diagonal downstrokes converging at top, crossbar in the middle third.',
+    'letter-m':'Three arches, evenly spaced. Each arch the same width and curve.',
+  };
+
+  function resizeCCallig() {
+    const w=Math.min(860, cCanvas.parentElement.clientWidth-2);
+    cCanvas.style.width=w+'px'; cCanvas.style.height=Math.round(380*(w/860))+'px';
+  }
+  resizeCCallig();
+  window.addEventListener('resize', resizeCCallig);
+
+  function setCalligGuide() {
+    cGuide = document.getElementById('callig-guide').value;
+    drawCalligBackground();
+  }
+
+  function drawCalligBackground() {
+    cCtx.fillStyle='#fffdf8'; cCtx.fillRect(0,0,cCanvas.width,cCanvas.height);
+    if (cGuide==='classic') {
+      for (let y=50; y<cCanvas.height; y+=64) {
+        [y, y+16, y+48, y+64].forEach((ly, i) => {
+          cCtx.strokeStyle = i===0||i===3 ? '#b0cfc9' : i===1 ? '#d0e8e4' : '#e5f5f3';
+          cCtx.lineWidth = i===0||i===3 ? 1.5 : 0.8;
+          cCtx.beginPath(); cCtx.moveTo(0,ly); cCtx.lineTo(cCanvas.width,ly); cCtx.stroke();
+        });
+      }
+    } else if (cGuide==='slant') {
+      cCtx.strokeStyle='rgba(20,184,166,.15)'; cCtx.lineWidth=0.8;
+      for (let y=-cCanvas.height; y<cCanvas.width+cCanvas.height; y+=28) {
+        const ang=Math.tan(35*Math.PI/180);
+        cCtx.beginPath(); cCtx.moveTo(y,0); cCtx.lineTo(y+cCanvas.height*ang, cCanvas.height); cCtx.stroke();
+      }
+      for (let gy=48; gy<cCanvas.height; gy+=48) {
+        cCtx.strokeStyle='rgba(20,184,166,.25)'; cCtx.lineWidth=1;
+        cCtx.beginPath(); cCtx.moveTo(0,gy); cCtx.lineTo(cCanvas.width,gy); cCtx.stroke();
+      }
+    } else if (cGuide==='grid') {
+      cCtx.strokeStyle='rgba(20,184,166,.15)'; cCtx.lineWidth=0.7;
+      for (let x=24; x<cCanvas.width; x+=24) { cCtx.beginPath(); cCtx.moveTo(x,0); cCtx.lineTo(x,cCanvas.height); cCtx.stroke(); }
+      for (let y=24; y<cCanvas.height; y+=24) { cCtx.beginPath(); cCtx.moveTo(0,y); cCtx.lineTo(cCanvas.width,y); cCtx.stroke(); }
+    }
+  }
+  drawCalligBackground();
+
+  function loadStrokeGuide(type) {
+    drawCalligBackground();
+    const tip = CALLIG_TIPS[type]||'Practise this stroke with slow, deliberate movements.';
+    document.getElementById('callig-tip').textContent = tip;
+    cCtx.save(); cCtx.globalAlpha=0.18; cCtx.strokeStyle='#14b8a6';
+    if (type==='thin-thick') {
+      for (let x=60; x<cCanvas.width; x+=90) {
+        cCtx.lineWidth=1; cCtx.beginPath(); cCtx.moveTo(x,60); cCtx.lineTo(x,140); cCtx.stroke();
+        cCtx.lineWidth=10; cCtx.beginPath(); cCtx.moveTo(x+20,60); cCtx.lineTo(x+20,140); cCtx.stroke();
+      }
+    } else if (type==='oval') {
+      for (let x=80; x<cCanvas.width; x+=100) {
+        cCtx.lineWidth=5; cCtx.beginPath(); cCtx.ellipse(x,110,28,36,0,0,Math.PI*2); cCtx.stroke();
+      }
+    } else if (type==='upstroke') {
+      for (let x=60; x<cCanvas.width; x+=80) {
+        cCtx.lineWidth=2; cCtx.beginPath(); cCtx.moveTo(x,150); cCtx.bezierCurveTo(x+8,130,x+14,100,x+18,60); cCtx.stroke();
+      }
+    } else if (type==='loop') {
+      for (let x=60; x<cCanvas.width-40; x+=100) {
+        cCtx.lineWidth=4; cCtx.beginPath(); cCtx.moveTo(x,150); cCtx.bezierCurveTo(x+6,120,x+30,40,x+38,60); cCtx.bezierCurveTo(x+46,80,x+30,110,x+20,120); cCtx.stroke();
+      }
+    } else {
+      cCtx.font='bold 120px "Playfair Display", Georgia, serif';
+      cCtx.fillStyle='#14b8a6'; cCtx.globalAlpha=0.12;
+      const letter = type==='uppercase-a'?'A':'m';
+      for (let x=60; x<cCanvas.width-80; x+=160) cCtx.fillText(letter, x, 160);
+    }
+    cCtx.restore();
+  }
+
+  function getCCalligPos(e) {
+    const rect=cCanvas.getBoundingClientRect();
+    const sx=cCanvas.width/rect.width, sy=cCanvas.height/rect.height;
+    if(e.touches) return {x:(e.touches[0].clientX-rect.left)*sx,y:(e.touches[0].clientY-rect.top)*sy};
+    return {x:(e.clientX-rect.left)*sx,y:(e.clientY-rect.top)*sy};
+  }
+
+  function getNibStyle() {
+    return document.getElementById('callig-nib').value;
+  }
+
+  function applyNibStroke(x1,y1,x2,y2) {
+    const nib = getNibStyle();
+    const alpha = calligOpacity;
+    cCtx.globalAlpha = alpha;
+    cCtx.strokeStyle = cColor;
+    cCtx.lineCap = 'round'; cCtx.lineJoin = 'round';
+    if (nib==='round') {
+      cCtx.lineWidth=3;
+      cCtx.beginPath(); cCtx.moveTo(x1,y1); cCtx.lineTo(x2,y2); cCtx.stroke();
+    } else if (nib==='broad') {
+      // Simulate broad nib — thick on downstroke, thin on upstroke
+      const dy = y2-y1, dx = x2-x1;
+      const angle = Math.atan2(dy,dx);
+      const broadFactor = Math.abs(Math.sin(angle)); // thick downstroke
+      cCtx.lineWidth = 2 + broadFactor*12;
+      cCtx.beginPath(); cCtx.moveTo(x1,y1); cCtx.lineTo(x2,y2); cCtx.stroke();
+    } else if (nib==='italic') {
+      // Italic oblique: rotate 45°, thick on one axis
+      const dy = y2-y1, dx = x2-x1;
+      const angle = Math.atan2(dy,dx);
+      const t = Math.abs(Math.cos(angle+Math.PI/4));
+      cCtx.lineWidth = 2 + t*8;
+      cCtx.beginPath(); cCtx.moveTo(x1,y1); cCtx.lineTo(x2,y2); cCtx.stroke();
+    }
+    cCtx.globalAlpha=1;
+  }
+
+  cCanvas.addEventListener('mousedown',e=>{cDrawing=true;const p=getCCalligPos(e);cLastX=p.x;cLastY=p.y});
+  cCanvas.addEventListener('mousemove',e=>{if(!cDrawing)return;const p=getCCalligPos(e);applyNibStroke(cLastX,cLastY,p.x,p.y);cLastX=p.x;cLastY=p.y});
+  cCanvas.addEventListener('mouseup',()=>cDrawing=false);
+  cCanvas.addEventListener('mouseleave',()=>cDrawing=false);
+  cCanvas.addEventListener('touchstart',e=>{e.preventDefault();cDrawing=true;const p=getCCalligPos(e);cLastX=p.x;cLastY=p.y},{passive:false});
+  cCanvas.addEventListener('touchmove',e=>{e.preventDefault();if(!cDrawing)return;const p=getCCalligPos(e);applyNibStroke(cLastX,cLastY,p.x,p.y);cLastX=p.x;cLastY=p.y},{passive:false});
+  cCanvas.addEventListener('touchend',()=>cDrawing=false);
+
+  function setCalligColor(el) {
+    cColor=el.dataset.color;
+    document.querySelectorAll('.color-swatch-c').forEach(s=>s.style.borderColor='transparent');
+    el.style.borderColor=el.dataset.color;
+  }
+
+  function clearCalligCanvas() { drawCalligBackground(); }
+  function saveCalligCanvas() {
+    const link=document.createElement('a');
+    link.download='lal-calligraphy-practice.png';
+    link.href=cCanvas.toDataURL('image/png');
+    link.click();
+  }
+</script>
+<script src="/js/auth.js"></script>
+<script>LALAuth.init();</script>
+</body>
+</html>

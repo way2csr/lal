@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rapid Reading Practice | LAL Academy</title>
+  <meta name="description" content="Boost your reading speed and fluency in English, Telugu, and Hindi with progressive drills, real-time speed tracking and confidence levels." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@700;800;900&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#f5f5f7; --surface:#ffffff; --surface-2:#f5f5f7;
+      --border:#d2d2d7; --border-s:#e8e8ed;
+      --td:#1d1d1f; --tm:#6e6e73; --tt:#aeaeb2;
+      --blue:#0071e3; --blue-l:#e8f2fd; --blue-d:#0051a2;
+      --green:#34c759; --green-l:#e9f9ee;
+      --red:#ff3b30; --red-l:#fff0ef;
+      --purple:#5e5ce6; --purple-l:#f0f0ff;
+      --orange:#f97316; --orange-l:#fff7ed;
+      --amber:#f59e0b; --amber-l:#fffbeb;
+      --r-sm:8px; --r:12px; --r-lg:18px; --r-xl:24px;
+      --sh-sm:0 2px 8px rgba(0,0,0,.08); --sh-md:0 4px 16px rgba(0,0,0,.10); --sh-lg:0 12px 40px rgba(0,0,0,.12);
+      --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      --font-te:'Noto Sans Telugu','Inter',sans-serif;
+      --font-hi:'Noto Sans Devanagari','Inter',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+    body{font-family:var(--font);background:var(--bg);color:var(--td);min-height:100vh;font-size:15px;line-height:1.5}
+
+    /* ── Topbar ── */
+    .topbar{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.88);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border-s);height:56px;display:flex;align-items:center;padding:0 24px;gap:16px}
+    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:600;color:var(--blue);background:var(--blue-l);padding:6px 14px;border-radius:100px;transition:all .2s}
+    .back-link:hover{background:var(--blue);color:#fff}
+    .topbar-brand{flex:1;text-align:center;font-weight:800;font-size:1rem;color:var(--td)}
+
+    .page{max-width:960px;margin:0 auto;padding:36px 24px 80px}
+
+    /* ── Screen system ── */
+    .screen{display:none}.screen.active{display:block}
+
+    /* ── Hero / Landing ── */
+    .hero-wrap{text-align:center;padding:48px 0 32px}
+    .hero-wrap h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;margin-bottom:10px;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero-wrap p{color:var(--tm);font-size:1rem;max-width:560px;margin:0 auto 28px}
+
+    /* ── Language Selector ── */
+    .lang-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:660px;margin:0 auto 36px}
+    .lang-card{background:var(--surface);border:2px solid var(--border-s);border-radius:var(--r-xl);padding:28px 20px;cursor:pointer;text-align:center;transition:all .22s;position:relative;overflow:hidden}
+    .lang-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--lc,var(--blue));opacity:0;transition:opacity .2s}
+    .lang-card:hover{transform:translateY(-4px);box-shadow:var(--sh-md);border-color:var(--lc,var(--blue))}
+    .lang-card:hover::before,.lang-card.selected::before{opacity:1}
+    .lang-card.selected{border-color:var(--lc,var(--blue));box-shadow:0 0 0 3px var(--lb,var(--blue-l))}
+    .lang-icon{font-size:2.6rem;margin-bottom:12px}
+    .lang-name{font-weight:900;font-size:1.15rem;margin-bottom:4px}
+    .lang-sub{font-size:.78rem;color:var(--tm)}
+
+    /* ── Level Picker ── */
+    .level-section{max-width:660px;margin:0 auto 32px}
+    .level-section h2{font-size:1.1rem;font-weight:800;margin-bottom:14px;color:var(--td)}
+    .level-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+    .level-card{background:var(--surface);border:1.5px solid var(--border-s);border-radius:var(--r-lg);padding:16px 18px;cursor:pointer;transition:all .2s}
+    .level-card:hover{transform:translateY(-2px);box-shadow:var(--sh-sm);border-color:var(--blue)}
+    .level-card .lv-name{font-weight:800;font-size:.9rem;margin-bottom:4px}
+    .level-card .lv-desc{font-size:.76rem;color:var(--tm)}
+    .level-card .lv-badge{display:inline-block;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:100px;margin-bottom:8px}
+
+    /* ── Practice UI ── */
+    .practice-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;padding:16px 20px;background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--sh-sm)}
+    .ph-info{display:flex;gap:20px;flex-wrap:wrap}
+    .ph-stat{text-align:center}
+    .ph-val{font-size:1.3rem;font-weight:900;font-variant-numeric:tabular-nums}
+    .ph-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tt)}
+
+    .passage-card{background:var(--surface);border:1.5px solid var(--border-s);border-radius:var(--r-xl);padding:40px 36px;box-shadow:var(--sh-sm);margin-bottom:24px;position:relative}
+    .passage-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--tt);margin-bottom:16px}
+    .passage-text{font-size:1.35rem;line-height:2;color:var(--td);white-space:pre-wrap;user-select:none;transition:font-size .2s}
+    .passage-text.telugu{font-family:var(--font-te);font-size:1.4rem;line-height:2.2}
+    .passage-text.hindi{font-family:var(--font-hi);font-size:1.4rem;line-height:2.2}
+    .passage-text .word{display:inline;border-radius:4px;padding:2px 0;transition:all .15s}
+    .passage-text .word.current{background:var(--blue-l);color:var(--blue);font-weight:700}
+    .passage-text .word.read{color:var(--tm)}
+
+    .practice-controls{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+    .ctrl-btn{padding:12px 28px;border-radius:var(--r);font-weight:700;font-size:.95rem;cursor:pointer;font-family:var(--font);transition:all .2s;border:none}
+    .ctrl-primary{background:var(--blue);color:#fff}
+    .ctrl-primary:hover{background:var(--blue-d);transform:translateY(-1px)}
+    .ctrl-sec{background:var(--surface);color:var(--tm);border:1.5px solid var(--border)}
+    .ctrl-sec:hover{border-color:var(--blue);color:var(--blue)}
+    .ctrl-sm{padding:8px 18px;font-size:.82rem;border-radius:var(--r-sm)}
+
+    /* font size controls */
+    .font-ctrl{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:20px}
+    .font-ctrl button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface);font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+    .font-ctrl button:hover{background:var(--blue-l);border-color:var(--blue);color:var(--blue)}
+    .font-ctrl span{font-size:.78rem;color:var(--tm);font-weight:600;min-width:36px;text-align:center}
+
+    /* ── Progress bar ── */
+    .progress-bar-wrap{height:8px;background:var(--border-s);border-radius:100px;overflow:hidden;margin-bottom:20px}
+    .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:100px;transition:width .4s}
+
+    /* ── Speed Meter ── */
+    .speed-ring-wrap{display:flex;justify-content:center;margin:24px 0}
+    .speed-ring{position:relative;width:160px;height:160px}
+    .speed-ring svg{transform:rotate(-90deg)}
+    .sr-bg{fill:none;stroke:var(--border-s);stroke-width:10}
+    .sr-fg{fill:none;stroke:var(--blue);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .6s,stroke .5s}
+    .speed-ring-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .sr-value{font-size:2.2rem;font-weight:900;color:var(--blue);font-variant-numeric:tabular-nums}
+    .sr-unit{font-size:.72rem;font-weight:700;color:var(--tt);text-transform:uppercase;letter-spacing:.08em}
+
+    /* ── Results ── */
+    .result-card{background:var(--surface);border:1.5px solid var(--border-s);border-radius:var(--r-xl);padding:40px 36px;max-width:600px;margin:0 auto;text-align:center;box-shadow:var(--sh-md)}
+    .result-emoji{font-size:3.5rem;margin-bottom:12px}
+    .result-title{font-size:1.8rem;font-weight:900;margin-bottom:8px}
+    .result-sub{color:var(--tm);font-size:.95rem;margin-bottom:24px}
+    .result-stats{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+    .rs-item{text-align:center}
+    .rs-val{font-size:1.8rem;font-weight:900;font-variant-numeric:tabular-nums}
+    .rs-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tt);margin-top:2px}
+
+    /* Confidence Meter */
+    .confidence-bar{display:flex;gap:3px;justify-content:center;margin:18px 0 24px}
+    .conf-seg{width:32px;height:10px;border-radius:100px;background:var(--border-s);transition:background .4s}
+    .conf-seg.fill-1{background:var(--red)}.conf-seg.fill-2{background:var(--orange)}
+    .conf-seg.fill-3{background:var(--amber)}.conf-seg.fill-4{background:var(--green)}.conf-seg.fill-5{background:#22c55e}
+    .conf-label{font-size:.78rem;font-weight:700;text-align:center;margin-bottom:8px}
+
+    /* History */
+    .history-section{margin-top:40px;max-width:660px;margin-left:auto;margin-right:auto}
+    .history-section h2{font-size:1rem;font-weight:800;margin-bottom:12px;color:var(--td)}
+    .hist-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:var(--r);background:var(--surface);border:1px solid var(--border-s);margin-bottom:6px;font-size:.84rem}
+    .hist-row .h-lang{font-weight:700;color:var(--blue);min-width:60px}
+    .hist-row .h-level{color:var(--tm);flex:1}
+    .hist-row .h-wpm{font-weight:900;color:var(--td);min-width:70px;text-align:right}
+    .hist-row .h-date{font-size:.72rem;color:var(--tt);min-width:100px;text-align:right}
+
+    /* Tip box */
+    .tip-box{background:var(--amber-l);border:1.5px solid #fcd34d;border-radius:var(--r);padding:14px 18px;margin:20px 0;font-size:.85rem;color:#92400e;line-height:1.6}
+    .tip-box strong{display:block;margin-bottom:4px}
+
+    @media(max-width:600px){
+      .lang-grid{grid-template-columns:1fr}
+      .level-grid{grid-template-columns:1fr 1fr}
+      .passage-card{padding:24px 18px}
+      .passage-text{font-size:1.1rem}
+      .result-card{padding:28px 18px}
+      .page{padding:24px 14px 60px}
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topbar">
+    <div style="display:flex;align-items:center;gap:8px">
+      <a href="index.html" class="back-link" title="Home">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        ← Home
+      </a>
+      <a href="home.html" class="back-link" title="LAL Academy" style="font-size:.8rem;padding:4px 10px;">🎓 LAL Academy</a>
+    </div>
+    <div class="topbar-brand">📖 Rapid Reading Practice</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span data-auth="username" style="font-size:.82rem;font-weight:600;color:var(--tm)"></span>
+      <a data-auth="show-login" href="login.html" class="back-link" style="font-size:.78rem;padding:4px 12px">Login</a>
+      <button data-auth="show-logout" onclick="LALAuth.logout()" style="display:none;font-size:.78rem;padding:4px 12px;border-radius:100px;border:1px solid var(--border);background:var(--surface);cursor:pointer;font-family:var(--font);font-weight:600;color:var(--tm)">Logout</button>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- ═══════ SCREEN 1: LANDING ═══════ -->
+    <div class="screen active" id="scr-landing">
+      <div class="hero-wrap">
+        <h1>Rapid Reading Trainer</h1>
+        <p>Build world-class reading fluency in English, Telugu & Hindi. Track your speed, measure progress, and grow your confidence — one passage at a time.</p>
+      </div>
+
+      <div class="lang-grid">
+        <div class="lang-card" style="--lc:var(--blue);--lb:var(--blue-l)" onclick="selectLang('en')" id="lc-en">
+          <div class="lang-icon">🇬🇧</div>
+          <div class="lang-name">English</div>
+          <div class="lang-sub">Stories · Science · Vocabulary</div>
+        </div>
+        <div class="lang-card" style="--lc:var(--purple);--lb:var(--purple-l)" onclick="selectLang('te')" id="lc-te">
+          <div class="lang-icon">🇮🇳</div>
+          <div class="lang-name">తెలుగు</div>
+          <div class="lang-sub">కథలు · సామెతలు · వాక్యాలు</div>
+        </div>
+        <div class="lang-card" style="--lc:var(--orange);--lb:var(--orange-l)" onclick="selectLang('hi')" id="lc-hi">
+          <div class="lang-icon">🇮🇳</div>
+          <div class="lang-name">हिन्दी</div>
+          <div class="lang-sub">कहानियाँ · मुहावरे · वाक्य</div>
+        </div>
+      </div>
+
+      <div class="level-section" id="level-picker" style="display:none">
+        <h2 id="level-title">Choose Difficulty</h2>
+        <div class="level-grid" id="level-grid"></div>
+      </div>
+
+      <!-- Reading History -->
+      <div class="history-section" id="history-section" style="display:none">
+        <h2>📊 Your Reading History</h2>
+        <div id="history-list"></div>
+        <div style="text-align:center;margin-top:10px">
+          <button class="ctrl-btn ctrl-sec ctrl-sm" onclick="clearHistory()">Clear History</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ SCREEN 2: PRACTICE ═══════ -->
+    <div class="screen" id="scr-practice">
+      <div class="practice-header">
+        <div>
+          <button class="ctrl-btn ctrl-sec ctrl-sm" onclick="exitPractice()">← Back</button>
+        </div>
+        <div class="ph-info">
+          <div class="ph-stat"><div class="ph-val" id="ph-passage">1/5</div><div class="ph-label">Passage</div></div>
+          <div class="ph-stat"><div class="ph-val" id="ph-words">0</div><div class="ph-label">Words</div></div>
+          <div class="ph-stat"><div class="ph-val" id="ph-timer" style="color:var(--blue)">0:00</div><div class="ph-label">Time</div></div>
+          <div class="ph-stat"><div class="ph-val" id="ph-wpm" style="color:var(--purple)">—</div><div class="ph-label">WPM</div></div>
+        </div>
+      </div>
+
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pb-fill" style="width:0%"></div></div>
+
+      <div class="tip-box" id="tip-box">
+        <strong>💡 Reading Tip</strong>
+        <span id="tip-text">Focus on groups of words rather than individual words. This trains your eye to scan faster.</span>
+      </div>
+
+      <div class="font-ctrl">
+        <button onclick="changeFontSize(-1)" title="Smaller">A−</button>
+        <span id="font-size-label">100%</span>
+        <button onclick="changeFontSize(1)" title="Larger">A+</button>
+      </div>
+
+      <div class="passage-card">
+        <div class="passage-label" id="passage-label">Passage 1 of 5</div>
+        <div class="passage-text" id="passage-text"></div>
+      </div>
+
+      <div class="speed-ring-wrap">
+        <div class="speed-ring">
+          <svg width="160" height="160" viewBox="0 0 160 160">
+            <circle class="sr-bg" cx="80" cy="80" r="65"/>
+            <circle class="sr-fg" id="sr-arc" cx="80" cy="80" r="65" stroke-dasharray="408.4" stroke-dashoffset="408.4"/>
+          </svg>
+          <div class="speed-ring-inner">
+            <div class="sr-value" id="sr-wpm">0</div>
+            <div class="sr-unit">Words / Min</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-controls" id="prac-controls">
+        <button class="ctrl-btn ctrl-primary" id="btn-start" onclick="startReading()">▶ Start Reading</button>
+        <button class="ctrl-btn ctrl-primary" id="btn-done" onclick="finishPassage()" style="display:none">✓ I'm Done Reading</button>
+        <button class="ctrl-btn ctrl-sec" id="btn-next" onclick="nextPassage()" style="display:none">Next Passage →</button>
+        <button class="ctrl-btn ctrl-sec" id="btn-hear" onclick="speakPassage()" style="display:none" title="Listen to the passage">🔊 Listen</button>
+      </div>
+    </div>
+
+    <!-- ═══════ SCREEN 3: RESULTS ═══════ -->
+    <div class="screen" id="scr-results">
+      <div class="result-card">
+        <div class="result-emoji" id="res-emoji">🏆</div>
+        <div class="result-title" id="res-title">Great Job!</div>
+        <div class="result-sub" id="res-sub">You've completed the session.</div>
+
+        <div class="result-stats">
+          <div class="rs-item"><div class="rs-val" id="res-wpm" style="color:var(--blue)">0</div><div class="rs-label">Avg WPM</div></div>
+          <div class="rs-item"><div class="rs-val" id="res-total-words" style="color:var(--purple)">0</div><div class="rs-label">Words Read</div></div>
+          <div class="rs-item"><div class="rs-val" id="res-time" style="color:var(--orange)">0:00</div><div class="rs-label">Total Time</div></div>
+          <div class="rs-item"><div class="rs-val" id="res-passages" style="color:var(--green)">0</div><div class="rs-label">Passages</div></div>
+        </div>
+
+        <div class="conf-label" id="conf-label">Confidence Level: —</div>
+        <div class="confidence-bar" id="conf-bar">
+          <div class="conf-seg"></div><div class="conf-seg"></div><div class="conf-seg"></div><div class="conf-seg"></div><div class="conf-seg"></div>
+          <div class="conf-seg"></div><div class="conf-seg"></div><div class="conf-seg"></div><div class="conf-seg"></div><div class="conf-seg"></div>
+        </div>
+
+        <div style="margin:20px 0;text-align:left">
+          <div style="font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;color:var(--tt);margin-bottom:10px">Per-Passage Breakdown</div>
+          <div id="res-breakdown"></div>
+        </div>
+
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px">
+          <button class="ctrl-btn ctrl-primary" onclick="retrySession()">🔄 Retry Same Level</button>
+          <button class="ctrl-btn ctrl-sec" onclick="showScreen('scr-landing')">← Choose Another</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/js/auth.js"></script>
+  <script>
+    // ════════════════════════════════════════════════════════
+    // READING PRACTICE ENGINE
+    // ════════════════════════════════════════════════════════
+
+    // ── Sentence Corpus ─────────────────────────────────────
+    const CORPUS = {
+      en: {
+        beginner: [
+          "The sun is big and bright. It gives us light every day. Plants need sunlight to grow. We feel warm when the sun shines on us.",
+          "A cat sat on the mat. It was a fluffy white cat. The cat liked to play with yarn. After playing, it took a long nap.",
+          "I like to eat apples. Apples are red, green, or yellow. They are sweet and crunchy. An apple a day keeps the doctor away.",
+          "Birds fly high in the sky. They have feathers and wings. Some birds sing beautiful songs. Baby birds live in nests made of twigs.",
+          "The rain falls from the clouds. It makes puddles on the ground. Children love to splash in puddles. Rain helps flowers and trees grow.",
+          "My dog is my best friend. He likes to run and fetch the ball. He wags his tail when he is happy. We go for walks every evening.",
+          "Fish live in water. They breathe through their gills. Some fish are very colourful. They swim by moving their fins and tail.",
+          "Stars twinkle at night. They are very far away from Earth. The moon also shines at night. It reflects the light of the sun.",
+          "I go to school every day. My teacher is very kind. I learn to read, write, and count. My favourite subject is science.",
+          "The garden has many flowers. Roses are red and smell sweet. Butterflies visit the flowers. Bees collect nectar to make honey."
+        ],
+        elementary: [
+          "The water cycle is one of nature's most fascinating processes. Water evaporates from oceans and lakes when heated by the sun. It rises into the atmosphere and forms clouds through condensation. When the clouds become heavy, rain or snow falls back to Earth, completing the cycle.",
+          "Thomas Edison invented the electric light bulb after thousands of experiments. He once said, 'I have not failed. I've just found ten thousand ways that won't work.' His persistence changed the world forever and brought light into millions of homes across the globe.",
+          "The Amazon rainforest is the largest tropical rainforest on Earth. It produces about twenty percent of the world's oxygen. Thousands of unique species of plants and animals call it home. Scientists believe many species in the Amazon are still undiscovered.",
+          "The human brain is incredibly powerful. It contains about one hundred billion neurons that communicate through electrical signals. Your brain uses about twenty percent of your body's energy. Even while you sleep, your brain remains active, processing memories and repairing itself.",
+          "Ancient Egyptians built the Great Pyramids more than four thousand years ago. The largest pyramid, the Great Pyramid of Giza, was the tallest structure in the world for nearly four thousand years. These monuments were built as tombs for the pharaohs and remain one of the Seven Wonders of the Ancient World.",
+          "Honey bees are remarkable creatures that live in highly organised colonies. Each colony has a queen, worker bees, and drones. Worker bees communicate the location of flowers through a special dance. A single bee colony can produce over thirty kilograms of honey in a year.",
+          "Mount Everest stands at eight thousand eight hundred and forty-eight metres above sea level. It is the tallest mountain on Earth. Every year, hundreds of climbers attempt to reach its summit. The extreme cold, thin air, and unpredictable weather make it one of the most dangerous climbs."
+        ],
+        intermediate: [
+          "Artificial intelligence is transforming how we interact with technology in unprecedented ways. Machine learning algorithms can now recognise speech, translate languages in real time, and even compose music. While these advances bring enormous benefits to healthcare, education, and industry, they also raise important questions about privacy, employment, and the ethical boundaries of automated decision-making that society must carefully navigate.",
+          "The theory of relativity, proposed by Albert Einstein in the early twentieth century, fundamentally changed our understanding of space, time, and gravity. According to the theory, time passes more slowly for objects moving at speeds close to the speed of light. This concept, known as time dilation, has been confirmed through numerous experiments and is essential for the accuracy of modern satellite-based navigation systems like GPS.",
+          "Photosynthesis is the biochemical process by which green plants convert carbon dioxide and water into glucose and oxygen using sunlight as an energy source. This process occurs primarily in the chloroplasts of plant cells, where chlorophyll absorbs light energy. Without photosynthesis, the oxygen levels in our atmosphere would plummet, making most forms of life on Earth impossible. It is one of the most vital chemical reactions sustaining our biosphere.",
+          "The Renaissance was a period of extraordinary cultural and intellectual transformation in Europe spanning roughly from the fourteenth to the seventeenth century. It began in the Italian city-states of Florence, Venice, and Rome before spreading across the continent. Artists like Leonardo da Vinci and Michelangelo created masterpieces that continue to inspire the world, while thinkers like Galileo and Copernicus revolutionised our understanding of the universe.",
+          "Ocean currents play a crucial role in regulating the Earth's climate by distributing heat from the equator toward the poles. The Gulf Stream, for example, carries warm water from the Gulf of Mexico across the Atlantic, keeping Western Europe significantly warmer than it would otherwise be at such high latitudes. Changes in ocean circulation patterns can have far-reaching effects on weather, marine ecosystems, and global temperatures."
+        ],
+        advanced: [
+          "Quantum entanglement, a phenomenon Albert Einstein famously dismissed as 'spooky action at a distance,' has become one of the most actively researched areas in modern physics. When two particles become entangled, measuring the quantum state of one particle instantaneously determines the state of the other, regardless of the distance separating them. This counterintuitive behaviour defies classical physics and has profound implications for quantum computing, quantum cryptography, and our fundamental understanding of the nature of reality. Researchers around the world are now harnessing entanglement to develop communication systems that would be theoretically immune to eavesdropping.",
+          "The microbiome — the vast community of trillions of microorganisms residing in and on the human body — has emerged as one of the most exciting frontiers in biomedical science. These bacteria, viruses, fungi, and other microbes collectively contain more genetic material than our own human cells and play pivotal roles in digestion, immune function, mental health, and even behaviour. Recent studies have linked imbalances in the gut microbiome to conditions as diverse as obesity, depression, autoimmune disorders, and cardiovascular disease, opening entirely new avenues for personalised medicine and therapeutic intervention.",
+          "The philosophical concept of consciousness remains one of the most profound unsolved mysteries in science. Despite remarkable advances in neuroscience, we still lack a comprehensive theory explaining how subjective experience — the felt quality of seeing the colour red or tasting chocolate — arises from the electrochemical activity of neurons. This gap, often referred to as the 'hard problem of consciousness' by philosopher David Chalmers, challenges the assumption that physical processes alone can fully account for the richness of human awareness and has sparked vigorous debate among scientists, philosophers, and artificial intelligence researchers alike."
+        ]
+      },
+      te: {
+        beginner: [
+          "సూర్యుడు చాలా పెద్దవాడు. ఆయన మనకు వెలుగు ఇస్తాడు. చెట్లు ఎదగడానికి సూర్యరశ్మి అవసరం. సూర్యుడు ప్రకాశిస్తే మనకు వెచ్చగా ఉంటుంది.",
+          "ఒక పిల్లి బల్ల మీద కూర్చుంది. అది తెల్ల పిల్లి. పిల్లికి దారంతో ఆడుకోవడం ఇష్టం. ఆడుకున్న తర్వాత అది నిద్రపోయింది.",
+          "నాకు ఆపిల్ పండు తినడం ఇష్టం. ఆపిల్ పండ్లు ఎరుపు, ఆకుపచ్చ లేదా పసుపు రంగులో ఉంటాయి. అవి తియ్యగా ఉంటాయి.",
+          "పక్షులు ఆకాశంలో ఎగురుతాయి. వాటికి ఈకలు మరియు రెక్కలు ఉంటాయి. కొన్ని పక్షులు అందమైన పాటలు పాడతాయి.",
+          "వర్షం మేఘాల నుండి కురుస్తుంది. నేల మీద నీటి గుంటలు ఏర్పడతాయి. పిల్లలు నీటిలో ఆడుకోవడం ఇష్టపడతారు.",
+          "నా కుక్క నా మంచి స్నేహితుడు. దానికి పరుగెత్తడం ఇష్టం. సంతోషంగా ఉన్నప్పుడు అది తోక ఊపుతుంది. మేము ప్రతిరోజూ నడకకు వెళ్తాము.",
+          "చేపలు నీటిలో నివసిస్తాయి. అవి మొప్పల ద్వారా శ్వాసిస్తాయి. కొన్ని చేపలు చాలా రంగురంగులుగా ఉంటాయి.",
+          "రాత్రి పూట నక్షత్రాలు మెరుస్తాయి. అవి భూమికి చాలా దూరంలో ఉంటాయి. చంద్రుడు కూడా రాత్రి ప్రకాశిస్తాడు.",
+          "నేను ప్రతిరోజూ బడికి వెళ్తాను. మా టీచర్ చాలా మంచివారు. నేను చదవడం, రాయడం మరియు లెక్కలు నేర్చుకుంటాను.",
+          "తోటలో చాలా పూలు ఉన్నాయి. గులాబీలు ఎరుపు రంగులో ఉంటాయి. సీతాకోకచిలుకలు పూల దగ్గరకు వస్తాయి."
+        ],
+        elementary: [
+          "నీటి చక్రం ప్రకృతిలో ఒక అద్భుతమైన ప్రక్రియ. సూర్యుడి వేడికి సముద్రాలు మరియు సరస్సుల నుండి నీరు ఆవిరి అవుతుంది. అది పైకి వెళ్లి మేఘాలుగా ఏర్పడుతుంది. మేఘాలు భారంగా అయినప్పుడు వర్షం లేదా మంచు రూపంలో భూమి మీద పడుతుంది.",
+          "భారతదేశం అనేక సంస్కృతులు మరియు సంప్రదాయాలకు నిలయం. ఇక్కడ వందలాది భాషలు మాట్లాడబడతాయి. ప్రతి రాష్ట్రానికి దాని స్వంత ఆహారం, నృత్యం మరియు సంగీతం ఉంది. ఈ వైవిధ్యం భారతదేశాన్ని ప్రపంచంలో ప్రత్యేకంగా నిలుపుతుంది.",
+          "మహాత్మా గాంధీ భారతదేశ స్వాతంత్ర్య పోరాటంలో ముఖ్యమైన పాత్ర పోషించారు. ఆయన అహింస మరియు శాంతి మార్గాన్ని అనుసరించారు. ఆయన సత్యాగ్రహ ఉద్యమం ప్రపంచవ్యాప్తంగా ప్రజలను ప్రేరేపించింది.",
+          "తెలుగు భాష ద్రావిడ భాషల కుటుంబానికి చెందినది. ఇది భారతదేశంలో అత్యధికంగా మాట్లాడబడే భాషలలో ఒకటి. తెలుగు సాహిత్యం వేల సంవత్సరాల చరిత్ర కలిగి ఉంది. ఆదికవి నన్నయ్య తెలుగులో మహాభారతాన్ని అనువదించారు.",
+          "భూమి సూర్యుని చుట్టూ తిరుగుతుంది. ఒక పరిభ్రమణం పూర్తి చేయడానికి మూడు వందల అరవై ఐదు రోజులు పడుతుంది. భూమి తన అక్షం చుట్టూ కూడా తిరుగుతుంది. ఈ భ్రమణం వల్ల పగలు మరియు రాత్రి ఏర్పడతాయి."
+        ],
+        intermediate: [
+          "విశ్వం అనంతమైన రహస్యాలతో నిండి ఉంది. శాస్త్రవేత్తలు టెలిస్కోపుల సహాయంతో దూరంగా ఉన్న నక్షత్రాలను మరియు గెలాక్సీలను అధ్యయనం చేస్తారు. మన సౌర వ్యవస్థలో ఎనిమిది గ్రహాలు ఉన్నాయి. భూమి మాత్రమే జీవం ఉన్న గ్రహం అని మనకు తెలుసు. అయితే, ఇతర గ్రహాలపై జీవం ఉన్నదో లేదో తెలుసుకోవడానికి అనేక పరిశోధనలు జరుగుతున్నాయి. అంగారక గ్రహం మీద నీటి ఆనవాళ్ళు కనుగొన్నారు.",
+          "సాంకేతికత మన జీవితాలను మౌలికంగా మార్చేసింది. స్మార్ట్‌ఫోన్లు ప్రపంచాన్ని మన చేతుల్లో పెట్టాయి. ఇంటర్నెట్ ద్వారా మనం ఎక్కడి నుండైనా సమాచారాన్ని పొందవచ్చు. కృత్రిమ మేధస్సు వైద్యం, విద్య మరియు పరిశ్రమలలో విప్లవాత్మక మార్పులు తీసుకువస్తోంది. అయితే, సాంకేతికత వల్ల కలిగే సామాజిక ప్రభావాల గురించి కూడా మనం ఆలోచించాలి.",
+          "భారతీయ శాస్త్రీయ సంగీతం ప్రపంచంలోనే అత్యంత సంక్లిష్టమైన మరియు అందమైన సంగీత విధానాలలో ఒకటి. కర్ణాటక సంగీతం మరియు హిందుస్తానీ సంగీతం రెండు ప్రధాన శాఖలు. రాగం, తాళం మరియు శ్రుతి ఈ సంగీతం యొక్క ప్రాథమిక అంశాలు. త్యాగరాజ స్వామి వంటి మహానుభావులు వేల కృతులు రచించారు."
+        ],
+        advanced: [
+          "క్వాంటం భౌతిక శాస్త్రం పరమాణు స్థాయిలో పదార్థం మరియు శక్తి యొక్క ప్రవర్తనను అధ్యయనం చేస్తుంది. ఈ రంగంలో అనేక ప్రతికూల ధోరణులు ఉన్నాయి — ఉదాహరణకు, ఒక కణం ఒకే సమయంలో రెండు స్థానాలలో ఉండగలదు అనే సూపర్‌పొజిషన్ సిద్ధాంతం. క్వాంటం ఎంటాంగిల్‌మెంట్ ద్వారా రెండు కణాలు ఎంత దూరంలో ఉన్నా ఒకదానిని కొలిచినప్పుడు రెండవదాని స్థితి తక్షణమే నిర్ణయమవుతుంది. ఈ సిద్ధాంతాలు క్వాంటం కంప్యూటింగ్ మరియు క్వాంటం క్రిప్టోగ్రఫీ వంటి కొత్త సాంకేతిక రంగాలకు పునాదులు వేస్తున్నాయి."
+        ]
+      },
+      hi: {
+        beginner: [
+          "सूरज बहुत बड़ा और चमकीला है। वह हमें हर दिन रोशनी देता है। पेड़-पौधों को बढ़ने के लिए सूरज की रोशनी चाहिए। धूप में हमें गर्मी मिलती है।",
+          "एक बिल्ली चटाई पर बैठी थी। वह एक सफेद बिल्ली थी। बिल्ली को धागे से खेलना पसंद था। खेलने के बाद वह सो गई।",
+          "मुझे सेब खाना पसंद है। सेब लाल, हरे या पीले रंग के होते हैं। वे मीठे और कुरकुरे होते हैं। रोज़ एक सेब खाने से डॉक्टर दूर रहता है।",
+          "पक्षी आसमान में उड़ते हैं। उनके पंख और पर होते हैं। कुछ पक्षी बहुत सुंदर गाते हैं। छोटे पक्षी घोंसलों में रहते हैं।",
+          "बारिश बादलों से गिरती है। ज़मीन पर पानी के गड्ढे बन जाते हैं। बच्चों को पानी में खेलना पसंद है। बारिश से फूल और पेड़ बढ़ते हैं।",
+          "मेरा कुत्ता मेरा सबसे अच्छा दोस्त है। उसे दौड़ना और गेंद लाना पसंद है। खुश होने पर वह पूँछ हिलाता है। हम हर शाम टहलने जाते हैं।",
+          "मछलियाँ पानी में रहती हैं। वे गलफड़ों से साँस लेती हैं। कुछ मछलियाँ बहुत रंगीन होती हैं। वे अपने पंखों और पूँछ से तैरती हैं।",
+          "रात में तारे टिमटिमाते हैं। वे पृथ्वी से बहुत दूर हैं। चाँद भी रात को चमकता है। वह सूरज की रोशनी को दर्शाता है।",
+          "मैं हर दिन स्कूल जाता हूँ। मेरे शिक्षक बहुत अच्छे हैं। मैं पढ़ना, लिखना और गिनती सीखता हूँ। मेरा पसंदीदा विषय विज्ञान है।",
+          "बगीचे में बहुत सारे फूल हैं। गुलाब लाल रंग के होते हैं और खुशबूदार होते हैं। तितलियाँ फूलों पर आती हैं। मधुमक्खियाँ शहद बनाती हैं।"
+        ],
+        elementary: [
+          "जल चक्र प्रकृति की सबसे अद्भुत प्रक्रियाओं में से एक है। सूर्य की गर्मी से समुद्रों और झीलों से पानी भाप बनकर उड़ जाता है। यह ऊपर जाकर बादलों का रूप ले लेता है। जब बादल भारी हो जाते हैं तो बारिश या बर्फ के रूप में पानी वापस धरती पर आ जाता है।",
+          "भारत विविध संस्कृतियों और परंपराओं का देश है। यहाँ सैकड़ों भाषाएँ बोली जाती हैं। हर राज्य का अपना खाना, नृत्य और संगीत है। यह विविधता भारत को दुनिया में विशेष बनाती है।",
+          "महात्मा गांधी ने भारत की आज़ादी में महत्वपूर्ण भूमिका निभाई। उन्होंने अहिंसा और शांति का मार्ग अपनाया। उनका सत्याग्रह आंदोलन दुनिया भर के लोगों के लिए प्रेरणा बना। उन्हें राष्ट्रपिता कहा जाता है।",
+          "हिंदी भारत की राजभाषा है। यह दुनिया में सबसे अधिक बोली जाने वाली भाषाओं में से एक है। हिंदी साहित्य की एक समृद्ध परंपरा है। प्रेमचंद, निराला और महादेवी वर्मा जैसे लेखकों ने हिंदी साहित्य को समृद्ध किया है।",
+          "पृथ्वी सूर्य के चारों ओर घूमती है। एक चक्कर पूरा करने में तीन सौ पैंसठ दिन लगते हैं। पृथ्वी अपनी धुरी पर भी घूमती है। इस घूर्णन से दिन और रात होते हैं।"
+        ],
+        intermediate: [
+          "ब्रह्मांड अनंत रहस्यों से भरा हुआ है। वैज्ञानिक दूरबीनों की मदद से दूर के तारों और आकाशगंगाओं का अध्ययन करते हैं। हमारे सौर मंडल में आठ ग्रह हैं। पृथ्वी ही एकमात्र ग्रह है जहाँ जीवन है। हालाँकि, अन्य ग्रहों पर जीवन की खोज जारी है। मंगल ग्रह पर पानी के निशान मिले हैं जो वैज्ञानिकों के लिए बहुत रोमांचक हैं।",
+          "प्रौद्योगिकी ने हमारे जीवन को मूल रूप से बदल दिया है। स्मार्टफोन ने दुनिया को हमारी हथेली में ला दिया है। इंटरनेट के माध्यम से हम कहीं से भी जानकारी प्राप्त कर सकते हैं। कृत्रिम बुद्धिमत्ता चिकित्सा, शिक्षा और उद्योग में क्रांतिकारी बदलाव ला रही है। लेकिन हमें प्रौद्योगिकी के सामाजिक प्रभावों के बारे में भी सोचना चाहिए।",
+          "भारतीय शास्त्रीय संगीत दुनिया की सबसे जटिल और सुंदर संगीत पद्धतियों में से एक है। हिंदुस्तानी संगीत और कर्नाटक संगीत इसकी दो प्रमुख शाखाएँ हैं। राग, ताल और स्वर इस संगीत के मूल तत्व हैं। तानसेन जैसे महान संगीतकारों ने इस परंपरा को समृद्ध किया।"
+        ],
+        advanced: [
+          "क्वांटम भौतिकी परमाणु स्तर पर पदार्थ और ऊर्जा के व्यवहार का अध्ययन करती है। इस क्षेत्र में कई प्रतिकूल अवधारणाएँ हैं — उदाहरण के लिए, सुपरपोजिशन सिद्धांत के अनुसार एक कण एक ही समय में दो स्थानों पर हो सकता है। क्वांटम उलझाव के माध्यम से दो कण कितनी भी दूर हों, एक को मापने पर दूसरे की स्थिति तुरंत निर्धारित हो जाती है। ये सिद्धांत क्वांटम कंप्यूटिंग और क्वांटम क्रिप्टोग्राफी जैसी नई तकनीकों की नींव रख रहे हैं।"
+        ]
+      }
+    };
+
+    const LEVELS = {
+      en: [
+        { id:'beginner',     name:'Beginner',     desc:'Short sentences, simple words',   badge:'🌱', color:'var(--green)',  bg:'var(--green-l)', wpmTarget:80 },
+        { id:'elementary',   name:'Elementary',    desc:'Paragraphs, moderate vocabulary', badge:'📘', color:'var(--blue)',   bg:'var(--blue-l)',  wpmTarget:120 },
+        { id:'intermediate', name:'Intermediate',  desc:'Complex passages, rich language', badge:'📙', color:'var(--orange)', bg:'var(--orange-l)',wpmTarget:180 },
+        { id:'advanced',     name:'Advanced',      desc:'Academic texts, dense ideas',    badge:'🔴', color:'var(--red)',    bg:'var(--red-l)',   wpmTarget:250 },
+      ],
+      te: [
+        { id:'beginner',     name:'ప్రాథమికం',      desc:'చిన్న వాక్యాలు, సరళ పదాలు',     badge:'🌱', color:'var(--green)',  bg:'var(--green-l)', wpmTarget:60 },
+        { id:'elementary',   name:'ప్రాథమిక+',      desc:'పేరాగ్రాఫ్‌లు, మధ్యస్థ పదజాలం',  badge:'📘', color:'var(--blue)',   bg:'var(--blue-l)',  wpmTarget:90 },
+        { id:'intermediate', name:'మధ్యస్థాయి',     desc:'సంక్లిష్ట వాక్యాలు',             badge:'📙', color:'var(--orange)', bg:'var(--orange-l)',wpmTarget:130 },
+        { id:'advanced',     name:'ఉన్నత స్థాయి',    desc:'విద్యా ప్రమాణ పాఠ్యాంశాలు',      badge:'🔴', color:'var(--red)',    bg:'var(--red-l)',   wpmTarget:170 },
+      ],
+      hi: [
+        { id:'beginner',     name:'शुरुआती',        desc:'छोटे वाक्य, सरल शब्द',         badge:'🌱', color:'var(--green)',  bg:'var(--green-l)', wpmTarget:60 },
+        { id:'elementary',   name:'प्राथमिक',       desc:'अनुच्छेद, मध्यम शब्दावली',     badge:'📘', color:'var(--blue)',   bg:'var(--blue-l)',  wpmTarget:90 },
+        { id:'intermediate', name:'मध्यवर्ती',      desc:'जटिल गद्यांश, समृद्ध भाषा',    badge:'📙', color:'var(--orange)', bg:'var(--orange-l)',wpmTarget:130 },
+        { id:'advanced',     name:'उन्नत',          desc:'शैक्षणिक पाठ, सघन विचार',      badge:'🔴', color:'var(--red)',    bg:'var(--red-l)',   wpmTarget:170 },
+      ]
+    };
+
+    const LANG_NAMES = { en:'English', te:'తెలుగు (Telugu)', hi:'हिन्दी (Hindi)' };
+
+    const TIPS = [
+      "Focus on groups of words rather than individual words. This trains your eye to scan faster.",
+      "Try not to move your lips while reading silently — it slows you down.",
+      "Use your finger or a pointer to guide your eyes along the line.",
+      "Avoid re-reading sentences. Trust your brain to capture meaning on the first pass.",
+      "Expand your peripheral vision — try to see 3–4 words at once.",
+      "Read at a pace slightly faster than comfortable. Slight pressure builds speed.",
+      "Practise every day, even for just 10 minutes. Consistency beats intensity.",
+      "After reading, try to recall the main idea. Comprehension + speed = true fluency.",
+      "Breathe steadily. Relaxed readers read faster than tense ones.",
+      "Set a personal WPM goal for each session and try to beat it next time."
+    ];
+
+    // ── State ───────────────────────────────────────────────
+    let lang = null, level = null, levelObj = null;
+    let passages = [], pIdx = 0;
+    let reading = false, startTime = 0, elapsed = 0, timerIv = null;
+    let sessionResults = [];
+    let fontScale = 100;
+
+    // ── Screen nav ──────────────────────────────────────────
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ── Language selection ───────────────────────────────────
+    function selectLang(l) {
+      lang = l;
+      document.querySelectorAll('.lang-card').forEach(c => c.classList.remove('selected'));
+      document.getElementById('lc-' + l).classList.add('selected');
+      renderLevels();
+      renderHistory();
+    }
+
+    function renderLevels() {
+      const levels = LEVELS[lang];
+      const grid = document.getElementById('level-grid');
+      grid.innerHTML = levels.map(lv => `
+        <div class="level-card" onclick="startSession('${lv.id}')">
+          <div class="lv-badge" style="background:${lv.bg};color:${lv.color}">${lv.badge} ${lv.name}</div>
+          <div class="lv-name">${lv.name}</div>
+          <div class="lv-desc">${lv.desc}</div>
+          <div style="font-size:.7rem;color:var(--tt);margin-top:6px">Target: ${lv.wpmTarget} WPM</div>
+        </div>
+      `).join('');
+      document.getElementById('level-title').textContent = `Choose Difficulty — ${LANG_NAMES[lang]}`;
+      document.getElementById('level-picker').style.display = '';
+    }
+
+    // ── Start session ───────────────────────────────────────
+    function startSession(lvId) {
+      levelObj = LEVELS[lang].find(l => l.id === lvId);
+      level = lvId;
+      const pool = CORPUS[lang][lvId] || CORPUS[lang].beginner;
+      passages = shuffle([...pool]).slice(0, Math.min(5, pool.length));
+      pIdx = 0;
+      sessionResults = [];
+      fontScale = 100;
+      document.getElementById('font-size-label').textContent = '100%';
+      showScreen('scr-practice');
+      renderPassage();
+    }
+
+    function renderPassage() {
+      const text = passages[pIdx];
+      const words = text.split(/\s+/);
+      const passageEl = document.getElementById('passage-text');
+      passageEl.className = 'passage-text' + (lang === 'te' ? ' telugu' : lang === 'hi' ? ' hindi' : '');
+      passageEl.style.fontSize = (fontScale / 100 * (lang === 'en' ? 1.35 : 1.4)) + 'rem';
+      passageEl.innerHTML = words.map((w, i) => `<span class="word" id="w${i}">${w}</span>`).join(' ');
+
+      document.getElementById('passage-label').textContent = `Passage ${pIdx + 1} of ${passages.length}`;
+      document.getElementById('ph-passage').textContent = `${pIdx + 1}/${passages.length}`;
+      document.getElementById('ph-words').textContent = words.length;
+      document.getElementById('pb-fill').style.width = ((pIdx) / passages.length * 100) + '%';
+
+      document.getElementById('tip-text').textContent = TIPS[Math.floor(Math.random() * TIPS.length)];
+
+      resetPracticeUI();
+      updateSpeedRing(0, levelObj.wpmTarget);
+    }
+
+    function resetPracticeUI() {
+      reading = false; elapsed = 0;
+      clearInterval(timerIv);
+      document.getElementById('ph-timer').textContent = '0:00';
+      document.getElementById('ph-wpm').textContent = '—';
+      document.getElementById('sr-wpm').textContent = '0';
+      document.getElementById('btn-start').style.display = '';
+      document.getElementById('btn-done').style.display = 'none';
+      document.getElementById('btn-next').style.display = 'none';
+      document.getElementById('btn-hear').style.display = 'none';
+    }
+
+    // ── Reading timer ───────────────────────────────────────
+    function startReading() {
+      reading = true;
+      startTime = Date.now();
+      document.getElementById('btn-start').style.display = 'none';
+      document.getElementById('btn-done').style.display = '';
+      document.getElementById('btn-hear').style.display = '';
+
+      highlightWord(0);
+      timerIv = setInterval(() => {
+        elapsed = (Date.now() - startTime) / 1000;
+        const m = Math.floor(elapsed / 60), s = Math.floor(elapsed % 60);
+        document.getElementById('ph-timer').textContent = `${m}:${s.toString().padStart(2, '0')}`;
+        const words = passages[pIdx].split(/\s+/).length;
+        const wpm = elapsed > 0 ? Math.round(words / (elapsed / 60)) : 0;
+        document.getElementById('ph-wpm').textContent = wpm;
+        document.getElementById('sr-wpm').textContent = wpm;
+        updateSpeedRing(wpm, levelObj.wpmTarget);
+      }, 500);
+    }
+
+    let highlightIdx = 0, highlightIv = null;
+    function highlightWord(startIdx) {
+      clearInterval(highlightIv);
+      highlightIdx = startIdx;
+      const words = passages[pIdx].split(/\s+/);
+      const avgTime = 60000 / Math.max(levelObj.wpmTarget, 80);
+      highlightIv = setInterval(() => {
+        if (highlightIdx > 0) {
+          const prev = document.getElementById('w' + (highlightIdx - 1));
+          if (prev) { prev.classList.remove('current'); prev.classList.add('read'); }
+        }
+        const cur = document.getElementById('w' + highlightIdx);
+        if (cur) cur.classList.add('current');
+        highlightIdx++;
+        if (highlightIdx >= words.length) clearInterval(highlightIv);
+      }, avgTime);
+    }
+
+    function finishPassage() {
+      clearInterval(timerIv);
+      clearInterval(highlightIv);
+      reading = false;
+      const words = passages[pIdx].split(/\s+/).length;
+      const wpm = elapsed > 0 ? Math.round(words / (elapsed / 60)) : 0;
+      sessionResults.push({ passage: pIdx + 1, words, time: elapsed, wpm });
+
+      document.getElementById('btn-done').style.display = 'none';
+      if (pIdx < passages.length - 1) {
+        document.getElementById('btn-next').style.display = '';
+      } else {
+        showResults();
+      }
+    }
+
+    function nextPassage() {
+      pIdx++;
+      renderPassage();
+    }
+
+    function exitPractice() {
+      clearInterval(timerIv);
+      clearInterval(highlightIv);
+      reading = false;
+      showScreen('scr-landing');
+    }
+
+    // ── Speed ring ──────────────────────────────────────────
+    const SR_CIRC = 408.4; // 2π×65
+    function updateSpeedRing(wpm, target) {
+      const pct = Math.min(wpm / target, 1.5);
+      const offset = SR_CIRC * (1 - Math.min(pct, 1));
+      const arc = document.getElementById('sr-arc');
+      arc.style.strokeDashoffset = offset;
+      arc.style.stroke = pct >= 1 ? 'var(--green)' : pct >= 0.6 ? 'var(--blue)' : pct >= 0.3 ? 'var(--amber)' : 'var(--red)';
+      document.getElementById('sr-wpm').style.color = arc.style.stroke;
+    }
+
+    // ── Font size ───────────────────────────────────────────
+    function changeFontSize(dir) {
+      fontScale = Math.max(70, Math.min(160, fontScale + dir * 10));
+      document.getElementById('font-size-label').textContent = fontScale + '%';
+      const el = document.getElementById('passage-text');
+      el.style.fontSize = (fontScale / 100 * (lang === 'en' ? 1.35 : 1.4)) + 'rem';
+    }
+
+    // ── Speak passage ───────────────────────────────────────
+    function speakPassage() {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(passages[pIdx]);
+      u.lang = lang === 'te' ? 'te-IN' : lang === 'hi' ? 'hi-IN' : 'en-US';
+      u.rate = 0.9;
+      window.speechSynthesis.speak(u);
+    }
+
+    // ── Results ─────────────────────────────────────────────
+    function showResults() {
+      const totalWords = sessionResults.reduce((s, r) => s + r.words, 0);
+      const totalTime = sessionResults.reduce((s, r) => s + r.time, 0);
+      const avgWpm = totalTime > 0 ? Math.round(totalWords / (totalTime / 60)) : 0;
+      const target = levelObj.wpmTarget;
+      const pct = Math.min(avgWpm / target, 1.5);
+
+      const m = Math.floor(totalTime / 60), s = Math.floor(totalTime % 60);
+      document.getElementById('res-wpm').textContent = avgWpm;
+      document.getElementById('res-total-words').textContent = totalWords;
+      document.getElementById('res-time').textContent = `${m}:${s.toString().padStart(2, '0')}`;
+      document.getElementById('res-passages').textContent = sessionResults.length;
+
+      const emoji = pct >= 1 ? '🏆' : pct >= 0.8 ? '⭐' : pct >= 0.6 ? '👍' : '💪';
+      const title = pct >= 1 ? 'Outstanding!' : pct >= 0.8 ? 'Well Done!' : pct >= 0.6 ? 'Good Effort!' : 'Keep Practising!';
+      document.getElementById('res-emoji').textContent = emoji;
+      document.getElementById('res-title').textContent = title;
+      document.getElementById('res-sub').textContent = `${LANG_NAMES[lang]} · ${levelObj.name} · Target ${target} WPM`;
+
+      // Confidence bar (1-10)
+      const confLevel = Math.min(10, Math.max(1, Math.round(pct * 7)));
+      const confNames = ['', 'Warming Up', 'Warming Up', 'Getting There', 'Getting There', 'Steady', 'Steady', 'Confident', 'Confident', 'Fluent', 'Master'];
+      document.getElementById('conf-label').textContent = `Confidence: ${confNames[confLevel]} (${confLevel}/10)`;
+      const segs = document.querySelectorAll('#conf-bar .conf-seg');
+      segs.forEach((seg, i) => {
+        seg.className = 'conf-seg';
+        if (i < confLevel) {
+          const cls = i < 2 ? 'fill-1' : i < 4 ? 'fill-2' : i < 6 ? 'fill-3' : i < 8 ? 'fill-4' : 'fill-5';
+          seg.classList.add(cls);
+        }
+      });
+
+      // Breakdown
+      document.getElementById('res-breakdown').innerHTML = sessionResults.map(r => {
+        const ok = r.wpm >= target;
+        return `<div class="hist-row" style="border-left:3px solid ${ok ? 'var(--green)' : 'var(--amber)'}">
+          <span class="h-lang">P${r.passage}</span>
+          <span class="h-level">${r.words} words · ${Math.round(r.time)}s</span>
+          <span class="h-wpm" style="color:${ok ? 'var(--green)' : 'var(--amber)'}">${r.wpm} WPM</span>
+        </div>`;
+      }).join('');
+
+      // Save to history
+      saveToHistory(avgWpm, totalWords, totalTime);
+      showScreen('scr-results');
+    }
+
+    function retrySession() {
+      startSession(level);
+    }
+
+    // ── History (localStorage) ──────────────────────────────
+    const HIST_KEY = 'lal_reading_history';
+    function getHistory() {
+      try { return JSON.parse(localStorage.getItem(HIST_KEY) || '[]'); } catch { return []; }
+    }
+    function saveToHistory(wpm, words, time) {
+      const h = getHistory();
+      h.unshift({ lang, level, wpm, words, time: Math.round(time), date: new Date().toISOString() });
+      if (h.length > 50) h.length = 50;
+      localStorage.setItem(HIST_KEY, JSON.stringify(h));
+    }
+    function renderHistory() {
+      const h = getHistory();
+      const sec = document.getElementById('history-section');
+      if (!h.length) { sec.style.display = 'none'; return; }
+      sec.style.display = '';
+      const list = document.getElementById('history-list');
+      list.innerHTML = h.slice(0, 15).map(r => {
+        const d = new Date(r.date);
+        const ds = `${d.getDate()}/${d.getMonth()+1} ${d.getHours()}:${d.getMinutes().toString().padStart(2,'0')}`;
+        return `<div class="hist-row">
+          <span class="h-lang">${r.lang.toUpperCase()}</span>
+          <span class="h-level">${r.level} · ${r.words} words</span>
+          <span class="h-wpm">${r.wpm} WPM</span>
+          <span class="h-date">${ds}</span>
+        </div>`;
+      }).join('');
+    }
+    function clearHistory() {
+      if (!confirm('Clear all reading history?')) return;
+      localStorage.removeItem(HIST_KEY);
+      renderHistory();
+    }
+
+    // ── Utility ─────────────────────────────────────────────
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    // ── Init ────────────────────────────────────────────────
+    renderHistory();
+    if (typeof LALAuth !== 'undefined') LALAuth.init();
+  </script>
+</body>
+</html>

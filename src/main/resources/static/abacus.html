@@ -1429,18 +1429,322 @@
         .q-grid { grid-template-columns: 1fr; }
         .ops-group { flex-direction: column; }
       }
+
+      /* ═══════════════ PRACTICE TESTS HUB ═══════════════ */
+      .pt-hero { text-align:center; padding: 32px 0 24px; }
+      .pt-hero h1 { font-size: clamp(1.5rem,3.5vw,2.2rem); font-weight:800; color:var(--text-primary); margin-bottom:8px; }
+      .pt-hero p  { font-size:.95rem; color:var(--text-secondary); max-width:520px; margin:0 auto; }
+
+      .pt-filter-bar { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:0 0 28px; }
+      .pt-filter-btn {
+        padding:7px 18px; border-radius:100px; border:1.5px solid var(--border);
+        background:var(--surface); font-size:.82rem; font-weight:700; cursor:pointer;
+        font-family:var(--font); color:var(--text-secondary); transition:all .2s;
+      }
+      .pt-filter-btn.active, .pt-filter-btn:hover {
+        background:var(--blue); color:#fff; border-color:var(--blue);
+      }
+
+      .pt-group-label {
+        font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+        color:var(--text-tertiary); margin:20px 0 10px 4px;
+      }
+      .pt-grid {
+        display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px;
+        margin-bottom:32px;
+      }
+      .pt-card {
+        background:var(--surface); border:1.5px solid var(--border-subtle);
+        border-radius:16px; padding:18px 20px; cursor:pointer; transition:all .22s;
+        display:flex; flex-direction:column; gap:8px; position:relative; overflow:hidden;
+      }
+      .pt-card::before {
+        content:''; position:absolute; top:0; left:0; right:0; height:3px;
+        background:var(--pt-color,var(--blue)); opacity:0; transition:opacity .22s;
+      }
+      .pt-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--pt-color,var(--blue)); }
+      .pt-card:hover::before { opacity:1; }
+      .pt-card-head { display:flex; align-items:center; gap:10px; }
+      .pt-card-icon {
+        width:38px; height:38px; border-radius:10px; display:flex; align-items:center;
+        justify-content:center; font-size:1.1rem; flex-shrink:0;
+        background:var(--pt-bg,var(--blue-light));
+      }
+      .pt-cat-id { font-size:.68rem; font-weight:800; color:var(--pt-color,var(--blue));
+        background:var(--pt-bg,var(--blue-light)); padding:3px 10px; border-radius:100px; }
+      .pt-card-name { font-weight:800; font-size:.92rem; color:var(--text-primary); line-height:1.3; }
+      .pt-card-meta { font-size:.76rem; color:var(--text-secondary); display:flex; gap:8px; flex-wrap:wrap; }
+      .pt-badge { background:var(--surface-2); border:1px solid var(--border-subtle);
+        border-radius:6px; padding:2px 8px; font-size:.68rem; font-weight:600; color:var(--text-secondary); }
+      .pt-start-label { font-size:.78rem; font-weight:700; color:var(--pt-color,var(--blue)); margin-top:4px; }
+
+      /* ═══════════════ ACTIVE QUIZ ═══════════════ */
+      .quiz-topbar {
+        display:flex; align-items:center; justify-content:space-between;
+        background:var(--surface); border-bottom:1px solid var(--border-subtle);
+        padding:14px 24px; margin:-24px -24px 28px; position:sticky; top:56px; z-index:50;
+        flex-wrap:wrap; gap:12px;
+      }
+      .quiz-info { display:flex; gap:20px; align-items:center; flex-wrap:wrap; }
+      .quiz-info-item { text-align:center; }
+      .quiz-info-val { font-size:1.2rem; font-weight:900; color:var(--blue); font-variant-numeric:tabular-nums; }
+      .quiz-info-label { font-size:.65rem; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:.08em; }
+      .quiz-category-name { font-weight:800; font-size:.95rem; color:var(--text-secondary); }
+
+      .quiz-question-card {
+        background:var(--surface); border:1.5px solid var(--border-subtle);
+        border-radius:20px; padding:36px 32px; max-width:560px; margin:0 auto;
+        text-align:center; box-shadow:var(--shadow-sm); transition:all .2s;
+      }
+      .quiz-q-number { font-size:.78rem; font-weight:700; color:var(--text-tertiary);
+        text-transform:uppercase; letter-spacing:.1em; margin-bottom:12px; }
+      .quiz-expr-rows { display:flex; flex-direction:column; align-items:flex-end;
+        margin:0 auto 20px; display:inline-block; text-align:right; }
+      .quiz-expr-row { font-size:2.4rem; font-weight:900; font-family:var(--font-mono);
+        color:var(--text-primary); line-height:1.2; letter-spacing:.04em; }
+      .quiz-expr-row.op-row { color:var(--blue); }
+      .quiz-divider { border:none; border-top:3px solid var(--text-primary);
+        width:100%; margin:8px 0 16px; }
+      .quiz-answer-wrap { position:relative; display:inline-flex; align-items:center;
+        gap:10px; margin-top:4px; }
+      .quiz-input {
+        font-size:2rem; font-weight:900; font-family:var(--font-mono); text-align:center;
+        width:160px; border:2.5px solid var(--border); border-radius:12px; padding:10px 12px;
+        outline:none; transition:all .2s; background:var(--surface);
+        color:var(--text-primary);
+      }
+      .quiz-input:focus { border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-light); }
+      .quiz-input.correct { border-color:var(--green); background:var(--green-light); color:var(--green); }
+      .quiz-input.wrong   { border-color:var(--red);   background:var(--red-light);   color:var(--red); }
+      .quiz-submit-btn {
+        background:var(--blue); color:#fff; border:none; padding:13px 28px;
+        border-radius:12px; font-size:1rem; font-weight:700; cursor:pointer;
+        font-family:var(--font); transition:all .2s;
+      }
+      .quiz-submit-btn:hover { background:var(--blue-dark); transform:translateY(-1px); }
+      .quiz-feedback { font-size:1rem; font-weight:700; min-height:28px; margin:10px 0 0; }
+      .quiz-countdown {
+        width:64px; height:64px; position:relative; flex-shrink:0;
+      }
+      .quiz-countdown svg { transform:rotate(-90deg); }
+      .quiz-countdown .cd-bg { fill:none; stroke:var(--border); stroke-width:5; }
+      .quiz-countdown .cd-fg { fill:none; stroke:var(--blue); stroke-width:5;
+        stroke-linecap:round; transition:stroke-dashoffset .9s linear, stroke .5s; }
+      .quiz-countdown-num { position:absolute; inset:0; display:flex; align-items:center;
+        justify-content:center; font-weight:900; font-size:1.1rem; color:var(--blue); }
+
+      /* ═══════════════ QUIZ RESULTS ═══════════════ */
+      .qr-card {
+        background:var(--surface); border:1.5px solid var(--border-subtle);
+        border-radius:24px; padding:40px 36px; max-width:600px; margin:0 auto;
+        text-align:center; box-shadow:var(--shadow-md);
+      }
+      .qr-emoji { font-size:3.5rem; margin-bottom:12px; }
+      .qr-title { font-size:1.8rem; font-weight:900; color:var(--text-primary); margin-bottom:8px; }
+      .qr-sub { font-size:.95rem; color:var(--text-secondary); margin-bottom:28px; }
+      .qr-stats { display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-bottom:28px; }
+      .qr-stat { text-align:center; }
+      .qr-stat-val { font-size:2rem; font-weight:900; font-family:var(--font-mono); }
+      .qr-stat-label { font-size:.72rem; font-weight:700; text-transform:uppercase;
+        letter-spacing:.08em; color:var(--text-tertiary); margin-top:2px; }
+      .qr-review { text-align:left; margin-top:24px; border-top:1px solid var(--border-subtle); padding-top:20px; }
+      .qr-review-title { font-size:.8rem; font-weight:800; text-transform:uppercase;
+        letter-spacing:.1em; color:var(--text-tertiary); margin-bottom:12px; }
+      .qr-item { display:flex; align-items:center; justify-content:space-between;
+        padding:8px 12px; border-radius:10px; margin-bottom:6px; }
+      .qr-item.ok  { background:var(--green-light); }
+      .qr-item.bad { background:var(--red-light); }
+      .qr-expr { font-family:var(--font-mono); font-weight:700; font-size:.9rem; }
+      .qr-yours { font-size:.82rem; color:var(--text-secondary); }
+      .qr-correct { font-size:.82rem; font-weight:700; color:var(--green); }
+      .qr-wrong   { font-size:.82rem; font-weight:700; color:var(--red); }
+      .qr-btn-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:28px; }
+      .qr-btn { padding:12px 24px; border-radius:12px; font-weight:700; font-size:.95rem;
+        cursor:pointer; transition:all .2s; font-family:var(--font); border:none; }
+      .qr-btn-primary { background:var(--blue); color:#fff; }
+      .qr-btn-primary:hover { background:var(--blue-dark); transform:translateY(-1px); }
+      .qr-btn-sec { background:var(--surface-2); color:var(--text-secondary);
+        border:1.5px solid var(--border); }
+      .qr-btn-sec:hover { border-color:var(--blue); color:var(--blue); }
+
+      @media(max-width:600px){
+        .pt-grid { grid-template-columns:1fr 1fr; }
+        .quiz-question-card { padding:24px 18px; }
+        .quiz-expr-row { font-size:1.8rem; }
+        .quiz-input { font-size:1.5rem; width:120px; }
+        .qr-card { padding:28px 18px; }
+      }
+
+      /* ═══════════════ FLASH ANZAN ═══════════════ */
+      .fa-stage {
+        position:relative; width:100%; max-width:560px; margin:0 auto;
+        height:340px; display:flex; align-items:center; justify-content:center;
+        background:radial-gradient(ellipse at center, #0a0e1a 0%, #000000 100%);
+        border-radius:28px; overflow:hidden;
+        box-shadow:0 0 80px rgba(0,113,227,.18), inset 0 0 80px rgba(0,0,0,.4);
+      }
+      .fa-stage::before {
+        content:''; position:absolute; inset:0; border-radius:28px;
+        border:1.5px solid rgba(255,255,255,.06);
+        pointer-events:none;
+      }
+      .fa-grid-bg {
+        position:absolute; inset:0; opacity:.04;
+        background-image:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),
+                         linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);
+        background-size:40px 40px;
+      }
+      .fa-number {
+        position:absolute; font-variant-numeric:tabular-nums;
+        font-weight:900; color:#fff; text-align:center;
+        text-shadow:0 0 40px rgba(0,200,255,.5), 0 0 80px rgba(0,113,227,.3);
+        opacity:0; transform:scale(.5); transition:none;
+        z-index:5; line-height:1;
+      }
+      .fa-number.pop-in {
+        animation: faPop .25s cubic-bezier(.17,.89,.32,1.28) forwards;
+      }
+      .fa-number.pop-out {
+        animation: faFade .2s ease-out forwards;
+      }
+      @keyframes faPop {
+        0%   { opacity:0; transform:scale(.4) translateY(20px); filter:blur(8px); }
+        60%  { opacity:1; transform:scale(1.08); filter:blur(0); }
+        100% { opacity:1; transform:scale(1); filter:blur(0); }
+      }
+      @keyframes faFade {
+        0%   { opacity:1; transform:scale(1); filter:blur(0); }
+        100% { opacity:0; transform:scale(1.1) translateY(-10px); filter:blur(6px); }
+      }
+      .fa-number.style-neon { color:#00e5ff; text-shadow:0 0 20px #00e5ff,0 0 60px rgba(0,229,255,.4); }
+      .fa-number.style-fire { color:#ff6b00; text-shadow:0 0 20px #ff6b00,0 0 60px rgba(255,107,0,.4); }
+      .fa-number.style-gold { color:#ffd700; text-shadow:0 0 20px #ffd700,0 0 60px rgba(255,215,0,.4); }
+      .fa-number.style-matrix { color:#00ff41; text-shadow:0 0 20px #00ff41,0 0 60px rgba(0,255,65,.4); font-family:var(--font-mono); }
+      .fa-number.style-purple { color:#bf7dff; text-shadow:0 0 20px #bf7dff,0 0 60px rgba(191,125,255,.4); }
+
+      .fa-countdown-overlay {
+        position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+        z-index:10; font-size:6rem; font-weight:900; color:#fff;
+        text-shadow:0 0 40px rgba(0,200,255,.5);
+      }
+      .fa-countdown-overlay span {
+        animation: faCountBeat .7s ease-out forwards;
+      }
+      @keyframes faCountBeat {
+        0% { transform:scale(0); opacity:0; }
+        50% { transform:scale(1.3); opacity:1; }
+        100% { transform:scale(1); opacity:1; }
+      }
+
+      .fa-progress {
+        position:absolute; bottom:0; left:0; height:3px; z-index:8;
+        background:linear-gradient(90deg,#00e5ff,#0071e3,#5e5ce6);
+        border-radius:0 0 28px 28px; transition:width .15s linear;
+      }
+      .fa-round-badge {
+        position:absolute; top:16px; left:20px; z-index:8;
+        font-size:.72rem; font-weight:800; color:rgba(255,255,255,.4);
+        text-transform:uppercase; letter-spacing:.12em;
+      }
+      .fa-speed-badge {
+        position:absolute; top:16px; right:20px; z-index:8;
+        font-size:.72rem; font-weight:700; color:rgba(255,255,255,.3);
+      }
+
+      /* Config cards */
+      .fa-config-grid {
+        display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+        gap:14px; max-width:660px; margin:0 auto 24px;
+      }
+      .fa-level-card {
+        background:var(--surface); border:2px solid var(--border-subtle);
+        border-radius:18px; padding:20px 18px; cursor:pointer; text-align:center;
+        transition:all .22s; position:relative; overflow:hidden;
+      }
+      .fa-level-card::before {
+        content:''; position:absolute; top:0; left:0; right:0; height:3px;
+        background:var(--fal-color,var(--blue)); opacity:0; transition:opacity .2s;
+      }
+      .fa-level-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md);
+        border-color:var(--fal-color,var(--blue)); }
+      .fa-level-card:hover::before { opacity:1; }
+      .fa-level-icon { font-size:2rem; margin-bottom:8px; }
+      .fa-level-name { font-weight:900; font-size:.95rem; margin-bottom:4px; }
+      .fa-level-desc { font-size:.76rem; color:var(--text-secondary); line-height:1.4; }
+      .fa-level-badge { display:inline-block; font-size:.65rem; font-weight:800;
+        padding:3px 10px; border-radius:100px; margin-top:8px;
+        background:var(--fal-bg,var(--blue-light)); color:var(--fal-color,var(--blue)); }
+
+      .fa-custom-panel {
+        max-width:540px; margin:0 auto 24px; background:var(--surface);
+        border:1.5px solid var(--border-subtle); border-radius:18px; padding:24px 28px;
+      }
+      .fa-slider-row { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+      .fa-slider-label { font-size:.82rem; font-weight:700; color:var(--text-secondary); min-width:100px; }
+      .fa-slider-val { font-size:.95rem; font-weight:900; color:var(--blue);
+        min-width:40px; text-align:right; font-variant-numeric:tabular-nums; }
+      .fa-slider-row input[type=range] { flex:1; }
+
+      .fa-style-grid { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin:16px 0; }
+      .fa-style-chip {
+        padding:8px 16px; border-radius:100px; font-size:.8rem; font-weight:700;
+        cursor:pointer; border:2px solid var(--border-subtle); background:var(--surface);
+        transition:all .2s; font-family:var(--font);
+      }
+      .fa-style-chip.active { border-color:var(--blue); background:var(--blue-light); color:var(--blue); }
+      .fa-style-chip:hover { border-color:var(--blue); }
+
+      /* Answer input */
+      .fa-answer-wrap {
+        max-width:400px; margin:24px auto 0; text-align:center;
+      }
+      .fa-answer-input {
+        font-size:2.4rem; font-weight:900; font-family:var(--font-mono);
+        text-align:center; width:200px; padding:14px 16px;
+        border:3px solid var(--border); border-radius:16px; outline:none;
+        background:var(--surface); color:var(--text-primary); transition:all .2s;
+      }
+      .fa-answer-input:focus { border-color:var(--blue); box-shadow:0 0 0 4px var(--blue-light); }
+      .fa-answer-input.correct { border-color:var(--green); background:var(--green-light); color:#1a9c3e; }
+      .fa-answer-input.wrong { border-color:var(--red); background:var(--red-light); color:#d4291f; }
+
+      /* Results */
+      .fa-result-card {
+        max-width:560px; margin:0 auto; background:var(--surface);
+        border:1.5px solid var(--border-subtle); border-radius:24px;
+        padding:40px 36px; text-align:center; box-shadow:var(--shadow-md);
+      }
+      .fa-result-streak { display:flex; gap:6px; justify-content:center; margin:20px 0; flex-wrap:wrap; }
+      .fa-streak-dot {
+        width:28px; height:28px; border-radius:50%; display:flex;
+        align-items:center; justify-content:center; font-size:.7rem; font-weight:800;
+      }
+      .fa-streak-dot.ok { background:var(--green-light); color:var(--green); }
+      .fa-streak-dot.bad { background:var(--red-light); color:var(--red); }
+
+      @media(max-width:600px){
+        .fa-stage { height:260px; border-radius:20px; }
+        .fa-number { font-size:3rem !important; }
+        .fa-config-grid { grid-template-columns:1fr 1fr; }
+        .fa-custom-panel { padding:18px 16px; }
+        .fa-answer-input { font-size:1.8rem; width:160px; }
+      }
     </style>
   </head>
   <body>
 
     <!-- ── Topbar ── -->
     <nav class="topbar">
-      <a href="/learn.html" class="back-link">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        LingoLearn
-      </a>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <a href="index.html" class="back-link" title="Home">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          ← Home
+        </a>
+        <a href="home.html" class="back-link" title="LAL Academy" style="font-size:0.8rem;padding:4px 10px;">🎓 LAL Academy</a>
+        <a href="learn.html" class="back-link" title="Learning Tools" style="font-size:0.8rem;padding:4px 10px;">🔤 LingoLearn</a>
+      </div>
 
       <div class="topbar-brand">🧮 Abacus Math Drills</div>
 
@@ -1598,6 +1902,17 @@
           <h1>🧮 Practice Sessions</h1>
           <p>Master your abacus skills with interactive drills.</p>
         </div>
+
+        <!-- Quick nav buttons -->
+        <div class="fade-up" style="text-align:center;margin-bottom:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <button onclick="showSec('sec-tests')" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#0071e3,#5e5ce6);color:#fff;border:none;padding:12px 28px;border-radius:100px;font-weight:800;font-size:.95rem;cursor:pointer;font-family:var(--font);box-shadow:0 4px 16px rgba(0,113,227,.28);transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+            🏆 Practice Tests
+          </button>
+          <button onclick="showSec('sec-flash-anzan')" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#0a0e1a,#1a1a2e);color:#00e5ff;border:2px solid rgba(0,229,255,.3);padding:12px 28px;border-radius:100px;font-weight:800;font-size:.95rem;cursor:pointer;font-family:var(--font);box-shadow:0 4px 24px rgba(0,229,255,.18);transition:all .2s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 32px rgba(0,229,255,.3)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 24px rgba(0,229,255,.18)'">
+            ⚡ Flash Anzan
+          </button>
+        </div>
+        <div style="text-align:center;margin-bottom:24px;font-size:.78rem;color:var(--text-tertiary)">Practice Tests · Timed Quizzes · Flash Anzan — Competition-style mental math</div>
 
         <!-- Resume in-progress session banner -->
         <div class="resume-banner fade-up" id="resume-session-banner">
@@ -2015,6 +2330,276 @@
           <button class="btn btn-primary" onclick="retry()">Retry Same Questions</button>
         </div>
 
+      </section>
+
+      <!-- ════════════ PRACTICE TESTS HUB ════════════ -->
+      <section class="section" id="sec-tests">
+        <div class="pt-hero">
+          <h1>🏆 Abacus Practice Tests</h1>
+          <p>35+ categorised test sets from beginner to advanced — just like competitive abacus exams. Each test is timed and scored.</p>
+        </div>
+
+        <!-- Level filter -->
+        <div class="pt-filter-bar" id="pt-filter-bar">
+          <button class="pt-filter-btn active" data-filter="all" onclick="filterPT(this,'all')">All Levels</button>
+          <button class="pt-filter-btn" data-filter="beginner" onclick="filterPT(this,'beginner')">🟢 Beginner</button>
+          <button class="pt-filter-btn" data-filter="elementary" onclick="filterPT(this,'elementary')">🔵 Elementary</button>
+          <button class="pt-filter-btn" data-filter="intermediate" onclick="filterPT(this,'intermediate')">🟡 Intermediate</button>
+          <button class="pt-filter-btn" data-filter="multiplication" onclick="filterPT(this,'multiplication')">🟠 Multiplication</button>
+          <button class="pt-filter-btn" data-filter="division" onclick="filterPT(this,'division')">🔴 Division</button>
+          <button class="pt-filter-btn" data-filter="decimal" onclick="filterPT(this,'decimal')">🟣 Decimal</button>
+        </div>
+
+        <div id="pt-category-grid"></div>
+
+        <div style="text-align:center;margin-top:12px">
+          <button onclick="showSec('sec-config')" style="padding:10px 24px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);font-weight:700;cursor:pointer;font-family:var(--font);font-size:.88rem;color:var(--text-secondary)">← Back to Free Practice</button>
+        </div>
+      </section>
+
+      <!-- ════════════ QUIZ ACTIVE ════════════ -->
+      <section class="section" id="sec-quiz-active">
+        <div class="quiz-topbar">
+          <div style="display:flex;align-items:center;gap:12px">
+            <button onclick="exitQuiz()" style="padding:7px 16px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);font-weight:700;cursor:pointer;font-family:var(--font);font-size:.82rem;color:var(--text-secondary)">← Exit</button>
+            <span class="quiz-category-name" id="qz-cat-name">Practice Test</span>
+          </div>
+          <div class="quiz-info">
+            <div class="quiz-info-item">
+              <div class="quiz-info-val" id="qz-qnum">1/10</div>
+              <div class="quiz-info-label">Question</div>
+            </div>
+            <div class="quiz-info-item">
+              <div class="quiz-info-val" id="qz-score">0</div>
+              <div class="quiz-info-label">Correct</div>
+            </div>
+            <div class="quiz-info-item">
+              <div class="quiz-info-val" id="qz-elapsed">0:00</div>
+              <div class="quiz-info-label">Time</div>
+            </div>
+          </div>
+          <!-- Per-question countdown -->
+          <div class="quiz-countdown" id="qz-countdown-wrap">
+            <svg width="64" height="64" viewBox="0 0 64 64">
+              <circle class="cd-bg" cx="32" cy="32" r="27"/>
+              <circle class="cd-fg" id="qz-cd-arc" cx="32" cy="32" r="27" stroke-dasharray="169.6" stroke-dashoffset="0"/>
+            </svg>
+            <div class="quiz-countdown-num" id="qz-cd-num">—</div>
+          </div>
+        </div>
+
+        <div class="quiz-question-card" id="qz-card">
+          <div class="quiz-q-number" id="qz-q-label">QUESTION 1 OF 10</div>
+          <div class="quiz-expr-rows" id="qz-expr"></div>
+          <hr class="quiz-divider"/>
+          <div class="quiz-answer-wrap">
+            <input class="quiz-input" id="qz-input" type="number" placeholder="?"
+              autocomplete="off" inputmode="numeric"
+              onkeydown="if(event.key==='Enter')submitQuizAnswer()" aria-label="Your answer" />
+          </div>
+          <div class="quiz-feedback" id="qz-feedback" aria-live="polite"></div>
+          <div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <button class="quiz-submit-btn" onclick="submitQuizAnswer()">✓ Submit</button>
+            <button id="qz-next-btn" onclick="nextQuizQuestion()" style="display:none;padding:13px 24px;border-radius:12px;background:var(--surface-2);border:1.5px solid var(--border);font-weight:700;cursor:pointer;font-family:var(--font);font-size:.95rem;color:var(--text-secondary)">Next →</button>
+          </div>
+          <div id="qz-skip-wrap" style="margin-top:10px">
+            <button onclick="skipQuizQuestion()" style="background:none;border:none;color:var(--text-tertiary);font-size:.78rem;cursor:pointer;font-family:var(--font);text-decoration:underline">Skip question</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════ QUIZ RESULTS ════════════ -->
+      <section class="section" id="sec-quiz-end">
+        <div class="qr-card">
+          <div class="qr-emoji" id="qr-emoji">🏆</div>
+          <div class="qr-title" id="qr-title">Great Work!</div>
+          <div class="qr-sub" id="qr-sub">You completed the practice test.</div>
+          <div class="qr-stats">
+            <div class="qr-stat">
+              <div class="qr-stat-val" id="qr-correct" style="color:var(--green)">0</div>
+              <div class="qr-stat-label">Correct</div>
+            </div>
+            <div class="qr-stat">
+              <div class="qr-stat-val" id="qr-wrong" style="color:var(--red)">0</div>
+              <div class="qr-stat-label">Wrong</div>
+            </div>
+            <div class="qr-stat">
+              <div class="qr-stat-val" id="qr-pct" style="color:var(--blue)">0%</div>
+              <div class="qr-stat-label">Accuracy</div>
+            </div>
+            <div class="qr-stat">
+              <div class="qr-stat-val" id="qr-time" style="color:var(--purple)">0:00</div>
+              <div class="qr-stat-label">Total Time</div>
+            </div>
+          </div>
+          <!-- Progress bar -->
+          <div style="background:var(--border-subtle);border-radius:100px;height:10px;margin-bottom:24px">
+            <div id="qr-bar" style="height:100%;border-radius:100px;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .6s;width:0%"></div>
+          </div>
+          <div class="qr-review">
+            <div class="qr-review-title">Question Review</div>
+            <div id="qr-review-list"></div>
+          </div>
+          <div class="qr-btn-row">
+            <button class="qr-btn qr-btn-primary" id="qr-retry-btn" onclick="retryQuiz()">🔄 Retry Same Category</button>
+            <button class="qr-btn qr-btn-sec" onclick="showSec('sec-tests')">← All Tests</button>
+            <button class="qr-btn qr-btn-sec" onclick="showSec('sec-config')">🏠 Practice Home</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════ FLASH ANZAN CONFIG ════════════ -->
+      <section class="section" id="sec-flash-anzan">
+        <div class="page-heading fade-up">
+          <h1 style="background:linear-gradient(135deg,#00e5ff,#0071e3);-webkit-background-clip:text;-webkit-text-fill-color:transparent">⚡ Flash Anzan</h1>
+          <p>Competition-style mental math. Numbers flash and vanish — add them all in your head.</p>
+        </div>
+
+        <div style="text-align:center;margin-bottom:32px">
+          <div style="font-size:.78rem;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px">Choose a Level</div>
+          <div class="fa-config-grid">
+            <div class="fa-level-card" style="--fal-color:#34c759;--fal-bg:#e9f9ee" onclick="faStartPreset('beginner')">
+              <div class="fa-level-icon">🌱</div>
+              <div class="fa-level-name">Beginner</div>
+              <div class="fa-level-desc">1-digit · 3 numbers · 2s each</div>
+              <div class="fa-level-badge">Level 1</div>
+            </div>
+            <div class="fa-level-card" style="--fal-color:#3b82f6;--fal-bg:#eff6ff" onclick="faStartPreset('elementary')">
+              <div class="fa-level-icon">📘</div>
+              <div class="fa-level-name">Elementary</div>
+              <div class="fa-level-desc">1-digit · 5 numbers · 1.5s each</div>
+              <div class="fa-level-badge">Level 2</div>
+            </div>
+            <div class="fa-level-card" style="--fal-color:#f59e0b;--fal-bg:#fffbeb" onclick="faStartPreset('intermediate')">
+              <div class="fa-level-icon">📙</div>
+              <div class="fa-level-name">Intermediate</div>
+              <div class="fa-level-desc">2-digit · 5 numbers · 1.2s each</div>
+              <div class="fa-level-badge">Level 3</div>
+            </div>
+            <div class="fa-level-card" style="--fal-color:#f97316;--fal-bg:#fff7ed" onclick="faStartPreset('advanced')">
+              <div class="fa-level-icon">🔥</div>
+              <div class="fa-level-name">Advanced</div>
+              <div class="fa-level-desc">2-digit · 8 numbers · 0.8s each</div>
+              <div class="fa-level-badge">Level 4</div>
+            </div>
+            <div class="fa-level-card" style="--fal-color:#ef4444;--fal-bg:#fff0ef" onclick="faStartPreset('expert')">
+              <div class="fa-level-icon">💎</div>
+              <div class="fa-level-name">Expert</div>
+              <div class="fa-level-desc">3-digit · 10 numbers · 0.6s each</div>
+              <div class="fa-level-badge">Level 5</div>
+            </div>
+            <div class="fa-level-card" style="--fal-color:#8b5cf6;--fal-bg:#f0f0ff" onclick="faStartPreset('master')">
+              <div class="fa-level-icon">👑</div>
+              <div class="fa-level-name">Grand Master</div>
+              <div class="fa-level-desc">3-digit · 15 numbers · 0.4s each</div>
+              <div class="fa-level-badge">Level 6</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom mode -->
+        <div style="text-align:center;margin-bottom:14px">
+          <button onclick="document.getElementById('fa-custom-wrap').style.display=document.getElementById('fa-custom-wrap').style.display==='none'?'':'none'" style="font-size:.82rem;font-weight:700;color:var(--blue);background:none;border:none;cursor:pointer;font-family:var(--font);text-decoration:underline">⚙ Custom Settings</button>
+        </div>
+        <div id="fa-custom-wrap" style="display:none">
+          <div class="fa-custom-panel">
+            <div class="fa-slider-row">
+              <span class="fa-slider-label">Digits</span>
+              <input type="range" id="fa-digits" min="1" max="4" step="1" value="1" oninput="document.getElementById('fa-digits-val').textContent=this.value" />
+              <span class="fa-slider-val" id="fa-digits-val">1</span>
+            </div>
+            <div class="fa-slider-row">
+              <span class="fa-slider-label">Numbers</span>
+              <input type="range" id="fa-count" min="3" max="20" step="1" value="5" oninput="document.getElementById('fa-count-val').textContent=this.value" />
+              <span class="fa-slider-val" id="fa-count-val">5</span>
+            </div>
+            <div class="fa-slider-row">
+              <span class="fa-slider-label">Flash Speed</span>
+              <input type="range" id="fa-speed" min="0.2" max="3" step="0.1" value="1.0" oninput="document.getElementById('fa-speed-val').textContent=this.value" />
+              <span class="fa-slider-val" id="fa-speed-val">1.0</span><span style="font-size:.78rem;color:var(--text-tertiary);margin-left:2px">s</span>
+            </div>
+            <div class="fa-slider-row">
+              <span class="fa-slider-label">Rounds</span>
+              <input type="range" id="fa-rounds" min="1" max="10" step="1" value="5" oninput="document.getElementById('fa-rounds-val').textContent=this.value" />
+              <span class="fa-slider-val" id="fa-rounds-val">5</span>
+            </div>
+
+            <div style="font-size:.78rem;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.08em;margin:16px 0 10px;text-align:center">Visual Style</div>
+            <div class="fa-style-grid">
+              <button class="fa-style-chip active" data-style="neon" onclick="faPickStyle(this)">💎 Neon</button>
+              <button class="fa-style-chip" data-style="fire" onclick="faPickStyle(this)">🔥 Fire</button>
+              <button class="fa-style-chip" data-style="gold" onclick="faPickStyle(this)">✨ Gold</button>
+              <button class="fa-style-chip" data-style="matrix" onclick="faPickStyle(this)">🟩 Matrix</button>
+              <button class="fa-style-chip" data-style="purple" onclick="faPickStyle(this)">🟣 Purple</button>
+            </div>
+
+            <div style="text-align:center;margin-top:20px">
+              <button onclick="faStartCustom()" style="padding:12px 32px;border-radius:100px;background:linear-gradient(135deg,#0a0e1a,#1a1a2e);color:#00e5ff;border:2px solid rgba(0,229,255,.3);font-weight:800;font-size:.95rem;cursor:pointer;font-family:var(--font);box-shadow:0 4px 24px rgba(0,229,255,.18);transition:all .2s">▶ Start Custom</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:24px">
+          <button onclick="showSec('sec-config')" style="padding:10px 24px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);font-weight:700;cursor:pointer;font-family:var(--font);font-size:.88rem;color:var(--text-secondary)">← Back to Practice Home</button>
+        </div>
+      </section>
+
+      <!-- ════════════ FLASH ANZAN ACTIVE ════════════ -->
+      <section class="section" id="sec-fa-active">
+        <div style="text-align:center;margin-bottom:16px">
+          <button onclick="faExit()" style="padding:7px 16px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);font-weight:700;cursor:pointer;font-family:var(--font);font-size:.82rem;color:var(--text-secondary)">← Exit</button>
+          <span style="margin-left:12px;font-weight:800;font-size:.9rem;color:var(--text-secondary)" id="fa-round-header">Round 1 of 5</span>
+        </div>
+
+        <div class="fa-stage" id="fa-stage">
+          <div class="fa-grid-bg"></div>
+          <div class="fa-round-badge" id="fa-stage-round">ROUND 1</div>
+          <div class="fa-speed-badge" id="fa-stage-speed">1.0s</div>
+          <div class="fa-progress" id="fa-progress" style="width:0%"></div>
+          <div id="fa-number-container"></div>
+          <div class="fa-countdown-overlay" id="fa-countdown" style="display:none"></div>
+        </div>
+
+        <div class="fa-answer-wrap" id="fa-answer-wrap" style="display:none">
+          <div style="font-size:.82rem;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">What is the total?</div>
+          <input class="fa-answer-input" id="fa-answer" type="number" placeholder="?"
+            autocomplete="off" inputmode="numeric"
+            onkeydown="if(event.key==='Enter')faSubmitAnswer()" />
+          <div style="margin-top:14px">
+            <button onclick="faSubmitAnswer()" style="padding:12px 28px;border-radius:12px;background:var(--blue);color:#fff;border:none;font-weight:700;font-size:.95rem;cursor:pointer;font-family:var(--font);transition:all .2s">✓ Submit</button>
+          </div>
+          <div id="fa-feedback" style="margin-top:12px;font-size:1rem;font-weight:700;min-height:28px" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- ════════════ FLASH ANZAN RESULTS ════════════ -->
+      <section class="section" id="sec-fa-results">
+        <div class="fa-result-card">
+          <div style="font-size:3.5rem;margin-bottom:12px" id="fa-res-emoji">⚡</div>
+          <div style="font-size:1.8rem;font-weight:900;margin-bottom:8px" id="fa-res-title">Flash Anzan Complete!</div>
+          <div style="color:var(--text-secondary);font-size:.95rem;margin-bottom:24px" id="fa-res-sub">—</div>
+
+          <div class="qr-stats">
+            <div class="qr-stat"><div class="qr-stat-val" id="fa-res-correct" style="color:var(--green)">0</div><div class="qr-stat-label">Correct</div></div>
+            <div class="qr-stat"><div class="qr-stat-val" id="fa-res-wrong" style="color:var(--red)">0</div><div class="qr-stat-label">Wrong</div></div>
+            <div class="qr-stat"><div class="qr-stat-val" id="fa-res-pct" style="color:var(--blue)">0%</div><div class="qr-stat-label">Accuracy</div></div>
+            <div class="qr-stat"><div class="qr-stat-val" id="fa-res-speed" style="color:var(--purple)">—</div><div class="qr-stat-label">Flash Speed</div></div>
+          </div>
+
+          <div style="background:var(--border-subtle);border-radius:100px;height:10px;margin:20px 0">
+            <div id="fa-res-bar" style="height:100%;border-radius:100px;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .6s;width:0%"></div>
+          </div>
+
+          <div style="font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--text-tertiary);margin:20px 0 12px">Round Breakdown</div>
+          <div class="fa-result-streak" id="fa-res-streak"></div>
+          <div id="fa-res-detail"></div>
+
+          <div class="qr-btn-row" style="margin-top:28px">
+            <button class="qr-btn qr-btn-primary" onclick="faRetry()">🔄 Retry Same</button>
+            <button class="qr-btn qr-btn-sec" onclick="showSec('sec-flash-anzan')">← All Levels</button>
+            <button class="qr-btn qr-btn-sec" onclick="showSec('sec-config')">🏠 Practice Home</button>
+          </div>
+        </div>
       </section>
 
     </main>
@@ -4320,7 +4905,664 @@
         try {
           window.speechSynthesis.getVoices();
         } catch (e) {}
+        buildPTGrid();
       });
+
+      // ═══════════════════════════════════════════════════════
+      // PRACTICE TESTS ENGINE
+      // ═══════════════════════════════════════════════════════
+
+      // ── Category Definitions ──────────────────────────────
+      const PT_CATS = [
+        // BEGINNER
+        { id:'0',   level:'beginner',       color:'#22c55e', bg:'#f0fdf4', icon:'🌱',
+          name:'Category 0',    desc:'Direct formula – 1-digit, 3 rows',
+          ops:['add','sub'], digits:1, operands:3, qCount:10, timePer:15 },
+        { id:'0.1', level:'beginner',       color:'#22c55e', bg:'#f0fdf4', icon:'🌱',
+          name:'Category 0.1',  desc:'Direct formula – 1-digit, 4-5 rows',
+          ops:['add','sub'], digits:1, operands:5, qCount:10, timePer:15 },
+        { id:'1',   level:'beginner',       color:'#22c55e', bg:'#f0fdf4', icon:'🌱',
+          name:'Category 1',    desc:"5's complement – 1-digit, 3-4 rows",
+          ops:['add','sub'], digits:1, operands:4, qCount:10, timePer:15, note:"5's complement" },
+        { id:'1.1', level:'beginner',       color:'#22c55e', bg:'#f0fdf4', icon:'🌱',
+          name:'Category 1.1',  desc:"5's complement – 1-digit, 5-6 rows",
+          ops:['add','sub'], digits:1, operands:6, qCount:10, timePer:20 },
+        { id:'2',   level:'beginner',       color:'#22c55e', bg:'#f0fdf4', icon:'🌱',
+          name:'Category 2',    desc:"10's complement – 1-digit, 3-4 rows",
+          ops:['add','sub'], digits:1, operands:4, qCount:10, timePer:15, note:"10's complement" },
+        { id:'2.1', level:'beginner',       color:'#22c55e', bg:'#f0fdf4', icon:'🌱',
+          name:'Category 2.1',  desc:"10's complement – 1-digit, 5-7 rows",
+          ops:['add','sub'], digits:1, operands:7, qCount:10, timePer:20 },
+        // ELEMENTARY
+        { id:'3.1', level:'elementary',     color:'#3b82f6', bg:'#eff6ff', icon:'📘',
+          name:'Category 3.1',  desc:'1-digit addition & subtraction – 8 rows',
+          ops:['add','sub'], digits:1, operands:8, qCount:10, timePer:20 },
+        { id:'3.2', level:'elementary',     color:'#3b82f6', bg:'#eff6ff', icon:'📘',
+          name:'Category 3.2',  desc:'2-digit add/sub – 2 rows',
+          ops:['add','sub'], digits:2, operands:2, qCount:10, timePer:20 },
+        { id:'3.3', level:'elementary',     color:'#3b82f6', bg:'#eff6ff', icon:'📘',
+          name:'Category 3.3',  desc:'2-digit add/sub – 3 rows',
+          ops:['add','sub'], digits:2, operands:3, qCount:10, timePer:20 },
+        { id:'3.4', level:'elementary',     color:'#3b82f6', bg:'#eff6ff', icon:'📘',
+          name:'Category 3.4',  desc:'2-digit add/sub – 4 rows',
+          ops:['add','sub'], digits:2, operands:4, qCount:10, timePer:25 },
+        { id:'3.5', level:'elementary',     color:'#3b82f6', bg:'#eff6ff', icon:'📘',
+          name:'Category 3.5',  desc:'2-digit additions – 5 to 9 rows',
+          ops:['add'], digits:2, operands:7, qCount:10, timePer:25 },
+        { id:'3.6', level:'elementary',     color:'#3b82f6', bg:'#eff6ff', icon:'📘',
+          name:'Category 3.6',  desc:'3-digit add/sub – 2 rows',
+          ops:['add','sub'], digits:3, operands:2, qCount:10, timePer:25 },
+        { id:'3.7', level:'elementary',     color:'#3b82f6', bg:'#eff6ff', icon:'📘',
+          name:'Category 3.7',  desc:'3-digit add/sub – 3 rows',
+          ops:['add','sub'], digits:3, operands:3, qCount:10, timePer:25 },
+        { id:'3.8', level:'elementary',     color:'#3b82f6', bg:'#eff6ff', icon:'📘',
+          name:'Category 3.8',  desc:'3-digit add/sub – 4 rows',
+          ops:['add','sub'], digits:3, operands:4, qCount:10, timePer:30 },
+        { id:'3.9', level:'elementary',     color:'#3b82f6', bg:'#eff6ff', icon:'📘',
+          name:'Category 3.9',  desc:'3-digit add/sub – 5 rows',
+          ops:['add','sub'], digits:3, operands:5, qCount:10, timePer:30 },
+        { id:'3.91',level:'elementary',     color:'#3b82f6', bg:'#eff6ff', icon:'📘',
+          name:'Category 3.91', desc:'4-digit add/sub – 2 rows',
+          ops:['add','sub'], digits:4, operands:2, qCount:10, timePer:30 },
+        // INTERMEDIATE
+        { id:'3-int',level:'intermediate',  color:'#f59e0b', bg:'#fffbeb', icon:'📙',
+          name:'Mixed Intermediate', desc:'1-3 digit add/sub – 6-8 rows',
+          ops:['add','sub'], digits:2, operands:6, qCount:10, timePer:30 },
+        // MULTIPLICATION
+        { id:'4',   level:'multiplication', color:'#f97316', bg:'#fff7ed', icon:'✖️',
+          name:'Category 4',    desc:'2-digit × 1-digit multiplication',
+          ops:['mul'], digits:2, operands:2, mulMode:'2x1', qCount:10, timePer:25 },
+        { id:'5',   level:'multiplication', color:'#f97316', bg:'#fff7ed', icon:'✖️',
+          name:'Category 5',    desc:'2-digit × 1-digit (harder mix)',
+          ops:['mul'], digits:2, operands:2, mulMode:'2x1h', qCount:10, timePer:25 },
+        { id:'6',   level:'multiplication', color:'#f97316', bg:'#fff7ed', icon:'✖️',
+          name:'Category 6',    desc:'3-digit × 1-digit multiplication',
+          ops:['mul'], digits:3, operands:2, mulMode:'3x1', qCount:10, timePer:30 },
+        { id:'7',   level:'multiplication', color:'#f97316', bg:'#fff7ed', icon:'✖️',
+          name:'Category 7',    desc:'2-digit × 2-digit multiplication',
+          ops:['mul'], digits:2, operands:2, mulMode:'2x2', qCount:10, timePer:35 },
+        { id:'8',   level:'multiplication', color:'#f97316', bg:'#fff7ed', icon:'✖️',
+          name:'Category 8',    desc:'2-digit × 3-digit multiplication',
+          ops:['mul'], digits:3, operands:2, mulMode:'2x3', qCount:10, timePer:40 },
+        // DIVISION
+        { id:'9',   level:'division',       color:'#ef4444', bg:'#fff0ef', icon:'➗',
+          name:'Category 9',    desc:'2-digit ÷ 1-digit division',
+          ops:['div'], digits:2, operands:2, divMode:'2d1', qCount:10, timePer:30 },
+        { id:'10',  level:'division',       color:'#ef4444', bg:'#fff0ef', icon:'➗',
+          name:'Category 10',   desc:'3-digit ÷ 1-digit division',
+          ops:['div'], digits:3, operands:2, divMode:'3d1', qCount:10, timePer:35 },
+        { id:'10.2',level:'division',       color:'#ef4444', bg:'#fff0ef', icon:'➗',
+          name:'Category 10.2', desc:'4-digit ÷ 2-digit division',
+          ops:['div'], digits:4, operands:2, divMode:'4d2', qCount:10, timePer:40 },
+        { id:'10.3',level:'division',       color:'#ef4444', bg:'#fff0ef', icon:'➗',
+          name:'Category 10.3', desc:'3-digit ÷ 2-digit division',
+          ops:['div'], digits:3, operands:2, divMode:'3d2', qCount:10, timePer:40 },
+        // DECIMAL
+        { id:'11.1',level:'decimal',        color:'#8b5cf6', bg:'#f3eeff', icon:'🔣',
+          name:'Category 11.1', desc:'1-decimal-digit add/sub – 2 rows',
+          ops:['add','sub'], digits:1, operands:2, decimal:1, qCount:10, timePer:25 },
+        { id:'11.2',level:'decimal',        color:'#8b5cf6', bg:'#f3eeff', icon:'🔣',
+          name:'Category 11.2', desc:'1-decimal-digit add/sub – 3 rows',
+          ops:['add','sub'], digits:1, operands:3, decimal:1, qCount:10, timePer:25 },
+        { id:'11.3',level:'decimal',        color:'#8b5cf6', bg:'#f3eeff', icon:'🔣',
+          name:'Category 11.3', desc:'1-decimal-digit add/sub – 4 rows',
+          ops:['add','sub'], digits:1, operands:4, decimal:1, qCount:10, timePer:30 },
+        { id:'11.4',level:'decimal',        color:'#8b5cf6', bg:'#f3eeff', icon:'🔣',
+          name:'Category 11.4', desc:'1-decimal-digit add/sub – 5 rows',
+          ops:['add','sub'], digits:1, operands:5, decimal:1, qCount:10, timePer:30 },
+        { id:'11.5',level:'decimal',        color:'#8b5cf6', bg:'#f3eeff', icon:'🔣',
+          name:'Category 11.5', desc:'2-decimal-digit add/sub – 4 rows',
+          ops:['add','sub'], digits:2, operands:4, decimal:2, qCount:10, timePer:35 },
+        { id:'11.6',level:'decimal',        color:'#8b5cf6', bg:'#f3eeff', icon:'🔣',
+          name:'Category 11.6', desc:'2-decimal-digit add/sub – 5 rows',
+          ops:['add','sub'], digits:2, operands:5, decimal:2, qCount:10, timePer:35 },
+        { id:'14.4',level:'decimal',        color:'#8b5cf6', bg:'#f3eeff', icon:'√',
+          name:'Category 14.4', desc:'Perfect Square Roots (1–400)',
+          ops:['sqrt'], digits:2, operands:1, qCount:10, timePer:30 },
+        { id:'14.3',level:'decimal',        color:'#8b5cf6', bg:'#f3eeff', icon:'%',
+          name:'Category 14.3', desc:'Percentage of whole numbers',
+          ops:['pct'], digits:2, operands:2, qCount:10, timePer:35 },
+      ];
+
+      const PT_LEVEL_ORDER = ['beginner','elementary','intermediate','multiplication','division','decimal'];
+      const PT_LEVEL_LABELS = {
+        beginner:'🟢 Beginner', elementary:'🔵 Elementary', intermediate:'🟡 Intermediate',
+        multiplication:'🟠 Multiplication', division:'🔴 Division', decimal:'🟣 Decimal / Advanced'
+      };
+
+      let ptCurrentFilter = 'all';
+      let quizCat = null, quizQs = [], quizIdx = 0, quizCorrect = 0, quizWrong = 0;
+      let quizElapsed = 0, quizElapsedIv = null;
+      let quizCdSec = 0, quizCdIv = null;
+      const QZ_CD_CIRC = 169.6; // 2π×27
+
+      // ── Build category grid ───────────────────────────────
+      function buildPTGrid() {
+        const container = document.getElementById('pt-category-grid');
+        container.innerHTML = '';
+        PT_LEVEL_ORDER.forEach(level => {
+          const cats = PT_CATS.filter(c => c.level === level);
+          if (!cats.length) return;
+          const groupEl = document.createElement('div');
+          groupEl.dataset.level = level;
+          groupEl.innerHTML = `<div class="pt-group-label">${PT_LEVEL_LABELS[level]}</div>`;
+          const grid = document.createElement('div');
+          grid.className = 'pt-grid';
+          cats.forEach(cat => {
+            const card = document.createElement('div');
+            card.className = 'pt-card';
+            card.dataset.level = level;
+            card.style.setProperty('--pt-color', cat.color);
+            card.style.setProperty('--pt-bg', cat.bg);
+            card.innerHTML = `
+              <div class="pt-card-head">
+                <div class="pt-card-icon">${cat.icon}</div>
+                <span class="pt-cat-id">Cat ${cat.id}</span>
+              </div>
+              <div class="pt-card-name">${cat.name}</div>
+              <div class="pt-card-meta">
+                <span class="pt-badge">${cat.qCount} Questions</span>
+                <span class="pt-badge">${cat.timePer}s each</span>
+                ${cat.note ? `<span class="pt-badge">${cat.note}</span>` : ''}
+              </div>
+              <div class="pt-card-meta" style="color:var(--text-secondary);font-size:.78rem">${cat.desc}</div>
+              <div class="pt-start-label">Start Test →</div>
+            `;
+            card.onclick = () => startPracticeTest(cat);
+            grid.appendChild(card);
+          });
+          groupEl.appendChild(grid);
+          container.appendChild(groupEl);
+        });
+      }
+
+      function filterPT(btn, filter) {
+        ptCurrentFilter = filter;
+        document.querySelectorAll('.pt-filter-btn').forEach(b => b.classList.toggle('active', b === btn));
+        document.querySelectorAll('#pt-category-grid > div').forEach(g => {
+          const show = filter === 'all' || g.dataset.level === filter;
+          g.style.display = show ? '' : 'none';
+        });
+      }
+
+      // ── Question generator for practice tests ─────────────
+      function makePTQuestion(cat) {
+        const op = cat.ops[0];
+
+        if (op === 'sqrt') {
+          // Perfect squares 1–20 → 1–400
+          const n = (Math.floor(Math.random() * 20) + 1);
+          const sq = n * n;
+          return { expr: `√${sq}`, exprRows:[{text:`√ ${sq}`, isOp:false}], answer: n };
+        }
+        if (op === 'pct') {
+          const pcts = [10,20,25,50,75];
+          const p = pcts[Math.floor(Math.random()*pcts.length)];
+          const n = (Math.floor(Math.random()*18)+2)*10;
+          const ans = Math.round(p/100*n);
+          return { expr:`${p}% of ${n}`, exprRows:[{text:`${p}% of ${n}`, isOp:false}], answer:ans };
+        }
+
+        const dec = cat.decimal || 0;
+        const factor = dec ? Math.pow(10, dec) : 1;
+
+        if (cat.ops.includes('div') && cat.divMode) {
+          let dividend, divisor, quotient;
+          if (cat.divMode === '2d1') {
+            divisor  = randInt(2, 9);
+            quotient = randInt(2, 9);
+            dividend = divisor * quotient;
+          } else if (cat.divMode === '3d1') {
+            divisor  = randInt(2, 9);
+            quotient = randInt(11, 99);
+            dividend = divisor * quotient;
+          } else if (cat.divMode === '4d2') {
+            divisor  = randInt(11, 49);
+            quotient = randInt(11, 49);
+            dividend = divisor * quotient;
+          } else { // 3d2
+            divisor  = randInt(11, 29);
+            quotient = randInt(11, 29);
+            dividend = divisor * quotient;
+          }
+          return {
+            expr:`${dividend} ÷ ${divisor}`,
+            exprRows:[{text:dividend,isOp:false},{text:`÷ ${divisor}`,isOp:true}],
+            answer:quotient
+          };
+        }
+
+        if (cat.ops.includes('mul')) {
+          let a, b;
+          if (cat.mulMode === '2x1') { a = randInt(10,49); b = randInt(2,9); }
+          else if (cat.mulMode === '2x1h') { a = randInt(50,99); b = randInt(2,9); }
+          else if (cat.mulMode === '3x1') { a = randInt(100,499); b = randInt(2,9); }
+          else if (cat.mulMode === '2x2') { a = randInt(10,49); b = randInt(10,49); }
+          else { a = randInt(10,49); b = randInt(100,499); }
+          return {
+            expr:`${a} × ${b}`,
+            exprRows:[{text:a,isOp:false},{text:`× ${b}`,isOp:true}],
+            answer:a*b
+          };
+        }
+
+        // add / sub (with optional decimal)
+        const minN = dec ? 1 : Math.pow(10, Math.max(0, cat.digits - 1));
+        const maxN = dec ? Math.pow(10, cat.digits) - 1 : Math.pow(10, cat.digits) - 1;
+
+        let rows = [], ans = 0;
+        for (let i = 0; i < cat.operands; i++) {
+          let n = randInt(minN, maxN);
+          if (dec) n = Math.round(n / factor * factor); // keep to dec places
+          let op2;
+          if (i === 0) {
+            op2 = 'first'; ans = n;
+          } else {
+            op2 = Math.random() > 0.5 ? 'add' : 'sub';
+            if (op2 === 'sub') {
+              // ensure no negative
+              n = randInt(1, Math.max(1, Math.floor(ans)));
+              ans -= n;
+            } else {
+              ans += n;
+            }
+          }
+          rows.push({ n: dec ? (n / factor).toFixed(dec) : n, op: op2 });
+        }
+
+        const decAns = dec ? parseFloat(ans / factor).toFixed(dec) : ans;
+        const exprRows = rows.map((r,i) => ({
+          text: i === 0 ? String(r.n) : `${r.op === 'add' ? '+' : '−'} ${r.n}`,
+          isOp: i > 0
+        }));
+        const expr = rows.map((r,i) => i===0 ? r.n : `${r.op==='add'?'+':'−'} ${r.n}`).join(' ');
+        return { expr, exprRows, answer: parseFloat(String(decAns)) };
+      }
+
+      function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+      // ── Start a practice test ─────────────────────────────
+      function startPracticeTest(cat) {
+        quizCat = cat;
+        quizQs = Array.from({length: cat.qCount}, () => makePTQuestion(cat));
+        quizQs = quizQs.map(q => ({...q, userAns: null, correct: null}));
+        quizIdx = 0; quizCorrect = 0; quizWrong = 0; quizElapsed = 0;
+        clearInterval(quizElapsedIv);
+        quizElapsedIv = setInterval(() => {
+          quizElapsed++;
+          const m = Math.floor(quizElapsed/60), s = quizElapsed%60;
+          const el = document.getElementById('qz-elapsed');
+          if (el) el.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+        }, 1000);
+        document.getElementById('qz-cat-name').textContent = `${cat.icon} ${cat.name}`;
+        showSec('sec-quiz-active');
+        renderQuizQuestion();
+      }
+
+      function renderQuizQuestion() {
+        if (quizIdx >= quizQs.length) { endQuiz(); return; }
+        const q = quizQs[quizIdx];
+        const total = quizQs.length;
+        document.getElementById('qz-qnum').textContent = `${quizIdx+1}/${total}`;
+        document.getElementById('qz-q-label').textContent = `QUESTION ${quizIdx+1} OF ${total}`;
+        document.getElementById('qz-score').textContent = quizCorrect;
+
+        // Render expression
+        const exprEl = document.getElementById('qz-expr');
+        exprEl.innerHTML = q.exprRows.map(r =>
+          `<div class="quiz-expr-row${r.isOp?' op-row':''}">${r.text}</div>`
+        ).join('') + '';
+
+        // Reset input and feedback
+        const inp = document.getElementById('qz-input');
+        inp.value = ''; inp.className = 'quiz-input';
+        document.getElementById('qz-feedback').textContent = '';
+        document.getElementById('qz-next-btn').style.display = 'none';
+        document.getElementById('qz-skip-wrap').style.display = '';
+
+        setTimeout(() => inp.focus(), 100);
+        startQuizCountdown(quizCat.timePer);
+      }
+
+      function startQuizCountdown(sec) {
+        clearInterval(quizCdIv);
+        quizCdSec = sec;
+        updateCdDisplay(sec, sec);
+        quizCdIv = setInterval(() => {
+          quizCdSec--;
+          updateCdDisplay(quizCdSec, sec);
+          if (quizCdSec <= 0) { clearInterval(quizCdIv); timeOutQuiz(); }
+        }, 1000);
+      }
+
+      function updateCdDisplay(remaining, total) {
+        const pct = remaining / total;
+        const offset = QZ_CD_CIRC * (1 - pct);
+        const arc = document.getElementById('qz-cd-arc');
+        if (!arc) return;
+        arc.style.strokeDashoffset = offset;
+        arc.style.stroke = remaining > total*0.4 ? 'var(--blue)' : remaining > total*0.2 ? '#f59e0b' : '#ef4444';
+        document.getElementById('qz-cd-num').textContent = remaining;
+        document.getElementById('qz-cd-num').style.color = arc.style.stroke;
+      }
+
+      function timeOutQuiz() {
+        const q = quizQs[quizIdx];
+        q.correct = false; q.userAns = null;
+        quizWrong++;
+        const fb = document.getElementById('qz-feedback');
+        fb.textContent = `⏰ Time's up! Answer: ${q.answer}`;
+        fb.style.color = 'var(--red)';
+        document.getElementById('qz-input').className = 'quiz-input wrong';
+        document.getElementById('qz-next-btn').style.display = 'inline-flex';
+        document.getElementById('qz-skip-wrap').style.display = 'none';
+      }
+
+      function submitQuizAnswer() {
+        clearInterval(quizCdIv);
+        const inp = document.getElementById('qz-input');
+        const q = quizQs[quizIdx];
+        const raw = inp.value.trim();
+        if (!raw) { inp.focus(); return; }
+        const val = parseFloat(raw);
+        const correct = Math.abs(val - q.answer) < 0.001;
+        q.userAns = val; q.correct = correct;
+        const fb = document.getElementById('qz-feedback');
+        if (correct) {
+          quizCorrect++;
+          inp.className = 'quiz-input correct';
+          fb.textContent = '✅ Correct!'; fb.style.color = 'var(--green)';
+          document.getElementById('qz-score').textContent = quizCorrect;
+          setTimeout(nextQuizQuestion, 700);
+        } else {
+          quizWrong++;
+          inp.className = 'quiz-input wrong';
+          fb.textContent = `❌ Correct answer: ${q.answer}`; fb.style.color = 'var(--red)';
+          document.getElementById('qz-next-btn').style.display = 'inline-flex';
+          document.getElementById('qz-skip-wrap').style.display = 'none';
+        }
+      }
+
+      function skipQuizQuestion() {
+        clearInterval(quizCdIv);
+        const q = quizQs[quizIdx];
+        q.correct = false; q.userAns = null; quizWrong++;
+        nextQuizQuestion();
+      }
+
+      function nextQuizQuestion() {
+        clearInterval(quizCdIv);
+        quizIdx++;
+        if (quizIdx >= quizQs.length) endQuiz();
+        else renderQuizQuestion();
+      }
+
+      function endQuiz() {
+        clearInterval(quizCdIv);
+        clearInterval(quizElapsedIv);
+        const total = quizQs.length;
+        const pct = Math.round(quizCorrect / total * 100);
+        const m = Math.floor(quizElapsed/60), s = quizElapsed%60;
+        const timeStr = `${m}:${s.toString().padStart(2,'0')}`;
+        document.getElementById('qr-correct').textContent = quizCorrect;
+        document.getElementById('qr-wrong').textContent = quizWrong;
+        document.getElementById('qr-pct').textContent = pct + '%';
+        document.getElementById('qr-time').textContent = timeStr;
+        document.getElementById('qr-bar').style.width = pct + '%';
+        const emoji = pct >= 90 ? '🏆' : pct >= 70 ? '⭐' : pct >= 50 ? '👍' : '💪';
+        const title = pct >= 90 ? 'Excellent!' : pct >= 70 ? 'Well Done!' : pct >= 50 ? 'Good Effort!' : 'Keep Practising!';
+        const sub = `${quizCat.icon} ${quizCat.name} • ${quizCorrect}/${total} correct • ${timeStr}`;
+        document.getElementById('qr-emoji').textContent = emoji;
+        document.getElementById('qr-title').textContent = title;
+        document.getElementById('qr-sub').textContent = sub;
+        // Review list
+        const list = document.getElementById('qr-review-list');
+        list.innerHTML = quizQs.map((q, i) => `
+          <div class="qr-item ${q.correct ? 'ok' : 'bad'}">
+            <span class="qr-expr">Q${i+1}: ${q.expr}</span>
+            <span style="display:flex;gap:10px;align-items:center">
+              ${q.correct
+                ? `<span class="qr-correct">= ${q.answer} ✓</span>`
+                : `<span class="qr-wrong">Your: ${q.userAns ?? '—'} | Ans: ${q.answer}</span>`
+              }
+            </span>
+          </div>`).join('');
+        showSec('sec-quiz-end');
+        if (pct >= 90) { try { launchConfetti && launchConfetti(); } catch(e){} }
+      }
+
+      function retryQuiz() {
+        if (quizCat) startPracticeTest(quizCat);
+      }
+
+      function exitQuiz() {
+        clearInterval(quizCdIv);
+        clearInterval(quizElapsedIv);
+        showSec('sec-tests');
+      }
+
+      // ═══════════════════════════════════════════════════════
+      // FLASH ANZAN ENGINE
+      // ═══════════════════════════════════════════════════════
+
+      const FA_PRESETS = {
+        beginner:     { digits:1, count:3,  speed:2.0, rounds:5, style:'neon' },
+        elementary:   { digits:1, count:5,  speed:1.5, rounds:5, style:'neon' },
+        intermediate: { digits:2, count:5,  speed:1.2, rounds:5, style:'gold' },
+        advanced:     { digits:2, count:8,  speed:0.8, rounds:5, style:'fire' },
+        expert:       { digits:3, count:10, speed:0.6, rounds:5, style:'matrix' },
+        master:       { digits:3, count:15, speed:0.4, rounds:5, style:'purple' },
+      };
+
+      let faCfg = {}, faRounds = [], faRoundIdx = 0, faCorrect = 0, faWrong = 0;
+      let faCurrentNumbers = [], faCurrentAnswer = 0;
+      let faFlashTimer = null, faStyle = 'neon';
+
+      function faPickStyle(btn) {
+        document.querySelectorAll('.fa-style-chip').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        faStyle = btn.dataset.style;
+      }
+
+      function faStartPreset(key) {
+        const p = FA_PRESETS[key];
+        faCfg = { ...p, levelName: key };
+        faStyle = p.style;
+        faBeginSession();
+      }
+
+      function faStartCustom() {
+        faCfg = {
+          digits: +document.getElementById('fa-digits').value,
+          count:  +document.getElementById('fa-count').value,
+          speed:  +document.getElementById('fa-speed').value,
+          rounds: +document.getElementById('fa-rounds').value,
+          levelName: 'custom'
+        };
+        const activeChip = document.querySelector('.fa-style-chip.active');
+        faStyle = activeChip ? activeChip.dataset.style : 'neon';
+        faBeginSession();
+      }
+
+      function faBeginSession() {
+        faRounds = [];
+        faRoundIdx = 0; faCorrect = 0; faWrong = 0;
+        for (let r = 0; r < faCfg.rounds; r++) {
+          faRounds.push(faGenerateRound(faCfg.digits, faCfg.count));
+        }
+        showSec('sec-fa-active');
+        faRunRound();
+      }
+
+      function faGenerateRound(digits, count) {
+        const min = Math.max(1, Math.pow(10, digits - 1));
+        const max = Math.pow(10, digits) - 1;
+        const nums = [];
+        for (let i = 0; i < count; i++) {
+          nums.push(Math.floor(Math.random() * (max - min + 1)) + min);
+        }
+        const answer = nums.reduce((a, b) => a + b, 0);
+        return { nums, answer };
+      }
+
+      function faRunRound() {
+        if (faRoundIdx >= faRounds.length) { faShowResults(); return; }
+        const round = faRounds[faRoundIdx];
+        faCurrentNumbers = round.nums;
+        faCurrentAnswer = round.answer;
+
+        document.getElementById('fa-round-header').textContent = `Round ${faRoundIdx + 1} of ${faRounds.length}`;
+        document.getElementById('fa-stage-round').textContent = `ROUND ${faRoundIdx + 1}`;
+        document.getElementById('fa-stage-speed').textContent = faCfg.speed + 's';
+        document.getElementById('fa-answer-wrap').style.display = 'none';
+        document.getElementById('fa-feedback').textContent = '';
+        document.getElementById('fa-progress').style.width = '0%';
+
+        const container = document.getElementById('fa-number-container');
+        container.innerHTML = '';
+
+        faCountdownThen(() => faFlashSequence());
+      }
+
+      function faCountdownThen(cb) {
+        const cdEl = document.getElementById('fa-countdown');
+        cdEl.style.display = 'flex';
+        let n = 3;
+        cdEl.innerHTML = `<span>${n}</span>`;
+        const iv = setInterval(() => {
+          n--;
+          if (n > 0) {
+            cdEl.innerHTML = `<span>${n}</span>`;
+          } else {
+            clearInterval(iv);
+            cdEl.style.display = 'none';
+            cb();
+          }
+        }, 700);
+      }
+
+      function faFlashSequence() {
+        const container = document.getElementById('fa-number-container');
+        const total = faCurrentNumbers.length;
+        let idx = 0;
+        const fontSize = faCfg.digits <= 1 ? '5.5rem' : faCfg.digits <= 2 ? '4.5rem' : '3.5rem';
+        const showMs = faCfg.speed * 1000;
+        const fadeMs = Math.min(200, showMs * 0.25);
+
+        function flashOne() {
+          if (idx >= total) {
+            setTimeout(() => {
+              document.getElementById('fa-answer-wrap').style.display = '';
+              const inp = document.getElementById('fa-answer');
+              inp.value = ''; inp.className = 'fa-answer-input';
+              setTimeout(() => inp.focus(), 100);
+            }, 300);
+            return;
+          }
+
+          container.innerHTML = '';
+          const numEl = document.createElement('div');
+          numEl.className = `fa-number style-${faStyle}`;
+          numEl.style.fontSize = fontSize;
+          numEl.textContent = faCurrentNumbers[idx];
+          container.appendChild(numEl);
+
+          requestAnimationFrame(() => numEl.classList.add('pop-in'));
+
+          document.getElementById('fa-progress').style.width = ((idx + 1) / total * 100) + '%';
+
+          setTimeout(() => {
+            numEl.classList.remove('pop-in');
+            numEl.classList.add('pop-out');
+          }, showMs - fadeMs);
+
+          idx++;
+          faFlashTimer = setTimeout(flashOne, showMs);
+        }
+
+        flashOne();
+      }
+
+      function faSubmitAnswer() {
+        clearTimeout(faFlashTimer);
+        const inp = document.getElementById('fa-answer');
+        const raw = inp.value.trim();
+        if (!raw) { inp.focus(); return; }
+        const val = parseInt(raw, 10);
+        const ok = val === faCurrentAnswer;
+        const fb = document.getElementById('fa-feedback');
+
+        faRounds[faRoundIdx].userAns = val;
+        faRounds[faRoundIdx].ok = ok;
+
+        if (ok) {
+          faCorrect++;
+          inp.className = 'fa-answer-input correct';
+          fb.textContent = '✅ Correct!';
+          fb.style.color = 'var(--green)';
+        } else {
+          faWrong++;
+          inp.className = 'fa-answer-input wrong';
+          fb.textContent = `❌ Answer was ${faCurrentAnswer}`;
+          fb.style.color = 'var(--red)';
+        }
+
+        setTimeout(() => {
+          faRoundIdx++;
+          faRunRound();
+        }, ok ? 800 : 1500);
+      }
+
+      function faShowResults() {
+        const total = faRounds.length;
+        const pct = Math.round(faCorrect / total * 100);
+        document.getElementById('fa-res-correct').textContent = faCorrect;
+        document.getElementById('fa-res-wrong').textContent = faWrong;
+        document.getElementById('fa-res-pct').textContent = pct + '%';
+        document.getElementById('fa-res-speed').textContent = faCfg.speed + 's';
+        document.getElementById('fa-res-bar').style.width = pct + '%';
+
+        const emoji = pct >= 100 ? '👑' : pct >= 80 ? '⚡' : pct >= 60 ? '🔥' : pct >= 40 ? '💪' : '🎯';
+        const title = pct >= 100 ? 'Perfect Score!' : pct >= 80 ? 'Excellent!' : pct >= 60 ? 'Great Work!' : pct >= 40 ? 'Good Try!' : 'Keep Practising!';
+        document.getElementById('fa-res-emoji').textContent = emoji;
+        document.getElementById('fa-res-title').textContent = title;
+
+        const info = faCfg.levelName !== 'custom'
+          ? `${faCfg.levelName.charAt(0).toUpperCase() + faCfg.levelName.slice(1)} · ${faCfg.digits}-digit · ${faCfg.count} numbers · ${faCfg.speed}s flash`
+          : `Custom · ${faCfg.digits}-digit · ${faCfg.count} numbers · ${faCfg.speed}s flash`;
+        document.getElementById('fa-res-sub').textContent = info;
+
+        // Streak dots
+        document.getElementById('fa-res-streak').innerHTML = faRounds.map((r, i) =>
+          `<div class="fa-streak-dot ${r.ok ? 'ok' : 'bad'}" title="Round ${i+1}: ${r.ok ? 'Correct' : 'Wrong'}">
+            ${r.ok ? '✓' : '✗'}
+          </div>`
+        ).join('');
+
+        // Detail list
+        document.getElementById('fa-res-detail').innerHTML = faRounds.map((r, i) => {
+          const numsStr = r.nums.join(' + ');
+          return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:10px;margin-bottom:6px;background:${r.ok ? 'var(--green-light)' : 'var(--red-light)'}">
+            <span style="font-family:var(--font-mono);font-weight:700;font-size:.82rem;flex:1">R${i+1}: ${numsStr} = ${r.answer}</span>
+            <span style="font-weight:700;font-size:.82rem;color:${r.ok ? 'var(--green)' : 'var(--red)'}">
+              ${r.ok ? '✓' : `Your: ${r.userAns ?? '—'}`}
+            </span>
+          </div>`;
+        }).join('');
+
+        showSec('sec-fa-results');
+        if (pct >= 80) { try { launchConfetti && launchConfetti(); } catch(e){} }
+      }
+
+      function faRetry() {
+        faBeginSession();
+      }
+
+      function faExit() {
+        clearTimeout(faFlashTimer);
+        showSec('sec-flash-anzan');
+      }
+
     </script>
 
   </body>

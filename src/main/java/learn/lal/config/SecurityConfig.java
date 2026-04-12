@@ -34,14 +34,44 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/login.html", "/css/**", "/js/**", "/images/**", "/error", "/api/guest/login", "/api/user/register").permitAll()
+                // Public: login + registration
+                .requestMatchers(
+                    "/login.html",
+                    "/api/guest/login",
+                    "/api/user/register"
+                ).permitAll()
+
+                // Public: auth-status endpoint (every page calls this to check session)
+                .requestMatchers("/api/auth/status").permitAll()
+
+                // Public: static assets
+                .requestMatchers("/css/**", "/js/**", "/images/**", "/error").permitAll()
+
+                // Public: navigation hub + academy landing + all static course pages
+                // (practice tools are pure HTML/JS, no sensitive data)
+                .requestMatchers(
+                    "/",
+                    "/index.html",
+                    "/home.html",
+                    "/abacus.html",
+                    "/vedic-math.html",
+                    "/phonetics.html",
+                    "/calligraphy.html",
+                    "/rubiks-cube.html",
+                    "/smart-write.html",
+                    "/reading-practice.html"
+                ).permitAll()
+
+                // Admin APIs
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                // Everything else (learn.html, AI APIs, history, etc.) needs auth
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/login.html")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/learn.html", true)
+                .defaultSuccessUrl("/index.html", true)
                 .permitAll()
             )
             .logout(logout -> logout
@@ -49,7 +79,7 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/login.html?logout")
                 .permitAll()
             )
-            .csrf(csrf -> csrf.disable()); // Disabled so frontend JS shutdown button works without needing CSRF tokens
+            .csrf(csrf -> csrf.disable());
 
         return http.build();
     }
