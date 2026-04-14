@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>School Education | LAL Academy</title>
+  <meta name="description" content="CBSE-aligned school education portal — Grade-wise subjects, chapters, practice, quizzes and worksheets." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#f5f5f7; --surf:#ffffff; --surf2:#f5f5f7;
+      --bdr:#d2d2d7; --bdr-s:#e8e8ed;
+      --td:#1d1d1f; --tm:#6e6e73; --tt:#aeaeb2;
+      --blue:#0071e3; --blue-l:#e8f2fd; --blue-d:#0051a2;
+      --green:#34c759; --green-l:#e9f9ee;
+      --red:#ff3b30; --red-l:#fff0ef;
+      --purple:#5e5ce6; --purple-l:#f0f0ff;
+      --orange:#f97316; --orange-l:#fff7ed;
+      --amber:#f59e0b; --amber-l:#fffbeb;
+      --teal:#0891b2; --teal-l:#ecfeff;
+      --r:12px; --r-lg:18px; --r-xl:24px;
+      --sh-sm:0 2px 8px rgba(0,0,0,.08); --sh-md:0 4px 16px rgba(0,0,0,.10); --sh-lg:0 12px 40px rgba(0,0,0,.12);
+      --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      --fh:'Nunito','Inter',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+    body{font-family:var(--font);background:var(--bg);color:var(--td);min-height:100vh;font-size:15px;line-height:1.6}
+    a{text-decoration:none;color:inherit}
+
+    .topbar{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.88);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--bdr-s);height:56px;display:flex;align-items:center;padding:0 24px;gap:16px}
+    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:600;color:var(--blue);background:var(--blue-l);padding:6px 14px;border-radius:100px;transition:all .2s;cursor:pointer;border:none;font-family:var(--font)}
+    .back-link:hover{background:var(--blue);color:#fff}
+    .topbar-brand{flex:1;text-align:center;font-weight:800;font-size:1rem}
+
+    .page{max-width:960px;margin:0 auto;padding:36px 24px 80px}
+
+    .screen{display:none}.screen.active{display:block}
+
+    /* Breadcrumb */
+    .bread{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:24px;font-size:.82rem;color:var(--tm)}
+    .bread a,.bread button{color:var(--blue);font-weight:600;cursor:pointer;border:none;background:none;font-family:var(--font);font-size:.82rem;padding:0}
+    .bread a:hover,.bread button:hover{text-decoration:underline}
+    .bread .sep{color:var(--tt)}
+
+    /* Hero */
+    .hero{text-align:center;padding:32px 0 28px}
+    .hero h1{font-family:var(--fh);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;margin-bottom:8px}
+    .hero p{color:var(--tm);font-size:.95rem;max-width:540px;margin:0 auto}
+
+    /* Card grids */
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+    .sel-card{background:var(--surf);border:2px solid var(--bdr-s);border-radius:var(--r-xl);padding:24px 20px;cursor:pointer;text-align:center;transition:all .22s;position:relative;overflow:hidden}
+    .sel-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--sc-color,var(--blue));opacity:0;transition:opacity .2s}
+    .sel-card:hover{transform:translateY(-4px);box-shadow:var(--sh-md);border-color:var(--sc-color,var(--blue))}
+    .sel-card:hover::before{opacity:1}
+    .sel-card .sc-icon{font-size:2.4rem;margin-bottom:10px}
+    .sel-card .sc-name{font-weight:900;font-size:1.05rem;margin-bottom:4px}
+    .sel-card .sc-sub{font-size:.78rem;color:var(--tm)}
+
+    /* Chapter list */
+    .ch-list{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+    .ch-item{display:flex;align-items:center;gap:16px;background:var(--surf);border:1.5px solid var(--bdr-s);border-radius:var(--r-lg);padding:16px 20px;cursor:pointer;transition:all .2s}
+    .ch-item:hover{transform:translateX(4px);box-shadow:var(--sh-sm);border-color:var(--blue)}
+    .ch-num{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem;flex-shrink:0}
+    .ch-info{flex:1}
+    .ch-title{font-weight:800;font-size:.95rem;margin-bottom:2px}
+    .ch-desc{font-size:.78rem;color:var(--tm)}
+    .ch-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+    .ch-badge{font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:100px}
+    .ch-arrow{color:var(--tt);font-size:1.2rem;flex-shrink:0}
+
+    /* Chapter content */
+    .ch-header{margin-bottom:32px}
+    .ch-header h1{font-family:var(--fh);font-size:clamp(1.5rem,3.5vw,2rem);font-weight:900;margin-bottom:8px}
+    .ch-header p{color:var(--tm);font-size:.95rem}
+
+    .ch-nav-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--bdr-s)}
+    .ch-tab{padding:8px 16px;border-radius:100px;font-size:.78rem;font-weight:700;cursor:pointer;border:1.5px solid var(--bdr-s);background:var(--surf);color:var(--tm);transition:all .18s;font-family:var(--font);white-space:nowrap}
+    .ch-tab:hover{border-color:var(--blue);color:var(--blue)}
+    .ch-tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+    .ch-section{display:none;animation:fadeUp .3s ease}.ch-section.active{display:block}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+    .content-card{background:var(--surf);border:1.5px solid var(--bdr-s);border-radius:var(--r-xl);padding:28px 24px;margin-bottom:20px;box-shadow:var(--sh-sm)}
+    .content-card h2{font-family:var(--fh);font-size:1.2rem;font-weight:800;margin-bottom:12px;color:var(--td)}
+    .content-card h3{font-size:1rem;font-weight:700;margin:16px 0 8px;color:var(--td)}
+    .content-card p,.content-card li{font-size:.9rem;line-height:1.7;color:var(--td)}
+    .content-card ul,.content-card ol{padding-left:20px;margin-bottom:12px}
+    .content-card li{margin-bottom:6px}
+
+    .example-box{background:var(--blue-l);border:1.5px solid #c5ddf5;border-radius:var(--r);padding:16px 18px;margin:12px 0}
+    .example-box h4{font-size:.88rem;font-weight:800;color:var(--blue-d);margin-bottom:8px}
+    .example-box p{font-size:.88rem;color:var(--td)}
+
+    .practice-q{background:var(--surf2);border:1px solid var(--bdr-s);border-radius:var(--r);padding:14px 18px;margin:8px 0}
+    .practice-q .q-text{font-weight:700;font-size:.88rem;margin-bottom:6px}
+    .practice-q .q-ans{font-size:.82rem;color:var(--green);display:none}
+    .practice-q .q-ans.show{display:block}
+    .q-diff{font-size:.65rem;font-weight:800;padding:2px 8px;border-radius:100px;margin-right:6px}
+    .q-easy{background:var(--green-l);color:var(--green)}
+    .q-med{background:var(--amber-l);color:var(--amber)}
+    .q-hard{background:var(--red-l);color:var(--red)}
+
+    .activity-box{background:var(--green-l);border:1.5px solid #b5e8c5;border-radius:var(--r);padding:18px 20px;margin:12px 0}
+    .activity-box h4{font-size:.88rem;font-weight:800;color:#1a7a35;margin-bottom:8px}
+
+    .mcq-item{background:var(--surf);border:1.5px solid var(--bdr-s);border-radius:var(--r);padding:14px 18px;margin:8px 0}
+    .mcq-item .mcq-q{font-weight:700;font-size:.88rem;margin-bottom:8px}
+    .mcq-opts{display:flex;flex-direction:column;gap:6px}
+    .mcq-opt{padding:8px 14px;border:1.5px solid var(--bdr-s);border-radius:var(--r);font-size:.85rem;cursor:pointer;transition:all .15s}
+    .mcq-opt:hover{border-color:var(--blue);background:var(--blue-l)}
+    .mcq-opt.correct{border-color:var(--green);background:var(--green-l);color:#1a7a35;font-weight:700}
+    .mcq-opt.wrong{border-color:var(--red);background:var(--red-l);color:var(--red)}
+    .mcq-opt.disabled{pointer-events:none;opacity:.7}
+
+    .tip-box{background:var(--amber-l);border:1.5px solid #fcd34d;border-radius:var(--r);padding:14px 18px;margin:12px 0;font-size:.88rem;color:#92400e;line-height:1.6}
+    .tip-box strong{display:block;margin-bottom:4px}
+
+    .revision-card{background:linear-gradient(135deg,var(--purple-l),var(--blue-l));border:1.5px solid #c5cdf5;border-radius:var(--r-xl);padding:24px;margin:16px 0}
+
+    .checklist{list-style:none;padding:0}
+    .checklist li{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:.88rem;border-bottom:1px solid var(--bdr-s)}
+    .checklist input[type=checkbox]{width:18px;height:18px;accent-color:var(--blue);cursor:pointer}
+
+    .chapter-nav{display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:20px;border-top:1px solid var(--bdr-s)}
+    .ch-nav-btn{padding:10px 24px;border-radius:100px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:var(--font);border:1.5px solid var(--bdr);background:var(--surf);color:var(--tm)}
+    .ch-nav-btn:hover{border-color:var(--blue);color:var(--blue)}
+    .ch-nav-btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .ch-nav-btn.primary:hover{background:var(--blue-d)}
+
+    .show-ans-btn{padding:6px 14px;border-radius:100px;font-size:.75rem;font-weight:700;cursor:pointer;border:1.5px solid var(--bdr);background:var(--surf);color:var(--tm);font-family:var(--font);transition:all .15s;margin-top:8px}
+    .show-ans-btn:hover{border-color:var(--blue);color:var(--blue)}
+
+    .parent-note{background:linear-gradient(135deg,#fef3c7,#fffbeb);border:1.5px solid #fcd34d;border-radius:var(--r-xl);padding:24px;margin:24px 0}
+    .parent-note h3{color:#92400e;margin-bottom:8px}
+    .parent-note p,.parent-note li{font-size:.88rem;color:#78350f}
+
+    .print-btn{padding:8px 18px;border-radius:100px;font-size:.78rem;font-weight:700;cursor:pointer;border:1.5px solid var(--bdr);background:var(--surf);color:var(--tm);font-family:var(--font)}
+    .print-btn:hover{border-color:var(--blue);color:var(--blue)}
+    @media print{.topbar,.bread,.ch-nav-tabs,.chapter-nav,.print-btn,.show-ans-btn,.ai-fab,.ai-panel{display:none!important}.page{max-width:100%;padding:12px}.content-card{break-inside:avoid;box-shadow:none;border:1px solid #ccc}}
+
+    /* AI Floating Action Button & Panel */
+    .ai-fab{position:fixed;bottom:24px;right:24px;z-index:500;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#5e5ce6);color:#fff;border:none;cursor:pointer;font-size:1.5rem;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(94,92,230,.4);transition:all .25s}
+    .ai-fab:hover{transform:scale(1.1);box-shadow:0 8px 32px rgba(94,92,230,.5)}
+    .ai-fab.open{border-radius:var(--r);width:46px;height:46px;font-size:1.1rem;bottom:auto;right:auto;position:static}
+
+    .ai-panel{position:fixed;bottom:24px;right:24px;z-index:500;width:420px;max-width:calc(100vw - 32px);height:min(600px, calc(100vh - 100px));background:var(--surf);border:1.5px solid var(--bdr-s);border-radius:var(--r-xl);box-shadow:var(--sh-lg);display:none;flex-direction:column;overflow:hidden;animation:panelIn .25s ease}
+    .ai-panel.open{display:flex}
+    @keyframes panelIn{from{opacity:0;transform:translateY(16px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+    .ai-panel-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--bdr-s);background:linear-gradient(135deg,#f3eeff,#e8f2fd);flex-shrink:0}
+    .ai-panel-head h3{flex:1;font-size:.92rem;font-weight:800;color:var(--purple)}
+    .ai-panel-close{width:32px;height:32px;border-radius:50%;border:none;background:rgba(0,0,0,.06);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;color:var(--tm)}
+    .ai-panel-close:hover{background:rgba(0,0,0,.12)}
+
+    .ai-tools{display:flex;gap:4px;padding:10px 14px;border-bottom:1px solid var(--bdr-s);overflow-x:auto;flex-shrink:0}
+    .ai-tool-btn{padding:6px 12px;border-radius:100px;font-size:.72rem;font-weight:700;cursor:pointer;border:1.5px solid var(--bdr-s);background:var(--surf);color:var(--tm);font-family:var(--font);white-space:nowrap;transition:all .15s}
+    .ai-tool-btn:hover{border-color:var(--purple);color:var(--purple)}
+    .ai-tool-btn.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+
+    .ai-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+
+    .ai-msg{max-width:92%;padding:12px 16px;border-radius:var(--r-lg);font-size:.85rem;line-height:1.65;word-wrap:break-word}
+    .ai-msg.user{align-self:flex-end;background:var(--blue);color:#fff;border-bottom-right-radius:4px}
+    .ai-msg.bot{align-self:flex-start;background:var(--surf2);border:1px solid var(--bdr-s);border-bottom-left-radius:4px;color:var(--td)}
+    .ai-msg.bot h4,.ai-msg.bot strong{color:var(--purple)}
+    .ai-msg.bot ul,.ai-msg.bot ol{padding-left:16px;margin:6px 0}
+    .ai-msg.bot li{margin-bottom:4px}
+    .ai-msg.bot code{background:rgba(0,0,0,.06);padding:1px 5px;border-radius:4px;font-size:.82em}
+    .ai-msg.system{align-self:center;background:var(--amber-l);color:#92400e;font-size:.78rem;font-weight:600;text-align:center;border-radius:100px;padding:6px 16px}
+    .ai-typing{align-self:flex-start;display:flex;gap:4px;padding:12px 18px}
+    .ai-typing span{width:8px;height:8px;border-radius:50%;background:var(--tt);animation:blink 1.4s infinite}
+    .ai-typing span:nth-child(2){animation-delay:.2s}
+    .ai-typing span:nth-child(3){animation-delay:.4s}
+    @keyframes blink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+
+    .ai-input-area{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--bdr-s);flex-shrink:0;background:var(--surf)}
+    .ai-input{flex:1;padding:10px 14px;border:1.5px solid var(--bdr-s);border-radius:var(--r);font-size:.85rem;font-family:var(--font);outline:none;resize:none;min-height:42px;max-height:100px}
+    .ai-input:focus{border-color:var(--purple)}
+    .ai-send{width:42px;height:42px;border-radius:var(--r);background:var(--purple);color:#fff;border:none;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+    .ai-send:hover{background:var(--blue-d)}
+    .ai-send:disabled{opacity:.4;cursor:not-allowed}
+
+    .ai-quick-actions{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 12px}
+    .ai-quick-btn{padding:6px 12px;border-radius:100px;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--bdr-s);background:var(--surf);color:var(--tm);font-family:var(--font);transition:all .15s}
+    .ai-quick-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-l)}
+
+    .ai-gen-card{background:var(--surf);border:1.5px solid var(--bdr-s);border-radius:var(--r);padding:12px 14px;margin:6px 0}
+    .ai-gen-card .aq-text{font-weight:600;font-size:.84rem;margin-bottom:4px}
+    .ai-gen-card .aq-ans{font-size:.8rem;color:var(--green);display:none}
+    .ai-gen-card .aq-hint{font-size:.8rem;color:var(--amber);display:none}
+    .ai-gen-card .aq-ans.show,.ai-gen-card .aq-hint.show{display:block}
+
+    .ai-diff-sel{display:flex;gap:4px}
+    .ai-diff-opt{padding:4px 10px;border-radius:100px;font-size:.7rem;font-weight:700;cursor:pointer;border:1.5px solid var(--bdr-s);background:var(--surf);font-family:var(--font);transition:all .12s}
+    .ai-diff-opt:hover,.ai-diff-opt.sel{border-color:var(--purple);background:var(--purple-l);color:var(--purple)}
+
+    @media(max-width:600px){
+      .card-grid{grid-template-columns:1fr 1fr}
+      .ch-nav-tabs{gap:4px}
+      .ch-tab{font-size:.72rem;padding:6px 12px}
+      .content-card{padding:20px 16px}
+      .page{padding:24px 14px 60px}
+      .ai-panel{width:100%;max-width:100%;height:calc(100vh - 60px);bottom:0;right:0;border-radius:var(--r-xl) var(--r-xl) 0 0}
+      .ai-fab{bottom:16px;right:16px;width:50px;height:50px;font-size:1.2rem}
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topbar">
+    <div style="display:flex;align-items:center;gap:8px">
+      <a href="index.html" class="back-link">← Home</a>
+      <a href="home.html" class="back-link" style="font-size:.78rem;padding:4px 10px">🎓 LAL Academy</a>
+    </div>
+    <div class="topbar-brand">🏫 School Education</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span data-auth="username" style="font-size:.82rem;font-weight:600;color:var(--tm)"></span>
+      <a data-auth="show-login" href="login.html" class="back-link" style="font-size:.78rem;padding:4px 12px">Login</a>
+      <button data-auth="show-logout" onclick="LALAuth.logout()" style="display:none;font-size:.78rem;padding:4px 12px;border-radius:100px;border:1px solid var(--bdr);background:var(--surf);cursor:pointer;font-family:var(--font);font-weight:600;color:var(--tm)">Logout</button>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- SCREEN: Grade Selection -->
+    <div class="screen active" id="scr-grades">
+      <div class="hero">
+        <h1>🏫 School Education</h1>
+        <p>CBSE-aligned learning with interactive practice, quizzes, worksheets and real-life activities. Choose your grade to begin.</p>
+      </div>
+      <div class="card-grid" id="grade-grid"></div>
+    </div>
+
+    <!-- SCREEN: Subject Selection -->
+    <div class="screen" id="scr-subjects">
+      <div class="bread" id="bread-subjects"></div>
+      <div class="hero">
+        <h1 id="subj-title">Choose a Subject</h1>
+        <p id="subj-sub">Pick a subject to explore chapters and start learning.</p>
+      </div>
+      <div class="card-grid" id="subject-grid"></div>
+    </div>
+
+    <!-- SCREEN: Chapter List -->
+    <div class="screen" id="scr-chapters">
+      <div class="bread" id="bread-chapters"></div>
+      <div class="hero">
+        <h1 id="chlist-title">Chapters</h1>
+        <p id="chlist-sub">Select a chapter to start learning.</p>
+      </div>
+      <div class="ch-list" id="chapter-list"></div>
+    </div>
+
+    <!-- SCREEN: Chapter Content -->
+    <div class="screen" id="scr-content">
+      <div class="bread" id="bread-content"></div>
+      <div class="ch-header">
+        <h1 id="ch-content-title"></h1>
+        <p id="ch-content-sub"></p>
+      </div>
+      <div class="ch-nav-tabs" id="ch-tabs"></div>
+      <div id="ch-sections-container"></div>
+      <div class="chapter-nav" id="ch-bottom-nav"></div>
+    </div>
+
+  </div>
+
+  <!-- AI Floating Button -->
+  <button class="ai-fab" id="ai-fab" onclick="toggleAiPanel()" title="AI Learning Assistant">🤖</button>
+
+  <!-- AI Panel -->
+  <div class="ai-panel" id="ai-panel">
+    <div class="ai-panel-head">
+      <span style="font-size:1.2rem">🤖</span>
+      <h3 id="ai-panel-title">AI Learning Assistant</h3>
+      <button class="ai-panel-close" onclick="toggleAiPanel()">✕</button>
+    </div>
+    <div class="ai-tools" id="ai-tools">
+      <button class="ai-tool-btn active" data-tool="tutor" onclick="switchAiTool('tutor')">🎓 Ask Tutor</button>
+      <button class="ai-tool-btn" data-tool="questions" onclick="switchAiTool('questions')">📝 Generate Qs</button>
+      <button class="ai-tool-btn" data-tool="quiz" onclick="switchAiTool('quiz')">🧩 AI Quiz</button>
+      <button class="ai-tool-btn" data-tool="story" onclick="switchAiTool('story')">📖 Math Story</button>
+      <button class="ai-tool-btn" data-tool="simplify" onclick="switchAiTool('simplify')">💡 Simplify</button>
+    </div>
+    <div class="ai-body" id="ai-body"></div>
+    <div class="ai-quick-actions" id="ai-quick-actions"></div>
+    <div class="ai-input-area">
+      <textarea class="ai-input" id="ai-input" placeholder="Ask me anything about your chapter..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAiMessage()}"></textarea>
+      <button class="ai-send" id="ai-send-btn" onclick="sendAiMessage()">➤</button>
+    </div>
+  </div>
+
+  <script src="/js/auth.js"></script>
+  <script>
+  // ═══════════════════════════════════════════════════════
+  // NAVIGATION DATA MODEL (scalable)
+  // ═══════════════════════════════════════════════════════
+  const SCHOOL_DATA = {
+    grades: [
+      {
+        id: "class-3", name: "Class 3", icon: "3️⃣", color: "#f97316", bg: "#fff7ed",
+        subjects: [
+          {
+            id: "maths", name: "Mathematics", icon: "🔢", color: "#5e5ce6", bg: "#f0f0ff",
+            chapters: [
+              {
+                id: "ch1-whats-in-a-name", num: 1, title: "What's in a Name?",
+                slug: "whats-in-a-name",
+                shortDescription: "Learn how to read and write numbers in words, understand place value, and compare numbers up to 1000.",
+                estimatedTimeMins: 45, difficulty: "Easy",
+                prerequisites: [],
+                learningOutcomes: [
+                  "Read and write number names up to 999",
+                  "Identify hundreds, tens and ones places",
+                  "Expand numbers into place value form",
+                  "Compare two 3-digit numbers using > < =",
+                  "Arrange numbers in ascending and descending order"
+                ],
+                keywords: ["number names", "place value", "hundreds", "tens", "ones", "expanded form", "comparison"]
+              },
+              {
+                id: "ch2-toy-joy", num: 2, title: "Toy Joy",
+                slug: "toy-joy",
+                shortDescription: "Add and subtract 3-digit numbers, solve real-life word problems involving buying and selling toys.",
+                estimatedTimeMins: 50, difficulty: "Medium",
+                prerequisites: ["ch1-whats-in-a-name"],
+                learningOutcomes: [
+                  "Add two 3-digit numbers without and with carrying",
+                  "Subtract 3-digit numbers without and with borrowing",
+                  "Solve word problems about buying toys, giving change",
+                  "Estimate sums and differences to the nearest ten",
+                  "Check answers using reverse operations"
+                ],
+                keywords: ["addition", "subtraction", "carrying", "borrowing", "word problems", "estimation"]
+              },
+              {
+                id: "ch3-double-century", num: 3, title: "Double Century",
+                slug: "double-century",
+                shortDescription: "Explore numbers beyond 100 — learn place value up to 999 deeply, form the greatest and smallest numbers, and spot patterns.",
+                estimatedTimeMins: 50, difficulty: "Medium",
+                prerequisites: ["ch1-whats-in-a-name"],
+                learningOutcomes: [
+                  "Understand the value of each digit in a 3-digit number",
+                  "Form the greatest and smallest 3-digit numbers from given digits",
+                  "Identify even and odd numbers up to 999",
+                  "Recognise and extend number patterns",
+                  "Round off numbers to the nearest 10 and 100"
+                ],
+                keywords: ["place value", "greatest number", "smallest number", "odd even", "patterns", "rounding"]
+              }
+            ]
+          }
+        ]
+      }
+      // More grades added here later: class-4, class-5 ...
+    ]
+  };
+
+  // ═══════════════════════════════════════════════════════
+  // CHAPTER CONTENT (all sections A–M)
+  // ═══════════════════════════════════════════════════════
+  const CHAPTER_CONTENT = {};
+
+  // ──────────────────────────────────────────────────────
+  // CH1: WHAT'S IN A NAME?
+  // ──────────────────────────────────────────────────────
+  CHAPTER_CONTENT["ch1-whats-in-a-name"] = {
+    overview: {
+      kid: "Have you ever wondered how we say numbers using words? In this chapter, you will learn to read big numbers, break them into parts, and even compare them — like a number detective! 🔍",
+      parent: "This chapter builds foundational place-value understanding for numbers up to 999. Children learn to read, write, expand and compare 3-digit numbers — a critical skill for all future arithmetic."
+    },
+    concepts: [
+      "Ones, Tens, Hundreds — what each place means",
+      "Writing number names (e.g. 457 → Four hundred fifty-seven)",
+      "Expanded form (e.g. 457 = 400 + 50 + 7)",
+      "Comparing numbers using >, < and =",
+      "Ordering numbers — ascending (small → big) and descending (big → small)",
+      "Predecessor (one before) and Successor (one after)"
+    ],
+    examples: [
+      { title: "Writing a Number Name", steps: ["Look at the number: 362", "Hundreds place: 3 → Three hundred", "Tens place: 6 → sixty", "Ones place: 2 → two", "Put it together: Three hundred sixty-two"] },
+      { title: "Expanded Form", steps: ["Number: 845", "8 is in the Hundreds place → 800", "4 is in the Tens place → 40", "5 is in the Ones place → 5", "Expanded form: 845 = 800 + 40 + 5"] },
+      { title: "Comparing Two Numbers", steps: ["Compare 472 and 467", "Step 1: Compare hundreds — both have 4, so equal", "Step 2: Compare tens — 7 vs 6, 7 > 6", "So 472 > 467 ✓"] },
+      { title: "Arranging in Ascending Order", steps: ["Numbers: 315, 153, 531", "Smallest first: 153", "Next: 315", "Largest: 531", "Ascending: 153, 315, 531"] },
+      { title: "Finding Predecessor and Successor", steps: ["Number: 500", "Predecessor (one before): 500 - 1 = 499", "Successor (one after): 500 + 1 = 501"] }
+    ],
+    practice: [
+      { q: "Write the number name for 278.", a: "Two hundred seventy-eight", diff: "easy" },
+      { q: "Write the number name for 905.", a: "Nine hundred five", diff: "easy" },
+      { q: "What is the expanded form of 643?", a: "600 + 40 + 3", diff: "easy" },
+      { q: "Which digit is in the tens place of 738?", a: "3", diff: "easy" },
+      { q: "Write the number: Five hundred twelve.", a: "512", diff: "easy" },
+      { q: "Compare using > or <: 456 ___ 465.", a: "456 < 465", diff: "medium" },
+      { q: "Arrange in ascending order: 892, 289, 928.", a: "289, 892, 928", diff: "medium" },
+      { q: "What is the expanded form of 807?", a: "800 + 0 + 7 = 800 + 7", diff: "medium" },
+      { q: "Write the predecessor of 300.", a: "299", diff: "medium" },
+      { q: "Write the successor of 999.", a: "1000", diff: "medium" },
+      { q: "Form the greatest 3-digit number using digits 5, 1, 8.", a: "851", diff: "hard" },
+      { q: "Form the smallest 3-digit number using digits 7, 0, 3.", a: "307", diff: "hard" },
+      { q: "Arrange in descending order: 567, 576, 657, 675.", a: "675, 657, 576, 567", diff: "hard" },
+      { q: "How many 3-digit numbers have 5 in the hundreds place?", a: "100 (from 500 to 599)", diff: "hard" },
+      { q: "Write all 3-digit numbers using digits 1, 2, 3 without repeating.", a: "123, 132, 213, 231, 312, 321", diff: "hard" }
+    ],
+    practicals: [
+      { title: "Number Name Cards", objective: "Practise matching numbers to their names.", materials: "Index cards, pen", steps: ["Write numbers 100–999 on 10 cards (one number per card)", "On separate cards, write the number names", "Shuffle all cards and try to match each number with its name", "Time yourself and try to beat your record!"], observation: "You will find that reading the hundreds digit first makes it easier.", learned: "You can quickly convert between numbers and number names." },
+      { title: "Place Value Cups", objective: "Understand hundreds, tens and ones using cups and objects.", materials: "3 cups (labelled H, T, O), 27 small items (beans, buttons, coins)", steps: ["Label three cups: Hundreds (H), Tens (T), Ones (O)", "Your parent says a number, e.g. 352", "Put 3 items in H cup, 5 in T cup, 2 in O cup", "Now say the expanded form: 300 + 50 + 2", "Repeat with 5 different numbers"], observation: "Each cup holds items for one place value.", learned: "The same digit means different amounts depending on its position." },
+      { title: "Number Comparison Game", objective: "Compare 3-digit numbers by building them.", materials: "Number cards 0–9 (3 sets), a friend or family member", steps: ["Each player picks 3 number cards and forms a 3-digit number", "Both players reveal their numbers", "Decide who has the greater number — that player wins the round", "Play 10 rounds and count wins", "Bonus: the winner of each round must say the number name aloud"], observation: "Comparing from the leftmost (hundreds) digit is the fastest strategy.", learned: "You can compare numbers quickly by checking digits from left to right." }
+    ],
+    quiz: [
+      { q: "What is the number name for 419?", opts: ["Four hundred nineteen", "Four hundred ninety-one", "Forty-one nine", "Four nineteen"], ans: 0 },
+      { q: "Which digit is in the hundreds place of 763?", opts: ["3", "6", "7", "76"], ans: 2 },
+      { q: "What is the expanded form of 530?", opts: ["500 + 30", "500 + 3 + 0", "53 + 0", "5 + 3 + 0"], ans: 0 },
+      { q: "Which is greater: 589 or 598?", opts: ["589", "598", "Both are equal", "Cannot tell"], ans: 1 },
+      { q: "The predecessor of 700 is:", opts: ["701", "699", "710", "600"], ans: 1 },
+      { q: "The successor of 499 is:", opts: ["500", "498", "410", "599"], ans: 0 },
+      { q: "Write 'Eight hundred six' as a number:", opts: ["860", "806", "680", "868"], ans: 1 },
+      { q: "Arrange in ascending order: 321, 213, 132", opts: ["321, 213, 132", "132, 213, 321", "213, 132, 321", "132, 321, 213"], ans: 1 },
+      { q: "The greatest 3-digit number using 4, 0, 9 is:", opts: ["904", "940", "490", "409"], ans: 1 },
+      { q: "How many hundreds are in 600?", opts: ["60", "6", "600", "0"], ans: 1 }
+    ],
+    realLife: [
+      "📦 Addresses use numbers — like House No. 342 has 3 hundreds, 4 tens and 2 ones.",
+      "🏏 Cricket scores — when India scores 286, you can say 'Two hundred eighty-six runs'.",
+      "🛒 A toy costs ₹475. You can expand it as ₹400 + ₹70 + ₹5 to count coins.",
+      "📅 The year 2025 has four digits — place value helps you read any year!",
+      "🚌 Bus number 507 — the 5 tells you the route group (hundreds)."
+    ],
+    mistakes: [
+      { mistake: "Writing 'Five hundred and seven' as 570 instead of 507.", tip: "If you hear 'seven' (not 'seventy'), the tens place is 0." },
+      { mistake: "Saying 201 as 'Two hundred and one' but writing 2001.", tip: "201 is a 3-digit number. 2001 has four digits." },
+      { mistake: "Comparing from the ones digit instead of hundreds.", tip: "Always start comparing from the leftmost (biggest) place." },
+      { mistake: "Thinking predecessor means 'add 1'.", tip: "Predecessor = one BEFORE (subtract 1). Successor = one AFTER (add 1)." },
+      { mistake: "Writing 0 at the start of a 3-digit number (e.g. 073).", tip: "A 3-digit number must start with 1–9 in the hundreds place." }
+    ],
+    revision: [
+      "3-digit numbers range from 100 to 999.",
+      "Hundreds place is the leftmost digit, Tens in the middle, Ones on the right.",
+      "Number name: 846 → Eight hundred forty-six.",
+      "Expanded form: 846 = 800 + 40 + 6.",
+      "To compare: check Hundreds first, then Tens, then Ones.",
+      "Ascending = smallest to largest. Descending = largest to smallest.",
+      "Predecessor of N = N − 1. Successor of N = N + 1.",
+      "Greatest 3-digit number from digits: place the largest digit in hundreds.",
+      "Smallest 3-digit number from digits: place the smallest non-zero digit in hundreds."
+    ],
+    checklist: [
+      "I can read and write number names up to 999",
+      "I know what hundreds, tens and ones mean",
+      "I can write the expanded form of any 3-digit number",
+      "I can compare two 3-digit numbers using > < =",
+      "I can arrange numbers in ascending and descending order",
+      "I can find the predecessor and successor of a number",
+      "I can form the greatest and smallest numbers from given digits"
+    ],
+    parentNote: "Help your child practise number names in daily life — reading prices at shops, bus numbers, or house numbers. Use beans or coins at home for the Place Value Cups activity. When your child writes number names, ensure they spell carefully (forty, not fourty). Encourage them to explain their comparison strategy aloud."
+  };
+
+  // ──────────────────────────────────────────────────────
+  // CH2: TOY JOY
+  // ──────────────────────────────────────────────────────
+  CHAPTER_CONTENT["ch2-toy-joy"] = {
+    overview: {
+      kid: "Imagine you go to a toy shop with ₹500! How will you add up the prices? What change will you get back? In this chapter, you'll become a maths superstar at adding and subtracting big numbers! 🎮🧸",
+      parent: "This chapter covers addition and subtraction of 3-digit numbers with and without regrouping. Word problems set in a toy-shop context make abstract arithmetic relatable and fun."
+    },
+    concepts: [
+      "Adding 3-digit numbers without carrying",
+      "Adding 3-digit numbers with carrying (regrouping)",
+      "Subtracting 3-digit numbers without borrowing",
+      "Subtracting 3-digit numbers with borrowing",
+      "Word problems — total cost, change, how much more",
+      "Estimating sums and differences to the nearest 10",
+      "Checking answers with reverse operations (addition ↔ subtraction)"
+    ],
+    examples: [
+      { title: "Addition Without Carrying", steps: ["Add 342 + 215", "Ones: 2 + 5 = 7", "Tens: 4 + 1 = 5", "Hundreds: 3 + 2 = 5", "Answer: 557"] },
+      { title: "Addition With Carrying", steps: ["Add 368 + 274", "Ones: 8 + 4 = 12 → write 2, carry 1", "Tens: 6 + 7 + 1(carry) = 14 → write 4, carry 1", "Hundreds: 3 + 2 + 1(carry) = 6", "Answer: 642"] },
+      { title: "Subtraction Without Borrowing", steps: ["Subtract 586 − 243", "Ones: 6 − 3 = 3", "Tens: 8 − 4 = 4", "Hundreds: 5 − 2 = 3", "Answer: 343"] },
+      { title: "Subtraction With Borrowing", steps: ["Subtract 502 − 168", "Ones: 2 − 8? Can't! Borrow from tens. But tens is 0, so borrow from hundreds.", "500 becomes 400, the 10 tens give 1 ten to ones → 12 − 8 = 4", "Tens: 9(remaining) − 6 = 3", "Hundreds: 4 − 1 = 3", "Answer: 334"] },
+      { title: "Word Problem", steps: ["A teddy bear costs ₹275 and a toy car costs ₹168. What is the total cost?", "Add: 275 + 168", "Ones: 5 + 8 = 13 → write 3, carry 1", "Tens: 7 + 6 + 1 = 14 → write 4, carry 1", "Hundreds: 2 + 1 + 1 = 4", "Total: ₹443"] }
+    ],
+    practice: [
+      { q: "Add: 123 + 456", a: "579", diff: "easy" },
+      { q: "Add: 310 + 285", a: "595", diff: "easy" },
+      { q: "Subtract: 789 − 345", a: "444", diff: "easy" },
+      { q: "Subtract: 650 − 230", a: "420", diff: "easy" },
+      { q: "A ball costs ₹120 and a bat costs ₹275. What is the total?", a: "₹395", diff: "easy" },
+      { q: "Add: 487 + 356", a: "843", diff: "medium" },
+      { q: "Subtract: 603 − 278", a: "325", diff: "medium" },
+      { q: "Riya has ₹500. She buys a doll for ₹345. How much change?", a: "₹155", diff: "medium" },
+      { q: "Add: 299 + 456", a: "755", diff: "medium" },
+      { q: "Subtract: 800 − 467", a: "333", diff: "medium" },
+      { q: "A shop sold 378 toys on Saturday and 465 toys on Sunday. Total toys sold?", a: "843", diff: "hard" },
+      { q: "Subtract: 1000 − 573", a: "427", diff: "hard" },
+      { q: "Amit has ₹672. He spends ₹389. Then he earns ₹150. How much does he have?", a: "₹433 (672 − 389 = 283, then 283 + 150 = 433)", diff: "hard" },
+      { q: "Find the missing number: 456 + ___ = 791", a: "335", diff: "hard" },
+      { q: "Estimate 478 + 315 to the nearest ten.", a: "480 + 320 = 800 (approximately)", diff: "hard" }
+    ],
+    practicals: [
+      { title: "Toy Shop Role Play", objective: "Practise addition and subtraction with play money.", materials: "Play money (or real coins), toy price tags, notebook", steps: ["Set up a pretend toy shop at home with 6–8 items", "Write a price tag for each item (between ₹50 and ₹500)", "One person is the shopkeeper, another is the buyer", "The buyer picks 2 items — add their prices for the total", "Pay with a bigger note and calculate the change", "Switch roles after 3 rounds"], observation: "You naturally do carry and borrow when handling money.", learned: "Addition and subtraction have real use in everyday shopping." },
+      { title: "Dice Addition Challenge", objective: "Build speed in 3-digit addition.", materials: "3 dice (or 1 die rolled 3 times), paper, pencil, timer", steps: ["Roll 3 dice to make a 3-digit number (e.g., 4-2-6 → 426)", "Roll again to make another 3-digit number", "Add them on paper — show all working", "Check with a calculator (if available)", "Repeat 5 times. Can you get all 5 correct?"], observation: "Carrying happens more often than you'd expect!", learned: "Practising with random numbers builds confidence for any addition." },
+      { title: "Subtraction Puzzle Trail", objective: "Practise subtraction through a puzzle chain.", materials: "Paper, pen", steps: ["Start with the number 999", "Roll a die 3 times to get a 3-digit number", "Subtract that number from 999", "Take your answer and subtract a new rolled number", "Continue for 5 rounds — can you avoid going below 0?", "If you go below 0, you're out! Track your longest chain."], observation: "Borrowing happens when any column's top digit is smaller than the bottom.", learned: "Subtraction chains show how numbers shrink step by step." }
+    ],
+    quiz: [
+      { q: "345 + 231 = ?", opts: ["576", "566", "586", "476"], ans: 0 },
+      { q: "678 − 345 = ?", opts: ["323", "333", "343", "233"], ans: 1 },
+      { q: "489 + 367 = ?", opts: ["846", "856", "756", "866"], ans: 1 },
+      { q: "700 − 256 = ?", opts: ["454", "444", "544", "354"], ans: 1 },
+      { q: "A kite costs ₹185 and a ball costs ₹260. Total cost?", opts: ["₹445", "₹435", "₹455", "₹345"], ans: 0 },
+      { q: "What is the change from ₹500 if you spend ₹327?", opts: ["₹173", "₹183", "₹273", "₹127"], ans: 0 },
+      { q: "Estimate 492 + 311 to nearest ten:", opts: ["800", "810", "790", "780"], ans: 0 },
+      { q: "If 256 + X = 600, what is X?", opts: ["344", "354", "334", "456"], ans: 0 },
+      { q: "Which operation checks subtraction?", opts: ["Multiplication", "Division", "Addition", "Subtraction again"], ans: 2 },
+      { q: "809 − 478 = ?", opts: ["331", "321", "341", "431"], ans: 0 }
+    ],
+    realLife: [
+      "🛒 Shopping: Adding prices of 2–3 items to check if you have enough money.",
+      "💰 Getting change: If you give ₹500 for a ₹382 purchase, the shopkeeper gives ₹118 back.",
+      "🏫 Attendance: If a school has 450 students and 38 are absent, 412 are present.",
+      "🎂 Party planning: 175 samosas + 250 sandwiches = 425 snacks to prepare.",
+      "📊 Scores: Your test score is 87 and your friend's is 93. The difference is 6 marks."
+    ],
+    mistakes: [
+      { mistake: "Forgetting to carry: 68 + 45 = 103, not 113.", tip: "When a column adds to 10 or more, write the ones digit and carry the tens digit." },
+      { mistake: "Borrowing errors: taking from the wrong column.", tip: "Always borrow from the column immediately to the left." },
+      { mistake: "Subtracting the smaller digit from the larger even when the larger is on the bottom.", tip: "The top number must be larger in each column. If not, you must borrow." },
+      { mistake: "Misaligning digits when writing vertically.", tip: "Use lined paper or graph paper. Ones under ones, tens under tens." },
+      { mistake: "Forgetting to add the carried number.", tip: "Write the carry number small above the next column so you don't forget." }
+    ],
+    revision: [
+      "To add: line up ones under ones, tens under tens, hundreds under hundreds.",
+      "Carrying: when a column adds to 10+, carry to the next left column.",
+      "To subtract: the top number must be ≥ bottom in each column, otherwise borrow.",
+      "Borrowing: take 1 from the next left column (adds 10 to current column).",
+      "Word problems: look for keywords — 'total', 'altogether' → add; 'how much more', 'change', 'left' → subtract.",
+      "Estimate: round each number to the nearest 10 first, then add/subtract.",
+      "Check subtraction by adding: if A − B = C, then C + B should equal A."
+    ],
+    checklist: [
+      "I can add 3-digit numbers without carrying",
+      "I can add 3-digit numbers with carrying",
+      "I can subtract 3-digit numbers without borrowing",
+      "I can subtract 3-digit numbers with borrowing",
+      "I can solve word problems about money and toys",
+      "I can estimate sums and differences",
+      "I can check my answer using reverse operations"
+    ],
+    parentNote: "Use real shopping trips as practice — ask your child to add prices of two items mentally or on paper. Play 'shopkeeper and customer' at home with play money. When your child makes a carrying or borrowing mistake, don't just correct — ask them to re-read the steps and find the error themselves. Graph paper is very helpful for keeping columns aligned."
+  };
+
+  // ──────────────────────────────────────────────────────
+  // CH3: DOUBLE CENTURY
+  // ──────────────────────────────────────────────────────
+  CHAPTER_CONTENT["ch3-double-century"] = {
+    overview: {
+      kid: "A cricketer scores a double century — that's 200 runs! In this chapter, you'll explore numbers beyond 100, find cool patterns, and learn to make the biggest and smallest numbers from any digits. Ready to score your own double century in maths? 🏏🎉",
+      parent: "This chapter deepens place-value understanding and introduces number formation, odd/even classification, number patterns, and rounding. These foundational skills support mental maths and estimation in later grades."
+    },
+    concepts: [
+      "Place value of 3-digit numbers (deeper understanding)",
+      "Face value vs. Place value",
+      "Forming greatest and smallest numbers from given digits",
+      "Even numbers and Odd numbers (up to 999)",
+      "Number patterns — increasing, decreasing, skip counting",
+      "Rounding off to the nearest 10 and 100"
+    ],
+    examples: [
+      { title: "Face Value vs. Place Value", steps: ["Number: 583", "Digit 5: Face value = 5, Place value = 500 (it's in hundreds place)", "Digit 8: Face value = 8, Place value = 80 (it's in tens place)", "Digit 3: Face value = 3, Place value = 3 (it's in ones place)"] },
+      { title: "Forming Greatest Number", steps: ["Digits given: 6, 2, 9", "Arrange digits in descending order for greatest: 9, 6, 2", "Greatest number: 962"] },
+      { title: "Forming Smallest Number", steps: ["Digits given: 4, 0, 7", "Arrange in ascending order: 0, 4, 7", "But 0 cannot be in hundreds place!", "Put the next smallest (4) in hundreds place: 407", "Smallest number: 407"] },
+      { title: "Identifying Even and Odd", steps: ["Look at the ones digit:", "If ones digit is 0, 2, 4, 6, or 8 → Even number", "If ones digit is 1, 3, 5, 7, or 9 → Odd number", "Example: 346 → ones digit is 6 → Even", "Example: 519 → ones digit is 9 → Odd"] },
+      { title: "Rounding to Nearest 10", steps: ["Round 467 to the nearest 10", "Look at the ones digit: 7", "7 ≥ 5, so round UP", "467 → 470", "Another: Round 432 → ones digit is 2, 2 < 5, round DOWN → 430"] }
+    ],
+    practice: [
+      { q: "What is the place value of 7 in 273?", a: "70 (tens place)", diff: "easy" },
+      { q: "Is 486 even or odd?", a: "Even (ones digit 6)", diff: "easy" },
+      { q: "What is the face value of 5 in 523?", a: "5", diff: "easy" },
+      { q: "What comes next in the pattern: 110, 120, 130, ___?", a: "140", diff: "easy" },
+      { q: "Round 250 to the nearest 100.", a: "300 (5 in tens → round up)", diff: "easy" },
+      { q: "Form the greatest number using 3, 8, 1.", a: "831", diff: "medium" },
+      { q: "Form the smallest number using 5, 0, 2.", a: "205", diff: "medium" },
+      { q: "Round 685 to the nearest 10.", a: "690", diff: "medium" },
+      { q: "Find the next 3 numbers: 225, 250, 275, ___, ___, ___.", a: "300, 325, 350", diff: "medium" },
+      { q: "List all even numbers between 391 and 401.", a: "392, 394, 396, 398, 400", diff: "medium" },
+      { q: "Form all possible 3-digit numbers from 5, 0, 3 (no repetition). List them.", a: "305, 350, 503, 530 (cannot start with 0)", diff: "hard" },
+      { q: "The place value of 6 in 869 minus the face value of 6 is:", a: "60 − 6 = 54", diff: "hard" },
+      { q: "Find the difference between the greatest and smallest 3-digit numbers using 7, 2, 5.", a: "752 − 257 = 495", diff: "hard" },
+      { q: "How many odd numbers are between 200 and 210?", a: "5 (201, 203, 205, 207, 209)", diff: "hard" },
+      { q: "A pattern goes 100, 200, 300, ... When will it cross 999?", a: "At 1000 (the 10th term)", diff: "hard" }
+    ],
+    practicals: [
+      { title: "Greatest & Smallest Card Game", objective: "Form the greatest and smallest numbers from random digits.", materials: "Number cards 0–9 (or small paper slips), timer", steps: ["Shuffle the number cards face down", "Pick 3 cards and reveal them", "Race to form the greatest and smallest 3-digit numbers", "Write both numbers and their difference", "Repeat 5 rounds — fastest correct answer scores a point"], observation: "You always need a non-zero digit in the hundreds place for the smallest number.", learned: "Arranging digits by value helps you form numbers quickly." },
+      { title: "Odd-Even Sort", objective: "Classify numbers as odd or even by checking the ones digit.", materials: "20 small objects (coins, buttons, beads)", steps: ["Write 10 random 3-digit numbers on paper", "For each number, try to make pairs from that many objects", "If all objects pair up (no leftover) → Even", "If one object is left over → Odd", "Verify by checking the ones digit", "Sort the 10 numbers into an 'Even' column and 'Odd' column"], observation: "Only the ones digit decides if a number is even or odd.", learned: "You don't need to count objects — just check the last digit!" },
+      { title: "Rounding Relay", objective: "Practise rounding to nearest 10 and 100.", materials: "Paper, pen, a number line drawn from 100 to 200 (by 10s)", steps: ["Parent calls out a number (e.g., 147)", "Child marks it on the number line", "Child says: 'Nearest ten is 150, nearest hundred is 100'", "Verify together", "Do 10 numbers — keep score of correct answers"], observation: "Numbers exactly at 5 (like 150, 250) round UP to the next ten.", learned: "Rounding helps you estimate quickly without exact calculation." }
+    ],
+    quiz: [
+      { q: "Place value of 4 in 847 is:", opts: ["4", "40", "400", "847"], ans: 1 },
+      { q: "Which is the smallest 3-digit number using 6, 0, 3?", opts: ["036", "306", "360", "063"], ans: 1 },
+      { q: "Is 375 even or odd?", opts: ["Even", "Odd", "Neither", "Both"], ans: 1 },
+      { q: "Round 556 to the nearest 10:", opts: ["550", "560", "600", "555"], ans: 1 },
+      { q: "Next in pattern: 450, 500, 550, ___", opts: ["600", "560", "650", "555"], ans: 0 },
+      { q: "Greatest 3-digit number from 2, 7, 4 is:", opts: ["742", "724", "472", "274"], ans: 0 },
+      { q: "Face value of 9 in 391 is:", opts: ["90", "9", "900", "1"], ans: 1 },
+      { q: "How many even numbers between 100 and 110?", opts: ["5", "4", "6", "3"], ans: 0 },
+      { q: "Round 850 to the nearest 100:", opts: ["800", "900", "850", "860"], ans: 1 },
+      { q: "Difference between greatest and smallest from 1,5,9:", opts: ["792", "828", "594", "648"], ans: 0 }
+    ],
+    realLife: [
+      "🏏 Scores: Virat Kohli's score of 183 — the 1 is worth 100, 8 is worth 80, 3 is worth 3.",
+      "🏠 House number 305 — the 0 in the tens place means there are zero tens.",
+      "🎯 Rounding at shops: ₹497 ≈ ₹500. Shopkeepers often round for convenience.",
+      "📊 Population: your village has 872 people — you can round to 'about 900'.",
+      "🔢 Patterns in calendars: dates follow a +1 pattern, weeks follow a +7 pattern."
+    ],
+    mistakes: [
+      { mistake: "Putting 0 in the hundreds place when forming the smallest number.", tip: "The hundreds digit must be 1–9. Place 0 in the tens or ones place." },
+      { mistake: "Confusing face value and place value.", tip: "Face value = the digit itself. Place value = digit × its place (ones/tens/hundreds)." },
+      { mistake: "Saying 312 is odd because 3 is odd.", tip: "Only the ONES digit decides odd/even. 312 → 2 → Even." },
+      { mistake: "Rounding 345 to 300 instead of 350.", tip: "When rounding to nearest 10, look at the ones digit. 5 → round up to 350." },
+      { mistake: "Missing valid numbers when listing permutations.", tip: "Be systematic — fix each digit in hundreds place, then arrange the rest." }
+    ],
+    revision: [
+      "Face value = digit itself (e.g., 5 in 752 has face value 5).",
+      "Place value = digit × its place (e.g., 5 in 752 = 50).",
+      "Greatest number: arrange digits in descending order.",
+      "Smallest number: ascending order, but hundreds digit cannot be 0.",
+      "Even: ones digit is 0, 2, 4, 6, or 8. Odd: 1, 3, 5, 7, or 9.",
+      "Patterns: look for what is being added or subtracted each step.",
+      "Round to nearest 10: ones digit ≥ 5 → round up, else round down.",
+      "Round to nearest 100: tens digit ≥ 5 → round up, else round down."
+    ],
+    checklist: [
+      "I understand face value and place value",
+      "I can form the greatest number from given digits",
+      "I can form the smallest number (avoiding 0 in hundreds)",
+      "I can tell if a number is even or odd",
+      "I can find and extend number patterns",
+      "I can round numbers to the nearest 10",
+      "I can round numbers to the nearest 100"
+    ],
+    parentNote: "Use cricket scores or news numbers to discuss place value in real life. When forming greatest/smallest numbers, let your child try without hints first — then guide if they get stuck on the 'zero rule'. For rounding, use a number line on paper — it makes the concept visual and concrete. Encourage your child to create their own number patterns for you to solve!"
+  };
+
+  // ═══════════════════════════════════════════════════════
+  // UI ENGINE
+  // ═══════════════════════════════════════════════════════
+
+  const SECTION_TABS = [
+    { id: "overview",    label: "📋 Overview" },
+    { id: "concepts",    label: "💡 Concepts" },
+    { id: "examples",    label: "✏️ Examples" },
+    { id: "practice",    label: "📝 Practice" },
+    { id: "practicals",  label: "🔬 Activities" },
+    { id: "worksheet",   label: "📄 Worksheet" },
+    { id: "quiz",        label: "🧩 Quiz" },
+    { id: "reallife",    label: "🌍 Real Life" },
+    { id: "mistakes",    label: "⚠️ Tips" },
+    { id: "revision",    label: "📌 Revision" },
+    { id: "checklist",   label: "✅ Progress" },
+  ];
+
+  let curGrade = null, curSubject = null, curChapter = null;
+  let curTab = "overview";
+
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Grade screen ──────────────────────────────────────
+  function renderGrades() {
+    const grid = document.getElementById('grade-grid');
+    grid.innerHTML = SCHOOL_DATA.grades.map(g => `
+      <div class="sel-card" style="--sc-color:${g.color}" onclick="selectGrade('${g.id}')">
+        <div class="sc-icon">${g.icon}</div>
+        <div class="sc-name">${g.name}</div>
+        <div class="sc-sub">${g.subjects.length} Subject${g.subjects.length > 1 ? 's' : ''}</div>
+      </div>
+    `).join('');
+  }
+
+  function selectGrade(gid) {
+    curGrade = SCHOOL_DATA.grades.find(g => g.id === gid);
+    if (!curGrade) return;
+    document.getElementById('subj-title').textContent = curGrade.name + ' — Choose a Subject';
+    document.getElementById('bread-subjects').innerHTML = `<button onclick="show('scr-grades')">🏫 Grades</button><span class="sep">›</span><span>${curGrade.name}</span>`;
+    const grid = document.getElementById('subject-grid');
+    grid.innerHTML = curGrade.subjects.map(s => `
+      <div class="sel-card" style="--sc-color:${s.color}" onclick="selectSubject('${s.id}')">
+        <div class="sc-icon">${s.icon}</div>
+        <div class="sc-name">${s.name}</div>
+        <div class="sc-sub">${s.chapters.length} Chapters</div>
+      </div>
+    `).join('');
+    show('scr-subjects');
+  }
+
+  function selectSubject(sid) {
+    curSubject = curGrade.subjects.find(s => s.id === sid);
+    if (!curSubject) return;
+    document.getElementById('chlist-title').textContent = curGrade.name + ' ' + curSubject.name;
+    document.getElementById('bread-chapters').innerHTML = `<button onclick="show('scr-grades')">🏫 Grades</button><span class="sep">›</span><button onclick="selectGrade('${curGrade.id}')">${curGrade.name}</button><span class="sep">›</span><span>${curSubject.name}</span>`;
+    const list = document.getElementById('chapter-list');
+    const colors = ['var(--blue)','var(--purple)','var(--orange)','var(--teal)','var(--green)','var(--red)','var(--amber)'];
+    list.innerHTML = curSubject.chapters.map((ch, i) => {
+      const c = colors[i % colors.length];
+      const bg = `${c}15`;
+      return `<div class="ch-item" onclick="selectChapter('${ch.id}')">
+        <div class="ch-num" style="background:${c}15;color:${c}">${ch.num}</div>
+        <div class="ch-info">
+          <div class="ch-title">${ch.title}</div>
+          <div class="ch-desc">${ch.shortDescription}</div>
+          <div class="ch-meta">
+            <span class="ch-badge" style="background:var(--blue-l);color:var(--blue)">⏱ ${ch.estimatedTimeMins} min</span>
+            <span class="ch-badge" style="background:${ch.difficulty==='Easy'?'var(--green-l)':ch.difficulty==='Hard'?'var(--red-l)':'var(--amber-l)'};color:${ch.difficulty==='Easy'?'var(--green)':ch.difficulty==='Hard'?'var(--red)':'var(--amber)'}">${ch.difficulty}</span>
+          </div>
+        </div>
+        <div class="ch-arrow">›</div>
+      </div>`;
+    }).join('');
+    show('scr-chapters');
+  }
+
+  function selectChapter(cid) {
+    curChapter = curSubject.chapters.find(c => c.id === cid);
+    if (!curChapter) return;
+    curTab = 'overview';
+    document.getElementById('ch-content-title').textContent = `Ch ${curChapter.num}: ${curChapter.title}`;
+    document.getElementById('ch-content-sub').textContent = curChapter.shortDescription;
+    document.getElementById('bread-content').innerHTML = `<button onclick="show('scr-grades')">🏫</button><span class="sep">›</span><button onclick="selectGrade('${curGrade.id}')">${curGrade.name}</button><span class="sep">›</span><button onclick="selectSubject('${curSubject.id}')">${curSubject.name}</button><span class="sep">›</span><span>Ch ${curChapter.num}</span>`;
+    renderChapterTabs();
+    renderChapterSection();
+    renderBottomNav();
+    show('scr-content');
+  }
+
+  function renderChapterTabs() {
+    const el = document.getElementById('ch-tabs');
+    el.innerHTML = SECTION_TABS.map(t =>
+      `<button class="ch-tab${t.id === curTab ? ' active' : ''}" onclick="switchChTab('${t.id}')">${t.label}</button>`
+    ).join('');
+  }
+
+  function switchChTab(tid) {
+    curTab = tid;
+    renderChapterTabs();
+    renderChapterSection();
+  }
+
+  // ── Chapter section renderer ──────────────────────────
+  function renderChapterSection() {
+    const data = CHAPTER_CONTENT[curChapter.id];
+    if (!data) { document.getElementById('ch-sections-container').innerHTML = '<p>Content coming soon!</p>'; return; }
+    const container = document.getElementById('ch-sections-container');
+    let html = '';
+
+    if (curTab === 'overview') {
+      html = `<div class="content-card">
+        <h2>🎯 Chapter Overview</h2>
+        <div style="background:var(--blue-l);border-radius:var(--r);padding:16px 18px;margin-bottom:16px">
+          <strong style="font-size:.78rem;color:var(--blue-d)">For Students:</strong>
+          <p>${data.overview.kid}</p>
+        </div>
+        <div style="background:var(--amber-l);border-radius:var(--r);padding:16px 18px">
+          <strong style="font-size:.78rem;color:#92400e">For Parents & Teachers:</strong>
+          <p>${data.overview.parent}</p>
+        </div>
+      </div>
+      <div class="content-card">
+        <h2>🎯 Learning Outcomes</h2>
+        <p style="font-size:.82rem;color:var(--tm);margin-bottom:10px">By the end of this chapter, you will be able to:</p>
+        <ul>${curChapter.learningOutcomes.map(o => `<li>✅ ${o}</li>`).join('')}</ul>
+      </div>`;
+    }
+
+    if (curTab === 'concepts') {
+      html = `<div class="content-card"><h2>💡 Concepts Covered</h2>
+        <p style="font-size:.78rem;color:var(--tm);margin-bottom:12px">Click "Explain" to get an AI-powered explanation of any concept.</p>
+        <ul>${data.concepts.map((c, ci) => {
+          const clean = c.replace(/[📌💡]/g, '').trim();
+          return `<li style="margin-bottom:10px">📌 ${c}
+            <button class="show-ans-btn" style="margin-left:8px;font-size:.68rem" onclick="explainConcept(${ci},'${clean.replace(/'/g, "\\'")}')">🤖 Explain</button>
+            <div id="concept-explain-${ci}" class="q-ans" style="color:var(--purple);margin-top:6px"></div>
+          </li>`;
+        }).join('')}</ul></div>`;
+    }
+
+    if (curTab === 'examples') {
+      html = data.examples.map((ex, i) => `<div class="content-card">
+        <h2>✏️ Example ${i+1}: ${ex.title}</h2>
+        <div class="example-box"><ol>${ex.steps.map(s => `<li>${s}</li>`).join('')}</ol></div>
+      </div>`).join('');
+    }
+
+    if (curTab === 'practice') {
+      const groups = { easy: [], medium: [], hard: [] };
+      data.practice.forEach((p, i) => groups[p.diff].push({ ...p, idx: i }));
+      html = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+        <button class="show-ans-btn" style="background:var(--purple-l);border-color:var(--purple);color:var(--purple)" onclick="openAiForMoreQuestions()">🤖 AI: Generate More Questions</button>
+        <button class="show-ans-btn" onclick="toggleAllAnswers()">👁 Show/Hide All Answers</button>
+      </div>`;
+      ['easy','medium','hard'].forEach(d => {
+        const label = d === 'easy' ? '🟢 Easy' : d === 'medium' ? '🟡 Medium' : '🔴 Hard';
+        html += `<div class="content-card"><h2>${label}</h2>`;
+        groups[d].forEach(p => {
+          html += `<div class="practice-q">
+            <div class="q-text"><span class="q-diff q-${d}">${d.toUpperCase()}</span>Q${p.idx+1}: ${p.q}</div>
+            <div class="q-ans" id="pans-${p.idx}">✅ ${p.a}</div>
+            <div class="q-ans" id="phint-${p.idx}" style="color:var(--amber)"></div>
+            <div style="display:flex;gap:4px;flex-wrap:wrap">
+              <button class="show-ans-btn" onclick="inlineAiHint(${p.idx},'${p.q.replace(/'/g, "\\'")}')">🤖 AI Hint</button>
+              <button class="show-ans-btn" onclick="toggleAns('pans-${p.idx}')">Show Answer</button>
+            </div>
+          </div>`;
+        });
+        html += '</div>';
+      });
+    }
+
+    if (curTab === 'practicals') {
+      html = data.practicals.map((a, i) => `<div class="content-card">
+        <h2>🔬 Activity ${i+1}: ${a.title}</h2>
+        <div class="activity-box">
+          <h4>🎯 Objective</h4><p>${a.objective}</p>
+        </div>
+        <h3>📦 Materials Needed</h3><p>${a.materials}</p>
+        <h3>📋 Steps</h3><ol>${a.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+        <h3>🔍 Observation</h3><p>${a.observation}</p>
+        <h3>💡 What You Learned</h3><p>${a.learned}</p>
+      </div>`).join('');
+    }
+
+    if (curTab === 'worksheet') {
+      html = `<div class="content-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <h2>📄 Worksheet</h2>
+          <button class="print-btn" onclick="window.print()">🖨 Print</button>
+        </div>
+        <p style="font-size:.82rem;color:var(--tm);margin-bottom:16px">Answer these questions on paper. Click "Print" to print this worksheet.</p>`;
+      data.practice.forEach((p, i) => {
+        html += `<div style="padding:10px 0;border-bottom:1px solid var(--bdr-s);font-size:.9rem"><strong>Q${i+1}.</strong> ${p.q}<div style="min-height:40px;border-bottom:1px dashed var(--bdr);margin-top:8px"></div></div>`;
+      });
+      html += '</div>';
+    }
+
+    if (curTab === 'quiz') {
+      html = `<div class="content-card"><h2>🧩 Quiz — ${curChapter.title}</h2>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+          <p style="font-size:.82rem;color:var(--tm)">10 multiple-choice questions. Click an option to check your answer.</p>
+          <button class="show-ans-btn" style="background:var(--purple-l);border-color:var(--purple);color:var(--purple)" onclick="if(!aiPanelOpen)toggleAiPanel();switchAiTool('quiz');">🤖 AI: Fresh Quiz</button>
+        </div>`;
+      data.quiz.forEach((q, qi) => {
+        html += `<div class="mcq-item" id="mcq-${qi}">
+          <div class="mcq-q">Q${qi+1}. ${q.q}</div>
+          <div class="mcq-opts">${q.opts.map((o, oi) =>
+            `<div class="mcq-opt" id="mcq-${qi}-${oi}" onclick="checkMcq(${qi},${oi},${q.ans})">${String.fromCharCode(65+oi)}) ${o}</div>`
+          ).join('')}</div>
+        </div>`;
+      });
+      html += '<div style="text-align:center;margin-top:16px"><button class="show-ans-btn" onclick="showAllMcqAnswers()">Show All Answers</button></div></div>';
+    }
+
+    if (curTab === 'reallife') {
+      html = `<div class="content-card"><h2>🌍 Real-life Applications</h2><ul>${data.realLife.map(r => `<li>${r}</li>`).join('')}</ul></div>`;
+    }
+
+    if (curTab === 'mistakes') {
+      html = `<div class="content-card"><h2>⚠️ Common Mistakes & Tips</h2>`;
+      data.mistakes.forEach(m => {
+        html += `<div class="tip-box"><strong>❌ Mistake: ${m.mistake}</strong>💡 Tip: ${m.tip}</div>`;
+      });
+      html += '</div>';
+    }
+
+    if (curTab === 'revision') {
+      html = `<div class="revision-card"><h2 style="margin-bottom:12px">📌 Quick Revision Notes</h2><ul>${data.revision.map(r => `<li style="margin-bottom:8px;font-size:.9rem">• ${r}</li>`).join('')}</ul>
+        <div style="text-align:right;margin-top:12px"><button class="print-btn" onclick="window.print()">🖨 Print Notes</button></div>
+      </div>`;
+    }
+
+    if (curTab === 'checklist') {
+      html = `<div class="content-card"><h2>✅ Progress Checklist</h2>
+        <p style="font-size:.82rem;color:var(--tm);margin-bottom:14px">Check off each item as you master it. Your progress is saved in your browser.</p>
+        <ul class="checklist">${data.checklist.map((c, i) =>
+          `<li><input type="checkbox" id="chk-${curChapter.id}-${i}" onchange="saveChecklist()" ${loadCheck(curChapter.id, i) ? 'checked' : ''} /><label for="chk-${curChapter.id}-${i}">${c}</label></li>`
+        ).join('')}</ul>
+      </div>
+      <div class="parent-note">
+        <h3>👨‍👩‍👧 How to Help Your Child</h3>
+        <p>${data.parentNote}</p>
+      </div>`;
+    }
+
+    container.innerHTML = html;
+  }
+
+  // ── Bottom navigation ─────────────────────────────────
+  function renderBottomNav() {
+    const idx = curSubject.chapters.findIndex(c => c.id === curChapter.id);
+    const prev = idx > 0 ? curSubject.chapters[idx - 1] : null;
+    const next = idx < curSubject.chapters.length - 1 ? curSubject.chapters[idx + 1] : null;
+    document.getElementById('ch-bottom-nav').innerHTML = `
+      ${prev ? `<button class="ch-nav-btn" onclick="selectChapter('${prev.id}')">← Ch ${prev.num}: ${prev.title}</button>` : '<span></span>'}
+      ${next ? `<button class="ch-nav-btn primary" onclick="selectChapter('${next.id}')">Ch ${next.num}: ${next.title} →</button>` : '<span></span>'}
+    `;
+  }
+
+  // ── Practice answers ──────────────────────────────────
+  function toggleAns(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('show');
+  }
+  function toggleAllAnswers() {
+    document.querySelectorAll('.q-ans').forEach(el => el.classList.toggle('show'));
+  }
+
+  function openAiForMoreQuestions() {
+    if (!aiPanelOpen) toggleAiPanel();
+    switchAiTool('questions');
+  }
+
+  async function explainConcept(idx, concept) {
+    const el = document.getElementById('concept-explain-' + idx);
+    if (!el) return;
+    if (el.classList.contains('show') && el.textContent) { el.classList.remove('show'); return; }
+    el.textContent = '🤖 Explaining...';
+    el.classList.add('show');
+    try {
+      const grade = curGrade?.name || 'Class 3';
+      const subject = curSubject?.name || 'Maths';
+      const chapter = curChapter?.title || '';
+      const result = await callAiEndpoint('/ai/school/tutor', {
+        question: 'Explain this concept in simple words with an example: ' + concept,
+        grade, subject, chapter
+      });
+      el.innerHTML = formatMarkdown(result);
+    } catch {
+      el.textContent = 'Please login to use AI explanations.';
+    }
+  }
+
+  async function inlineAiHint(idx, question) {
+    const el = document.getElementById('phint-' + idx);
+    if (!el) return;
+    if (el.classList.contains('show') && el.textContent) { el.classList.remove('show'); return; }
+    el.textContent = '💡 Getting hint...';
+    el.classList.add('show');
+    try {
+      const grade = curGrade?.name || 'Class 3';
+      const subject = curSubject?.name || 'Maths';
+      const result = await callAiEndpoint('/ai/school/hint', { question, grade, subject });
+      el.innerHTML = '💡 ' + formatMarkdown(result);
+    } catch {
+      el.textContent = '💡 Please login to use AI hints.';
+    }
+  }
+
+  // ── Quiz MCQ ──────────────────────────────────────────
+  function checkMcq(qi, oi, correct) {
+    const opts = document.querySelectorAll(`#mcq-${qi} .mcq-opt`);
+    opts.forEach((o, i) => {
+      o.classList.add('disabled');
+      if (i === correct) o.classList.add('correct');
+      else if (i === oi && oi !== correct) o.classList.add('wrong');
+    });
+  }
+  function showAllMcqAnswers() {
+    const data = CHAPTER_CONTENT[curChapter.id];
+    data.quiz.forEach((q, qi) => {
+      const opts = document.querySelectorAll(`#mcq-${qi} .mcq-opt`);
+      opts.forEach((o, i) => {
+        o.classList.add('disabled');
+        if (i === q.ans) o.classList.add('correct');
+      });
+    });
+  }
+
+  // ── Checklist persistence ─────────────────────────────
+  function saveChecklist() {
+    const data = CHAPTER_CONTENT[curChapter.id];
+    const state = data.checklist.map((_, i) => document.getElementById(`chk-${curChapter.id}-${i}`)?.checked || false);
+    localStorage.setItem('chk_' + curChapter.id, JSON.stringify(state));
+  }
+  function loadCheck(chId, idx) {
+    try { return JSON.parse(localStorage.getItem('chk_' + chId) || '[]')[idx] || false; } catch { return false; }
+  }
+
+  // ═══════════════════════════════════════════════════════
+  // AI LEARNING ASSISTANT ENGINE
+  // ═══════════════════════════════════════════════════════
+
+  let aiPanelOpen = false;
+  let aiCurrentTool = 'tutor';
+  let aiIsLoading = false;
+
+  const AI_TOOLS = {
+    tutor: {
+      name: 'Ask Tutor',
+      placeholder: 'Ask a doubt about this chapter...',
+      welcome: "Hi! I'm your AI tutor. Ask me anything about your chapter — I'll explain it step by step!",
+      quickActions: () => {
+        if (!curChapter) return ['What is place value?','How do I compare numbers?','Explain expanded form'];
+        const data = CHAPTER_CONTENT[curChapter.id];
+        if (!data) return [];
+        return data.concepts.slice(0, 4).map(c => 'Explain: ' + c.replace(/[📌💡]/g, '').trim().substring(0, 40));
+      }
+    },
+    questions: {
+      name: 'Generate Questions',
+      placeholder: 'Enter a topic or click a quick action...',
+      welcome: "I'll generate fresh practice questions for you! Choose a difficulty and topic below.",
+      quickActions: () => {
+        if (!curChapter) return [];
+        return (curChapter.keywords || []).slice(0, 5).map(k => k.charAt(0).toUpperCase() + k.slice(1));
+      }
+    },
+    quiz: {
+      name: 'AI Quiz',
+      placeholder: 'Enter a topic for the quiz...',
+      welcome: "I'll create a fresh MCQ quiz just for you! Tell me what topic you want to be quizzed on.",
+      quickActions: () => {
+        if (!curChapter) return [];
+        return (curChapter.keywords || []).slice(0, 5).map(k => k.charAt(0).toUpperCase() + k.slice(1));
+      }
+    },
+    story: {
+      name: 'Math Story',
+      placeholder: 'Which concept should the story teach?',
+      welcome: "I'll write a fun story that teaches you a maths concept! What concept would you like to learn through a story?",
+      quickActions: () => {
+        if (!curChapter) return [];
+        const data = CHAPTER_CONTENT[curChapter.id];
+        if (!data) return [];
+        return data.concepts.slice(0, 4).map(c => c.replace(/[📌💡]/g, '').trim().substring(0, 35));
+      }
+    },
+    simplify: {
+      name: 'Simplify',
+      placeholder: 'Paste text or type a concept to simplify...',
+      welcome: "Paste or type anything you find confusing — I'll rewrite it in super simple words!",
+      quickActions: () => ['Explain in Hindi', 'Explain in Telugu', 'Use an example', 'Make it simpler']
+    }
+  };
+
+  function toggleAiPanel() {
+    aiPanelOpen = !aiPanelOpen;
+    document.getElementById('ai-panel').classList.toggle('open', aiPanelOpen);
+    document.getElementById('ai-fab').style.display = aiPanelOpen ? 'none' : 'flex';
+    if (aiPanelOpen && document.getElementById('ai-body').children.length === 0) {
+      initAiTool();
+    }
+  }
+
+  function switchAiTool(tool) {
+    aiCurrentTool = tool;
+    document.querySelectorAll('.ai-tool-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.tool === tool);
+    });
+    initAiTool();
+  }
+
+  function initAiTool() {
+    const tool = AI_TOOLS[aiCurrentTool];
+    const body = document.getElementById('ai-body');
+    body.innerHTML = '';
+    document.getElementById('ai-input').placeholder = tool.placeholder;
+
+    addAiMsg('bot', tool.welcome);
+
+    if (aiCurrentTool === 'questions') {
+      addDifficultySelector();
+    }
+
+    const chContext = curChapter
+      ? `You are studying <strong>${curChapter.title}</strong> (${curGrade?.name || ''} ${curSubject?.name || ''}).`
+      : 'Select a chapter first to get the best AI help!';
+    addAiMsg('system', chContext);
+
+    renderQuickActions();
+  }
+
+  function renderQuickActions() {
+    const qa = document.getElementById('ai-quick-actions');
+    const tool = AI_TOOLS[aiCurrentTool];
+    const actions = tool.quickActions();
+    qa.innerHTML = actions.map(a =>
+      `<button class="ai-quick-btn" onclick="handleQuickAction('${a.replace(/'/g, "\\'")}')">${a}</button>`
+    ).join('');
+  }
+
+  function addAiMsg(type, content) {
+    const body = document.getElementById('ai-body');
+    const div = document.createElement('div');
+    div.className = 'ai-msg ' + type;
+    div.innerHTML = type === 'bot' ? formatMarkdown(content) : content;
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function addTypingIndicator() {
+    const body = document.getElementById('ai-body');
+    const div = document.createElement('div');
+    div.className = 'ai-typing';
+    div.id = 'ai-typing';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function removeTypingIndicator() {
+    const el = document.getElementById('ai-typing');
+    if (el) el.remove();
+  }
+
+  function addDifficultySelector() {
+    const body = document.getElementById('ai-body');
+    const div = document.createElement('div');
+    div.style.cssText = 'display:flex;align-items:center;gap:8px;padding:8px 0';
+    div.innerHTML = `<span style="font-size:.78rem;font-weight:700;color:var(--tm)">Difficulty:</span>
+      <div class="ai-diff-sel">
+        <button class="ai-diff-opt sel" data-diff="easy" onclick="selectAiDiff(this)">Easy</button>
+        <button class="ai-diff-opt" data-diff="medium" onclick="selectAiDiff(this)">Medium</button>
+        <button class="ai-diff-opt" data-diff="hard" onclick="selectAiDiff(this)">Hard</button>
+        <button class="ai-diff-opt" data-diff="mixed" onclick="selectAiDiff(this)">Mixed</button>
+      </div>
+      <span style="font-size:.78rem;font-weight:700;color:var(--tm);margin-left:8px">Count:</span>
+      <select id="ai-q-count" style="padding:4px 8px;border:1.5px solid var(--bdr-s);border-radius:var(--r);font-size:.78rem;font-family:var(--font)">
+        <option value="3">3</option><option value="5" selected>5</option><option value="10">10</option>
+      </select>`;
+    body.appendChild(div);
+  }
+
+  let aiDifficulty = 'easy';
+  function selectAiDiff(el) {
+    el.parentElement.querySelectorAll('.ai-diff-opt').forEach(b => b.classList.remove('sel'));
+    el.classList.add('sel');
+    aiDifficulty = el.dataset.diff;
+  }
+
+  function handleQuickAction(text) {
+    document.getElementById('ai-input').value = text;
+    sendAiMessage();
+  }
+
+  async function sendAiMessage() {
+    if (aiIsLoading) return;
+    const input = document.getElementById('ai-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    input.value = '';
+    addAiMsg('user', text);
+    aiIsLoading = true;
+    document.getElementById('ai-send-btn').disabled = true;
+    addTypingIndicator();
+
+    try {
+      let result;
+      const grade = curGrade?.name || 'Class 3';
+      const subject = curSubject?.name || 'Maths';
+      const chapter = curChapter?.title || '';
+
+      if (aiCurrentTool === 'tutor') {
+        result = await callAiEndpoint('/ai/school/tutor', { question: text, grade, subject, chapter });
+        removeTypingIndicator();
+        addAiMsg('bot', result);
+
+      } else if (aiCurrentTool === 'questions') {
+        const count = document.getElementById('ai-q-count')?.value || '5';
+        result = await callAiEndpoint('/ai/school/generate-questions', {
+          topic: text, grade, subject, difficulty: aiDifficulty, count
+        });
+        removeTypingIndicator();
+        renderGeneratedQuestions(result);
+
+      } else if (aiCurrentTool === 'quiz') {
+        result = await callAiEndpoint('/ai/school/generate-quiz', { topic: text, grade, subject, count: '5' });
+        removeTypingIndicator();
+        renderGeneratedQuiz(result);
+
+      } else if (aiCurrentTool === 'story') {
+        result = await callAiEndpoint('/ai/school/story', { concept: text, grade, subject });
+        removeTypingIndicator();
+        addAiMsg('bot', result);
+
+      } else if (aiCurrentTool === 'simplify') {
+        let lang = 'en';
+        if (text.toLowerCase().includes('hindi')) lang = 'hi';
+        else if (text.toLowerCase().includes('telugu')) lang = 'te';
+        result = await callAiEndpoint('/ai/school/simplify', { text, grade, language: lang });
+        removeTypingIndicator();
+        addAiMsg('bot', result);
+      }
+    } catch (err) {
+      removeTypingIndicator();
+      addAiMsg('system', 'Oops! Something went wrong. Please try again or check your login.');
+    }
+
+    aiIsLoading = false;
+    document.getElementById('ai-send-btn').disabled = false;
+  }
+
+  async function callAiEndpoint(path, params) {
+    const url = new URL(path, window.location.origin);
+    Object.entries(params).forEach(([k, v]) => { if (v) url.searchParams.set(k, v); });
+    const resp = await fetch(url.toString());
+    if (resp.status === 401 || resp.status === 403) {
+      throw new Error('Not authenticated');
+    }
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error);
+    return data.generation;
+  }
+
+  function renderGeneratedQuestions(raw) {
+    let questions;
+    try {
+      const cleaned = raw.replace(/```json\s*/g, '').replace(/```/g, '').trim();
+      questions = JSON.parse(cleaned);
+    } catch {
+      addAiMsg('bot', raw);
+      return;
+    }
+
+    const body = document.getElementById('ai-body');
+    const wrap = document.createElement('div');
+    wrap.className = 'ai-msg bot';
+    wrap.style.maxWidth = '100%';
+
+    let html = `<strong style="display:block;margin-bottom:8px">Generated ${questions.length} Questions:</strong>`;
+    questions.forEach((q, i) => {
+      const uid = 'aiq-' + Date.now() + '-' + i;
+      html += `<div class="ai-gen-card">
+        <div class="aq-text">Q${i + 1}. ${q.q}</div>
+        ${q.hint ? `<div class="aq-hint" id="h-${uid}">💡 Hint: ${q.hint}</div>` : ''}
+        <div class="aq-ans" id="a-${uid}">✅ ${q.a}</div>
+        <div style="display:flex;gap:4px;margin-top:6px">
+          ${q.hint ? `<button class="ai-quick-btn" onclick="document.getElementById('h-${uid}').classList.toggle('show')">Hint</button>` : ''}
+          <button class="ai-quick-btn" onclick="document.getElementById('a-${uid}').classList.toggle('show')">Answer</button>
+          <button class="ai-quick-btn" onclick="getAiHint('${q.q.replace(/'/g, "\\'")}')">AI Hint</button>
+        </div>
+      </div>`;
+    });
+    wrap.innerHTML = html;
+    body.appendChild(wrap);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function renderGeneratedQuiz(raw) {
+    let questions;
+    try {
+      const cleaned = raw.replace(/```json\s*/g, '').replace(/```/g, '').trim();
+      questions = JSON.parse(cleaned);
+    } catch {
+      addAiMsg('bot', raw);
+      return;
+    }
+
+    const body = document.getElementById('ai-body');
+    const wrap = document.createElement('div');
+    wrap.className = 'ai-msg bot';
+    wrap.style.maxWidth = '100%';
+
+    let html = `<strong style="display:block;margin-bottom:8px">AI Quiz (${questions.length} Questions):</strong>`;
+    questions.forEach((q, qi) => {
+      const uid = 'aiquiz-' + Date.now() + '-' + qi;
+      html += `<div class="mcq-item" id="${uid}">
+        <div class="mcq-q">Q${qi + 1}. ${q.q}</div>
+        <div class="mcq-opts">${q.opts.map((o, oi) =>
+          `<div class="mcq-opt" onclick="checkAiMcq('${uid}',${oi},${q.ans})">${String.fromCharCode(65 + oi)}) ${o}</div>`
+        ).join('')}</div>
+      </div>`;
+    });
+    wrap.innerHTML = html;
+    body.appendChild(wrap);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function checkAiMcq(uid, oi, correct) {
+    const opts = document.querySelectorAll(`#${uid} .mcq-opt`);
+    opts.forEach((o, i) => {
+      o.classList.add('disabled');
+      if (i === correct) o.classList.add('correct');
+      else if (i === oi && oi !== correct) o.classList.add('wrong');
+    });
+  }
+
+  async function getAiHint(question) {
+    if (aiIsLoading) return;
+    aiIsLoading = true;
+    addTypingIndicator();
+    try {
+      const grade = curGrade?.name || 'Class 3';
+      const subject = curSubject?.name || 'Maths';
+      const result = await callAiEndpoint('/ai/school/hint', { question, grade, subject });
+      removeTypingIndicator();
+      addAiMsg('bot', '💡 **Hint:** ' + result);
+    } catch {
+      removeTypingIndicator();
+      addAiMsg('system', 'Could not get hint. Please try again.');
+    }
+    aiIsLoading = false;
+  }
+
+  function formatMarkdown(text) {
+    if (!text) return '';
+    return text
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/^### (.+)$/gm, '<h4 style="margin:8px 0 4px">$1</h4>')
+      .replace(/^## (.+)$/gm, '<h4 style="margin:8px 0 4px">$1</h4>')
+      .replace(/^# (.+)$/gm, '<h4 style="margin:10px 0 4px">$1</h4>')
+      .replace(/^\- (.+)$/gm, '<li>$1</li>')
+      .replace(/^(\d+)\. (.+)$/gm, '<li>$1. $2</li>')
+      .replace(/(<li>.*<\/li>)/gs, '<ul style="padding-left:16px;margin:4px 0">$1</ul>')
+      .replace(/`(.+?)`/g, '<code>$1</code>')
+      .replace(/\n\n/g, '<br/><br/>')
+      .replace(/\n/g, '<br/>');
+  }
+
+  // ── Init ──────────────────────────────────────────────
+  renderGrades();
+  if (typeof LALAuth !== 'undefined') LALAuth.init();
+  </script>
+</body>
+</html>

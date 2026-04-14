@@ -290,6 +290,31 @@
       .op-toggle.div label { color: var(--purple); border-color: var(--purple-light); background: #fbf5ff; }
       .op-toggle.div input:checked + label { background: var(--purple-light); border-color: var(--purple); box-shadow: 0 0 0 3px rgba(168,85,247,0.15); transform: translateY(0); }
 
+      /* ── Digit pills ── */
+      .dpill-row { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+      .dpill { position:relative; }
+      .dpill input { display:none; }
+      .dpill label {
+        display:inline-flex; align-items:center; justify-content:center; gap:4px;
+        min-width:38px; height:34px; padding:0 12px;
+        border:1.5px solid var(--border); border-radius:100px;
+        font-size:.82rem; font-weight:700; font-family:var(--font-mono);
+        color:var(--text-secondary); background:var(--surface);
+        cursor:pointer; user-select:none; transition:all .18s;
+      }
+      .dpill label:hover { border-color:var(--blue); color:var(--blue); transform:translateY(-1px); }
+      .dpill input:checked + label {
+        background:var(--blue); color:#fff; border-color:var(--blue);
+        box-shadow:0 2px 8px rgba(0,113,227,.25);
+      }
+      .dpill-more {
+        display:inline-flex; align-items:center; height:34px; padding:0 10px;
+        font-size:.72rem; font-weight:700; color:var(--blue);
+        cursor:pointer; border:none; background:none;
+        font-family:var(--font); transition:color .15s;
+      }
+      .dpill-more:hover { color:var(--blue-dark); text-decoration:underline; }
+
       /* ── Sliders ── */
       .slider-stack { display: flex; flex-direction: column; gap: 20px; }
 
@@ -1598,8 +1623,9 @@
         position:absolute; font-variant-numeric:tabular-nums;
         font-weight:900; color:#fff; text-align:center;
         text-shadow:0 0 40px rgba(0,200,255,.5), 0 0 80px rgba(0,113,227,.3);
-        opacity:0; transform:scale(.5); transition:none;
+        opacity:0; transition:none;
         z-index:5; line-height:1;
+        left:50%; top:50%;
       }
       .fa-number.pop-in {
         animation: faPop .25s cubic-bezier(.17,.89,.32,1.28) forwards;
@@ -1608,14 +1634,105 @@
         animation: faFade .2s ease-out forwards;
       }
       @keyframes faPop {
-        0%   { opacity:0; transform:scale(.4) translateY(20px); filter:blur(8px); }
-        60%  { opacity:1; transform:scale(1.08); filter:blur(0); }
-        100% { opacity:1; transform:scale(1); filter:blur(0); }
+        0%   { opacity:0; transform:translate(-50%,-50%) scale(.4) translateY(20px); filter:blur(8px); }
+        60%  { opacity:1; transform:translate(-50%,-50%) scale(1.08); filter:blur(0); }
+        100% { opacity:1; transform:translate(-50%,-50%) scale(1); filter:blur(0); }
       }
       @keyframes faFade {
-        0%   { opacity:1; transform:scale(1); filter:blur(0); }
-        100% { opacity:0; transform:scale(1.1) translateY(-10px); filter:blur(6px); }
+        0%   { opacity:1; transform:translate(-50%,-50%) scale(1); filter:blur(0); }
+        100% { opacity:0; transform:translate(-50%,-50%) scale(1.1) translateY(-10px); filter:blur(6px); }
       }
+      /* ── Slide ── */
+      .fa-number.slide-in {
+        animation: faSlideIn .3s cubic-bezier(.22,.68,0,1.2) forwards;
+      }
+      .fa-number.slide-out {
+        animation: faSlideOut .25s ease-in forwards;
+      }
+      @keyframes faSlideIn {
+        0%   { opacity:0; transform:translate(-50%, 60px); }
+        100% { opacity:1; transform:translate(-50%,-50%); }
+      }
+      @keyframes faSlideOut {
+        0%   { opacity:1; transform:translate(-50%,-50%); }
+        100% { opacity:0; transform:translate(-50%, -80px); }
+      }
+
+      /* ── Zoom ── */
+      .fa-number.zoom-in {
+        animation: faZoomIn .3s cubic-bezier(.17,.89,.32,1.15) forwards;
+      }
+      .fa-number.zoom-out {
+        animation: faZoomOut .25s ease-in forwards;
+      }
+      @keyframes faZoomIn {
+        0%   { opacity:0; transform:translate(-50%,-50%) scale(2.5); filter:blur(10px); }
+        100% { opacity:1; transform:translate(-50%,-50%) scale(1); filter:blur(0); }
+      }
+      @keyframes faZoomOut {
+        0%   { opacity:1; transform:translate(-50%,-50%) scale(1); filter:blur(0); }
+        100% { opacity:0; transform:translate(-50%,-50%) scale(0); filter:blur(6px); }
+      }
+
+      /* ── Drop ── */
+      .fa-number.drop-in {
+        animation: faDropIn .4s cubic-bezier(.22,.68,0,1.3) forwards;
+      }
+      .fa-number.drop-out {
+        animation: faDropOut .25s ease-in forwards;
+      }
+      @keyframes faDropIn {
+        0%   { opacity:0; transform:translate(-50%,-200%); }
+        70%  { opacity:1; transform:translate(-50%,-45%); }
+        85%  { transform:translate(-50%,-52%); }
+        100% { opacity:1; transform:translate(-50%,-50%); }
+      }
+      @keyframes faDropOut {
+        0%   { opacity:1; transform:translate(-50%,-50%); }
+        100% { opacity:0; transform:translate(-50%, 80px); }
+      }
+
+      /* ── Flip ── */
+      .fa-number.flip-in {
+        animation: faFlipIn .35s ease-out forwards;
+      }
+      .fa-number.flip-out {
+        animation: faFlipOut .25s ease-in forwards;
+      }
+      @keyframes faFlipIn {
+        0%   { opacity:0; transform:translate(-50%,-50%) perspective(600px) rotateY(90deg); }
+        100% { opacity:1; transform:translate(-50%,-50%) perspective(600px) rotateY(0deg); }
+      }
+      @keyframes faFlipOut {
+        0%   { opacity:1; transform:translate(-50%,-50%) perspective(600px) rotateY(0deg); }
+        100% { opacity:0; transform:translate(-50%,-50%) perspective(600px) rotateY(-90deg); }
+      }
+
+      /* ── Typewriter ── */
+      .fa-number.type-in {
+        animation: faTypeIn .1s step-end forwards;
+      }
+      .fa-number.type-out {
+        animation: faTypeOut .1s step-end forwards;
+      }
+      .fa-number.type-in::after {
+        content:'|'; position:absolute; right:-.15em; top:0;
+        animation: faCursorBlink .5s step-end infinite;
+        color:inherit; opacity:.7;
+      }
+      @keyframes faTypeIn {
+        0%   { opacity:0; transform:translate(-50%,-50%); }
+        100% { opacity:1; transform:translate(-50%,-50%); }
+      }
+      @keyframes faTypeOut {
+        0%   { opacity:1; transform:translate(-50%,-50%); }
+        100% { opacity:0; transform:translate(-50%,-50%); }
+      }
+      @keyframes faCursorBlink {
+        0%, 100% { opacity:.7; }
+        50% { opacity:0; }
+      }
+
       .fa-number.style-neon { color:#00e5ff; text-shadow:0 0 20px #00e5ff,0 0 60px rgba(0,229,255,.4); }
       .fa-number.style-fire { color:#ff6b00; text-shadow:0 0 20px #ff6b00,0 0 60px rgba(255,107,0,.4); }
       .fa-number.style-gold { color:#ffd700; text-shadow:0 0 20px #ffd700,0 0 60px rgba(255,215,0,.4); }
@@ -1723,11 +1840,51 @@
       .fa-streak-dot.bad { background:var(--red-light); color:var(--red); }
 
       @media(max-width:600px){
-        .fa-stage { height:260px; border-radius:20px; }
-        .fa-number { font-size:3rem !important; }
+        .fa-stage { border-radius:20px; }
         .fa-config-grid { grid-template-columns:1fr 1fr; }
         .fa-custom-panel { padding:18px 16px; }
         .fa-answer-input { font-size:1.8rem; width:160px; }
+      }
+
+      /* Admin display config panel */
+      .fa-admin-panel {
+        display:none; max-width:1200px; margin:16px auto 0;
+        background:linear-gradient(135deg,#1a1a2e,#16213e);
+        border:1.5px solid rgba(0,229,255,.15); border-radius:16px;
+        padding:18px 22px; color:rgba(255,255,255,.85);
+      }
+      body.abacus-user-admin .fa-admin-panel { display:block; }
+      .fa-admin-panel h4 {
+        font-size:.78rem; font-weight:800; text-transform:uppercase;
+        letter-spacing:.1em; color:rgba(0,229,255,.7); margin-bottom:14px;
+        display:flex; align-items:center; gap:8px;
+      }
+      .fa-admin-row {
+        display:flex; align-items:center; gap:12px; margin-bottom:12px;
+      }
+      .fa-admin-row label {
+        font-size:.78rem; font-weight:700; min-width:90px; color:rgba(255,255,255,.5);
+      }
+      .fa-admin-row input[type=range] { flex:1; accent-color:#00e5ff; }
+      .fa-admin-row .fa-admin-val {
+        font-size:.88rem; font-weight:900; color:#00e5ff;
+        min-width:50px; text-align:right; font-variant-numeric:tabular-nums;
+      }
+      .fa-admin-save {
+        padding:8px 20px; border-radius:100px; border:1.5px solid rgba(0,229,255,.3);
+        background:rgba(0,229,255,.1); color:#00e5ff; font-weight:800;
+        font-size:.82rem; cursor:pointer; font-family:var(--font); transition:all .2s;
+      }
+      .fa-admin-save:hover { background:rgba(0,229,255,.25); }
+      .fa-admin-status {
+        font-size:.72rem; font-weight:600; margin-left:10px;
+        transition:opacity .3s;
+      }
+
+      @media(max-width:600px) {
+        .fa-admin-panel { padding:14px 16px; }
+        .fa-admin-row { gap:8px; }
+        .fa-admin-row label { min-width:70px; font-size:.72rem; }
       }
     </style>
   </head>
@@ -2057,13 +2214,12 @@
               </div>
 
               <div class="slider-field">
-                <label>
-                  Digits per Number
-                  <input type="number" class="val-input" id="v-d" value="1" min="1" max="4"
-                    oninput="syncSlider('r-d',this,1,4)" />
-                </label>
-                <input type="range" id="r-d" min="1" max="4" step="1" value="1"
-                  oninput="syncInput('v-d',this)" />
+                <label style="display:block;margin-bottom:8px">Digits per Number</label>
+                <div id="digit-pills-row"></div>
+                <div style="font-size:.7rem;color:var(--text-tertiary);margin-top:6px">Pick one or more — each operand randomly uses a selected digit count</div>
+                <!-- Hidden sliders kept for backward compat with resume/snapshot -->
+                <input type="range" id="r-d" min="1" max="4" step="1" value="1" style="display:none" />
+                <input type="number" class="val-input" id="v-d" value="1" style="display:none" />
               </div>
 
               <div class="slider-field">
@@ -2497,6 +2653,19 @@
           </div>
         </div>
 
+        <!-- Animation mode (always visible, works with presets and custom) -->
+        <div style="max-width:540px;margin:0 auto 24px;text-align:center">
+          <div style="font-size:.78rem;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Animation Mode</div>
+          <div class="fa-style-grid" style="justify-content:center">
+            <button class="fa-style-chip active" data-anim="pop" onclick="faPickAnim(this)">💥 Pop</button>
+            <button class="fa-style-chip" data-anim="slide" onclick="faPickAnim(this)">⬆ Slide</button>
+            <button class="fa-style-chip" data-anim="zoom" onclick="faPickAnim(this)">🔍 Zoom</button>
+            <button class="fa-style-chip" data-anim="drop" onclick="faPickAnim(this)">⬇ Drop</button>
+            <button class="fa-style-chip" data-anim="flip" onclick="faPickAnim(this)">🔄 Flip</button>
+            <button class="fa-style-chip" data-anim="type" onclick="faPickAnim(this)">⌨ Typewriter</button>
+          </div>
+        </div>
+
         <!-- Custom mode -->
         <div style="text-align:center;margin-bottom:14px">
           <button onclick="document.getElementById('fa-custom-wrap').style.display=document.getElementById('fa-custom-wrap').style.display==='none'?'':'none'" style="font-size:.82rem;font-weight:700;color:var(--blue);background:none;border:none;cursor:pointer;font-family:var(--font);text-decoration:underline">⚙ Custom Settings</button>
@@ -2505,17 +2674,18 @@
           <div class="fa-custom-panel">
             <div class="fa-slider-row">
               <span class="fa-slider-label">Digits</span>
-              <input type="range" id="fa-digits" min="1" max="4" step="1" value="1" oninput="document.getElementById('fa-digits-val').textContent=this.value" />
+              <input type="range" id="fa-digits" min="1" max="6" step="1" value="1" oninput="document.getElementById('fa-digits-val').textContent=this.value" />
               <span class="fa-slider-val" id="fa-digits-val">1</span>
             </div>
             <div class="fa-slider-row">
               <span class="fa-slider-label">Numbers</span>
-              <input type="range" id="fa-count" min="3" max="20" step="1" value="5" oninput="document.getElementById('fa-count-val').textContent=this.value" />
+              <input type="range" id="fa-count" min="3" max="1000" step="1" value="5" oninput="document.getElementById('fa-count-val').textContent=this.value" />
               <span class="fa-slider-val" id="fa-count-val">5</span>
+              <input type="number" id="fa-count-input" min="3" max="1000" value="5" style="width:60px;padding:4px 6px;border:1.5px solid var(--border-subtle);border-radius:8px;font-size:.85rem;font-weight:700;font-family:var(--font-mono);text-align:center;color:var(--blue)" oninput="let v=Math.min(1000,Math.max(3,+this.value||3));document.getElementById('fa-count').value=v;document.getElementById('fa-count-val').textContent=v" />
             </div>
             <div class="fa-slider-row">
               <span class="fa-slider-label">Flash Speed</span>
-              <input type="range" id="fa-speed" min="0.2" max="3" step="0.1" value="1.0" oninput="document.getElementById('fa-speed-val').textContent=this.value" />
+              <input type="range" id="fa-speed" min="0.2" max="10" step="0.1" value="1.0" oninput="document.getElementById('fa-speed-val').textContent=this.value" />
               <span class="fa-slider-val" id="fa-speed-val">1.0</span><span style="font-size:.78rem;color:var(--text-tertiary);margin-left:2px">s</span>
             </div>
             <div class="fa-slider-row">
@@ -2523,6 +2693,34 @@
               <input type="range" id="fa-rounds" min="1" max="10" step="1" value="5" oninput="document.getElementById('fa-rounds-val').textContent=this.value" />
               <span class="fa-slider-val" id="fa-rounds-val">5</span>
             </div>
+
+            <div class="fa-slider-row" style="border-top:1px solid var(--border-subtle);padding-top:14px;margin-top:4px">
+              <span class="fa-slider-label" style="min-width:auto;flex:1">
+                Include Negatives
+                <span style="display:block;font-size:.68rem;font-weight:500;color:var(--text-tertiary);line-height:1.3;margin-top:2px">Subtraction mixed in — running total never goes below zero</span>
+              </span>
+              <button type="button" id="fa-neg-toggle" onclick="faToggleNeg()" style="position:relative;width:44px;height:24px;flex-shrink:0;cursor:pointer;border:none;border-radius:100px;background:var(--border);transition:all .25s;padding:0">
+                <span id="fa-neg-knob" style="position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:all .25s;pointer-events:none"></span>
+              </button>
+              <input type="hidden" id="fa-negatives" value="false" />
+            </div>
+            <script>
+              function faToggleNeg() {
+                const inp = document.getElementById('fa-negatives');
+                const on = inp.value !== 'true';
+                inp.value = on ? 'true' : 'false';
+                document.getElementById('fa-neg-toggle').style.background = on ? 'var(--blue)' : 'var(--border)';
+                document.getElementById('fa-neg-knob').style.left = on ? '22px' : '2px';
+              }
+              document.getElementById('fa-count').addEventListener('input', function() {
+                document.getElementById('fa-count-input').value = this.value;
+              });
+              document.getElementById('fa-count-input').addEventListener('input', function() {
+                let v = Math.min(1000, Math.max(3, +this.value || 3));
+                document.getElementById('fa-count').value = v;
+                document.getElementById('fa-count-val').textContent = v;
+              });
+            </script>
 
             <div style="font-size:.78rem;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.08em;margin:16px 0 10px;text-align:center">Visual Style</div>
             <div class="fa-style-grid">
@@ -2558,6 +2756,43 @@
           <div class="fa-progress" id="fa-progress" style="width:0%"></div>
           <div id="fa-number-container"></div>
           <div class="fa-countdown-overlay" id="fa-countdown" style="display:none"></div>
+        </div>
+
+        <!-- Admin-only display config (visible only when body has .abacus-user-admin) -->
+        <div class="fa-admin-panel" id="fa-admin-panel">
+          <h4>🔧 Admin: Display Settings <span style="font-size:.65rem;font-weight:500;color:rgba(255,255,255,.3);text-transform:none;letter-spacing:0">(only you can see this)</span></h4>
+          <div style="font-size:.68rem;font-weight:700;color:rgba(0,229,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Stage (Black Box)</div>
+          <div class="fa-admin-row">
+            <label>Box Width</label>
+            <input type="range" id="fa-cfg-w" min="300" max="1200" step="10" value="560" oninput="faAdminPreview()" />
+            <span class="fa-admin-val" id="fa-cfg-w-val">560px</span>
+          </div>
+          <div class="fa-admin-row">
+            <label>Box Height</label>
+            <input type="range" id="fa-cfg-h" min="200" max="800" step="10" value="340" oninput="faAdminPreview()" />
+            <span class="fa-admin-val" id="fa-cfg-h-val">340px</span>
+          </div>
+          <div style="font-size:.68rem;font-weight:700;color:rgba(0,229,255,.4);text-transform:uppercase;letter-spacing:.1em;margin:14px 0 10px">Number Display</div>
+          <div class="fa-admin-row">
+            <label>Font Size</label>
+            <input type="range" id="fa-cfg-size" min="1" max="30" step="0.5" value="5.5" oninput="faAdminPreview()" />
+            <span class="fa-admin-val" id="fa-cfg-size-val">5.5rem</span>
+          </div>
+          <div class="fa-admin-row">
+            <label>Offset X</label>
+            <input type="range" id="fa-cfg-x" min="-50" max="50" step="1" value="0" oninput="faAdminPreview()" />
+            <span class="fa-admin-val" id="fa-cfg-x-val">0%</span>
+          </div>
+          <div class="fa-admin-row">
+            <label>Offset Y</label>
+            <input type="range" id="fa-cfg-y" min="-50" max="50" step="1" value="0" oninput="faAdminPreview()" />
+            <span class="fa-admin-val" id="fa-cfg-y-val">0%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+            <button class="fa-admin-save" onclick="faAdminSaveConfig()">💾 Save for All Users</button>
+            <button class="fa-admin-save" onclick="faAdminResetPreview()" style="background:transparent;border-color:rgba(255,255,255,.15);color:rgba(255,255,255,.5)">↺ Reset</button>
+            <span class="fa-admin-status" id="fa-admin-status"></span>
+          </div>
         </div>
 
         <div class="fa-answer-wrap" id="fa-answer-wrap" style="display:none">
@@ -4145,19 +4380,46 @@
       function rand(a, b){ return Math.floor(Math.random()*(b-a+1))+a; }
       function numD(d){ return rand(Math.pow(10,d-1), Math.pow(10,d)-1); }
 
-      function makeQ(ops, digits, operands) {
-        const d = Math.max(1, digits | 0);
-        const minN = Math.max(1, Math.pow(10, d - 1));
-        const maxN = Math.pow(10, d) - 1;
-        const pickNumD = () => rand(minN, maxN);
+      function makeQ(ops, digits, operands, digitsMix) {
+        const hasMix = digitsMix && digitsMix.length > 1;
         const rndRange = (lo, hi) => (hi < lo ? lo : rand(lo, hi));
+        const pickNumForDigits = (dd) => {
+          const mn = Math.max(1, Math.pow(10, dd - 1));
+          const mx = Math.pow(10, dd) - 1;
+          return rand(mn, mx);
+        };
+
+        // Build a per-operand digit schedule that guarantees every
+        // selected digit size appears at least once, rest filled randomly.
+        function buildDigitSchedule(count) {
+          if (!hasMix) {
+            const d = Math.max(1, digits | 0);
+            return Array(count).fill(d);
+          }
+          const schedule = [];
+          // First: one of each selected digit size
+          for (let k = 0; k < digitsMix.length && schedule.length < count; k++) {
+            schedule.push(digitsMix[k]);
+          }
+          // Fill remaining slots randomly from the mix
+          while (schedule.length < count) {
+            schedule.push(digitsMix[rand(0, digitsMix.length - 1)]);
+          }
+          // Shuffle so the guaranteed ones aren't always first
+          for (let i = schedule.length - 1; i > 0; i--) {
+            const j = rand(0, i);
+            [schedule[i], schedule[j]] = [schedule[j], schedule[i]];
+          }
+          return schedule;
+        }
 
         const rows = [];
+        const d0 = hasMix ? digitsMix[rand(0, digitsMix.length - 1)] : Math.max(1, digits | 0);
         let isDiv = ops.includes('div') && (ops.length === 1 || Math.random() > 0.7);
 
         if (isDiv) {
-          let b = numD(Math.max(1, d - 1)) || 1;
-          let a = b * rand(2, Math.pow(10, Math.max(1, d - 1)));
+          let b = numD(Math.max(1, d0 - 1)) || 1;
+          let a = b * rand(2, Math.pow(10, Math.max(1, d0 - 1)));
           rows.push({ num: a, op: 'first' });
           rows.push({ num: b, op: 'div' });
         } else {
@@ -4165,12 +4427,15 @@
           if (!filteredOps.length) filteredOps = ['add'];
           const canMix = filteredOps.includes('add') && filteredOps.includes('sub');
 
+          const digitSchedule = buildDigitSchedule(operands);
           let ans = 0;
           for (let i = 0; i < operands; i++) {
+            const di = digitSchedule[i];
+            const maxN = Math.pow(10, di) - 1;
             let stepOp;
             if (i === 0) {
               stepOp = 'first';
-              const n = pickNumD();
+              const n = pickNumForDigits(di);
               ans = n;
               rows.push({ num: n, op: stepOp });
               continue;
@@ -4185,11 +4450,11 @@
             let n;
             if (stepOp === 'sub') {
               const cap = Math.min(maxN, Math.max(0, Math.floor(ans)));
-              n = rndRange(0, cap);
+              n = cap > 0 ? rndRange(1, cap) : 0;
             } else if (stepOp === 'add' || stepOp === 'mul') {
-              n = pickNumD();
+              n = pickNumForDigits(di);
             } else {
-              n = pickNumD();
+              n = pickNumForDigits(di);
             }
 
             if (stepOp === 'add') ans += n;
@@ -4397,10 +4662,13 @@
         sessionMeta = { source: 'generate', providedName: label || undefined };
         lastSessionSnapshot = null;
         clearInProgressSession();
+        const digitChecks = [...document.querySelectorAll('.digit-chk:checked')].map(c => +c.value);
+        if (!digitChecks.length) { alert('Select at least one digit option.'); return; }
         cfg={
           ops,
           qCount  : +document.getElementById('r-q').value,
-          digits  : +document.getElementById('r-d').value,
+          digits  : digitChecks.length === 1 ? digitChecks[0] : digitChecks[0],
+          digitsMix: digitChecks,
           operands: +document.getElementById('r-o').value,
           mode    : document.querySelector('input[name=mode]:checked').value,
           layout  : 'column',
@@ -4411,7 +4679,9 @@
           speechRate: +document.getElementById('r-rate').value,
           ...readRepeatSettingsFromDom(),
         };
-        questions=Array.from({length:cfg.qCount},()=>makeQ(cfg.ops,cfg.digits,cfg.operands));
+        questions=Array.from({length:cfg.qCount},()=>{
+          return makeQ(cfg.ops, cfg.digits, cfg.operands, cfg.digitsMix);
+        });
         flashIdx=0; flashLog=[];
         document.getElementById('new-btn').style.display='flex';
         document.getElementById('topbar-session-name-wrap').style.display='none';
@@ -4849,7 +5119,7 @@
           restoreSessionFromSnapshot(lastSessionSnapshot, { clearAnswers: true });
           return;
         }
-        questions=Array.from({length:cfg.qCount},()=>makeQ(cfg.ops,cfg.digits,cfg.operands));
+        questions=Array.from({length:cfg.qCount},()=>makeQ(cfg.ops,cfg.digits,cfg.operands,cfg.digitsMix));
         flashIdx=0; flashLog=[];
         startTimer();
         cfg.mode==='flash'?initFlash():initAll();
@@ -4906,7 +5176,66 @@
           window.speechSynthesis.getVoices();
         } catch (e) {}
         buildPTGrid();
+        buildDigitPills();
       });
+
+      // ─── Growable Digit Pills ──────────────────────────────────────────────
+      const DIGIT_MAX = 10;
+      const DIGIT_INITIAL_VISIBLE = 4;
+      let digitPillsVisible = DIGIT_INITIAL_VISIBLE;
+
+      function buildDigitPills() {
+        const row = document.getElementById('digit-pills-row');
+        if (!row) return;
+        row.className = 'dpill-row';
+        row.innerHTML = '';
+        for (let d = 1; d <= DIGIT_MAX; d++) {
+          const pill = document.createElement('span');
+          pill.className = 'dpill';
+          pill.id = 'dpill-' + d;
+          if (d > digitPillsVisible) pill.style.display = 'none';
+          const chk = d === 1 ? 'checked' : '';
+          pill.innerHTML = `<input type="checkbox" id="d-${d}" value="${d}" ${chk} class="digit-chk" onchange="onDigitPillChange()" /><label for="d-${d}">${d}-digit</label>`;
+          row.appendChild(pill);
+        }
+        const moreBtn = document.createElement('button');
+        moreBtn.className = 'dpill-more';
+        moreBtn.id = 'dpill-more-btn';
+        moreBtn.type = 'button';
+        moreBtn.textContent = `+ more (5–${DIGIT_MAX})`;
+        moreBtn.onclick = expandDigitPills;
+        if (digitPillsVisible >= DIGIT_MAX) moreBtn.style.display = 'none';
+        row.appendChild(moreBtn);
+      }
+
+      function onDigitPillChange() {
+        const checked = [...document.querySelectorAll('.digit-chk:checked')].map(c => +c.value);
+        const maxChecked = checked.length ? Math.max(...checked) : 0;
+        if (maxChecked >= digitPillsVisible && maxChecked < DIGIT_MAX) {
+          revealDigitPillsUpTo(maxChecked + 1);
+        }
+      }
+
+      function expandDigitPills() {
+        revealDigitPillsUpTo(DIGIT_MAX);
+      }
+
+      function revealDigitPillsUpTo(n) {
+        digitPillsVisible = Math.min(n, DIGIT_MAX);
+        for (let d = 1; d <= DIGIT_MAX; d++) {
+          const el = document.getElementById('dpill-' + d);
+          if (el) el.style.display = d <= digitPillsVisible ? '' : 'none';
+        }
+        const btn = document.getElementById('dpill-more-btn');
+        if (btn) {
+          if (digitPillsVisible >= DIGIT_MAX) {
+            btn.style.display = 'none';
+          } else {
+            btn.textContent = `+ more (${digitPillsVisible + 1}–${DIGIT_MAX})`;
+            btn.style.display = '';
+          }
+        }
+      }
 
       // ═══════════════════════════════════════════════════════
       // PRACTICE TESTS ENGINE
@@ -5342,6 +5671,149 @@
       }
 
       // ═══════════════════════════════════════════════════════
+      // GLOBAL APP CONFIG (reusable for any feature)
+      // ═══════════════════════════════════════════════════════
+
+      const APP_CONFIG_CACHE = {};
+
+      async function loadAppConfig(key) {
+        try {
+          const r = await fetch('/api/config/' + encodeURIComponent(key), { credentials: 'same-origin' });
+          if (!r.ok) return {};
+          const data = await r.json();
+          APP_CONFIG_CACHE[key] = data.value || {};
+          return APP_CONFIG_CACHE[key];
+        } catch { return {}; }
+      }
+
+      async function saveAppConfig(key, value) {
+        const r = await fetch('/api/config/' + encodeURIComponent(key), {
+          method: 'PUT', credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(value)
+        });
+        if (!r.ok) throw new Error('Save failed');
+        const data = await r.json();
+        if (data.error) throw new Error(data.error);
+        APP_CONFIG_CACHE[key] = data.value || value;
+        return data;
+      }
+
+      // ═══════════════════════════════════════════════════════
+      // FLASH ANZAN DISPLAY CONFIG (admin-managed, all users see)
+      // ═══════════════════════════════════════════════════════
+
+      const FA_DISPLAY_DEFAULTS = { fontSize: 5.5, offsetX: 0, offsetY: 0, stageW: 560, stageH: 340 };
+      let faDisplayCfg = { ...FA_DISPLAY_DEFAULTS };
+
+      function faApplyStageSize() {
+        const stage = document.getElementById('fa-stage');
+        if (!stage) return;
+        stage.style.maxWidth = faDisplayCfg.stageW + 'px';
+        stage.style.height = faDisplayCfg.stageH + 'px';
+      }
+
+      async function faLoadDisplayConfig() {
+        const cfg = await loadAppConfig('flash-anzan-display');
+        if (cfg && Object.keys(cfg).length) {
+          faDisplayCfg = {
+            fontSize: cfg.fontSize ?? FA_DISPLAY_DEFAULTS.fontSize,
+            offsetX:  cfg.offsetX  ?? FA_DISPLAY_DEFAULTS.offsetX,
+            offsetY:  cfg.offsetY  ?? FA_DISPLAY_DEFAULTS.offsetY,
+            stageW:   cfg.stageW   ?? FA_DISPLAY_DEFAULTS.stageW,
+            stageH:   cfg.stageH   ?? FA_DISPLAY_DEFAULTS.stageH,
+          };
+        }
+        faApplyStageSize();
+        faApplyAdminSliders();
+      }
+
+      function faApplyAdminSliders() {
+        const sizeEl = document.getElementById('fa-cfg-size');
+        const xEl = document.getElementById('fa-cfg-x');
+        const yEl = document.getElementById('fa-cfg-y');
+        const wEl = document.getElementById('fa-cfg-w');
+        const hEl = document.getElementById('fa-cfg-h');
+        if (sizeEl) { sizeEl.value = faDisplayCfg.fontSize; document.getElementById('fa-cfg-size-val').textContent = faDisplayCfg.fontSize + 'rem'; }
+        if (xEl) { xEl.value = faDisplayCfg.offsetX; document.getElementById('fa-cfg-x-val').textContent = faDisplayCfg.offsetX + '%'; }
+        if (yEl) { yEl.value = faDisplayCfg.offsetY; document.getElementById('fa-cfg-y-val').textContent = faDisplayCfg.offsetY + '%'; }
+        if (wEl) { wEl.value = faDisplayCfg.stageW; document.getElementById('fa-cfg-w-val').textContent = faDisplayCfg.stageW + 'px'; }
+        if (hEl) { hEl.value = faDisplayCfg.stageH; document.getElementById('fa-cfg-h-val').textContent = faDisplayCfg.stageH + 'px'; }
+      }
+
+      function faAdminPreview() {
+        const size = +document.getElementById('fa-cfg-size').value;
+        const x = +document.getElementById('fa-cfg-x').value;
+        const y = +document.getElementById('fa-cfg-y').value;
+        const w = +document.getElementById('fa-cfg-w').value;
+        const h = +document.getElementById('fa-cfg-h').value;
+        document.getElementById('fa-cfg-size-val').textContent = size.toFixed(1) + 'rem';
+        document.getElementById('fa-cfg-x-val').textContent = x + '%';
+        document.getElementById('fa-cfg-y-val').textContent = y + '%';
+        document.getElementById('fa-cfg-w-val').textContent = w + 'px';
+        document.getElementById('fa-cfg-h-val').textContent = h + 'px';
+
+        const stage = document.getElementById('fa-stage');
+        if (stage) {
+          stage.style.maxWidth = w + 'px';
+          stage.style.height = h + 'px';
+        }
+
+        const container = document.getElementById('fa-number-container');
+        if (!container) return;
+        const preview = container.querySelector('.fa-number') || (() => {
+          const el = document.createElement('div');
+          el.className = 'fa-number style-neon';
+          el.style.opacity = '0.5';
+          el.style.left = '50%'; el.style.top = '50%';
+          el.style.transform = 'translate(-50%,-50%)';
+          el.textContent = '123';
+          container.appendChild(el);
+          return el;
+        })();
+        preview.style.fontSize = size + 'rem';
+        preview.style.left = (50 + x) + '%';
+        preview.style.top = (50 + y) + '%';
+        preview.style.opacity = '0.5';
+        preview.style.transform = 'translate(-50%,-50%)';
+      }
+
+      function faAdminResetPreview() {
+        faDisplayCfg = { ...FA_DISPLAY_DEFAULTS };
+        faApplyAdminSliders();
+        faApplyStageSize();
+        const container = document.getElementById('fa-number-container');
+        if (container) container.innerHTML = '';
+      }
+
+      async function faAdminSaveConfig() {
+        const statusEl = document.getElementById('fa-admin-status');
+        const size = +document.getElementById('fa-cfg-size').value;
+        const x = +document.getElementById('fa-cfg-x').value;
+        const y = +document.getElementById('fa-cfg-y').value;
+        const w = +document.getElementById('fa-cfg-w').value;
+        const h = +document.getElementById('fa-cfg-h').value;
+        statusEl.textContent = 'Saving...';
+        statusEl.style.color = '#00e5ff';
+        try {
+          const cfgData = { fontSize: +size.toFixed(1), offsetX: x, offsetY: y, stageW: w, stageH: h };
+          await saveAppConfig('flash-anzan-display', cfgData);
+          faDisplayCfg = { ...cfgData };
+          statusEl.textContent = '✓ Saved!';
+          statusEl.style.color = '#34c759';
+          const container = document.getElementById('fa-number-container');
+          if (container) container.innerHTML = '';
+          setTimeout(() => { statusEl.textContent = ''; }, 2500);
+        } catch (e) {
+          statusEl.textContent = '✗ ' + (e.message || 'Failed');
+          statusEl.style.color = '#ff3b30';
+        }
+      }
+
+      // Load config on page init
+      faLoadDisplayConfig();
+
+      // ═══════════════════════════════════════════════════════
       // FLASH ANZAN ENGINE
       // ═══════════════════════════════════════════════════════
 
@@ -5356,31 +5828,61 @@
 
       let faCfg = {}, faRounds = [], faRoundIdx = 0, faCorrect = 0, faWrong = 0;
       let faCurrentNumbers = [], faCurrentAnswer = 0;
-      let faFlashTimer = null, faStyle = 'neon';
+      let faFlashTimer = null, faStyle = 'neon', faAnimMode = 'pop';
+
+      // Beep using Web Audio API
+      const faAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      function faPlayBeep(freq, durationMs) {
+        try {
+          const osc = faAudioCtx.createOscillator();
+          const gain = faAudioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(faAudioCtx.destination);
+          osc.frequency.value = freq;
+          osc.type = 'sine';
+          gain.gain.setValueAtTime(0.3, faAudioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, faAudioCtx.currentTime + durationMs / 1000);
+          osc.start();
+          osc.stop(faAudioCtx.currentTime + durationMs / 1000);
+        } catch(e) {}
+      }
 
       function faPickStyle(btn) {
-        document.querySelectorAll('.fa-style-chip').forEach(b => b.classList.remove('active'));
+        btn.closest('.fa-style-grid').querySelectorAll('.fa-style-chip').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         faStyle = btn.dataset.style;
       }
 
+      function faPickAnim(btn) {
+        btn.closest('.fa-style-grid').querySelectorAll('.fa-style-chip').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        faAnimMode = btn.dataset.anim;
+      }
+
       function faStartPreset(key) {
         const p = FA_PRESETS[key];
-        faCfg = { ...p, levelName: key };
+        faCfg = { ...p, negatives: false, levelName: key };
         faStyle = p.style;
+        const activeAnimChip = document.querySelector('.fa-style-chip[data-anim].active');
+        faAnimMode = activeAnimChip ? activeAnimChip.dataset.anim : 'pop';
         faBeginSession();
       }
 
       function faStartCustom() {
         faCfg = {
           digits: +document.getElementById('fa-digits').value,
-          count:  +document.getElementById('fa-count').value,
+          count:  +document.getElementById('fa-count-input').value || +document.getElementById('fa-count').value,
           speed:  +document.getElementById('fa-speed').value,
           rounds: +document.getElementById('fa-rounds').value,
+          negatives: document.getElementById('fa-negatives').value === 'true',
           levelName: 'custom'
         };
-        const activeChip = document.querySelector('.fa-style-chip.active');
-        faStyle = activeChip ? activeChip.dataset.style : 'neon';
+        if (faCfg.count < 3) faCfg.count = 3;
+        if (faCfg.count > 1000) faCfg.count = 1000;
+        const activeStyleChip = document.querySelector('.fa-style-chip[data-style].active');
+        faStyle = activeStyleChip ? activeStyleChip.dataset.style : 'neon';
+        const activeAnimChip = document.querySelector('.fa-style-chip[data-anim].active');
+        faAnimMode = activeAnimChip ? activeAnimChip.dataset.anim : 'pop';
         faBeginSession();
       }
 
@@ -5388,19 +5890,42 @@
         faRounds = [];
         faRoundIdx = 0; faCorrect = 0; faWrong = 0;
         for (let r = 0; r < faCfg.rounds; r++) {
-          faRounds.push(faGenerateRound(faCfg.digits, faCfg.count));
+          faRounds.push(faGenerateRound(faCfg.digits, faCfg.count, faCfg.negatives));
         }
         showSec('sec-fa-active');
         faRunRound();
       }
 
-      function faGenerateRound(digits, count) {
+      function faGenerateRound(digits, count, allowNeg) {
         const min = Math.max(1, Math.pow(10, digits - 1));
         const max = Math.pow(10, digits) - 1;
         const nums = [];
+        let runningTotal = 0;
+
         for (let i = 0; i < count; i++) {
-          nums.push(Math.floor(Math.random() * (max - min + 1)) + min);
+          let val, retries = 0;
+          do {
+            val = Math.floor(Math.random() * (max - min + 1)) + min;
+            retries++;
+          } while (nums.length > 0 && val === Math.abs(nums[nums.length - 1]) && retries < 6);
+
+          if (allowNeg && i > 0 && Math.random() < 0.4) {
+            let negVal, negRetries = 0;
+            const maxNeg = Math.min(val, runningTotal);
+            if (maxNeg >= min) {
+              do {
+                negVal = Math.floor(Math.random() * (maxNeg - min + 1)) + min;
+                negRetries++;
+              } while (nums.length > 0 && negVal === Math.abs(nums[nums.length - 1]) && negRetries < 6);
+              val = -negVal;
+            }
+          }
+
+          nums.push(val);
+          runningTotal += val;
+          if (runningTotal < 0) runningTotal = 0;
         }
+
         const answer = nums.reduce((a, b) => a + b, 0);
         return { nums, answer };
       }
@@ -5429,23 +5954,31 @@
         cdEl.style.display = 'flex';
         let n = 3;
         cdEl.innerHTML = `<span>${n}</span>`;
+        faPlayBeep(440, 200);
         const iv = setInterval(() => {
           n--;
           if (n > 0) {
             cdEl.innerHTML = `<span>${n}</span>`;
+            faPlayBeep(440, 200);
           } else {
             clearInterval(iv);
-            cdEl.style.display = 'none';
-            cb();
+            cdEl.innerHTML = `<span style="color:#00e5ff">GO!</span>`;
+            faPlayBeep(880, 350);
+            setTimeout(() => { cdEl.style.display = 'none'; cb(); }, 400);
           }
         }, 700);
       }
 
       function faFlashSequence() {
+        faApplyStageSize();
         const container = document.getElementById('fa-number-container');
         const total = faCurrentNumbers.length;
         let idx = 0;
-        const fontSize = faCfg.digits <= 1 ? '5.5rem' : faCfg.digits <= 2 ? '4.5rem' : '3.5rem';
+        const adminSize = faDisplayCfg.fontSize;
+        const adminX = faDisplayCfg.offsetX;
+        const adminY = faDisplayCfg.offsetY;
+        const posLeft = (50 + adminX) + '%';
+        const posTop  = (50 + adminY) + '%';
         const showMs = faCfg.speed * 1000;
         const fadeMs = Math.min(200, showMs * 0.25);
 
@@ -5463,17 +5996,22 @@
           container.innerHTML = '';
           const numEl = document.createElement('div');
           numEl.className = `fa-number style-${faStyle}`;
-          numEl.style.fontSize = fontSize;
-          numEl.textContent = faCurrentNumbers[idx];
+          numEl.style.fontSize = adminSize + 'rem';
+          numEl.style.left = posLeft;
+          numEl.style.top = posTop;
+          const val = faCurrentNumbers[idx];
+          numEl.textContent = val < 0 ? '− ' + Math.abs(val) : val;
+          if (val < 0) numEl.style.color = '#ff6b6b';
           container.appendChild(numEl);
 
-          requestAnimationFrame(() => numEl.classList.add('pop-in'));
+          const animIn = faAnimMode + '-in', animOut = faAnimMode + '-out';
+          requestAnimationFrame(() => numEl.classList.add(animIn));
 
           document.getElementById('fa-progress').style.width = ((idx + 1) / total * 100) + '%';
 
           setTimeout(() => {
-            numEl.classList.remove('pop-in');
-            numEl.classList.add('pop-out');
+            numEl.classList.remove(animIn);
+            numEl.classList.add(animOut);
           }, showMs - fadeMs);
 
           idx++;
@@ -5527,9 +6065,10 @@
         document.getElementById('fa-res-emoji').textContent = emoji;
         document.getElementById('fa-res-title').textContent = title;
 
+        const negLabel = faCfg.negatives ? ' · ±neg' : '';
         const info = faCfg.levelName !== 'custom'
           ? `${faCfg.levelName.charAt(0).toUpperCase() + faCfg.levelName.slice(1)} · ${faCfg.digits}-digit · ${faCfg.count} numbers · ${faCfg.speed}s flash`
-          : `Custom · ${faCfg.digits}-digit · ${faCfg.count} numbers · ${faCfg.speed}s flash`;
+          : `Custom · ${faCfg.digits}-digit · ${faCfg.count} numbers · ${faCfg.speed}s flash${negLabel}`;
         document.getElementById('fa-res-sub').textContent = info;
 
         // Streak dots
@@ -5541,9 +6080,12 @@
 
         // Detail list
         document.getElementById('fa-res-detail').innerHTML = faRounds.map((r, i) => {
-          const numsStr = r.nums.join(' + ');
+          const numsStr = r.nums.map((n, j) => {
+            if (j === 0) return String(n);
+            return n < 0 ? '− ' + Math.abs(n) : '+ ' + n;
+          }).join(' ');
           return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:10px;margin-bottom:6px;background:${r.ok ? 'var(--green-light)' : 'var(--red-light)'}">
-            <span style="font-family:var(--font-mono);font-weight:700;font-size:.82rem;flex:1">R${i+1}: ${numsStr} = ${r.answer}</span>
+            <span style="font-family:var(--font-mono);font-weight:700;font-size:.82rem;flex:1;overflow-x:auto">R${i+1}: ${numsStr} = ${r.answer}</span>
             <span style="font-weight:700;font-size:.82rem;color:${r.ok ? 'var(--green)' : 'var(--red)'}">
               ${r.ok ? '✓' : `Your: ${r.userAns ?? '—'}`}
             </span>

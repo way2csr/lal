@@ -44,6 +44,9 @@ public class SecurityConfig {
                 // Public: auth-status endpoint (every page calls this to check session)
                 .requestMatchers("/api/auth/status").permitAll()
 
+                // Public: read-only app config (display settings etc.)
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/config/**").permitAll()
+
                 // Public: static assets
                 .requestMatchers("/css/**", "/js/**", "/images/**", "/error").permitAll()
 
@@ -59,7 +62,8 @@ public class SecurityConfig {
                     "/calligraphy.html",
                     "/rubiks-cube.html",
                     "/smart-write.html",
-                    "/reading-practice.html"
+                    "/reading-practice.html",
+                    "/school-education.html"
                 ).permitAll()
 
                 // Admin APIs
