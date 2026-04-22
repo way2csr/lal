@@ -330,4 +330,36 @@
     }
   },
   "timestamp" : "2026-04-22T09:03:15.865+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1776848682,
+    "date" : "2026-04-22T09:04:42.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you",
+    "translations" : {
+      "en" : "how are you",
+      "hi" : "आप कैसे हैं",
+      "te" : "ఎలా ఉన్నావు"
+    }
+  },
+  "timestamp" : "2026-04-22T09:04:42.369+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1776848711,
+    "date" : "2026-04-22T09:05:11.000+00:00"
+  },
+  "username" : "Guest",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "Testing Microsoft Vibe Voice again.",
+    "translations" : {
+      "en" : "Testing Microsoft Vibe Voice again.",
+      "hi" : "माइक्रोसॉफ्ट वाइब वॉयस का दोबारा परीक्षण।",
+      "te" : "మైక్రోసాఫ్ట్ వైబ్ వాయిస్‌ని మళ్లీ పరీక్షిస్తోంది."
+    }
+  },
+  "timestamp" : "2026-04-22T09:05:11.315+00:00"
 } ]
