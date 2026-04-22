@@ -218,4 +218,68 @@
     "completedAt" : "2026-04-12T17:05:20.176Z"
   },
   "timestamp" : "2026-04-12T17:05:20.207+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1776847739,
+    "date" : "2026-04-22T08:48:59.000+00:00"
+  },
+  "username" : "Guest",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "Hello, this is a test of Vibe Voice",
+    "translations" : {
+      "en" : "Hello, this is a test of Vibe Voice",
+      "hi" : "नमस्ते, यह वाइब वॉयस का परीक्षण है",
+      "te" : "హలో, ఇది వైబ్ వాయిస్ పరీక్ష"
+    }
+  },
+  "timestamp" : "2026-04-22T08:48:59.765+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1776847774,
+    "date" : "2026-04-22T08:49:34.000+00:00"
+  },
+  "username" : "Guest",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you my dear",
+    "translations" : {
+      "en" : "how are you my dear",
+      "hi" : "क्या हाल हे जानेमन",
+      "te" : "ఎలా ఉన్నావు నా ప్రియతమా"
+    }
+  },
+  "timestamp" : "2026-04-22T08:49:34.684+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1776847877,
+    "date" : "2026-04-22T08:51:17.000+00:00"
+  },
+  "username" : "Guest",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you",
+    "translations" : {
+      "en" : "how are you",
+      "hi" : "आप कैसे हैं",
+      "te" : "ఎలా ఉన్నావు"
+    }
+  },
+  "timestamp" : "2026-04-22T08:51:17.056+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1776848152,
+    "date" : "2026-04-22T08:55:52.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you.",
+    "translations" : {
+      "en" : "how are you.",
+      "hi" : "आप कैसे हैं।",
+      "te" : "ఎలా ఉన్నావు."
+    }
+  },
+  "timestamp" : "2026-04-22T08:55:52.208+00:00"
 } ]
