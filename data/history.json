@@ -362,4 +362,52 @@
     }
   },
   "timestamp" : "2026-04-22T09:05:11.315+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1776848857,
+    "date" : "2026-04-22T09:07:37.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you",
+    "translations" : {
+      "en" : "how are you",
+      "hi" : "आप कैसे हैं",
+      "te" : "ఎలా ఉన్నావు"
+    }
+  },
+  "timestamp" : "2026-04-22T09:07:37.501+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1776848862,
+    "date" : "2026-04-22T09:07:42.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you",
+    "translations" : {
+      "en" : "how are you",
+      "hi" : "आप कैसे हैं",
+      "te" : "ఎలా ఉన్నావు"
+    }
+  },
+  "timestamp" : "2026-04-22T09:07:42.127+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1776848889,
+    "date" : "2026-04-22T09:08:09.000+00:00"
+  },
+  "username" : "Guest",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "Testing connectivity to Hugging Face.",
+    "translations" : {
+      "en" : "Testing connectivity to Hugging Face.",
+      "hi" : "हगिंग फेस से कनेक्टिविटी का परीक्षण।",
+      "te" : "హగ్గింగ్ ఫేస్‌కి కనెక్టివిటీని పరీక్షిస్తోంది."
+    }
+  },
+  "timestamp" : "2026-04-22T09:08:09.364+00:00"
 } ]
