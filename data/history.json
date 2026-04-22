@@ -410,4 +410,36 @@
     }
   },
   "timestamp" : "2026-04-22T09:08:09.364+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1776849097,
+    "date" : "2026-04-22T09:11:37.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "this is form history",
+    "translations" : {
+      "en" : "this is form history",
+      "hi" : "यह फॉर्म इतिहास है",
+      "te" : "ఇది రూప చరిత్ర"
+    }
+  },
+  "timestamp" : "2026-04-22T09:11:37.167+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1776849221,
+    "date" : "2026-04-22T09:13:41.000+00:00"
+  },
+  "username" : "Guest",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "Testing Vibe Voice after clean restart.",
+    "translations" : {
+      "en" : "Testing Vibe Voice after clean restart.",
+      "hi" : "क्लीन रीस्टार्ट के बाद वाइब वॉयस का परीक्षण।",
+      "te" : "క్లీన్ రీస్టార్ట్ తర్వాత వైబ్ వాయిస్‌ని పరీక్షిస్తోంది."
+    }
+  },
+  "timestamp" : "2026-04-22T09:13:41.946+00:00"
 } ]
