@@ -490,4 +490,135 @@
     }
   },
   "timestamp" : "2026-04-22T09:48:53.883+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1777728426,
+    "date" : "2026-05-02T13:27:06.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "BETTER_WAY",
+  "content" : {
+    "original" : "how you are you.",
+    "refined" : "How are you?",
+    "translations" : {
+      "en" : "How are you?",
+      "hi" : "आप कैसे हैं?",
+      "te" : "మీరు ఎలా ఉన్నారు?"
+    }
+  },
+  "timestamp" : "2026-05-02T13:27:06.361+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1777728432,
+    "date" : "2026-05-02T13:27:12.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "OTHER",
+  "content" : {
+    "type" : "GRAMMAR_CHECK",
+    "original" : "how you are you.",
+    "analysis" : {
+      "status" : "Incorrect",
+      "correction" : "How are you?",
+      "explanation" : "In the original text, 'how you are you' has a redundant structure that makes it unclear. The corrected version 'How are you?' is a standard greeting that effectively expresses concern about someone's well-being. Using the correct form improves clarity and follows conventional English grammar.",
+      "tone" : "Casual"
+    }
+  },
+  "timestamp" : "2026-05-02T13:27:12.058+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1777728436,
+    "date" : "2026-05-02T13:27:16.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "How are you?",
+    "translations" : {
+      "en" : "How are you?",
+      "hi" : "आप कैसे हैं?",
+      "te" : "మీరు ఎలా ఉన్నారు?"
+    }
+  },
+  "timestamp" : "2026-05-02T13:27:16.739+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1777728444,
+    "date" : "2026-05-02T13:27:24.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "How are you?",
+    "translations" : {
+      "en" : "How are you?",
+      "hi" : "आप कैसे हैं?",
+      "te" : "మీరు ఎలా ఉన్నారు?"
+    }
+  },
+  "timestamp" : "2026-05-02T13:27:24.315+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1777728450,
+    "date" : "2026-05-02T13:27:30.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "How are you?",
+    "translations" : {
+      "en" : "How are you?",
+      "hi" : "आप कैसे हैं?",
+      "te" : "మీరు ఎలా ఉన్నారు?"
+    }
+  },
+  "timestamp" : "2026-05-02T13:27:30.473+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1777728451,
+    "date" : "2026-05-02T13:27:31.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "How are you?",
+    "translations" : {
+      "en" : "How are you?",
+      "hi" : "आप कैसे हैं?",
+      "te" : "మీరు ఎలా ఉన్నారు?"
+    }
+  },
+  "timestamp" : "2026-05-02T13:27:31.894+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1777728538,
+    "date" : "2026-05-02T13:28:58.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you sir.",
+    "translations" : {
+      "en" : "how are you sir.",
+      "hi" : "कैसे हो जनाब।",
+      "te" : "ఎలా ఉన్నారు సార్."
+    }
+  },
+  "timestamp" : "2026-05-02T13:28:58.661+00:00"
+}, {
+  "_id" : {
+    "timestamp" : 1777728556,
+    "date" : "2026-05-02T13:29:16.000+00:00"
+  },
+  "username" : "admin",
+  "actionType" : "TRANSLATE",
+  "content" : {
+    "original" : "how are you sir.",
+    "translations" : {
+      "en" : "how are you sir.",
+      "hi" : "कैसे हो जनाब।",
+      "te" : "ఎలా ఉన్నారు సార్."
+    }
+  },
+  "timestamp" : "2026-05-02T13:29:16.206+00:00"
 } ]
